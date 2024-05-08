@@ -1,2 +1,2 @@
-# Overcooked-
+# Overcooked
 KGA Team Project
