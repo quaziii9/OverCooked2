@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6646645254819518298}
   - component: {fileID: 8898841578193004787}
-  - component: {fileID: 6710958565662160635}
   m_Layer: 0
   m_Name: AutoChecking
   m_TagString: CounterTop
@@ -47,18 +46,6 @@ CapsuleCollider:
   m_Height: 0.0075014443
   m_Direction: 1
   m_Center: {x: 0, y: 0.0037507222, z: 0}
---- !u!114 &6710958565662160635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5800430657187268021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8f639ccb384a474086227e2957fe143, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6227929389838468051
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +155,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8986890382625418870}
   - component: {fileID: 235382547464999595}
-  - component: {fileID: 6332981312886440538}
   m_Layer: 0
   m_Name: Collider
   m_TagString: CounterTop
@@ -202,26 +188,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.1933647, y: 0.9999999, z: 1.5713362}
-  m_Center: {x: 0.002543303, y: 0, z: -0.18226825}
---- !u!114 &6332981312886440538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7816515593208429023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 637616dbee639874b8a1219b8e399142, type: 2}
-  - {fileID: 2100000, guid: 88f05aece074d6a478483d8cc525fa91, type: 2}
-  type: 0
+  m_Size: {x: 1.193, y: 1, z: 1.57}
+  m_Center: {x: 0.0025, y: 0, z: -0.18}
 --- !u!1 &7870186716771150858
 GameObject:
   m_ObjectHideFlags: 0

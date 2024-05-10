@@ -1,7 +1,7 @@
 public interface IPlayerState
 {
-    void EnterState();
-    void UpdateState();
-    void ExitState();
+    void CatchOrKnockback();
+    void CookOrThrow();
+    void PickupOrPlace();
 }
 

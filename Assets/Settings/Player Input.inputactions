@@ -15,9 +15,27 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Hold",
+                    "name": "PickupOrPlace",
                     "type": "Button",
                     "id": "d3e63b99-71e4-412c-91e2-05b91c086934",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CookOrThrow",
+                    "type": "Button",
+                    "id": "176805df-c351-40e9-a90a-6e2df654c866",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "e9605252-a966-4817-82e0-16dd0df922ad",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -87,7 +105,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Hold",
+                    "action": "PickupOrPlace",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e95315a-3df6-400c-9b48-0f0dcfd82317",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CookOrThrow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b1f04f9-5199-43ec-b0fd-39a5d9f0f25a",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
