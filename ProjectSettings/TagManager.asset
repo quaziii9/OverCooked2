@@ -3,12 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - focus
+  - stage1
+  - stage2
+  - stage3
+  - Station
+  - CounterTop
+  - Return
+  - Plate
+  - Bin
+  - Craft
+  - Bus
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PostPro
   - Water
   - UI
   - 

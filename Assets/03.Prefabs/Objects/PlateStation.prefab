@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: 0.70710576, y: -0.00000059604633, z: -0.00000062584866, w: 0.70710784}
   m_LocalPosition: {x: -0.00010999673, y: 0.0053699994, z: 0.0007100004}
   m_LocalScale: {x: 4.7236414, y: 4.7236414, z: 4.72364}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5497326238068034196}
   m_RootOrder: 2
@@ -56,6 +57,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2123036160165952017}
   m_RootOrder: 1
@@ -86,6 +88,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 28.11, y: -6.15, z: -5.99}
   m_LocalScale: {x: 250, y: 250, z: 250}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4525235778111053829}
   - {fileID: 8819602997017448175}
@@ -105,7 +108,6 @@ GameObject:
   - component: {fileID: 1666248963708353710}
   - component: {fileID: 2556165443406546596}
   - component: {fileID: 7668845711894856618}
-  - component: {fileID: 5991212054853161226}
   m_Layer: 0
   m_Name: Mesh 7
   m_TagString: Station
@@ -123,6 +125,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.0008, z: 0.0037}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5497326238068034196}
   m_RootOrder: 1
@@ -146,6 +149,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -192,18 +196,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.02391136, y: 0.013480391, z: 0.01881804}
   m_Center: {x: 0.000048475267, y: -0.0013972725, z: 0.0030215369}
---- !u!114 &5991212054853161226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5512865851456825616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5765c1f537bf0494f87cf0f048a5e126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5921588013459619497
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +206,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5497326238068034196}
   - component: {fileID: 8467086955635514025}
-  - component: {fileID: 1306621488360819341}
   m_Layer: 0
   m_Name: ThePass
   m_TagString: Station
@@ -232,6 +223,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6714229562971472144}
   - {fileID: 5576210005377918277}
@@ -252,26 +244,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.022873383, y: 0.010000011, z: 0.015491384}
   m_Center: {x: 0.00009529258, y: 0, z: -0.0027457648}
---- !u!114 &1306621488360819341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5921588013459619497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: f4c3f137e5f2c2b4dab6a538026fbf3a, type: 2}
-  - {fileID: 2100000, guid: 90039174c9e65154bb71b6e8a5b4b86d, type: 2}
-  - {fileID: 2100000, guid: 379b538295ac7b043abfae59a744cbe7, type: 2}
-  - {fileID: 2100000, guid: 70f16ef54f390b642ac1ed4616ea1ea4, type: 2}
-  type: 3
 --- !u!1 &6309983182688343332
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +270,7 @@ Transform:
   m_LocalRotation: {x: -0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.0001700023, y: 0.011700001, z: 0.0030299881}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5497326238068034196}
   m_RootOrder: 0
@@ -328,6 +301,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.01, z: 0.0069999998}
   m_LocalScale: {x: 2.4, y: 2, z: 0.5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2123036160165952017}
   m_RootOrder: 0
