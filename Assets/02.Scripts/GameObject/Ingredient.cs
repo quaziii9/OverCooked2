@@ -8,6 +8,8 @@ public class Ingredient : GameItem
     public enum IngredientState { Raw, Cooking, Cooked }
     public IngredientState currentState = IngredientState.Raw;
 
+    public Vector3 fishLocalPos = new Vector3(0, 0.138f, 0.08f);
+
     public override void Interact(Player player)
     {
         // 기본 상호작용: 재료를 주움

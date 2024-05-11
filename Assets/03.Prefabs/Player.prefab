@@ -1159,8 +1159,8 @@ GameObject:
   - component: {fileID: 5265518529961989397}
   - component: {fileID: 5265518529961989399}
   - component: {fileID: 5265518529961989393}
-  - component: {fileID: 1508655267}
   - component: {fileID: 7604232999279904366}
+  - component: {fileID: 6353399755794853273}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1213,22 +1213,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.494843, y: 1.6721357, z: 2.035496}
   m_Center: {x: -0.2810943, y: -0.7687109, z: 0.51774734}
---- !u!114 &1508655267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5265518529961989418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5c581681f82af8448ca691761d30851, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 2484040779482123671}
-  rb: {fileID: 5265518529961989399}
-  moveSpeed: 20
-  turnSpeed: 10
 --- !u!114 &7604232999279904366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1260,6 +1244,22 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6353399755794853273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265518529961989418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29c00a4588d2ffd40aa487c56eed0c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2484040779482123671}
+  rb: {fileID: 5265518529961989399}
+  moveSpeed: 10
+  turnSpeed: 10
 --- !u!1 &5265518530452819521
 GameObject:
   m_ObjectHideFlags: 0
