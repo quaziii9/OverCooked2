@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageManager : MonoBehaviour
+public class StageView : MonoBehaviour
 {
-
-    public int[] stages = { 200, 300, 100, 50 };
-
+    // Start is called before the first frame update
     void Start()
     {
         
