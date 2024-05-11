@@ -4,21 +4,21 @@ using static CookingAppliance;
 public class CookingTool : GameItem
 {
     public enum ToolType { Pan, Pot, Frybasket, Plate, Extinguisher };
-    public ToolType toolType; // µµ±¸ À¯Çü: ÇÁ¶óÀÌÆÒ, ³¿ºñ, Æ¢±è¸Á, Á¢½Ã, ¼ÒÈ­±â? µî
+    public ToolType toolType; // ë„êµ¬ ìœ í˜•: í”„ë¼ì´íŒ¬, ëƒ„ë¹„, íŠ€ê¹€ë§, ì ‘ì‹œ, ì†Œí™”ê¸°? ë“±
 
     public enum CookingToolState { InUse, NotInUse }
     public CookingToolState currentState = CookingToolState.NotInUse;
 
 
-    public override void Interact(Player player)
+    public override void Interact(PlayerInteracteController player)
     {
-        // ÀÛ¾÷´ë¿ÍÀÇ »óÈ£ÀÛ¿ë ·ÎÁ÷ ±¸Çö
+        // ì‘ì—…ëŒ€ì™€ì˜ ìƒí˜¸ì‘ìš© ë¡œì§ êµ¬í˜„
         Debug.Log("Player has interacted with a craft station.");
-        // ¿¹¸¦ µé¾î, ¾ÆÀÌÅÛÀ» Á¦ÀÛÇÏ°Å³ª ±â´ÉÀ» È°¼ºÈ­ÇÏ´Â ·ÎÁ÷
+        // ì˜ˆë¥¼ ë“¤ì–´, ì•„ì´í…œì„ ì œì‘í•˜ê±°ë‚˜ ê¸°ëŠ¥ì„ í™œì„±í™”í•˜ëŠ” ë¡œì§
         //player.ActivateCraft(this.gameObject);
     }
 
-    // »óÅÂ º¯°æ ¸Ş¼Òµå
+    // ìƒíƒœ ë³€ê²½ ë©”ì†Œë“œ
     public void ChangeState(CookingToolState newState)
     {
         currentState = newState;

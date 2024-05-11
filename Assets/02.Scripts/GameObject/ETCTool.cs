@@ -4,20 +4,20 @@ using static CookingAppliance;
 public class ETCTool : GameItem
 {
     public enum ETCToolType { Sink, WasteBasket, Station, PlateTable };
-    public ETCToolType toolType; // µµ±¸ À¯Çü: ½ÌÅ©´ë, ¾²·¹±âÅë, ¼­ºù½ºÅ×ÀÌ¼Ç, Á¢½Ã½ºÆùÅ×ÀÌºí µî
+    public ETCToolType toolType; // ë„êµ¬ ìœ í˜•: ì‹±í¬ëŒ€, ì“°ë ˆê¸°í†µ, ì„œë¹™ìŠ¤í…Œì´ì…˜, ì ‘ì‹œìŠ¤í°í…Œì´ë¸” ë“±
 
     public enum ETCToolState { InUse, NotInUse }
     public ETCToolState currentState = ETCToolState.NotInUse;
 
-    public override void Interact(Player player)
+    public override void Interact(PlayerInteracteController player)
     {
-        // ÀÛ¾÷´ë¿ÍÀÇ »óÈ£ÀÛ¿ë ·ÎÁ÷ ±¸Çö
+        // ì‘ì—…ëŒ€ì™€ì˜ ìƒí˜¸ì‘ìš© ë¡œì§ êµ¬í˜„
         Debug.Log("Player has interacted with a craft station.");
-        // ¿¹¸¦ µé¾î, ¾ÆÀÌÅÛÀ» Á¦ÀÛÇÏ°Å³ª ±â´ÉÀ» È°¼ºÈ­ÇÏ´Â ·ÎÁ÷
+        // ì˜ˆë¥¼ ë“¤ì–´, ì•„ì´í…œì„ ì œì‘í•˜ê±°ë‚˜ ê¸°ëŠ¥ì„ í™œì„±í™”í•˜ëŠ” ë¡œì§
         //player.ActivateCraft(this.gameObject);
     }
 
-    // »óÅÂ º¯°æ ¸Ş¼Òµå
+    // ìƒíƒœ ë³€ê²½ ë©”ì†Œë“œ
     public void ChangeState(ETCToolState newState)
     {
         currentState = newState;

@@ -1,12 +1,12 @@
 using UnityEngine;
 
-// °ÔÀÓ ³» ¾ÆÀÌÅÛÀÇ ±âº»À» Á¤ÀÇÇÏ´Â Ãß»ó Å¬·¡½º
+// ê²Œì„ ë‚´ ì•„ì´í…œì˜ ê¸°ë³¸ì„ ì •ì˜í•˜ëŠ” ì¶”ìƒ í´ë˜ìŠ¤
 public abstract class GameItem : MonoBehaviour, IInteractable
 {
-    // ¸ğµç °ÔÀÓ ¾ÆÀÌÅÛÀÌ °¡Á®¾ß ÇÒ ±âº» ¼Ó¼º
+    // ëª¨ë“  ê²Œì„ ì•„ì´í…œì´ ê°€ì ¸ì•¼ í•  ê¸°ë³¸ ì†ì„±
     public string itemName;
     //public Sprite icon;
 
-    // IInteractable ÀÎÅÍÆäÀÌ½º ±¸ÇöÀ» °­Á¦ÇÔ
-    public abstract void Interact(Player player);
+    // IInteractable ì¸í„°í˜ì´ìŠ¤ êµ¬í˜„ì„ ê°•ì œí•¨
+    public abstract void Interact(PlayerInteracteController player);
 }

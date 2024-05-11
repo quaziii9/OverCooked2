@@ -3,20 +3,20 @@ using UnityEngine;
 public class Ingredient : GameItem
 {
     public enum IngredientType { Fish, Shrimp, Plate, Lettuce, Tomato, Cucumber, Chicken, Potato };
-    public IngredientType type; // Àç·á À¯Çü: Ã¤¼Ò, °í±â µî
+    public IngredientType type; // ì¬ë£Œ ìœ í˜•: ì±„ì†Œ, ê³ ê¸° ë“±
     
     public enum IngredientState { Raw, Cooking, Cooked }
     public IngredientState currentState = IngredientState.Raw;
 
     public Vector3 fishLocalPos = new Vector3(0, 0.138f, 0.08f);
 
-    public override void Interact(Player player)
+    public override void Interact(PlayerInteracteController player)
     {
-        // ±âº» »óÈ£ÀÛ¿ë: Àç·á¸¦ ÁÖ¿ò
+        // ê¸°ë³¸ ìƒí˜¸ì‘ìš©: ì¬ë£Œë¥¼ ì£¼ì›€
         //Pickup(player);
     }
 
-    // »óÅÂ º¯°æ ¸Ş¼Òµå
+    // ìƒíƒœ ë³€ê²½ ë©”ì†Œë“œ
     public void ChangeState(IngredientState newState)
     {
         currentState = newState;
