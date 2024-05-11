@@ -15,6 +15,7 @@ TagManager:
   - Bin
   - Craft
   - Bus
+  - StageUi
   layers:
   - Default
   - TransparentFX

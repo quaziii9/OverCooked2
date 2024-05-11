@@ -65,13 +65,11 @@ public class Bus : MonoBehaviour
 
         Rigidbody rb= GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * 20,ForceMode.Impulse);
-        yield return new WaitForSecondsRealtime(0.05f);
-        rb.AddForce(transform.forward * 20);
-        yield return new WaitForSecondsRealtime(0.05f);
-        rb.AddForce(transform.forward * 20);
-        yield return new WaitForSecondsRealtime(0.05f);
-        rb.AddForce(transform.forward * 20);
-        yield return new WaitForSecondsRealtime(0.05f);
+        for (int i = 0; i < 4; i++)
+        {
+            rb.AddForce(transform.forward, ForceMode.Impulse);
+            yield return new WaitForSecondsRealtime(0.05f);
+        }
         rb.velocity = Vector3.zero;
         isboost = false;
     }
