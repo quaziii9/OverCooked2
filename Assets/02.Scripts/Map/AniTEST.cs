@@ -5,8 +5,8 @@ using UnityEngine;
 public class AniTEST : MonoBehaviour
 {
     
-        // 자식 객체의 애니메이터 컴포넌트를 저장할 배열
-        private Animator[] childAnimators;
+    // 자식 객체의 애니메이터 컴포넌트를 저장할 배열
+    private Animator[] childAnimators;
 
     void Start()
     {
@@ -25,8 +25,11 @@ public class AniTEST : MonoBehaviour
 
     void PlayChildAnimations()
     {
-        // 모든 자식 객체의 애니메이션을 실행
-     
+      
+            foreach (Animator animator in childAnimators)
+            {
+                animator.SetTrigger("flip");
+            }
     }
     private void OnCollisionEnter(Collision collision)
     {

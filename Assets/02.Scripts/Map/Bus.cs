@@ -63,17 +63,16 @@ public class Bus : MonoBehaviour
     {
         Debug.Log("BOost");
 
-        busobject.transform.Translate(busobject.transform.forward * 1f, Space.World);
+        Rigidbody rb= GetComponent<Rigidbody>();
+        rb.AddForce(transform.forward * 20,ForceMode.Impulse);
         yield return new WaitForSecondsRealtime(0.05f);
-        busobject.transform.Translate(busobject.transform.forward * 1f, Space.World);
+        rb.AddForce(transform.forward * 20);
         yield return new WaitForSecondsRealtime(0.05f);
-        busobject.transform.Translate(busobject.transform.forward * 1f, Space.World);
+        rb.AddForce(transform.forward * 20);
         yield return new WaitForSecondsRealtime(0.05f);
-        busobject.transform.Translate(busobject.transform.forward * 1f, Space.World);
+        rb.AddForce(transform.forward * 20);
         yield return new WaitForSecondsRealtime(0.05f);
-        busobject.transform.Translate(busobject.transform.forward * 1f, Space.World);
-        yield return new WaitForSecondsRealtime(0.05f);
-        yield return new WaitForSecondsRealtime(1f);
+        rb.velocity = Vector3.zero;
         isboost = false;
     }
 }
