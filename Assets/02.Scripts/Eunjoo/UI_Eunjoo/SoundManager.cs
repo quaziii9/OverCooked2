@@ -5,19 +5,19 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
 
-    [SerializeField] private GameObject[] BGMSquares; //À½·® ³×¸ğ³×¸ğ
+    [SerializeField] private GameObject[] BGMSquares; //ìŒëŸ‰ ë„¤ëª¨ë„¤ëª¨
     [SerializeField] private GameObject[] effectSquares;
 
 
 
-    [Header("À½·®")]
+    [Header("ìŒëŸ‰")]
     public float volumeBGM = 0.2f;
     public float volumeEffect = 1f;
 
-    [Header("¹è°æÀ½¾Ç")]
+    [Header("ë°°ê²½ìŒì•…")]
     public AudioSource BgmAudioSource;
 
-    [Header("È¿°úÀ½")]
+    [Header("íš¨ê³¼ìŒ")]
     public AudioSource EffectAudioSource;
 
     void Start()
@@ -57,19 +57,20 @@ public class SoundManager : MonoBehaviour
 
     private void SetBGMSquares()
     {
-        Debug.Log(volumeBGM);
-        for (int i = 0; i < BGMSquares.Length; i++)
+        int j = 0;
+        for (float i = 0; i < 1; i += 0.1f)
         {
-            if (i <volumeBGM * 10) // ÇöÀç º¼·ı¿¡ µû¶ó È°¼ºÈ­ÇÒ ³×¸ğµéÀÇ °³¼ö¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+            if (i < volumeBGM) //ì¼œìˆëŠ”ê±°
             {
-                BGMSquares[i].transform.GetChild(0).gameObject.SetActive(false);
-                BGMSquares[i].transform.GetChild(1).gameObject.SetActive(true);
+                BGMSquares[j].transform.GetChild(0).gameObject.SetActive(false);
+                BGMSquares[j].transform.GetChild(1).gameObject.SetActive(true);
             }
-            else // ³ª¸ÓÁö ³×¸ğµéÀº ºñÈ°¼ºÈ­ÇÕ´Ï´Ù.
+            else //êº¼ìˆëŠ”ê±°
             {
-                BGMSquares[i].transform.GetChild(0).gameObject.SetActive(true);
-                BGMSquares[i].transform.GetChild(1).gameObject.SetActive(false);
+                BGMSquares[j].transform.GetChild(0).gameObject.SetActive(true);
+                BGMSquares[j].transform.GetChild(1).gameObject.SetActive(false);
             }
+            j++;
         }
     }
 

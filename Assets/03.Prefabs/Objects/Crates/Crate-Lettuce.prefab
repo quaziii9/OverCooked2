@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8814759878303876003}
-  - component: {fileID: 4008431981571034346}
   - component: {fileID: 6486265058856676250}
   m_Layer: 0
   m_Name: AutoCheck
@@ -33,18 +32,6 @@ Transform:
   m_Father: {fileID: 4705835281624494115}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4008431981571034346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2318409053052465977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8f639ccb384a474086227e2957fe143, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &6486265058856676250
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -152,8 +139,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5382026129661738291}
   - component: {fileID: 4321026146549428436}
-  - component: {fileID: 8853159325261836579}
-  - component: {fileID: 3365640600665807944}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Craft
@@ -189,39 +174,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.013, y: 0.0043214993, z: 0.01037902}
   m_Center: {x: -0.005893215, y: -0.002839265, z: -0.00018952011}
---- !u!114 &8853159325261836579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4435701947243532792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: e85434d27394186448f4d867a40600cd, type: 2}
-  - {fileID: 2100000, guid: 96b684af4a6a4614880b1b3ad9dee9e8, type: 2}
-  type: 1
---- !u!114 &3365640600665807944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4435701947243532792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baea67d6fbf0a3f4381458a65328fb62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CraftAnim: {fileID: 5221491689511982923}
-  food: 2
-  foodPrefabs: {fileID: 5495133024234152564, guid: c3097bce1564cac478c406ce84f6aed9, type: 3}
 --- !u!1 &4967199767160227568
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +237,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e85434d27394186448f4d867a40600cd, type: 2}
+  - {fileID: 2100000, guid: f7308dff4483d0744be0fd8361621ded, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -439,7 +391,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e85434d27394186448f4d867a40600cd, type: 2}
+  - {fileID: 2100000, guid: f7308dff4483d0744be0fd8361621ded, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
