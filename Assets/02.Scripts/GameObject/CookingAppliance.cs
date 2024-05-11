@@ -3,22 +3,22 @@ using UnityEngine;
 public class CookingAppliance : GameItem, ICookable
 {
     public enum ApplianceType { ChoppingBoard, Stove, Oven, Fryer };
-    public ApplianceType applianceType; // ±â±¸ À¯Çü: µµ¸¶, ½ºÅäºê, ¿Àºì, Æ¢±è±â µî
+    public ApplianceType applianceType; // ê¸°êµ¬ ìœ í˜•: ë„ë§ˆ, ìŠ¤í† ë¸Œ, ì˜¤ë¸, íŠ€ê¹€ê¸° ë“±
 
     public enum CookingApplianceState { InUse, NotInUse }
     public CookingApplianceState currentState = CookingApplianceState.NotInUse;
 
-    public override void Interact(Player player)
+    public override void Interact(PlayerInteracteController player)
     {
         //player.CookFood(this);
     }
 
-    public void Cook(Player player)
+    public void Cook(PlayerInteracteController player)
     {
         throw new System.NotImplementedException();
     }
 
-    // »óÅÂ º¯°æ ¸Ş¼Òµå
+    // ìƒíƒœ ë³€ê²½ ë©”ì†Œë“œ
     public void ChangeState(CookingApplianceState newState)
     {
         currentState = newState;

@@ -1,4 +1,4 @@
 public interface ICookable
 {
-    void Cook(Player player);
+    void Cook(PlayerInteracteController player);
 }
