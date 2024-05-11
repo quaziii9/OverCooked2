@@ -1,5 +1,5 @@
 public interface IInteractable
 {
-    // ÇÃ·¹ÀÌ¾î¿Í »óÈ£ÀÛ¿ëÀ» Ã³¸®ÇÏ´Â ¸Ş¼Òµå
-    void Interact(Player player);
+    // í”Œë ˆì´ì–´ì™€ ìƒí˜¸ì‘ìš©ì„ ì²˜ë¦¬í•˜ëŠ” ë©”ì†Œë“œ
+    void Interact(PlayerInteracteController playerIC);
 }
