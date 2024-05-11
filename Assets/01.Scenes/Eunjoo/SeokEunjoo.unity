@@ -129,80 +129,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1344294609}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &104987768 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3440338632022801264, guid: a9cf81703fdda4f469c4093a169b3d13,
-    type: 3}
-  m_PrefabInstance: {fileID: 1344294609}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &104987770 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3440338632022801278, guid: a9cf81703fdda4f469c4093a169b3d13,
-    type: 3}
-  m_PrefabInstance: {fileID: 1344294609}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 104987768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &104987772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 104987768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.654902, g: 0.5882353, b: 0.5882353, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 104987770}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 154817030}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: upBGM
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &147931746
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,80 +273,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1344294609}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &284316881 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3440338632267903227, guid: a9cf81703fdda4f469c4093a169b3d13,
-    type: 3}
-  m_PrefabInstance: {fileID: 1344294609}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &284316883 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3440338632267903225, guid: a9cf81703fdda4f469c4093a169b3d13,
-    type: 3}
-  m_PrefabInstance: {fileID: 1344294609}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 284316881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &284316885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 284316881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.654902, g: 0.5882353, b: 0.5882353, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 284316883}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 154817030}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: upBGM
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &303057161
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,80 +1235,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1344294609}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &973954222 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3440338633442551717, guid: a9cf81703fdda4f469c4093a169b3d13,
-    type: 3}
-  m_PrefabInstance: {fileID: 1344294609}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &973954224 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3440338633442551715, guid: a9cf81703fdda4f469c4093a169b3d13,
-    type: 3}
-  m_PrefabInstance: {fileID: 1344294609}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973954222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &973954226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973954222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.654902, g: 0.5882353, b: 0.5882353, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 973954224}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 154817030}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: downBGM
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &976631781 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6531989941928850459, guid: a9cf81703fdda4f469c4093a169b3d13,
@@ -1883,100 +1661,70 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 606147795}
     m_Modifications:
-    - target: {fileID: 1390728559999993239, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Bgm Sound Bar(5)
+    - target: {fileID: 104987772, guid: a9cf81703fdda4f469c4093a169b3d13, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 154817030}
+    - target: {fileID: 104987772, guid: a9cf81703fdda4f469c4093a169b3d13, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: upBgmSound
       objectReference: {fileID: 0}
-    - target: {fileID: 1484907503462464964, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Effect Sound Bar(8)
+    - target: {fileID: 284316885, guid: a9cf81703fdda4f469c4093a169b3d13, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 154817030}
+    - target: {fileID: 973954226, guid: a9cf81703fdda4f469c4093a169b3d13, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 154817030}
+    - target: {fileID: 973954226, guid: a9cf81703fdda4f469c4093a169b3d13, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: downBgmSound
       objectReference: {fileID: 0}
-    - target: {fileID: 1634120340381198625, guid: a9cf81703fdda4f469c4093a169b3d13,
+    - target: {fileID: 169653124411525934, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
-      propertyPath: m_Name
-      value: Bgm Sound Bar(3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1642975417701573845, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Effect Sound Bar(3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2446026548019696599, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Colors.m_PressedColor.b
-      value: 0.5882353
-      objectReference: {fileID: 0}
-    - target: {fileID: 2446026548019696599, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Colors.m_PressedColor.g
-      value: 0.5882353
-      objectReference: {fileID: 0}
-    - target: {fileID: 2446026548019696599, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Colors.m_PressedColor.r
-      value: 0.654902
-      objectReference: {fileID: 0}
-    - target: {fileID: 2446026548019696599, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2446026548019696599, guid: a9cf81703fdda4f469c4093a169b3d13,
+    - target: {fileID: 670881369171193865, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 761911198113722612, guid: a9cf81703fdda4f469c4093a169b3d13,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1044872713389617031, guid: a9cf81703fdda4f469c4093a169b3d13,
+        type: 3}
+      propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1504966382293529390, guid: a9cf81703fdda4f469c4093a169b3d13,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2446026548019696599, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 154817030}
-    - target: {fileID: 2446026548019696599, guid: a9cf81703fdda4f469c4093a169b3d13,
+    - target: {fileID: 3140717056688741127, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2446026548019696599, guid: a9cf81703fdda4f469c4093a169b3d13,
+    - target: {fileID: 3443342976687061247, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: downBGM
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2446026548019696599, guid: a9cf81703fdda4f469c4093a169b3d13,
+    - target: {fileID: 3613267839725035760, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SoundManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2446026548019696599, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 3222811655579356961, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Effect Sound Bar(1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3347513199506515562, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Effect Sound Bar(10)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3794716500642231307, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Effect Sound Bar(7)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3849579759223534407, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Bgm Sound Bar(1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4067040693688792162, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Bgm Sound Bar(6)
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4306646796493536802, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
@@ -2083,11 +1831,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4385164009203383509, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Bgm Sound Bar(7)
-      objectReference: {fileID: 0}
     - target: {fileID: 4516472143569160496, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_Name
@@ -2098,70 +1841,50 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4884777046661849975, guid: a9cf81703fdda4f469c4093a169b3d13,
+    - target: {fileID: 4999392173878106011, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
-      propertyPath: m_Name
-      value: Bgm Sound Bar(9)
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5527253515033104324, guid: a9cf81703fdda4f469c4093a169b3d13,
+    - target: {fileID: 7067256733415254237, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
-      propertyPath: m_Name
-      value: Effect Sound Bar(2)
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6531989941928850459, guid: a9cf81703fdda4f469c4093a169b3d13,
+    - target: {fileID: 7478907250341888726, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
-      propertyPath: m_Name
-      value: Bgm Sound Bar(4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6543352215836367073, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Effect Sound Bar(4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7021250856769595292, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Effect Sound Bar(9)
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7491508440208831254, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5879901377634937582}
-    - target: {fileID: 7491508440208831254, guid: a9cf81703fdda4f469c4093a169b3d13,
+    - target: {fileID: 7651446362866723192, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SeetingOffButton
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7491508440208831254, guid: a9cf81703fdda4f469c4093a169b3d13,
+    - target: {fileID: 7836955498282555680, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: OptionSettingManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7886485461823890630, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Bgm Sound Bar(2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8158256707726686075, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Bgm Sound Bar(8)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8254794169786977902, guid: a9cf81703fdda4f469c4093a169b3d13,
-        type: 3}
-      propertyPath: m_Name
-      value: Effect Sound Bar(5)
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8305186422612941225, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
-      propertyPath: m_Name
-      value: Bgm Sound Bar(10)
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 9088535062873505957, guid: a9cf81703fdda4f469c4093a169b3d13,
+    - target: {fileID: 8349339759979881191, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
-      propertyPath: m_Name
-      value: Effect Sound Bar(6)
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463249813079754009, guid: a9cf81703fdda4f469c4093a169b3d13,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9cf81703fdda4f469c4093a169b3d13, type: 3}

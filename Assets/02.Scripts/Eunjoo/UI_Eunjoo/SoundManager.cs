@@ -34,7 +34,7 @@ public class SoundManager : MonoBehaviour
 
 
 
-    public void upBGM()
+    public void upBgmSound()
     {
         volumeBGM += 0.1f;
         if (volumeBGM >= 1)
@@ -44,7 +44,7 @@ public class SoundManager : MonoBehaviour
         //BgmAudioSource.volume = volumeBGM;
         SetBGMSquares();
     }
-    public void downBGM()
+    public void downBgmSound()
     {
         volumeBGM -= 0.1f;
         if (volumeBGM <= 0)
@@ -74,24 +74,24 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void effectUp()
+    public void upEffectSound()
     {
         volumeEffect += 0.1f;
         if (volumeEffect >= 1)
         {
             volumeEffect = 1f;
         }
-        EffectAudioSource.volume = volumeEffect;
+        //EffectAudioSource.volume = volumeEffect;
         SetEffectSquares();
     }
-    public void effectDown()
+    public void downEffectSound()
     {
         volumeEffect -= 0.1f;
         if (volumeEffect <= 0)
         {
             volumeEffect = 0;
         }
-        EffectAudioSource.volume = volumeEffect;
+        //EffectAudioSource.volume = volumeEffect;
         SetEffectSquares();
     }
 
