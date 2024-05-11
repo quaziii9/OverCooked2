@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
         // 이동 입력이 없을 때 애니메이터의 이동 파라미터를 false로 설정
         if (moveInput.magnitude == 0)
         {
+            rb.velocity = Vector3.zero;
             animator.SetBool("isWalking", false);
         }
         else
@@ -49,8 +50,8 @@ public class PlayerController : MonoBehaviour
         if(moveInput.magnitude != 0)
         {
             Vector3 moveDir = new Vector3(moveInput.x, 0f, moveInput.y);
-            Vector3 movement = moveDir * moveSpeed * Time.deltaTime;
-            rb.MovePosition(rb.position + movement);
+            Vector3 movement = moveDir * moveSpeed;
+            rb.velocity = movement;
 
             // transform.forward = moveDir;
 
@@ -67,14 +68,30 @@ public class PlayerController : MonoBehaviour
 
     public void CookOrThrow()
     {
-        // 던지기 로직 구현
-        ChangeState(freeState);  // 상태 전환
+        if (isHanded())
+        {
+            // 집기 로직 구현
+            ChangeState(holdState);  // 상태 전환
+        }
+        else
+        {
+            // 내려놓기 로직 구현
+            ChangeState(freeState);  // 상태 전환
+        }
     }
 
     public void PickupOrPlace()
     {
-        // 내려놓기 로직 구현
-        ChangeState(freeState);  // 상태 전환
+        if (isHanded())
+        {
+            // 집기 로직 구현
+            ChangeState(holdState);  // 상태 전환
+        }
+        else
+        {
+            // 내려놓기 로직 구현
+            ChangeState(freeState);  // 상태 전환
+        }
     }
 
     public void ChangeState(IPlayerState newState)
@@ -94,11 +111,36 @@ public class PlayerController : MonoBehaviour
 
     public void OnCookOrThrow(InputValue inputValue)
     {
-
+        if (isHanded())
+        {
+            // 집기 로직 구현
+            ChangeState(holdState);  // 상태 전환
+        }
+        else
+        {
+            // 내려놓기 로직 구현
+            ChangeState(freeState);  // 상태 전환
+        }
     }
 
     public void OnPickupOrPlace(InputValue inputValue)
     {
-
+        if (isHanded())
+        {
+            // 집기 로직 구현
+            ChangeState(holdState);  // 상태 전환
+        }
+        else
+        {
+            // 내려놓기 로직 구현
+            ChangeState(freeState);  // 상태 전환
+        }
     }
+
+    // 손에 물건이 있으면 bool 값이 바뀜.
+    private bool isHanded()
+    {
+        return true;
+    }
+
 }
