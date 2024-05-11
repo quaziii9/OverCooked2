@@ -263,7 +263,7 @@ MonoBehaviour:
   - {fileID: 436619141}
   - {fileID: 659320626}
   - {fileID: 1401732846}
-  volumeBGM: 1
+  volumeBGM: 0.2
   volumeEffect: 1
   BgmAudioSource: {fileID: 0}
   EffectAudioSource: {fileID: 0}
@@ -1684,27 +1684,27 @@ PrefabInstance:
     - target: {fileID: 169653124411525934, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 670881369171193865, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 761911198113722612, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1044872713389617031, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1504966382293529390, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2446026548019696599, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
@@ -1714,14 +1714,19 @@ PrefabInstance:
     - target: {fileID: 3140717056688741127, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3443342976687061247, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3613267839725035760, guid: a9cf81703fdda4f469c4093a169b3d13,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947133871731856390, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1839,22 +1844,22 @@ PrefabInstance:
     - target: {fileID: 4516472143569160496, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4999392173878106011, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7067256733415254237, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7478907250341888726, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7491508440208831254, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
@@ -1864,12 +1869,12 @@ PrefabInstance:
     - target: {fileID: 7651446362866723192, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7836955498282555680, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8305186422612941225, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
@@ -1879,12 +1884,12 @@ PrefabInstance:
     - target: {fileID: 8349339759979881191, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8463249813079754009, guid: a9cf81703fdda4f469c4093a169b3d13,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9cf81703fdda4f469c4093a169b3d13, type: 3}
@@ -2580,7 +2585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1907271777
 MonoBehaviour:
   m_ObjectHideFlags: 0

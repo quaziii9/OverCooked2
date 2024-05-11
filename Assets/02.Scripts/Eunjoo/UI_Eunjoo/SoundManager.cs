@@ -11,7 +11,7 @@ public class SoundManager : MonoBehaviour
 
 
     [Header("음량")]
-    public float volumeBGM = 1f;
+    public float volumeBGM = 0.2f;
     public float volumeEffect = 1f;
 
     [Header("배경음악")]
@@ -57,20 +57,19 @@ public class SoundManager : MonoBehaviour
 
     private void SetBGMSquares()
     {
-        int j = 0;
-        for (float i = 0; i < 1; i += 0.1f)
+        Debug.Log(volumeBGM);
+        for (int i = 0; i < BGMSquares.Length; i++)
         {
-            if (i < volumeBGM)
+            if (i <volumeBGM * 10) // 현재 볼륨에 따라 활성화할 네모들의 개수를 설정합니다.
             {
-                BGMSquares[j].transform.GetChild(0).gameObject.SetActive(false);
-                BGMSquares[j].transform.GetChild(1).gameObject.SetActive(true);
+                BGMSquares[i].transform.GetChild(0).gameObject.SetActive(false);
+                BGMSquares[i].transform.GetChild(1).gameObject.SetActive(true);
             }
-            else
+            else // 나머지 네모들은 비활성화합니다.
             {
-                BGMSquares[j].transform.GetChild(0).gameObject.SetActive(true);
-                BGMSquares[j].transform.GetChild(1).gameObject.SetActive(false);
+                BGMSquares[i].transform.GetChild(0).gameObject.SetActive(true);
+                BGMSquares[i].transform.GetChild(1).gameObject.SetActive(false);
             }
-            j++;
         }
     }
 
