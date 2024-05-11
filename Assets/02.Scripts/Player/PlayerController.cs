@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private float turnSpeed = 50f;
+    [SerializeField] private float turnSpeed = 10f;
 
     private Vector2 moveInput;
 
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     {
         freeState = new FreeState(this);
         holdState = new HoldState(this);
-        currentState = freeState;  // ÃÊ±â »óÅÂ ¼³Á¤
+        currentState = freeState;  // ì´ˆê¸° ìƒíƒœ ì„¤ì •
     }
 
     void Start()
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // ÀÌµ¿ ÀÔ·ÂÀÌ ¾øÀ» ¶§ ¾Ö´Ï¸ŞÀÌÅÍÀÇ ÀÌµ¿ ÆÄ¶ó¹ÌÅÍ¸¦ false·Î ¼³Á¤
+        // ì´ë™ ì…ë ¥ì´ ì—†ì„ ë•Œ ì• ë‹ˆë©”ì´í„°ì˜ ì´ë™ íŒŒë¼ë¯¸í„°ë¥¼ falseë¡œ ì„¤ì •
         if (moveInput.magnitude == 0)
         {
             animator.SetBool("isWalking", false);
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
             // transform.forward = moveDir;
 
-            // ÇÃ·¹ÀÌ¾î°¡ ÀÌµ¿ÇÏ´Â ¹æÇâÀ» ¹Ù¶óº¸µµ·Ï È¸Àü
+            // í”Œë ˆì´ì–´ê°€ ì´ë™í•˜ëŠ” ë°©í–¥ì„ ë°”ë¼ë³´ë„ë¡ íšŒì „
             Quaternion targetRotation = Quaternion.LookRotation(moveDir);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
         }
@@ -62,19 +62,19 @@ public class PlayerController : MonoBehaviour
 
     public void CatchOrKnockback()
     {
-        // ´ë½¬ ·ÎÁ÷ ±¸Çö
+        // ëŒ€ì‰¬ ë¡œì§ êµ¬í˜„
     }
 
     public void CookOrThrow()
     {
-        // ´øÁö±â ·ÎÁ÷ ±¸Çö
-        ChangeState(freeState);  // »óÅÂ ÀüÈ¯
+        // ë˜ì§€ê¸° ë¡œì§ êµ¬í˜„
+        ChangeState(freeState);  // ìƒíƒœ ì „í™˜
     }
 
     public void PickupOrPlace()
     {
-        // ³»·Á³õ±â ·ÎÁ÷ ±¸Çö
-        ChangeState(freeState);  // »óÅÂ ÀüÈ¯
+        // ë‚´ë ¤ë†“ê¸° ë¡œì§ êµ¬í˜„
+        ChangeState(freeState);  // ìƒíƒœ ì „í™˜
     }
 
     public void ChangeState(IPlayerState newState)
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputValue inputValue)
     {
-
+        // ì¼ì • ê±°ë¦¬ 
     }
 
     public void OnCookOrThrow(InputValue inputValue)
