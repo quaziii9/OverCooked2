@@ -781,12 +781,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 0
 --- !u!65 &139999152
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -974,12 +968,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 6
 --- !u!65 &170996932
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1090,12 +1078,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 0
 --- !u!65 &172664026
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1651,21 +1633,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f42c62577887841a2810c9c62b3bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingBar: {fileID: 4156643022233841631}
-  pos: {x: 0, y: 2, z: 0}
-  Pause: 0
-  CuttingTime: 0
-  Canvas: {fileID: 4156643020944634083}
-  IngredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
-    type: 3}
-  Icons:
-  - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
-  - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
-  - {fileID: 21300000, guid: 395eaf5650b040947951375ff280d770, type: 3}
-  - {fileID: 21300000, guid: 8664d225a9029924781b8b4474490a1a, type: 3}
-  - {fileID: 21300000, guid: 76d14744947c6c5409f533990372ab43, type: 3}
-  - {fileID: 21300000, guid: 35470bc04a80228478213f2ff56b6471, type: 3}
-  - {fileID: 21300000, guid: 3c7bf3321bd71924aa300a5ac4bfdc15, type: 3}
 --- !u!1 &287439124
 GameObject:
   m_ObjectHideFlags: 0
@@ -1711,21 +1678,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f42c62577887841a2810c9c62b3bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingBar: {fileID: 4156643022834699208}
-  pos: {x: 0, y: 2, z: 0}
-  Pause: 0
-  CuttingTime: 0
-  Canvas: {fileID: 4156643020944634083}
-  IngredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
-    type: 3}
-  Icons:
-  - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
-  - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
-  - {fileID: 21300000, guid: 395eaf5650b040947951375ff280d770, type: 3}
-  - {fileID: 21300000, guid: 8664d225a9029924781b8b4474490a1a, type: 3}
-  - {fileID: 21300000, guid: 76d14744947c6c5409f533990372ab43, type: 3}
-  - {fileID: 21300000, guid: 35470bc04a80228478213f2ff56b6471, type: 3}
-  - {fileID: 21300000, guid: 3c7bf3321bd71924aa300a5ac4bfdc15, type: 3}
 --- !u!1 &300170143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1857,12 +1809,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 0
 --- !u!65 &314490703
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2700,12 +2646,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 1
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 0
 --- !u!65 &426372160
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3014,12 +2954,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 0
 --- !u!65 &481534817
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3518,21 +3452,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f42c62577887841a2810c9c62b3bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingBar: {fileID: 45847510715753377}
-  pos: {x: 0, y: 2, z: 0}
-  Pause: 0
-  CuttingTime: 0
-  Canvas: {fileID: 4156643020944634083}
-  IngredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
-    type: 3}
-  Icons:
-  - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
-  - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
-  - {fileID: 21300000, guid: 395eaf5650b040947951375ff280d770, type: 3}
-  - {fileID: 21300000, guid: 8664d225a9029924781b8b4474490a1a, type: 3}
-  - {fileID: 21300000, guid: 76d14744947c6c5409f533990372ab43, type: 3}
-  - {fileID: 21300000, guid: 35470bc04a80228478213f2ff56b6471, type: 3}
-  - {fileID: 21300000, guid: 3c7bf3321bd71924aa300a5ac4bfdc15, type: 3}
 --- !u!1 &687302113
 GameObject:
   m_ObjectHideFlags: 0
@@ -4548,12 +4467,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 6
 --- !u!65 &847026324
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4696,12 +4609,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 0
 --- !u!65 &896463201
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5006,12 +4913,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 1
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 0
 --- !u!65 &972782016
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5123,12 +5024,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 6
 --- !u!65 &974230374
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5239,12 +5134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 0
 --- !u!65 &975771588
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6520,12 +6409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 6
 --- !u!65 &1262915344
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7242,12 +7125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 0
 --- !u!65 &1430471953
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7715,12 +7592,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 0
 --- !u!65 &1536931635
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8029,6 +7900,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6353399755794853273, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1508655267, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
@@ -8077,21 +7953,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f42c62577887841a2810c9c62b3bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingBar: {fileID: 4156643022617519952}
-  pos: {x: 0, y: 2, z: 0}
-  Pause: 0
-  CuttingTime: 0
-  Canvas: {fileID: 4156643020944634083}
-  IngredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
-    type: 3}
-  Icons:
-  - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
-  - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
-  - {fileID: 21300000, guid: 395eaf5650b040947951375ff280d770, type: 3}
-  - {fileID: 21300000, guid: 8664d225a9029924781b8b4474490a1a, type: 3}
-  - {fileID: 21300000, guid: 76d14744947c6c5409f533990372ab43, type: 3}
-  - {fileID: 21300000, guid: 35470bc04a80228478213f2ff56b6471, type: 3}
-  - {fileID: 21300000, guid: 3c7bf3321bd71924aa300a5ac4bfdc15, type: 3}
 --- !u!1 &1640717938
 GameObject:
   m_ObjectHideFlags: 0
@@ -8139,12 +8000,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  type: 0
 --- !u!65 &1640717941
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8357,54 +8212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeTrigger: {fileID: 1683303741}
-  volumeLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  stopNaNPropagation: 1
-  finalBlitToCameraTarget: 0
-  antialiasingMode: 0
-  temporalAntialiasing:
-    jitterSpread: 0.75
-    sharpness: 0.25
-    stationaryBlending: 0.95
-    motionBlending: 0.85
-  subpixelMorphologicalAntialiasing:
-    quality: 2
-  fastApproximateAntialiasing:
-    fastMode: 0
-    keepAlpha: 0
-  fog:
-    enabled: 1
-    excludeSkybox: 1
-  debugLayer:
-    lightMeter:
-      width: 512
-      height: 256
-      showCurves: 1
-    histogram:
-      width: 512
-      height: 256
-      channel: 3
-    waveform:
-      exposure: 0.12
-      height: 256
-    vectorscope:
-      size: 256
-      exposure: 0.12
-    overlaySettings:
-      linearDepth: 0
-      motionColorIntensity: 4
-      motionGridSize: 64
-      colorBlindnessType: 0
-      colorBlindnessStrength: 1
-  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
-  m_ShowToolkit: 0
-  m_ShowCustomSorter: 0
-  breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
 --- !u!1 &1736584107
 GameObject:
   m_ObjectHideFlags: 0
@@ -10554,18 +10361,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &45847510715753377 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3428634526848298683, guid: e80a8e521e2d28740903395e70598fe0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1602058956082155711}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &45951853487278659
 Transform:
   m_ObjectHideFlags: 0
@@ -57959,42 +57754,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1602058956082155711}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4156643022233841631 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3428634526435786592, guid: e80a8e521e2d28740903395e70598fe0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1602058956082155711}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4156643022617519952 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3428634526081595375, guid: e80a8e521e2d28740903395e70598fe0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1602058956082155711}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4156643022834699208 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3428634526231403383, guid: e80a8e521e2d28740903395e70598fe0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1602058956082155711}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &4157733095156355351
 Transform:
   m_ObjectHideFlags: 0

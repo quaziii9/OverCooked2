@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float moveSpeed = 15f;
     [SerializeField] private float turnSpeed = 10f;
 
     private Vector2 moveInput;
