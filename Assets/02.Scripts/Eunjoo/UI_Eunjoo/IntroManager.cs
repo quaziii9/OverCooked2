@@ -31,6 +31,7 @@ public class IntroManager : Singleton<IntroManager>
         if (!isSpace && !isLoading && Input.GetKeyDown(KeyCode.Space))
         {
             isSpace = true;
+            SoundManager.Instance.StartPlay();
 
             Camera.main.transform.position = new Vector3(-3.07999992f, -0.449999988f, -9.89999962f);
             Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.326138616f, 12.5265751f, 0.704141259f));

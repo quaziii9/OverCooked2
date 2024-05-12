@@ -23,6 +23,12 @@ public class SoundManager : Singleton<SoundManager>
     //public AudioClip resultBGM;
 
     [Header("효과음")]
+    public AudioClip UISelect;
+    public AudioClip UIPop;
+    public AudioClip UITick;
+    public AudioClip UIStart;
+
+
 
 
     public AudioSource BgmAudioSource;
@@ -54,7 +60,7 @@ public class SoundManager : Singleton<SoundManager>
 
     public void upBgmSound()
     {
-        volumeBGM += Mathf.Floor(0.1f * 100f) / 100f;
+        volumeBGM += 0.1f;
         if (volumeBGM >= 1)
         {
             volumeBGM = 1f;
@@ -66,7 +72,7 @@ public class SoundManager : Singleton<SoundManager>
     
     public void downBgmSound()
     {
-        volumeBGM -= Mathf.Floor(0.1f * 100f) / 100f;
+        volumeBGM -= 0.1f;
         if (volumeBGM <= 0)
         {
             volumeBGM = 0;
@@ -77,7 +83,7 @@ public class SoundManager : Singleton<SoundManager>
 
     public void upEffectSound()
     {
-        volumeEffect += Mathf.Floor(0.1f * 100f) / 100f;
+        volumeEffect += 0.1f;
         if (volumeEffect >= 1)
         {
             volumeEffect = 1f;
@@ -87,7 +93,7 @@ public class SoundManager : Singleton<SoundManager>
     }
     public void downEffectSound()
     {
-        volumeEffect -= Mathf.Floor(0.1f * 100f) / 100f;
+        volumeEffect -= 0.1f;
         if (volumeEffect <= 0)
         {
             volumeEffect = 0;
@@ -99,6 +105,7 @@ public class SoundManager : Singleton<SoundManager>
     public void SettingSave()
     {
         settingBGM = volumeBGM;
+        settingEffect = volumeEffect;
         BgmAudioSource.volume = volumeBGM;
         EffectAudioSource.volume = volumeEffect;
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
@@ -110,6 +117,7 @@ public class SoundManager : Singleton<SoundManager>
     public void SettingCancle()
     {
         volumeBGM = settingBGM;
+        volumeEffect = settingEffect;
         BgmAudioSource.volume = volumeBGM;
         EffectAudioSource.volume = volumeEffect;
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
@@ -127,13 +135,29 @@ public class SoundManager : Singleton<SoundManager>
         }
 
     }
-
     void IntroBGM()
     {
         BgmAudioSource.clip = introBGM;
         BgmAudioSource.loop = true;
         BgmAudioSource.Play();
     }
+    public void ButtonPop()
+    {
+        EffectAudioSource.PlayOneShot(UIPop);
+    }
 
+    public void ButtonTick()
+    {
+        EffectAudioSource.PlayOneShot(UITick);
+    }
 
+    public void OnClickButton()
+    {
+        EffectAudioSource.PlayOneShot(UISelect);
+    }
+
+    public void StartPlay()
+    {
+        EffectAudioSource.PlayOneShot(UIStart);
+    }
 }

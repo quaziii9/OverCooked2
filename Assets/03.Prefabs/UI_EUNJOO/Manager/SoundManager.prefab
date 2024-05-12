@@ -328,6 +328,9 @@ MonoBehaviour:
   volumeEffect: 0.2
   settingBGM: 0.2
   settingEffect: 0.2
-  BgmAudioSource: {fileID: 833418968}
   introBGM: {fileID: 8300000, guid: 01b1aaca2935834478c244b44a7ce6ee, type: 3}
+  UIPop: {fileID: 8300000, guid: 6eef09767a920754b86996449b28c999, type: 3}
+  UISelect: {fileID: 8300000, guid: 7a2bb122907680a458abe20e7304ed4e, type: 3}
+  UITick: {fileID: 8300000, guid: d14262497474d834d98b6d9b1dacca12, type: 3}
+  BgmAudioSource: {fileID: 833418968}
   EffectAudioSource: {fileID: 726523713}
