@@ -9,7 +9,7 @@ public class ETCTool : GameItem
     public enum ETCToolState { InUse, NotInUse }
     public ETCToolState currentState = ETCToolState.NotInUse;
 
-    public override void Interact(PlayerInteracteController player)
+    public override void Interact(PlayerInteractController player)
     {
         // 작업대와의 상호작용 로직 구현
         Debug.Log("Player has interacted with a craft station.");

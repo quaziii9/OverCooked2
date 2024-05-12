@@ -10,7 +10,7 @@ public class Ingredient : GameItem
 
     public Vector3 fishLocalPos = new Vector3(0, 0.138f, 0.08f);
 
-    public override void Interact(PlayerInteracteController player)
+    public override void Interact(PlayerInteractController player)
     {
         // 기본 상호작용: 재료를 주움
         //Pickup(player);
