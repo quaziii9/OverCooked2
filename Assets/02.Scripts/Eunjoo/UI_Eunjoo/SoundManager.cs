@@ -2,115 +2,138 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : Singleton<SoundManager>
 {
 
     [SerializeField] private GameObject[] BGMSquares; //음량 네모네모
     [SerializeField] private GameObject[] effectSquares;
 
-
-
     [Header("음량")]
     public float volumeBGM = 0.2f;
-    public float volumeEffect = 1f;
+    public float volumeEffect = 0.2f;
+    public float settingBGM = 0.2f;
+    public float settingEffect = 0.2f;
 
     [Header("배경음악")]
-    public AudioSource BgmAudioSource;
+    public AudioClip introBGM;
+    //public AudioClip mapBGM;
+    //public AudioClip stage1BGM;
+    //public AudioClip stage2BGM;
+    //public AudioClip stage3BGM;
+    //public AudioClip resultBGM;
 
     [Header("효과음")]
+
+
+    public AudioSource BgmAudioSource;
     public AudioSource EffectAudioSource;
+
+    private void Awake()
+    {
+        SettingAudioVolume();
+    }
 
     void Start()
     {
-        
+
+        StartCoroutine("playIntro");
+        //IntroBGM();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
+        Debug.Log(BgmAudioSource.volume);
     }
 
-
-
+    public void SettingAudioVolume()
+    {
+        BgmAudioSource.volume = 0f;
+        EffectAudioSource.volume = volumeEffect;
+    }
 
     public void upBgmSound()
     {
-        volumeBGM += 0.1f;
+        volumeBGM += Mathf.Floor(0.1f * 100f) / 100f;
         if (volumeBGM >= 1)
         {
             volumeBGM = 1f;
         }
-        //BgmAudioSource.volume = volumeBGM;
-        SetBGMSquares();
+        BgmAudioSource.volume = volumeBGM;
+
+        UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
     }
+    
     public void downBgmSound()
     {
-        volumeBGM -= 0.1f;
+        volumeBGM -= Mathf.Floor(0.1f * 100f) / 100f;
         if (volumeBGM <= 0)
         {
             volumeBGM = 0;
         }
-        //BgmAudioSource.volume = volumeBGM;
-        SetBGMSquares();
-    }
-
-    private void SetBGMSquares()
-    {
-        int j = 0;
-        for (float i = 0; i < 1; i += 0.1f)
-        {
-            if (i < volumeBGM) //켜있는거
-            {
-                BGMSquares[j].transform.GetChild(0).gameObject.SetActive(false);
-                BGMSquares[j].transform.GetChild(1).gameObject.SetActive(true);
-            }
-            else //꺼있는거
-            {
-                BGMSquares[j].transform.GetChild(0).gameObject.SetActive(true);
-                BGMSquares[j].transform.GetChild(1).gameObject.SetActive(false);
-            }
-            j++;
-        }
+        BgmAudioSource.volume = volumeBGM;
+        UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
     }
 
     public void upEffectSound()
     {
-        volumeEffect += 0.1f;
+        volumeEffect += Mathf.Floor(0.1f * 100f) / 100f;
         if (volumeEffect >= 1)
         {
             volumeEffect = 1f;
         }
-        //EffectAudioSource.volume = volumeEffect;
-        SetEffectSquares();
+        EffectAudioSource.volume = volumeEffect;
+        UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
     public void downEffectSound()
     {
-        volumeEffect -= 0.1f;
+        volumeEffect -= Mathf.Floor(0.1f * 100f) / 100f;
         if (volumeEffect <= 0)
         {
             volumeEffect = 0;
         }
-        //EffectAudioSource.volume = volumeEffect;
-        SetEffectSquares();
+        EffectAudioSource.volume = volumeEffect;
+        UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
 
-    private void SetEffectSquares()
+    public void SettingSave()
     {
-        int j = 0;
-        for (float i = 0; i < 1; i += 0.1f)
-        {
-            if (i < volumeEffect) 
-            {
-                effectSquares[j].transform.GetChild(0).gameObject.SetActive(false);
-                effectSquares[j].transform.GetChild(1).gameObject.SetActive(true);
-            }
-            else 
-            {
-                effectSquares[j].transform.GetChild(0).gameObject.SetActive(true);
-                effectSquares[j].transform.GetChild(1).gameObject.SetActive(false);
-            }
-            j++;
-        }
+        settingBGM = volumeBGM;
+        BgmAudioSource.volume = volumeBGM;
+        EffectAudioSource.volume = volumeEffect;
+        UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
+
+
     }
+
+    public void SettingCancle()
+    {
+        volumeBGM = settingBGM;
+        BgmAudioSource.volume = volumeBGM;
+        EffectAudioSource.volume = volumeEffect;
+        UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
+    }
+
+    IEnumerator playIntro()
+    {
+        yield return new WaitForSeconds(8f);        
+        IntroBGM();
+        while (BgmAudioSource.volume < volumeBGM)
+        {
+            BgmAudioSource.volume += Time.deltaTime * 0.2f;
+            yield return new WaitForSeconds(Time.deltaTime * 0.5f);
+        }
+
+    }
+
+    void IntroBGM()
+    {
+        BgmAudioSource.clip = introBGM;
+        BgmAudioSource.loop = true;
+        BgmAudioSource.Play();
+    }
+
+
 }
