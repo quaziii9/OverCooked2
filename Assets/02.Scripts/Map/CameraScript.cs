@@ -6,11 +6,11 @@ public class CameraScript : MonoBehaviour
 {
 
     public GameObject bus;
-    public Transform target; // Å¸°Ù ¿ÀºêÁ§Æ®ÀÇ Transform
+    public Transform target; // íƒ€ê²Ÿ ì˜¤ë¸Œì íŠ¸ì˜ Transform
 
-    public Vector3 offset; // Ä«¸Ş¶ó¿Í Å¸°Ù »çÀÌÀÇ °Å¸®
+    public Vector3 offset; // ì¹´ë©”ë¼ì™€ íƒ€ê²Ÿ ì‚¬ì´ì˜ ê±°ë¦¬
 
-    public float smoothSpeed = 0.125f; // Ä«¸Ş¶ó ÀÌµ¿ ¼Óµµ
+    public float smoothSpeed = 0.125f; // ì¹´ë©”ë¼ ì´ë™ ì†ë„
 
 
     void Start()
@@ -34,7 +34,7 @@ public class CameraScript : MonoBehaviour
         }
         else
         {
-            Debug.Log("Bus Find Fall!!");
+            //Debug.Log("Bus Find Fall!!");
         }
     }
     
