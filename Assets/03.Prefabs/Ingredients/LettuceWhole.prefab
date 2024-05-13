@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 5054737159479010310}
   - component: {fileID: 8060820076504099662}
   - component: {fileID: 5054737159479010311}
+  - component: {fileID: 259462767}
   m_Layer: 0
   m_Name: Lettuce_Whole
   m_TagString: Untagged
@@ -60,7 +61,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5054737159479010362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -2.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -148,6 +149,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &259462767
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5054737159479010362}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4022682982453949128, guid: 9cd4d3364860c33438bc4feac0670e3d, type: 3}
 --- !u!1 &5054737159724565775
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,6 +174,7 @@ GameObject:
   - component: {fileID: 5054737159724565774}
   - component: {fileID: 5054737159724565769}
   - component: {fileID: 5054737159724565768}
+  - component: {fileID: 860930745}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -207,6 +223,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Lettuce
+  isCooked: 0
+  isOnDesk: 1
   type: 3
   currentState: 0
   fishLocalPos: {x: 0, y: 0.138, z: 0.08}
+--- !u!114 &860930745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5054737159724565775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19435dd8b8dc43e438677d6b368032b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeObject: 0
+  onSomething: 0
+  hightlightMaterials:
+  - {fileID: 2100000, guid: bf8a4a3d0106eae418fb98a7bb479d62, type: 2}
+  - {fileID: 2100000, guid: e4b3b466bb5b5d344b8f7036b10806b4, type: 2}
+  - {fileID: 2100000, guid: e3beb2d12aec27f45a3b339277d2132b, type: 2}
+  - {fileID: 2100000, guid: 508aa4f3f5ad202488bae6e4ba9fbe8a, type: 2}
+  objectType: 0
