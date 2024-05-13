@@ -1,5 +1,7 @@
+using DG.Tweening.Core.Easing;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : Singleton<SoundManager>
 {
@@ -25,6 +27,13 @@ public class SoundManager : Singleton<SoundManager>
     public AudioSource BgmAudioSource;
     public AudioSource EffectAudioSource;
 
+    [Header("Mixer Groups")]
+    public AudioMixerGroup musicGroup;  // The music mixer group
+    public AudioMixerGroup effectGroup; // The effect mixer group
+
+    AudioSource musicSource;            // Reference to the generated music Audio Source
+    AudioSource effectSource;           // Reference to the generated effect Audio Source
+
     private void Awake()
     {
         SettingAudioVolume();
@@ -33,6 +42,12 @@ public class SoundManager : Singleton<SoundManager>
     void Start()
     {
         StartCoroutine("FadeInBGM");
+
+        musicSource = gameObject.AddComponent<AudioSource>();
+        effectSource = gameObject.AddComponent<AudioSource>();
+
+        musicSource.outputAudioMixerGroup = musicGroup;
+        effectSource.outputAudioMixerGroup = effectGroup;
         //IntroBGM();
     }
 
