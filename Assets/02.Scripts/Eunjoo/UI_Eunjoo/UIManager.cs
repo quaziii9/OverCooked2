@@ -4,22 +4,26 @@ public class UIManager : Singleton<UIManager>
 {
 
     [Header("Van")]
-    public GameObject Shutter;
-    public GameObject ButtonUI;
-    public GameObject IngamePlayerUI;
+    public GameObject shutter;
+    public GameObject buttonUI;
+    public GameObject ingamePlayerUI;
 
     [Header("Intro")]
-    public GameObject LoadingUI;
-    public GameObject SpaceToStart;
+    public GameObject loadingUI;
+    public GameObject spaceToStart;
 
     [Header("Option")]
-    public GameObject SettingUI;
-    public GameObject StopUI;
-    public GameObject PopupBackGroundUI;
+    public GameObject settingUI;
+    public GameObject stopUI;
+    public GameObject popupBackGroundUI;
 
     [Header("UnderBar")]
-    public GameObject UnderBarCancle;
-    public GameObject UnderBarStop;
+    public GameObject underBarCancle;
+    public GameObject underBarStop;
+
+    [Header("Animator")]
+    public Animator shutterAnim;
+
 
 
     //private bool isExit = false;
@@ -27,15 +31,15 @@ public class UIManager : Singleton<UIManager>
 
     public void SettingOn()
     {
-        PopupBackGroundUI.SetActive(true);
-        SettingUI.SetActive(true);
+        popupBackGroundUI.SetActive(true);
+        settingUI.SetActive(true);
         //isSetting = true;
     }
 
     public void SeetingOff()
     {
-        PopupBackGroundUI.SetActive(false);
-        SettingUI.SetActive(false);
+        popupBackGroundUI.SetActive(false);
+        settingUI.SetActive(false);
         //isSetting = false;
     }
 
@@ -49,15 +53,15 @@ public class UIManager : Singleton<UIManager>
 
     public void StopUIOn()
     {
-        PopupBackGroundUI.SetActive(true);
-        StopUI.SetActive(true);
+        popupBackGroundUI.SetActive(true);
+        stopUI.SetActive(true);
        // isExit = true;
     }
 
     public void StopUIOff()
     {
-        PopupBackGroundUI.SetActive(false);
-        StopUI.SetActive(false);
+        popupBackGroundUI.SetActive(false);
+        stopUI.SetActive(false);
         // isExit = false;
     }
 

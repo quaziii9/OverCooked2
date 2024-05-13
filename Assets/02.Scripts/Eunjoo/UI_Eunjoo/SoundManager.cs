@@ -49,7 +49,6 @@ public class SoundManager : Singleton<SoundManager>
     
     void Update()
     {
-        Debug.Log(BgmAudioSource.volume);
     }
 
     public void SettingAudioVolume()
