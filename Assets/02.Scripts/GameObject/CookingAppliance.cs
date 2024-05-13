@@ -8,12 +8,12 @@ public class CookingAppliance : GameItem, ICookable
     public enum CookingApplianceState { InUse, NotInUse }
     public CookingApplianceState currentState = CookingApplianceState.NotInUse;
 
-    public override void Interact(PlayerInteracteController player)
+    public override void Interact(PlayerInteractController player)
     {
         //player.CookFood(this);
     }
 
-    public void Cook(PlayerInteracteController player)
+    public void Cook(PlayerInteractController player)
     {
         throw new System.NotImplementedException();
     }

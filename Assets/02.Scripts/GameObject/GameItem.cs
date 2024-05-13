@@ -8,5 +8,5 @@ public abstract class GameItem : MonoBehaviour, IInteractable
     //public Sprite icon;
 
     // IInteractable 인터페이스 구현을 강제함
-    public abstract void Interact(PlayerInteracteController player);
+    public abstract void Interact(PlayerInteractController player);
 }
