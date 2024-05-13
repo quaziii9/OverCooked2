@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4528,10 +4528,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 860930745, guid: 29d4f06455fbe2b40b5ecf94018a42ec, type: 3}
-      propertyPath: objectType
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5054737158120559202, guid: 29d4f06455fbe2b40b5ecf94018a42ec,
         type: 3}
       propertyPath: m_RootOrder
@@ -4591,31 +4587,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LettuceWhole
-      objectReference: {fileID: 0}
-    - target: {fileID: 5054737159479010311, guid: 29d4f06455fbe2b40b5ecf94018a42ec,
-        type: 3}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5054737159479010311, guid: 29d4f06455fbe2b40b5ecf94018a42ec,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5054737159479010362, guid: 29d4f06455fbe2b40b5ecf94018a42ec,
-        type: 3}
-      propertyPath: m_TagString
-      value: Ingredient
-      objectReference: {fileID: 0}
-    - target: {fileID: 5054737159724565775, guid: 29d4f06455fbe2b40b5ecf94018a42ec,
-        type: 3}
-      propertyPath: m_TagString
-      value: Ingredient
-      objectReference: {fileID: 0}
-    - target: {fileID: 8060820076504099662, guid: 29d4f06455fbe2b40b5ecf94018a42ec,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29d4f06455fbe2b40b5ecf94018a42ec, type: 3}

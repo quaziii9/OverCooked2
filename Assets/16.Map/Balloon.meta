@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/16.Map/Balloon.meta
 guid: b0c15f4cd004d9e4ea020415a8b18117
+========
+guid: 4757ca59b1c0bf94c89da8533c514786
+>>>>>>>> Inseok+Eunjoo+Minseok:Assets/08.Sprites/Eunjoo/Character.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5054737158120559202}
+  - component: {fileID: 841141871}
   m_Layer: 0
   m_Name: LettuceWhole
   m_TagString: Ingredient
@@ -32,6 +33,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &841141871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5054737158120559203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57770054d41265d40ac3f145f8b8cc67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5054737159479010362
 GameObject:
   m_ObjectHideFlags: 0
@@ -48,7 +61,7 @@ GameObject:
   - component: {fileID: 259462767}
   m_Layer: 0
   m_Name: Lettuce_Whole
-  m_TagString: Untagged
+  m_TagString: Ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -177,7 +190,7 @@ GameObject:
   - component: {fileID: 860930745}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: Ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -227,7 +240,11 @@ MonoBehaviour:
   isOnDesk: 1
   type: 3
   currentState: 0
+  cookedIngredient: {fileID: 0}
+  cookedFish: {fileID: 0}
   fishLocalPos: {x: 0, y: 0.138, z: 0.08}
+  shrimpLocalPos: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
+  lettuceLocalPos: {x: 0, y: 0.418, z: 0}
 --- !u!114 &860930745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,4 +264,4 @@ MonoBehaviour:
   - {fileID: 2100000, guid: e4b3b466bb5b5d344b8f7036b10806b4, type: 2}
   - {fileID: 2100000, guid: e3beb2d12aec27f45a3b339277d2132b, type: 2}
   - {fileID: 2100000, guid: 508aa4f3f5ad202488bae6e4ba9fbe8a, type: 2}
-  objectType: 0
+  objectType: 5
