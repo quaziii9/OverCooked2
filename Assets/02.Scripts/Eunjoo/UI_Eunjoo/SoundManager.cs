@@ -1,10 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager : Singleton<SoundManager>
 {
-
     [SerializeField] private GameObject[] BGMSquares; //음량 네모네모
     [SerializeField] private GameObject[] effectSquares;
 
@@ -28,9 +26,6 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip UITick;
     public AudioClip UIStart;
 
-
-
-
     public AudioSource BgmAudioSource;
     public AudioSource EffectAudioSource;
 
@@ -44,11 +39,6 @@ public class SoundManager : Singleton<SoundManager>
 
         StartCoroutine("playIntro");
         //IntroBGM();
-    }
-
-    
-    void Update()
-    {
     }
 
     public void SettingAudioVolume()
@@ -90,6 +80,7 @@ public class SoundManager : Singleton<SoundManager>
         EffectAudioSource.volume = volumeEffect;
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
+
     public void downEffectSound()
     {
         volumeEffect -= 0.1f;
