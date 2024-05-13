@@ -24,8 +24,6 @@ public class UIManager : Singleton<UIManager>
     [Header("Animator")]
     public Animator shutterAnim;
 
-
-
     //private bool isExit = false;
     //private bool isSetting = false;
 
@@ -50,7 +48,6 @@ public class UIManager : Singleton<UIManager>
 
     }
 
-
     public void StopUIOn()
     {
         popupBackGroundUI.SetActive(true);
@@ -64,7 +61,6 @@ public class UIManager : Singleton<UIManager>
         stopUI.SetActive(false);
         // isExit = false;
     }
-
 
     public void SetBGMSquares(float volumeBGM, GameObject[] BGMSquares)
     {

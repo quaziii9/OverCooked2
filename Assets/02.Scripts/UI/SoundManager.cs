@@ -6,26 +6,22 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private GameObject[] BGMSquares; //음량 네모네모
     [SerializeField] private GameObject[] effectSquares;
 
-    [Header("음량")]
+    [Header("Volume")]
     public float volumeBGM = 0.2f;
     public float volumeEffect = 0.2f;
     public float settingBGM = 0.2f;
     public float settingEffect = 0.2f;
 
-    [Header("배경음악")]
+    [Header("BGM")]
     public AudioClip introBGM;
-    //public AudioClip mapBGM;
-    //public AudioClip stage1BGM;
-    //public AudioClip stage2BGM;
-    //public AudioClip stage3BGM;
-    //public AudioClip resultBGM;
 
-    [Header("효과음")]
+    [Header("Sound Effect")]
     public AudioClip UISelect;
     public AudioClip UIPop;
     public AudioClip UITick;
     public AudioClip UIStart;
 
+    [Header("Audio Source")]
     public AudioSource BgmAudioSource;
     public AudioSource EffectAudioSource;
 
@@ -36,8 +32,7 @@ public class SoundManager : Singleton<SoundManager>
 
     void Start()
     {
-
-        StartCoroutine("playIntro");
+        StartCoroutine("FadeInBGM");
         //IntroBGM();
     }
 
@@ -47,7 +42,7 @@ public class SoundManager : Singleton<SoundManager>
         EffectAudioSource.volume = volumeEffect;
     }
 
-    public void upBgmSound()
+    public void BGMVolumeUp()
     {
         volumeBGM += 0.1f;
         if (volumeBGM >= 1)
@@ -59,7 +54,7 @@ public class SoundManager : Singleton<SoundManager>
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
     }
     
-    public void downBgmSound()
+    public void BGMVolumeDown()
     {
         volumeBGM -= 0.1f;
         if (volumeBGM <= 0)
@@ -70,7 +65,7 @@ public class SoundManager : Singleton<SoundManager>
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
     }
 
-    public void upEffectSound()
+    public void EffectSoundVolumeUp()
     {
         volumeEffect += 0.1f;
         if (volumeEffect >= 1)
@@ -81,7 +76,7 @@ public class SoundManager : Singleton<SoundManager>
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
 
-    public void downEffectSound()
+    public void EffectSoundVolumeDown()
     {
         volumeEffect -= 0.1f;
         if (volumeEffect <= 0)
@@ -100,8 +95,6 @@ public class SoundManager : Singleton<SoundManager>
         EffectAudioSource.volume = volumeEffect;
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
-
-
     }
 
     public void SettingCancle()
@@ -114,7 +107,7 @@ public class SoundManager : Singleton<SoundManager>
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
 
-    IEnumerator playIntro()
+    IEnumerator FadeInBGM()
     {
         yield return new WaitForSeconds(8f);        
         IntroBGM();
@@ -123,14 +116,15 @@ public class SoundManager : Singleton<SoundManager>
             BgmAudioSource.volume += Time.deltaTime * 0.2f;
             yield return new WaitForSeconds(Time.deltaTime * 0.5f);
         }
-
     }
+    
     void IntroBGM()
     {
         BgmAudioSource.clip = introBGM;
         BgmAudioSource.loop = true;
         BgmAudioSource.Play();
     }
+
     public void ButtonPop()
     {
         EffectAudioSource.PlayOneShot(UIPop);

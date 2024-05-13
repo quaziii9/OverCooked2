@@ -483,6 +483,78 @@ MonoBehaviour:
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 0
     IsHidden: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 1907271776}
+    Ordinal: 1
+    Priority: 0
+    IconType: 161000
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 0
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 1090737375}
+    Ordinal: 2
+    Priority: 0
+    IconType: 161000
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 0
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 1284505912}
+    Ordinal: 3
+    Priority: 0
+    IconType: 161000
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 0
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 657685455}
+    Ordinal: 4
+    Priority: 0
+    IconType: 161000
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 0
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 606147791}
+    Ordinal: 5
+    Priority: 0
+    IconType: 161000
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 0
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 665619998}
+    Ordinal: 6
+    Priority: 0
+    IconType: 103000
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 0
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
 --- !u!4 &460040728
 Transform:
   m_ObjectHideFlags: 0
@@ -613,7 +685,7 @@ RectTransform:
   - {fileID: 4306646797300953331}
   - {fileID: 2069005967}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -739,7 +811,7 @@ GameObject:
   m_Component:
   - component: {fileID: 665619999}
   m_Layer: 0
-  m_Name: Manager
+  m_Name: Managers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -761,7 +833,7 @@ Transform:
   - {fileID: 5625591116893630103}
   - {fileID: 154817029}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &749183549
 PrefabInstance:
@@ -770,6 +842,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1907271780}
     m_Modifications:
+    - target: {fileID: 8361802307255937038, guid: 701fc02e1572d814f9c8555a1addc925,
+        type: 3}
+      propertyPath: m_Name
+      value: TeamLogo
+      objectReference: {fileID: 0}
     - target: {fileID: 8361802307630195041, guid: 701fc02e1572d814f9c8555a1addc925,
         type: 3}
       propertyPath: m_Name
@@ -935,7 +1012,7 @@ PrefabInstance:
     - target: {fileID: 5272129735475820220, guid: b1e38e40253bc3e47b90ad7971347a47,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5272129735475820220, guid: b1e38e40253bc3e47b90ad7971347a47,
         type: 3}
@@ -1128,7 +1205,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 154817030}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: upEffectSound
+        m_MethodName: EffectSoundVolumeUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1245,7 +1322,7 @@ RectTransform:
   m_Children:
   - {fileID: 1683447946}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1451,6 +1528,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 193752175273186269, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 654244731328869999, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1599,7 +1681,7 @@ PrefabInstance:
     - target: {fileID: 692837296668181346, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 692837296668181346, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}
@@ -1808,6 +1890,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6760967761809279420, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}
+      propertyPath: m_Name
+      value: Van Shutter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760967761809279420, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -1894,7 +1981,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 154817030}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: upBgmSound
+        m_MethodName: BGMVolumeUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2366,7 +2453,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 154817030}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: downBgmSound
+        m_MethodName: BGMVolumeDown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2403,7 +2490,7 @@ PrefabInstance:
     - target: {fileID: 7100268596758244160, guid: 7f919bd17a474b9428da9a2f328f3312,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7100268596758244160, guid: 7f919bd17a474b9428da9a2f328f3312,
         type: 3}
@@ -2556,7 +2643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1907271777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2633,7 +2720,7 @@ RectTransform:
   m_Children:
   - {fileID: 749183550}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3884,7 +3971,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 154817030}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: downEffectSound
+        m_MethodName: EffectSoundVolumeDown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7413,19 +7500,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
         type: 3}
-      propertyPath: StopUI
-      value: 
-      objectReference: {fileID: 1955804576}
-    - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
-        type: 3}
       propertyPath: stopUI
       value: 
       objectReference: {fileID: 1955804576}
-    - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
-        type: 3}
-      propertyPath: Shutter
-      value: 
-      objectReference: {fileID: 828961693}
     - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
         type: 3}
       propertyPath: shutter
@@ -7433,24 +7510,9 @@ PrefabInstance:
       objectReference: {fileID: 828961693}
     - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
         type: 3}
-      propertyPath: ButtonUI
-      value: 
-      objectReference: {fileID: 1284505912}
-    - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
-        type: 3}
       propertyPath: buttonUI
       value: 
       objectReference: {fileID: 1284505912}
-    - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
-        type: 3}
-      propertyPath: LoadingUI
-      value: 
-      objectReference: {fileID: 1907271776}
-    - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
-        type: 3}
-      propertyPath: SettingUI
-      value: 
-      objectReference: {fileID: 4516472144372385761}
     - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
         type: 3}
       propertyPath: loadingUI
@@ -7468,16 +7530,6 @@ PrefabInstance:
       objectReference: {fileID: 828961695}
     - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
         type: 3}
-      propertyPath: SpaceToStart
-      value: 
-      objectReference: {fileID: 1090737375}
-    - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
-        type: 3}
-      propertyPath: UnderBarStop
-      value: 
-      objectReference: {fileID: 211707789}
-    - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
-        type: 3}
       propertyPath: spaceToStart
       value: 
       objectReference: {fileID: 1090737375}
@@ -7488,16 +7540,6 @@ PrefabInstance:
       objectReference: {fileID: 211707789}
     - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
         type: 3}
-      propertyPath: IngamePlayerUI
-      value: 
-      objectReference: {fileID: 1683374077}
-    - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
-        type: 3}
-      propertyPath: UnderBarCancle
-      value: 
-      objectReference: {fileID: 6140271949121280135}
-    - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
-        type: 3}
       propertyPath: ingamePlayerUI
       value: 
       objectReference: {fileID: 1683374077}
@@ -7506,11 +7548,6 @@ PrefabInstance:
       propertyPath: underBarCancle
       value: 
       objectReference: {fileID: 6140271949121280135}
-    - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
-        type: 3}
-      propertyPath: PopupBackGroundUI
-      value: 
-      objectReference: {fileID: 999725357}
     - target: {fileID: 7454043424410783193, guid: a508697c52148084eace51c5c416e9f6,
         type: 3}
       propertyPath: popupBackGroundUI
@@ -7696,11 +7733,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 665619999}
     m_Modifications:
-    - target: {fileID: 4103381849454088829, guid: d6499c32952ac5f4599e2ab2c3bb5a27,
-        type: 3}
-      propertyPath: UIStart
-      value: 
-      objectReference: {fileID: 8300000, guid: 0b086d21fe987cb46b1a568f39271434, type: 3}
     - target: {fileID: 4103381849454088829, guid: d6499c32952ac5f4599e2ab2c3bb5a27,
         type: 3}
       propertyPath: BGMSquares.Array.data[0]

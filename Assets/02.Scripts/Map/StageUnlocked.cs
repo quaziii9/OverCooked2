@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class StageUnlocked : MonoBehaviour
 {
     public float scaleSpeed = 0.5f;
@@ -152,7 +153,4 @@ public class StageUnlocked : MonoBehaviour
             yield return null;
         }
     }
-
-
-
 }

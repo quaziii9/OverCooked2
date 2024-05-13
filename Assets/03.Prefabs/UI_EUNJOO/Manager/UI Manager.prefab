@@ -44,13 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67ea3f09349ee56479e09e2ffd101199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Shutter: {fileID: 0}
-  ButtonUI: {fileID: 0}
-  IngamePlayerUI: {fileID: 0}
-  LoadingUI: {fileID: 0}
-  SpaceToStart: {fileID: 0}
-  SettingUI: {fileID: 0}
-  StopUI: {fileID: 0}
-  PopupBackGroundUI: {fileID: 0}
-  UnderBarCancle: {fileID: 0}
-  UnderBarStop: {fileID: 0}
+  shutter: {fileID: 0}
+  buttonUI: {fileID: 0}
+  ingamePlayerUI: {fileID: 0}
+  loadingUI: {fileID: 0}
+  spaceToStart: {fileID: 0}
+  settingUI: {fileID: 0}
+  stopUI: {fileID: 0}
+  popupBackGroundUI: {fileID: 0}
+  underBarCancle: {fileID: 0}
+  underBarStop: {fileID: 0}
+  shutterAnim: {fileID: 0}
