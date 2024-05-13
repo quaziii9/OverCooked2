@@ -15,10 +15,12 @@ public class Bus : MonoBehaviour
     public GameObject busobject;
     public GameObject rotbusobjdet;
     public bool isboost=false;
+    public Rigidbody busRigid;
 
     private void Start()
     {
         isboost = false;
+        busRigid= GetComponent<Rigidbody>();
     }
     void Update()
     {
@@ -37,6 +39,7 @@ public class Bus : MonoBehaviour
     public void BusMove()
     {
         busobject.transform.Translate(move * speed * Time.deltaTime,Space.World);
+        busRigid.AddForce(move * speed * Time.deltaTime, ForceMode.Impulse);
     }
     public void BusRotate()
     {
