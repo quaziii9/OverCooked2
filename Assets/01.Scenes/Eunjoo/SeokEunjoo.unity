@@ -316,24 +316,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4633667233885985341}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &215084462 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3657081126450026110, guid: ee90a1f93078caf45bec7091d6783c01,
-    type: 3}
-  m_PrefabInstance: {fileID: 2069005966}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &215084467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 215084462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201cf6f4661d07f48aacd23cfe238a71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &331533819
 GameObject:
   m_ObjectHideFlags: 3
@@ -427,18 +409,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &383272988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3440338633010229016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201cf6f4661d07f48aacd23cfe238a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &460040726
@@ -570,24 +540,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &470887428 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3657081127335159115, guid: ee90a1f93078caf45bec7091d6783c01,
-    type: 3}
-  m_PrefabInstance: {fileID: 2069005966}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &470887433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 470887428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201cf6f4661d07f48aacd23cfe238a71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &606147791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,18 +1023,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1e38e40253bc3e47b90ad7971347a47, type: 3}
---- !u!114 &852874092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3440338632894387565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201cf6f4661d07f48aacd23cfe238a71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &999725357
 GameObject:
   m_ObjectHideFlags: 0
@@ -2643,7 +2583,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1907271777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5256,7 +5196,6 @@ GameObject:
   - component: {fileID: 3440338632894387560}
   - component: {fileID: 3440338632894387563}
   - component: {fileID: 3555601525787980255}
-  - component: {fileID: 852874092}
   m_Layer: 5
   m_Name: SaveButton
   m_TagString: Untagged
@@ -5531,7 +5470,6 @@ GameObject:
   - component: {fileID: 3440338633010228999}
   - component: {fileID: 3440338633010228998}
   - component: {fileID: 7491508441012026823}
-  - component: {fileID: 383272988}
   m_Layer: 5
   m_Name: Cancle Button
   m_TagString: Untagged
