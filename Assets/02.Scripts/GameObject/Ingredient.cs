@@ -165,4 +165,83 @@ public class Ingredient : GameItem
         }
     }
 
+    // 각 재료에 대한 자동 배치를 수행하는 메서드
+    public void IngredientAuto(Transform parent, Vector3 target, IngredientType handle)
+    {
+        // 콜라이더의 트리거 비활성화
+        transform.parent.GetComponent<MeshCollider>().isTrigger = false;
+
+        // 위치와 회전 설정
+        SetPositionAndRotation(handle);
+
+        // 부모 설정 및 최종 위치, 회전 적용
+        transform.parent.parent.SetParent(parent);
+        transform.parent.parent.localRotation = Quaternion.identity;
+        transform.parent.parent.localPosition = target;
+
+        // 특정 조건에서 회전 또는 추가 위치 조정
+        AdjustPositionOrRotationBasedOnCookedState(handle);
+    }
+
+    // 위치와 회전을 설정하는 메서드
+    private void SetPositionAndRotation(IngredientType handle)
+    {
+        switch (handle)
+        {
+            case IngredientType.Fish:
+                SetTransform(fishLocalPos, Quaternion.identity);
+                break;
+            case IngredientType.Shrimp:
+                if (!isCooked)
+                    SetTransform(shrimpLocalPos, Quaternion.Euler(35.029995f, -1.04264745e-06f, 326.160004f));
+                else
+                    SetTransform(Vector3.zero, Quaternion.identity);
+                break;
+            case IngredientType.Lettuce:
+                SetTransform(lettuceLocalPos, Quaternion.identity);
+                break;
+            case IngredientType.Tomato:
+            case IngredientType.Cucumber:
+            case IngredientType.Chicken:
+            case IngredientType.Potato:
+                SetTransform(Vector3.zero, Quaternion.identity);
+                break;
+        }
+    }
+
+    // 위치와 회전을 동시에 설정
+    private void SetTransform(Vector3 position, Quaternion rotation)
+    {
+        transform.parent.localPosition = position;
+        transform.parent.localRotation = rotation;
+    }
+
+    // 조리 상태에 따라 위치 또는 회전을 조정하는 메서드
+    private void AdjustPositionOrRotationBasedOnCookedState(IngredientType handle)
+    {
+        if (handle == IngredientType.Shrimp && !isCooked)
+        {
+            transform.parent.parent.localRotation = Quaternion.Euler(0, 244.302612f, 0);
+        }
+        else if (handle == IngredientType.Fish && isCooked)
+        {
+            AdjustYPosition(-0.00224f);
+        }
+        else if (handle == IngredientType.Lettuce)
+        {
+            AdjustYPosition(isCooked ? -0.5f : -0.095f);
+        }
+        else if (handle == IngredientType.Tomato)
+        {
+            AdjustYPosition(isCooked ? -0.21f : -0.08f);
+        }
+    }
+
+    // Y 위치를 조정
+    private void AdjustYPosition(float offsetY)
+    {
+        Vector3 currentPosition = transform.parent.parent.localPosition;
+        transform.parent.parent.localPosition = new Vector3(currentPosition.x, currentPosition.y + offsetY, currentPosition.z);
+    }
+
 }

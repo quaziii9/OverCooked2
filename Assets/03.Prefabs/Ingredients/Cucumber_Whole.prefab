@@ -30,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3761984604929322186}
   m_Father: {fileID: 4201811269493152776}
@@ -54,6 +55,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -112,7 +114,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
-  m_CookingOptions: 30
+  m_CookingOptions: -1
   m_Mesh: {fileID: -9178412234012477763, guid: 7b9d42b0f6a214d47a226310dd1ba376, type: 3}
 --- !u!1 &3531954308380559026
 GameObject:
@@ -123,7 +125,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4201811269493152776}
-  - component: {fileID: 8673902293103970490}
+  - component: {fileID: 3536961248395914204}
   m_Layer: 0
   m_Name: Cucumber_Whole
   m_TagString: Ingredient
@@ -141,12 +143,13 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 38.885635, y: 1.1822281, z: -9.838821}
   m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5628226203801494848}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8673902293103970490
+--- !u!114 &3536961248395914204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,7 +158,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3531954308380559026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d47c89e9ec0f2e9478409cf545c9b035, type: 3}
+  m_Script: {fileID: 11500000, guid: 57770054d41265d40ac3f145f8b8cc67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3580168186687904102
@@ -168,8 +171,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3761984604929322186}
   - component: {fileID: 1655873270197019305}
-  - component: {fileID: 8621812189437851149}
-  - component: {fileID: 7006210668433587921}
+  - component: {fileID: 8920831130184617520}
+  - component: {fileID: 4910632276519573264}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Ingredient
@@ -187,6 +190,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5628226203801494848}
   m_RootOrder: 0
@@ -204,7 +208,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.9963657, z: 1}
   m_Center: {x: 0, y: 0.3657903, z: 0}
---- !u!114 &8621812189437851149
+--- !u!114 &8920831130184617520
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -213,15 +217,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 3580168186687904102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0713fb8c0c7de4348b118c07896a2eb9, type: 3}
+  m_Script: {fileID: 11500000, guid: 95891b54896143e46b0552645f25cd8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: 5
-  isOnDesk: 1
+  itemName: 
   isCooked: 0
-  cookedIngredient: {fileID: 8943641177590148311, guid: e7be3e81bf372df4dba50f21054a6f97, type: 3}
+  isOnDesk: 1
+  type: 5
+  currentState: 0
+  cookedIngredient: {fileID: 8943641177590148311, guid: e7be3e81bf372df4dba50f21054a6f97,
+    type: 3}
   cookedFish: {fileID: 0}
---- !u!114 &7006210668433587921
+  fishLocalPos: {x: 0, y: 0.138, z: 0.08}
+  shrimpLocalPos: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
+  lettuceLocalPos: {x: 0, y: 0.418, z: 0}
+--- !u!114 &4910632276519573264
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,14 +240,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3580168186687904102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
+  m_Script: {fileID: 11500000, guid: 19435dd8b8dc43e438677d6b368032b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeObject: 0
   onSomething: 0
-  canActive: 0
-  materials:
+  hightlightMaterials:
   - {fileID: 2100000, guid: 969a05072b4a0af42b78f7e4711e1695, type: 2}
   - {fileID: 2100000, guid: 41fdfa1b2d1b4004090dbf94e21c3a11, type: 2}
   - {fileID: 2100000, guid: 969a05072b4a0af42b78f7e4711e1695, type: 2}
   - {fileID: 2100000, guid: 41fdfa1b2d1b4004090dbf94e21c3a11, type: 2}
-  type: 5
+  objectType: 5

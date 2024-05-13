@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
-public class PlayerInteractController : MonoBehaviour
+public class Player2InteractController : MonoBehaviour
 {
     // 상태 변화 패턴
     private IPlayerState currentState;
@@ -36,8 +36,8 @@ public class PlayerInteractController : MonoBehaviour
 
     private void Awake()
     {
-        freeState = new FreeState(this);
-        holdState = new HoldState(this);
+        //freeState = new FreeState(this);
+        //holdState = new HoldState(this);
         currentState = freeState;  // 초기 상태 설정
     }
     
@@ -133,7 +133,6 @@ public class PlayerInteractController : MonoBehaviour
 
     private void HandleCraftInteraction()
     {
-        Debug.Log($"objectHighlight.onSomething : {objectHighlight.onSomething}");
         if (!objectHighlight.onSomething)
         {
             if (!isHolding)
@@ -171,7 +170,7 @@ public class PlayerInteractController : MonoBehaviour
         }
         else if (isHolding)
         {
-            PlaceOrDropObject(true);
+            PlaceOrDropObject(false);
         }
     }
 
@@ -189,8 +188,7 @@ public class PlayerInteractController : MonoBehaviour
         //SoundManager.instance.PlayEffect(drop ? "put" : "place");
         if (drop)
         {
-            // Ingredient 바닥에 떨구기.
-            DropObject(); 
+            DropObject(); // 로직 상세 구현 필요
         }
         else
         {
@@ -229,7 +227,7 @@ public class PlayerInteractController : MonoBehaviour
     {
         //SoundManager.instance.PlayEffect("take");
         // Craft에서 아이템 꺼내기 로직 구현
-        interactObject.GetComponent<Craft>().OpenCraftPlayer1();
+        interactObject.GetComponent<Craft>().OpenCraftPlayer2();
         objectHighlight.onSomething = false;
         isHolding = true;
         anim.SetBool("isHolding", isHolding);
@@ -261,14 +259,6 @@ public class PlayerInteractController : MonoBehaviour
     private void DropObject()
     {
         // 떨어트리기 로직 상세 구현 필요
-        GameObject handlingThing = transform.GetChild(1).gameObject;
-        // 객체를 내려놓을 때의 로직
-        Debug.Log("내려");
-        handlingThing.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        handlingThing.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
-        handlingThing.transform.SetParent(null); // 부모 설정 해제
-        anim.SetBool("isHolding", false);
-        isHolding = false;
     }
 
     #endregion
