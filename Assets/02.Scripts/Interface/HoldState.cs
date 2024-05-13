@@ -1,8 +1,8 @@
 public class HoldState : IPlayerState
 {
-    private PlayerInteracteController playerController;
+    private PlayerInteractController playerController;
 
-    public HoldState(PlayerInteracteController playerController)
+    public HoldState(PlayerInteractController playerController)
     {
         this.playerController = playerController;
     }

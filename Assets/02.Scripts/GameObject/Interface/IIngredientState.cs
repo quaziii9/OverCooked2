@@ -1,6 +1,6 @@
 public interface IIngredientState
 {
-    void Processing(Ingredient ingredient, PlayerInteracteController playerIC);
-    void Cooked(Ingredient ingredient, PlayerInteracteController playerIC);
-    void Raw(Ingredient ingredient, PlayerInteracteController playerIC);
+    void Processing(Ingredient ingredient, PlayerInteractController playerIC);
+    void Cooked(Ingredient ingredient, PlayerInteractController playerIC);
+    void Raw(Ingredient ingredient, PlayerInteractController playerIC);
 }
