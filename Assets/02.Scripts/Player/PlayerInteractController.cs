@@ -71,15 +71,22 @@ public class PlayerInteractController : MonoBehaviour
     #region OnPickupOrPlace
     public void OnPickupOrPlace(InputValue inputValue)
     {
-        Debug.Log("OnPickupOrPlace");
-        SetHand();
         ProcessInteraction();
+        SetHand();
     }
 
     private void ProcessInteraction()
     {
-        if (interactObject == null) return;
+        if (interactObject == null && !isHolding) return;
 
+        if(isHolding)
+        {
+            // 뭔가 들고있을때 처리
+            HandleGeneralObjectInteraction();
+            return;
+        }
+
+        Debug.Log($"objectHighlight.objectType : {objectHighlight.objectType}");
         switch (objectHighlight.objectType)
         {
             case ObjectHighlight.ObjectType.CounterTop:
@@ -157,7 +164,6 @@ public class PlayerInteractController : MonoBehaviour
 
     private void HandleGeneralObjectInteraction()
     {
-
         if (!isHolding && interactObject.CompareTag("Ingredient"))
         {
             PickupIngredient();
@@ -186,10 +192,11 @@ public class PlayerInteractController : MonoBehaviour
         }
         else
         {
-            // 놓기 로직 구현
+            // 땅에 놓기 로직 구현
             GameObject handlingThing = transform.GetChild(1).gameObject;
-            objectHighlight.onSomething = true;
-            isHolding = false;
+            Debug.Log($"handlingThing : {handlingThing.name}");
+            //objectHighlight.onSomething = true;
+            //isHolding = false;
             HandleObject(handlingThing, false);
         }
     }
@@ -209,7 +216,7 @@ public class PlayerInteractController : MonoBehaviour
         {
             // 객체를 내려놓을 때의 로직
             Debug.Log("내려");
-            obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            obj.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             obj.transform.SetParent(null); // 부모 설정 해제
             anim.SetBool("isHolding", false);
             isHolding = false;
