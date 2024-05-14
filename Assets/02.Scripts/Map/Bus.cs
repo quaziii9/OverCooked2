@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Pool;
 
 public class Bus : MonoBehaviour
 {
@@ -11,11 +12,24 @@ public class Bus : MonoBehaviour
     private Vector3 inputMovement = Vector3.zero;
     private Vector3 move = Vector3.zero;
     
-    public GameObject busObject;
-    public GameObject rotBusObject;
     public Rigidbody busRigid;
 
+    public GameObject puffTransform; //퍼프가 실행되는 위치
     public bool isboost=false;
+
+    public GameObject puffWalkPrefab; //것는 퍼프 프리팹
+    public GameObject puffBustPrefab;//부스트 퍼프 프리팹
+    private IObjectPool<Puff> walkPool;//걷는 퍼프 풀
+    private IObjectPool<Puff> bustPool;//버스트 퍼프 풀
+    public int PuffCount = 0;
+
+
+    private void Awake()//버스가 나올시 퍼프들의 풀을생성
+    {
+        walkPool = new ObjectPool<Puff>(CreateWalk, OnGetPuff, OnReleasePuff, OnDestroyPuff, maxSize: 1000);
+        bustPool = new ObjectPool<Puff>(CreateBust, OnGetPuff, OnReleasePuff, OnDestroyPuff, maxSize: 1000);
+    }
+
 
     private void Start()
     {
@@ -39,8 +53,16 @@ public class Bus : MonoBehaviour
 
     public void BusMove()
     {
-        busObject.transform.Translate(move * speed * Time.deltaTime,Space.World);
-        busRigid.AddForce(move * speed * Time.deltaTime, ForceMode.Impulse);
+        transform.Translate(move * speed * Time.deltaTime, Space.World);
+        
+        //무브중 퍼프
+        PuffCount++;
+        if (move != Vector3.zero && PuffCount>=5) 
+        {
+            var walk = walkPool.Get();
+            walk.transform.position = puffTransform.transform.position;
+            PuffCount = 0;
+        }
     }
     public void BusRotate()
     {
@@ -48,7 +70,7 @@ public class Bus : MonoBehaviour
         if (move != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(move);
-            rotBusObject.transform.rotation = Quaternion.Slerp(rotBusObject.transform.rotation, targetRotation, rotspeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotspeed * Time.deltaTime);
         }
     }
 
@@ -59,11 +81,13 @@ public class Bus : MonoBehaviour
             //Debug.Log("BOost");
             if (!isboost)
             {
+                BoostPuff();
                 isboost = true;
                 StartCoroutine("BoostCoroutine");
             }
         }
     }
+
 
     IEnumerator BoostCoroutine()
     {
@@ -72,14 +96,55 @@ public class Bus : MonoBehaviour
         Rigidbody rb= GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * 20,ForceMode.Impulse);
 
+
+
         for (int i = 0; i < 4; i++)
         {
+            
+
             rb.AddForce(transform.forward, ForceMode.Impulse);
             yield return new WaitForSecondsRealtime(0.05f);
         }
 
         rb.velocity = Vector3.zero;
         isboost = false;
+        //puff.Stop();
     }
+
+
+    //아래부터는 퍼프 관련 함수
+    void BoostPuff() //부스트 퍼프 실행
+    {
+        var bust = bustPool.Get();
+        bust.transform.position = puffTransform.transform.position;
+    }
+    private Puff CreateWalk() //워크퍼프생성후 풀에 담음
+    {
+        Puff puff = Instantiate(puffWalkPrefab).GetComponent<Puff>();
+        puff.SetManagedPool(walkPool);
+        return puff;
+    }
+    private Puff CreateBust() //버스트퍼프생성
+    {
+        Puff puff = Instantiate(puffBustPrefab).GetComponent<Puff>();
+        puff.SetManagedPool(bustPool);
+        return puff;
+    }
+
+    private void OnGetPuff(Puff puff) //퍼프를 불러옴
+    {
+        puff.gameObject.SetActive(true);
+    }
+
+    private void OnReleasePuff(Puff puff) //퍼프비활성화
+    {
+        puff.gameObject.SetActive(false);
+    }
+
+    private void OnDestroyPuff(Puff puff) //퍼프삭제
+    {
+        Destroy(puff.gameObject);
+    }
+
 }
 
