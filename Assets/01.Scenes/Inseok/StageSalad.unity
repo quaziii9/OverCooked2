@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1181,7 +1181,7 @@ MonoBehaviour:
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
   - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  objectType: 0
+  objectType: 6
 --- !u!1 &172664023
 GameObject:
   m_ObjectHideFlags: 0
@@ -2895,7 +2895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeObject: 0
-  onSomething: 0
+  onSomething: 1
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
   - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
@@ -4932,7 +4932,7 @@ MonoBehaviour:
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
   - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  objectType: 0
+  objectType: 6
 --- !u!1 &887093606
 GameObject:
   m_ObjectHideFlags: 0
@@ -5404,7 +5404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeObject: 0
-  onSomething: 0
+  onSomething: 1
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
   - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
@@ -5525,7 +5525,7 @@ MonoBehaviour:
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
   - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  objectType: 0
+  objectType: 6
 --- !u!1 &975771585
 GameObject:
   m_ObjectHideFlags: 0
@@ -6666,6 +6666,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9022119302960996902, guid: 2120c2d8fc76830438efb0cc916d3b4b,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2120c2d8fc76830438efb0cc916d3b4b, type: 3}
 --- !u!4 &1161460885 stripped
@@ -7132,7 +7137,7 @@ MonoBehaviour:
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
   - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
-  objectType: 0
+  objectType: 6
 --- !u!1 &1289165225
 GameObject:
   m_ObjectHideFlags: 0
