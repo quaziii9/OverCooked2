@@ -36,7 +36,7 @@ public class IntroManager : Singleton<IntroManager>
         UIManager.Instance.underBarStop.SetActive(false);
         UIManager.Instance.underBarCancle.SetActive(false);
 
-        UIManager.Instance.loadingUI.SetActive(true);
+//        UIManager.Instance.loadingUI.SetActive(true);
 
         StartCoroutine("IntroSetting");
     }
