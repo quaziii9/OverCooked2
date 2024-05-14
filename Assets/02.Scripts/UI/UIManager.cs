@@ -184,14 +184,21 @@ public class UIManager : Singleton<UIManager>
         MaskInUI();
         if(maskInEnd == true) Invoke("BattleUI", 2F);
 
-        if (maskOutEnd == true) maskOutUI.SetActive(false);
+        Debug.Log(maskOutEnd);
+        if (maskOutEnd == true)
+        {
+            Debug.Log("??");
+            maskOutUI.SetActive(false);
+        }
+        Debug.Log(maskOutEnd);
+        Debug.Log("?");
     }
 
     public void BattleUI()
     {
         battleUI.SetActive(true);
         MaskOutUI();
-        //battleIn = true;
+        maskOutEnd = true;
     }
 
     public void ExitLobbyUIOn()
