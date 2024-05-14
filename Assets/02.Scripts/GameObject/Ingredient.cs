@@ -317,7 +317,8 @@ public class Ingredient : GameItem
                 }
                 break;
             case IngredientType.Tomato:
-                positionOffset = new Vector3(0, isCooked ? -0.21f : -0.08f, 0);
+                //positionOffset = new Vector3(0, isCooked ? -0.21f : -0.08f, 0);
+                positionOffset = new Vector3(0, isCooked ? -0.21f : 0, 0);
                 break;
             default:
                 positionOffset = new Vector3(0, -0.0025f, 0);

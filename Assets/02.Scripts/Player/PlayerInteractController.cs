@@ -66,6 +66,36 @@ public class PlayerInteractController : MonoBehaviour
     public void OnCookOrThrow(InputValue inputValue)
     {
         Debug.Log("OnCookOrThrow");
+        if (ShouldStartCutting())
+        {
+            StartCuttingProcess();
+        }
+    }
+
+    bool ShouldStartCutting()
+    {
+        return objectHighlight.objectType == ObjectHighlight.ObjectType.Board &&
+               interactObject.transform.parent.childCount > 2 &&
+               !interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked &&
+               !isHolding;
+    }
+
+    void StartCuttingProcess()
+    {
+        var cuttingBoard = interactObject.transform.GetChild(0).GetComponent<CuttingBoard>();
+
+        if (cuttingBoard._CoTimer == null) // 한번도 실행 안된거면 시작 가능
+        {
+            anim.SetTrigger("startCut");
+            cuttingBoard.Pause = false;
+            cuttingBoard.CuttingTime = 0;
+            cuttingBoard.StartCutting1();
+        }
+        else if (cuttingBoard.Pause) // 실행되다 만거라면
+        {
+            anim.SetTrigger("startCut");
+            cuttingBoard.PauseSlider(false);
+        }
     }
     #endregion
 
