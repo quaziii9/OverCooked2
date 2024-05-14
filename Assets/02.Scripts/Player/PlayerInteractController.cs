@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerInteractController : MonoBehaviour
 {
@@ -262,7 +263,10 @@ public class PlayerInteractController : MonoBehaviour
         if (drop)
         {
             // true 테이블 위에 뭔가 있는데 내가 가진게 접시고, 음식이면 담음
-            DropObject();
+            if (CanPlaceIngredient())
+            {
+                PlaceIngredient();
+            }
         }
         else
         {
@@ -270,6 +274,46 @@ public class PlayerInteractController : MonoBehaviour
             GameObject handlingThing = transform.GetChild(1).gameObject;
             Debug.Log($"handlingThing.name : {handlingThing.name}");
             HandleObject(handlingThing, false);
+        }
+    }
+
+    private bool CanPlaceIngredient()
+    {
+        return canActive && objectHighlight.onSomething
+               && interactObject.transform.parent.childCount > 2
+               && IsPlate(interactObject.transform.parent.GetChild(2))
+               && isHolding
+               && IsHoldingCookedIngredient();
+    }
+
+    private bool IsPlate(UnityEngine.Transform obj)
+    {
+        var handle = obj.GetComponent<Ingredient>();
+        return handle != null && handle.type == Ingredient.IngredientType.Plate;
+    }
+
+    private bool IsHoldingCookedIngredient()
+    {
+        var holdingObj = transform.GetChild(1).GetChild(0);
+        if (holdingObj.childCount > 0)
+        {
+            var handle = holdingObj.GetChild(0).GetComponent<Ingredient>();
+            return handle != null && handle.isCooked;
+        }
+        return false;
+    }
+
+    private void PlaceIngredient()
+    {
+        var plate = interactObject.transform.parent.GetChild(2).GetComponent<Plates>();
+        var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient>().type;
+        if (plate.AddIngredient(ingredient))
+        {
+            //SoundManager.instance.PlayEffect("put");
+            plate.InstantiateUI();
+            Destroy(transform.GetChild(1).gameObject);
+            isHolding = false;
+            anim.SetBool("isHolding", false);
         }
     }
 
