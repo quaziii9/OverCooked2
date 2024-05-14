@@ -1919,7 +1919,7 @@ MonoBehaviour:
   Pause: 0
   CuttingTime: 0
   Canvas: {fileID: 4156643020944634083}
-  IngredientUI: {fileID: 3456285177428942253, guid: b25bbb6c6bdd0cd4ca169f99f718d3f6,
+  IngredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
     type: 3}
   Icons:
   - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
@@ -1992,7 +1992,7 @@ MonoBehaviour:
   Pause: 0
   CuttingTime: 0
   Canvas: {fileID: 4156643020944634083}
-  IngredientUI: {fileID: 3456285177428942253, guid: b25bbb6c6bdd0cd4ca169f99f718d3f6,
+  IngredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
     type: 3}
   Icons:
   - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
@@ -3857,7 +3857,7 @@ MonoBehaviour:
   Pause: 0
   CuttingTime: 0
   Canvas: {fileID: 4156643020944634083}
-  IngredientUI: {fileID: 3456285177428942253, guid: b25bbb6c6bdd0cd4ca169f99f718d3f6,
+  IngredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
     type: 3}
   Icons:
   - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
@@ -8698,7 +8698,7 @@ MonoBehaviour:
   Pause: 0
   CuttingTime: 0
   Canvas: {fileID: 4156643020944634083}
-  IngredientUI: {fileID: 3456285177428942253, guid: b25bbb6c6bdd0cd4ca169f99f718d3f6,
+  IngredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
     type: 3}
   Icons:
   - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}

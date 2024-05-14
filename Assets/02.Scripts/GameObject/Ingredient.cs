@@ -118,7 +118,8 @@ public class Ingredient : GameItem
     {
         MeshRenderer meshRenderer = transform.parent.GetComponent<MeshRenderer>();
         meshRenderer.material = cookedFish; // Example for applying material
-        Vector3 positionAdjustment = new Vector3(0, CalculatePositionAdjustment(handType), 0);
+        Vector3 positionAdjustment = new Vector3(0, 0, 0);
+        //Vector3 positionAdjustment = new Vector3(0, CalculatePositionAdjustment(handType), 0);
         AdjustPosition(transform.parent.parent, positionAdjustment);
     }
 
@@ -252,13 +253,13 @@ public class Ingredient : GameItem
     {
         transform.parent.GetComponent<MeshCollider>().isTrigger = false;
 
-        SetLocalPositionAndRotation(handle);
+        //SetLocalPositionAndRotation(handle);
 
         transform.parent.parent.SetParent(parent);
         transform.parent.parent.localPosition = target;
         transform.parent.parent.localRotation = Quaternion.identity;
 
-        AdjustParentPositionAndRotation(handle);
+        //AdjustParentPositionAndRotation(handle);
     }
 
     private void SetLocalPositionAndRotation(IngredientType handle)
@@ -300,6 +301,9 @@ public class Ingredient : GameItem
 
         switch (handle)
         {
+            case IngredientType.Lettuce:
+                positionOffset = isCooked ? new Vector3(0,0,0) : new Vector3(0, 0, 0);
+                break;
             case IngredientType.Shrimp:
                 if (!isCooked)
                 {
@@ -318,7 +322,7 @@ public class Ingredient : GameItem
                 break;
             case IngredientType.Tomato:
                 //positionOffset = new Vector3(0, isCooked ? -0.21f : -0.08f, 0);
-                positionOffset = new Vector3(0, isCooked ? -0.21f : 0, 0);
+                //positionOffset = new Vector3(0, isCooked ? -0.21f : 0, 0);
                 break;
             default:
                 positionOffset = new Vector3(0, -0.0025f, 0);

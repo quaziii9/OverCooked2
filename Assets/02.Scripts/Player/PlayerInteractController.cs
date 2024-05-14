@@ -62,6 +62,11 @@ public class PlayerInteractController : MonoBehaviour
     }
     #endregion
 
+    private void Update()
+    {
+        SetHand();
+    }
+
     #region OnCookOrThrow
     public void OnCookOrThrow(InputValue inputValue)
     {
@@ -103,7 +108,7 @@ public class PlayerInteractController : MonoBehaviour
     public void OnPickupOrPlace(InputValue inputValue)
     {
         ProcessInteraction();
-        SetHand();
+        //SetHand();
     }
 
     private void ProcessInteraction()

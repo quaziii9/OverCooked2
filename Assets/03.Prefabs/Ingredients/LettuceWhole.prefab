@@ -58,7 +58,6 @@ GameObject:
   - component: {fileID: 5054737159479010310}
   - component: {fileID: 8060820076504099662}
   - component: {fileID: 5054737159479010311}
-  - component: {fileID: 259462767}
   m_Layer: 0
   m_Name: Lettuce_Whole
   m_TagString: Ingredient
@@ -162,20 +161,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!64 &259462767
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5054737159479010362}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4022682982453949128, guid: 9cd4d3364860c33438bc4feac0670e3d, type: 3}
 --- !u!1 &5054737159724565775
 GameObject:
   m_ObjectHideFlags: 0
