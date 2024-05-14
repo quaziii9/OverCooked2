@@ -25,16 +25,35 @@ public class UIManager : Singleton<UIManager>
     [Header("Animator")]
     public Animator shutterAnim;
 
-    [Header("Sence Change UI")]
-    public GameObject sceneChangeUI;
-    public float time;
+    [Header("MaskTransitionUI")]
+    public GameObject maskInUI; // 크기를 변경할 RectTransform
+    public GameObject maskOutUI; // 크기를 변경할 RectTransform
+    private RectTransform maskInUIRect;
+    private RectTransform maskOutUIRect;
+    private Vector2 maskOutTargetRect = new Vector2(7300, 7300);
+    public float inDuration = 0.3f; // 변화에 걸리는 시간
+    public float outDuration = 0.5f; // 변화에 걸리는 시간
 
-    RectTransform sceneChangeUIRect;
-    Vector2 fromSize;
-    Vector2 toSize;
+    [Header("Battle")]
+    public GameObject battleUI;
 
+    [Header("ExitLobbyUI")]
+    public GameObject exitLobbyUI;
+
+    public bool maskInEnd;
+    public bool maskOutEnd;
+    public bool battleIn;
     //private bool isExit = false;
     //private bool isSetting = false;
+
+    private void Update()
+    {
+        //if(!isSetting && !isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOn();
+        //if (!isSetting && isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOff();
+
+    }
+
+    #region Intro UI
 
     public void SettingOn()
     {
@@ -50,14 +69,6 @@ public class UIManager : Singleton<UIManager>
         //isSetting = false;
     }
 
-    private void Update()
-    {        
-        //if(!isSetting && !isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOn();
-        //if (!isSetting && isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOff();
-
-    }
-
-
     public void StopUIOn()
     {
         popupBackGroundUI.SetActive(true);
@@ -71,6 +82,10 @@ public class UIManager : Singleton<UIManager>
         stopUI.SetActive(false);
         // isExit = false;
     }
+    #endregion
+
+
+    #region
 
     public void SetBGMSquares(float volumeBGM, GameObject[] BGMSquares)
     {
@@ -110,35 +125,89 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
+    #endregion
 
     public void ExitGame()
     {
 
         #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;
-#else
+        #else
                     Application.Quit();
-#endif
+        #endif
 
     }
 
-    public void SceneChangeUI()
-    {
-        sceneChangeUI.SetActive(true);
-        sceneChangeUIRect = sceneChangeUI.GetComponent<RectTransform>();
-        fromSize = sceneChangeUIRect.sizeDelta;
-        toSize = new Vector2(0, 0);
 
-        // 이 부분 수정해야함
+
+
+    // PopUpIn -> UI팝업 띄우기 -> PopUpOut 
+    #region Scene Change UI
+   
+    public void MaskInUI()
+    {
+        maskInUI.SetActive(true);
+        maskInUIRect = maskInUI.GetComponent<RectTransform>();
+        StartCoroutine(MaskInOut(maskInUIRect, Vector2.zero, inDuration));
+        maskInEnd = true;
     }
 
-    IEnumerator SceneChaengeCo()
+    public void MaskOutUI()
     {
-        //Vector2 fromSize = rt.sizeDelta;
+        maskInUI.SetActive(false);
+        maskOutUI.SetActive(true);
+        maskOutUIRect = maskOutUI.GetComponent<RectTransform>();
+        StartCoroutine(MaskInOut(maskOutUIRect, maskOutTargetRect, outDuration));
 
-        sceneChangeUIRect.sizeDelta = Vector2.Lerp(fromSize, toSize, Time.deltaTime * 1f);
+        maskOutEnd = true;
+    }
 
-        yield return new WaitForSeconds(0.1f);
-        //sceneChangeUIRect.sizeDelta = toSize; // 최종 크기 설정
+    IEnumerator MaskInOut(RectTransform rt, Vector2 toSize, float time)
+    {
+        Vector2 fromSize = rt.sizeDelta;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < time)
+        {
+            rt.sizeDelta = Vector2.Lerp(fromSize, toSize, (elapsedTime / time));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        rt.sizeDelta = toSize; // 최종 크기 설정
+    }
+
+    #endregion
+
+    public void EnterBattleUI()
+    {
+        MaskInUI();
+        if(maskInEnd == true) Invoke("BattleUI", 2F);
+
+        if (maskOutEnd == true) maskOutUI.SetActive(false);
+    }
+
+    public void BattleUI()
+    {
+        battleUI.SetActive(true);
+        MaskOutUI();
+        //battleIn = true;
+    }
+
+    public void ExitLobbyUIOn()
+    {
+        popupBackGroundUI.SetActive(true);
+        exitLobbyUI.SetActive(true);
+    }
+
+    public void ExitLobbyUIOff()
+    {
+        popupBackGroundUI.SetActive(false);
+        exitLobbyUI.SetActive(false);
+    }
+
+    public void Enter()
+    {
+        battleUI.SetActive(false);
     }
 }

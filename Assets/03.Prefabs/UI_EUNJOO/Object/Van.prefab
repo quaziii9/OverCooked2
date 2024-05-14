@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 692837296009475942}
   - component: {fileID: 4962408636597717785}
   m_Layer: 5
-  m_Name: btnFight
+  m_Name: btnBattle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
