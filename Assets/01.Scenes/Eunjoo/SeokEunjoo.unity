@@ -2986,7 +2986,7 @@ MonoBehaviour:
   underBarStop: {fileID: 5719555851397800729}
   shutterAnim: {fileID: 828961695}
   sceneChangeUI: {fileID: 376953317}
-  time: 15
+  duration: 0.3
 --- !u!1 &665619998
 GameObject:
   m_ObjectHideFlags: 0
@@ -4197,8 +4197,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 430, y: 0}
-  m_SizeDelta: {x: 866.65, y: 800}
+  m_AnchoredPosition: {x: 430, y: 90.16113}
+  m_SizeDelta: {x: 866.65, y: 1914.7188}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &967875806
 MonoBehaviour:
@@ -6085,6 +6085,11 @@ PrefabInstance:
       objectReference: {fileID: 637988502}
     - target: {fileID: 692837296009475942, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 637988502}
+    - target: {fileID: 692837296009475942, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnClickButton
       objectReference: {fileID: 0}
@@ -6095,12 +6100,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 692837296009475942, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ShrinkToZero
+      objectReference: {fileID: 0}
+    - target: {fileID: 692837296009475942, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SoundManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 692837296009475942, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 692837296009475942, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 692837296009475943, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
@@ -8734,8 +8749,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -422, y: -27.007}
-  m_SizeDelta: {x: 861.15, y: 771.2}
+  m_AnchoredPosition: {x: -422, y: -170.445}
+  m_SizeDelta: {x: 861.15, y: 1501.7542}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1782907531
 MonoBehaviour:

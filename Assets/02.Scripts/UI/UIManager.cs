@@ -26,12 +26,11 @@ public class UIManager : Singleton<UIManager>
     public Animator shutterAnim;
 
     [Header("Sence Change UI")]
-    public GameObject sceneChangeUI;
-    public float time;
+    public GameObject sceneChangeUI; // 크기를 변경할 RectTransform
+    private RectTransform sceneChangeUIRect;
+    public float duration = 0.3f; // 변화에 걸리는 시간
 
-    RectTransform sceneChangeUIRect;
-    Vector2 fromSize;
-    Vector2 toSize;
+
 
     //private bool isExit = false;
     //private bool isSetting = false;
@@ -116,29 +115,33 @@ public class UIManager : Singleton<UIManager>
 
         #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;
-#else
+        #else
                     Application.Quit();
-#endif
+        #endif
 
     }
 
-    public void SceneChangeUI()
+    public void ShrinkToZero()
     {
+        // 기존 코루틴을 중지하고 새로운 코루틴 시작
+        //StopAllCoroutines();
         sceneChangeUI.SetActive(true);
         sceneChangeUIRect = sceneChangeUI.GetComponent<RectTransform>();
-        fromSize = sceneChangeUIRect.sizeDelta;
-        toSize = new Vector2(0, 0);
-
-        // 이 부분 수정해야함
+        StartCoroutine(ResizeRectTransform(sceneChangeUIRect, Vector2.zero, duration));
     }
 
-    IEnumerator SceneChaengeCo()
+    IEnumerator ResizeRectTransform(RectTransform rt, Vector2 toSize, float time)
     {
-        //Vector2 fromSize = rt.sizeDelta;
+        Vector2 fromSize = rt.sizeDelta;
+        float elapsedTime = 0f;
 
-        sceneChangeUIRect.sizeDelta = Vector2.Lerp(fromSize, toSize, Time.deltaTime * 1f);
+        while (elapsedTime < time)
+        {
+            rt.sizeDelta = Vector2.Lerp(fromSize, toSize, (elapsedTime / time));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
 
-        yield return new WaitForSeconds(0.1f);
-        //sceneChangeUIRect.sizeDelta = toSize; // 최종 크기 설정
+        rt.sizeDelta = toSize; // 최종 크기 설정
     }
 }
