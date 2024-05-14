@@ -11,14 +11,42 @@ public class Plates : MonoBehaviour
     public GameObject Canvas;
     [SerializeField] private GameObject IngredientUI;
     [SerializeField] private Sprite[] Icons;
-    GameObject madeUI;
+    public GameObject madeUI;
 
     public bool AddIngredient(Ingredient.IngredientType handleType)
     {
         if (!CheckOverlap(handleType) && containIngredients.Count < limit)
         {
             containIngredients.Add(handleType);
-            UpdateVisibleChild(handleType);
+
+            if (handleType == Ingredient.IngredientType.Fish)
+            {
+                transform.GetChild(1).gameObject.SetActive(true);
+            }
+            else if (handleType == Ingredient.IngredientType.Shrimp)
+            {
+                transform.GetChild(2).gameObject.SetActive(true);
+            }
+            else if (handleType == Ingredient.IngredientType.Tomato)
+            {
+                transform.GetChild(3).gameObject.SetActive(true);
+            }
+            else if (handleType == Ingredient.IngredientType.Lettuce)
+            {
+                transform.GetChild(4).gameObject.SetActive(true);
+            }
+            else if (handleType == Ingredient.IngredientType.Cucumber)
+            {
+                transform.GetChild(5).gameObject.SetActive(true);
+            }
+            else if (handleType == Ingredient.IngredientType.Potato)
+            {
+                transform.GetChild(6).gameObject.SetActive(true);
+            }
+            else if (handleType == Ingredient.IngredientType.Chicken)
+            {
+                transform.GetChild(7).gameObject.SetActive(true);
+            }
             return true;
         }
         return false;
@@ -26,43 +54,146 @@ public class Plates : MonoBehaviour
 
     public void ClearIngredient()
     {
-        foreach (Transform child in transform)
+        if (containIngredients.Count == 1)
         {
-            child.gameObject.SetActive(false);
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
-        containIngredients.Clear();
-        Destroy(madeUI);
+        containIngredients.RemoveRange(0, containIngredients.Count); //다 지우고
+        Destroy(madeUI); //UI도 지우기
     }
-
     private bool CheckOverlap(Ingredient.IngredientType type)
     {
-        return containIngredients.Contains(type);
-    }
-
-    private void UpdateVisibleChild(Ingredient.IngredientType handleType)
-    {
-        int childIndex = (int)handleType - 1; // Assuming children are ordered according to HandleType enum
-        if (childIndex < transform.childCount)
+        for (int i = 0; i < containIngredients.Count; i++)
         {
-            transform.GetChild(childIndex).gameObject.SetActive(true);
+            if (containIngredients[i].Equals(type))
+            {
+                return true;
+            }
         }
+        return false;
     }
 
     public void InstantiateUI()
     {
-        if (madeUI != null) Destroy(madeUI);
-        madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
-        SetupUI();
-    }
-
-    private void SetupUI()
-    {
-        for (int i = 0; i < containIngredients.Count; i++)
+        if (containIngredients.Count == 1)
         {
-            int childIndex = containIngredients.Count - 1; // Child index to activate
-            madeUI.transform.GetChild(childIndex).gameObject.SetActive(true);
-            Image image = madeUI.transform.GetChild(childIndex).GetChild(i).GetComponent<Image>();
-            image.sprite = Icons[(int)containIngredients[i] - 1];
+            madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
+            madeUI.transform.GetChild(1).gameObject.SetActive(false);
+            madeUI.transform.GetChild(2).gameObject.SetActive(false);
+            Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
+            if (containIngredients[0].Equals(Ingredient.IngredientType.Fish))
+            {
+                image.sprite = Icons[0];
+            }
+            else if (containIngredients[0].Equals(Ingredient.IngredientType.Shrimp))
+            {
+                image.sprite = Icons[1];
+            }
+            else if (containIngredients[0].Equals(Ingredient.IngredientType.Tomato))
+            {
+                image.sprite = Icons[2];
+            }
+            else if (containIngredients[0].Equals(Ingredient.IngredientType.Lettuce))
+            {
+                image.sprite = Icons[3];
+            }
+            else if (containIngredients[0].Equals(Ingredient.IngredientType.Cucumber))
+            {
+                image.sprite = Icons[4];
+            }
+            else if (containIngredients[0].Equals(Ingredient.IngredientType.Potato))
+            {
+                image.sprite = Icons[5];
+            }
+            else if (containIngredients[0].Equals(Ingredient.IngredientType.Chicken))
+            {
+                image.sprite = Icons[6];
+            }
+            madeUI.GetComponent<IngredientUI>().Target = transform;
+        }
+        else if (containIngredients.Count == 2) //접시에 합쳐진게 2개면
+        {
+            madeUI.transform.GetChild(0).gameObject.SetActive(false);
+            madeUI.transform.GetChild(1).gameObject.SetActive(true);
+            madeUI.transform.GetChild(2).gameObject.SetActive(false);
+            Image[] images = new Image[2];
+            images[0] = madeUI.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+            images[1] = madeUI.transform.GetChild(1).GetChild(1).GetComponent<Image>();
+            for (int i = 0; i < containIngredients.Count; i++)
+            {
+                if (containIngredients[i].Equals(Ingredient.IngredientType.Fish))
+                {
+                    images[i].sprite = Icons[0];
+                }
+                else if (containIngredients[i].Equals(Ingredient.IngredientType.Shrimp))
+                {
+                    images[i].sprite = Icons[1];
+                }
+                else if (containIngredients[i].Equals(Ingredient.IngredientType.Tomato))
+                {
+                    images[i].sprite = Icons[2];
+                }
+                else if (containIngredients[i].Equals(Ingredient.IngredientType.Lettuce))
+                {
+                    images[i].sprite = Icons[3];
+                }
+                else if (containIngredients[i].Equals(Ingredient.IngredientType.Cucumber))
+                {
+                    images[i].sprite = Icons[4];
+                }
+                else if (containIngredients[i].Equals(Ingredient.IngredientType.Potato))
+                {
+                    images[i].sprite = Icons[5];
+                }
+                else if (containIngredients[i].Equals(Ingredient.IngredientType.Chicken))
+                {
+                    images[i].sprite = Icons[6];
+                }
+            }
+        }
+        else if (containIngredients.Count == 3) //재료가 3개면
+        {
+            madeUI.transform.GetChild(0).gameObject.SetActive(false);
+            madeUI.transform.GetChild(1).gameObject.SetActive(false);
+            madeUI.transform.GetChild(2).gameObject.SetActive(true);
+            Image[] images = new Image[3];
+            images[0] = madeUI.transform.GetChild(2).GetChild(0).GetComponent<Image>();
+            images[1] = madeUI.transform.GetChild(2).GetChild(1).GetComponent<Image>();
+            images[2] = madeUI.transform.GetChild(2).GetChild(2).GetComponent<Image>();
+            for (int i = 0; i < containIngredients.Count; i++)
+            {
+                if (containIngredients[i].Equals(Ingredient.IngredientType.Fish))
+                {
+                    images[i].sprite = Icons[0];
+                }
+                else if (containIngredients[i].Equals(Ingredient.IngredientType.Shrimp))
+                {
+                    images[i].sprite = Icons[1];
+                }
+                else if (containIngredients[i].Equals(Ingredient.IngredientType.Tomato))
+                {
+                    images[i].sprite = Icons[2];
+                }
+                else if (containIngredients[i].Equals(Ingredient.IngredientType.Lettuce))
+                {
+                    images[i].sprite = Icons[3];
+                }
+                else if (containIngredients[i].Equals(Ingredient.IngredientType.Cucumber))
+                {
+                    images[i].sprite = Icons[4];
+                }
+                else if (containIngredients[i].Equals(Ingredient.IngredientType.Potato))
+                {
+                    images[i].sprite = Icons[5];
+                }
+                else if (containIngredients[i].Equals(Ingredient.IngredientType.Chicken))
+                {
+                    images[i].sprite = Icons[6];
+                }
+            }
         }
     }
 }

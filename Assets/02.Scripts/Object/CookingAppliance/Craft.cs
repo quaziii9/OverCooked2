@@ -18,17 +18,25 @@ public class Craft : MonoBehaviour
 
     public void OpenCraftPlayer2()
     {
-        //OpenCraft(FindObjectOfType<Player2Controller>());
+        OpenCraft(FindObjectOfType<Player2InteractController>());
     }
 
     private void OpenCraft(PlayerInteractController player)
     {
-        //CraftAnim.SetTrigger("Open");
+        CraftAnim.SetTrigger("Open");
         GameObject newFood = Instantiate(foodPrefabs, Vector3.zero, Quaternion.identity);
         player.isHolding = true;
-        newFood.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient>().HandleIngredient(player.transform, ConvertFoodTypeToHandleType(food), player.isHolding);
+        newFood.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        newFood.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient>().HandleIngredient(player.transform, ConvertFoodTypeToHandleType(food), true);
     }
-
+    private void OpenCraft(Player2InteractController player)
+    {
+        CraftAnim.SetTrigger("Open");
+        GameObject newFood = Instantiate(foodPrefabs, Vector3.zero, Quaternion.identity);
+        player.isHolding = true;
+        newFood.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        newFood.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient>().HandleIngredient(player.transform, ConvertFoodTypeToHandleType(food), true);
+    }
     private Ingredient.IngredientType ConvertFoodTypeToHandleType(FoodType food)
     {
         switch (food)
@@ -51,10 +59,4 @@ public class Craft : MonoBehaviour
                 throw new System.ArgumentOutOfRangeException(nameof(food), "Invalid food type");
         }
     }
-}
-
-// Assuming PlayerController class exists and has the required properties/methods.
-public class PlayerController : MonoBehaviour
-{
-    public bool isHolding;
 }

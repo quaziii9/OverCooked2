@@ -58,7 +58,6 @@ GameObject:
   - component: {fileID: 5054737159479010310}
   - component: {fileID: 8060820076504099662}
   - component: {fileID: 5054737159479010311}
-  - component: {fileID: 259462767}
   m_Layer: 0
   m_Name: Lettuce_Whole
   m_TagString: Ingredient
@@ -160,22 +159,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
---- !u!64 &259462767
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5054737159479010362}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4022682982453949128, guid: 9cd4d3364860c33438bc4feac0670e3d, type: 3}
 --- !u!1 &5054737159724565775
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,8 +225,9 @@ MonoBehaviour:
   isOnDesk: 1
   type: 3
   currentState: 0
-  cookedIngredient: {fileID: 0}
-  cookedFish: {fileID: 0}
+  cookedIngredient: {fileID: 8097617054539991953, guid: 12a386c2dfdf6504791895fae95723f0,
+    type: 3}
+  cookedFish: {fileID: 2100000, guid: e3beb2d12aec27f45a3b339277d2132b, type: 2}
   fishLocalPos: {x: 0, y: 0.138, z: 0.08}
   shrimpLocalPos: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
   lettuceLocalPos: {x: 0, y: 0.418, z: 0}

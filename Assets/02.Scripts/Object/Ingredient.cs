@@ -34,9 +34,11 @@ public class Ingredient : GameItem
         Debug.Log("State changed to: " + currentState);
     }
 
+    #region HandleIngredient
     // Ingredient 핸들링과 관련된 로직
     public void HandleIngredient(Transform something, IngredientType handle, bool isActive)
     {
+
         MeshCollider collider = transform.parent.GetComponent<MeshCollider>();
         collider.isTrigger = isActive;
 
@@ -116,7 +118,8 @@ public class Ingredient : GameItem
     {
         MeshRenderer meshRenderer = transform.parent.GetComponent<MeshRenderer>();
         meshRenderer.material = cookedFish; // Example for applying material
-        Vector3 positionAdjustment = new Vector3(0, CalculatePositionAdjustment(handType), 0);
+        Vector3 positionAdjustment = new Vector3(0, 0, 0);
+        //Vector3 positionAdjustment = new Vector3(0, CalculatePositionAdjustment(handType), 0);
         AdjustPosition(transform.parent.parent, positionAdjustment);
     }
 
@@ -165,4 +168,176 @@ public class Ingredient : GameItem
         }
     }
 
+    // 각 재료에 대한 자동 배치를 수행하는 메서드
+    public void IngredientAuto(Transform parent, Vector3 target, IngredientType handle)
+    {
+        // 콜라이더의 트리거 비활성화
+        transform.parent.GetComponent<MeshCollider>().isTrigger = false;
+
+        // 위치와 회전 설정
+        SetPositionAndRotation(handle);
+
+        // 부모 설정 및 최종 위치, 회전 적용
+        transform.parent.parent.SetParent(parent);
+        transform.parent.parent.localRotation = Quaternion.identity;
+        transform.parent.parent.localPosition = target;
+
+        // 특정 조건에서 회전 또는 추가 위치 조정
+        AdjustPositionOrRotationBasedOnCookedState(handle);
+    }
+
+    // 위치와 회전을 설정하는 메서드
+    private void SetPositionAndRotation(IngredientType handle)
+    {
+        switch (handle)
+        {
+            case IngredientType.Fish:
+                SetTransform(fishLocalPos, Quaternion.identity);
+                break;
+            case IngredientType.Shrimp:
+                if (!isCooked)
+                    SetTransform(shrimpLocalPos, Quaternion.Euler(35.029995f, -1.04264745e-06f, 326.160004f));
+                else
+                    SetTransform(Vector3.zero, Quaternion.identity);
+                break;
+            case IngredientType.Lettuce:
+                SetTransform(lettuceLocalPos, Quaternion.identity);
+                break;
+            case IngredientType.Tomato:
+            case IngredientType.Cucumber:
+            case IngredientType.Chicken:
+            case IngredientType.Potato:
+                SetTransform(Vector3.zero, Quaternion.identity);
+                break;
+        }
+    }
+
+    // 위치와 회전을 동시에 설정
+    private void SetTransform(Vector3 position, Quaternion rotation)
+    {
+        transform.parent.localPosition = position;
+        transform.parent.localRotation = rotation;
+    }
+
+    // 조리 상태에 따라 위치 또는 회전을 조정하는 메서드
+    private void AdjustPositionOrRotationBasedOnCookedState(IngredientType handle)
+    {
+        if (handle == IngredientType.Shrimp && !isCooked)
+        {
+            transform.parent.parent.localRotation = Quaternion.Euler(0, 244.302612f, 0);
+        }
+        else if (handle == IngredientType.Fish && isCooked)
+        {
+            AdjustYPosition(-0.00224f);
+        }
+        else if (handle == IngredientType.Lettuce)
+        {
+            AdjustYPosition(isCooked ? -0.5f : -0.095f);
+        }
+        else if (handle == IngredientType.Tomato)
+        {
+            AdjustYPosition(isCooked ? -0.21f : -0.08f);
+        }
+    }
+
+    // Y 위치를 조정
+    private void AdjustYPosition(float offsetY)
+    {
+        Vector3 currentPosition = transform.parent.parent.localPosition;
+        transform.parent.parent.localPosition = new Vector3(currentPosition.x, currentPosition.y + offsetY, currentPosition.z);
+    }
+    #endregion
+
+    #region IngredientHandleOff
+    public void IngredientHandleOff(Transform parent, Vector3 target, IngredientType handle)
+    {
+        transform.parent.GetComponent<MeshCollider>().isTrigger = false;
+
+        //SetLocalPositionAndRotation(handle);
+
+        transform.parent.parent.SetParent(parent);
+        transform.parent.parent.localPosition = target;
+        transform.parent.parent.localRotation = Quaternion.identity;
+
+        //AdjustParentPositionAndRotation(handle);
+    }
+
+    private void SetLocalPositionAndRotation(IngredientType handle)
+    {
+        Vector3 localPosition = Vector3.zero;
+        Quaternion localRotation = Quaternion.identity;
+
+        switch (handle)
+        {
+            case IngredientType.Fish:
+                localPosition = fishLocalPos;
+                break;
+            case IngredientType.Shrimp:
+                localPosition = shrimpLocalPos;
+                localRotation = !isCooked ? Quaternion.Euler(new Vector3(35.029995f, -1.04264745e-06f, 326.160004f)) : Quaternion.identity;
+                break;
+            case IngredientType.Lettuce:
+                localPosition = lettuceLocalPos;
+                break;
+            case IngredientType.Tomato:
+                localPosition = new Vector3(0, 0, 0);
+                break;
+            case IngredientType.Cucumber:
+            case IngredientType.Chicken:
+                break;
+            case IngredientType.Potato:
+                transform.parent.GetChild(0).localRotation = Quaternion.identity;
+                break;
+        }
+
+        transform.parent.localPosition = localPosition;
+        transform.parent.localRotation = localRotation;
+    }
+
+    private void AdjustParentPositionAndRotation(IngredientType handle)
+    {
+        Vector3 positionOffset = Vector3.zero;
+        Quaternion rotationOffset = Quaternion.identity;
+
+        switch (handle)
+        {
+            case IngredientType.Lettuce:
+                positionOffset = isCooked ? new Vector3(0,0,0) : new Vector3(0, 0, 0);
+                break;
+            case IngredientType.Shrimp:
+                if (!isCooked)
+                {
+                    rotationOffset = Quaternion.Euler(new Vector3(0, 244.302612f, 0));
+                }
+                else
+                {
+                    positionOffset = new Vector3(0, -0.0008f, 0);
+                }
+                break;
+            case IngredientType.Fish:
+                if (isCooked)
+                {
+                    positionOffset = new Vector3(0, -0.00146f, 0);
+                }
+                break;
+            case IngredientType.Tomato:
+                //positionOffset = new Vector3(0, isCooked ? -0.21f : -0.08f, 0);
+                //positionOffset = new Vector3(0, isCooked ? -0.21f : 0, 0);
+                break;
+            default:
+                positionOffset = new Vector3(0, -0.0025f, 0);
+                break;
+        }
+
+        transform.parent.parent.localPosition += positionOffset;
+        transform.parent.parent.localRotation = rotationOffset * transform.parent.parent.localRotation;
+    }
+    #endregion
+    
+    public void PlayerHandleOff(Transform parent, Vector3 target)
+    {
+        transform.SetParent(parent);
+        transform.rotation = Quaternion.identity;
+        transform.localPosition = target;
+    }
 }

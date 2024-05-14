@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3289461300042815339}
   - component: {fileID: 1110442390261782792}
-  - component: {fileID: 7941277770538929580}
-  - component: {fileID: 8694425531610269040}
+  - component: {fileID: 2686033427331725856}
+  - component: {fileID: 5928427815376604736}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Ingredient
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6307497327328009953}
   m_RootOrder: 0
@@ -46,7 +47,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.9963657, z: 1}
   m_Center: {x: 0, y: 0.3657903, z: 0}
---- !u!114 &7941277770538929580
+--- !u!114 &2686033427331725856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,15 +56,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 2899347774234518215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0713fb8c0c7de4348b118c07896a2eb9, type: 3}
+  m_Script: {fileID: 11500000, guid: 95891b54896143e46b0552645f25cd8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: 4
-  isOnDesk: 1
+  itemName: 
   isCooked: 0
-  cookedIngredient: {fileID: 8409117400548429230, guid: efa759a74ef4b7a4bb82698c1514b6d8, type: 3}
-  cookedFish: {fileID: 0}
---- !u!114 &8694425531610269040
+  isOnDesk: 1
+  type: 4
+  currentState: 0
+  cookedIngredient: {fileID: 8409117400548429230, guid: c134ed68a3dba25469cf13430f1c6834,
+    type: 3}
+  cookedFish: {fileID: 2100000, guid: d26135e3e310e464fb5290658b72117e, type: 2}
+  fishLocalPos: {x: 0, y: 0.138, z: 0.08}
+  shrimpLocalPos: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
+  lettuceLocalPos: {x: 0, y: 0.418, z: 0}
+--- !u!114 &5928427815376604736
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,17 +79,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2899347774234518215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
+  m_Script: {fileID: 11500000, guid: 19435dd8b8dc43e438677d6b368032b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeObject: 0
   onSomething: 0
-  canActive: 0
-  materials:
+  hightlightMaterials:
   - {fileID: 2100000, guid: 27be284ef4ca1d540a572914380f1fa9, type: 2}
   - {fileID: 2100000, guid: 70a5ddbb12adcd348ae989559f5d616f, type: 2}
   - {fileID: 2100000, guid: 27be284ef4ca1d540a572914380f1fa9, type: 2}
   - {fileID: 2100000, guid: 70a5ddbb12adcd348ae989559f5d616f, type: 2}
-  type: 5
+  objectType: 5
 --- !u!1 &2925025516699368723
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +99,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2583966233634400169}
-  - component: {fileID: 4722191791671800519}
+  - component: {fileID: 2731059160161086580}
   m_Layer: 0
   m_Name: Tomato_Whole
   m_TagString: Ingredient
@@ -110,12 +117,13 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 16.48, y: 0, z: -0.06}
   m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6307497327328009953}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4722191791671800519
+--- !u!114 &2731059160161086580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,7 +132,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2925025516699368723}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d47c89e9ec0f2e9478409cf545c9b035, type: 3}
+  m_Script: {fileID: 11500000, guid: 57770054d41265d40ac3f145f8b8cc67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4461515266875544464
@@ -157,6 +165,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3289461300042815339}
   m_Father: {fileID: 2583966233634400169}
@@ -181,6 +190,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
