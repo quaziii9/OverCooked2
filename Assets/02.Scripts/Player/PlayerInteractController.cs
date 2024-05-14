@@ -420,11 +420,6 @@ public class PlayerInteractController : MonoBehaviour
         //SetPositionbetweenPlayerandObject(plateObject);
     }
 
-    private void DropObject()
-    {
-        
-    }
-
     #endregion
 
     public void ChangeState(IPlayerState newState)
