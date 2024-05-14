@@ -1,8 +1,8 @@
 public class FreeState : IPlayerState
 {
-    private PlayerController playerController;
+    private PlayerInteractController playerController;
 
-    public FreeState(PlayerController playerController)
+    public FreeState(PlayerInteractController playerController)
     {
         this.playerController = playerController;
     }

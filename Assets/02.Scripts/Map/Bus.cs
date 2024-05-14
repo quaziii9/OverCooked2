@@ -1,25 +1,28 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 public class Bus : MonoBehaviour
 {
-    [SerializeField]
-    public float speed = 1f;
-    [SerializeField]
-    public float rotspeed = 2f;
+    [Header("Speed")]
+    [SerializeField] private float speed = 1f;
+    [SerializeField] private float rotspeed = 2f;
+
     private Vector3 inputMovement = Vector3.zero;
     private Vector3 move = Vector3.zero;
-    public GameObject busobject;
-    public GameObject rotbusobjdet;
+    
+    public GameObject busObject;
+    public GameObject rotBusObject;
+    public Rigidbody busRigid;
+
     public bool isboost=false;
 
     private void Start()
     {
         isboost = false;
+        busRigid= GetComponent<Rigidbody>();
     }
+
     void Update()
     {
         BusMove();
@@ -36,7 +39,8 @@ public class Bus : MonoBehaviour
 
     public void BusMove()
     {
-        busobject.transform.Translate(move * speed * Time.deltaTime,Space.World);
+        busObject.transform.Translate(move * speed * Time.deltaTime,Space.World);
+        busRigid.AddForce(move * speed * Time.deltaTime, ForceMode.Impulse);
     }
     public void BusRotate()
     {
@@ -44,9 +48,10 @@ public class Bus : MonoBehaviour
         if (move != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(move);
-            rotbusobjdet.transform.rotation = Quaternion.Slerp(rotbusobjdet.transform.rotation, targetRotation, rotspeed * Time.deltaTime);
+            rotBusObject.transform.rotation = Quaternion.Slerp(rotBusObject.transform.rotation, targetRotation, rotspeed * Time.deltaTime);
         }
     }
+
     public void OnBoost()
     {
         if(Input.GetKey(KeyCode.LeftShift))
@@ -59,19 +64,20 @@ public class Bus : MonoBehaviour
             }
         }
     }
+
     IEnumerator BoostCoroutine()
     {
-        Debug.Log("BOost");
+        Debug.Log("Boost");
 
         Rigidbody rb= GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * 20,ForceMode.Impulse);
-        yield return new WaitForSecondsRealtime(0.05f);
-        rb.AddForce(transform.forward * 20);
-        yield return new WaitForSecondsRealtime(0.05f);
-        rb.AddForce(transform.forward * 20);
-        yield return new WaitForSecondsRealtime(0.05f);
-        rb.AddForce(transform.forward * 20);
-        yield return new WaitForSecondsRealtime(0.05f);
+
+        for (int i = 0; i < 4; i++)
+        {
+            rb.AddForce(transform.forward, ForceMode.Impulse);
+            yield return new WaitForSecondsRealtime(0.05f);
+        }
+
         rb.velocity = Vector3.zero;
         isboost = false;
     }

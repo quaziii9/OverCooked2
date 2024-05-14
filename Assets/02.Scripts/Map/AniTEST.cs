@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class AniTEST : MonoBehaviour
 {
-    
-    // ÀÚ½Ä °´Ã¼ÀÇ ¾Ö´Ï¸ŞÀÌÅÍ ÄÄÆ÷³ÍÆ®¸¦ ÀúÀåÇÒ ¹è¿­
+    // ìì‹ ê°ì²´ì˜ ì• ë‹ˆë©”ì´í„° ì»´í¬ë„ŒíŠ¸ë¥¼ ì €ì¥í•  ë°°ì—´
     private Animator[] childAnimators;
 
     void Start()
     {
-        // ¸ğµç ÀÚ½Ä °´Ã¼ÀÇ ¾Ö´Ï¸ŞÀÌÅÍ ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿È
+        // ëª¨ë“  ìì‹ ê°ì²´ì˜ ì• ë‹ˆë©”ì´í„° ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜´
         childAnimators = GetComponentsInChildren<Animator>();
     }
 
     void Update()
     {
-        // Æ¯Á¤ Á¶°ÇÀ» ¸¸Á·ÇÏ¸é ¸ğµç ÀÚ½Ä °´Ã¼ÀÇ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ½ÇÇà½ÃÅ´
-        if (Input.GetKeyDown(KeyCode.Space)) // ¿¹½Ã·Î ½ºÆäÀÌ½º¹Ù¸¦ ´©¸¦ ¶§ ½ÇÇàÇÏµµ·Ï ¼³Á¤
+        // íŠ¹ì • ì¡°ê±´ì„ ë§Œì¡±í•˜ë©´ ëª¨ë“  ìì‹ ê°ì²´ì˜ ì• ë‹ˆë©”ì´ì…˜ì„ ì‹¤í–‰ì‹œí‚´
+        if (Input.GetKeyDown(KeyCode.Space)) // ì˜ˆì‹œë¡œ ìŠ¤í˜ì´ìŠ¤ë°”ë¥¼ ëˆ„ë¥¼ ë•Œ ì‹¤í–‰í•˜ë„ë¡ ì„¤ì •
         {
             PlayChildAnimations();
         }
@@ -25,12 +24,13 @@ public class AniTEST : MonoBehaviour
 
     void PlayChildAnimations()
     {
-      
-            foreach (Animator animator in childAnimators)
-            {
-                animator.SetTrigger("flip");
-            }
+
+        foreach (Animator animator in childAnimators)
+        {
+            animator.SetTrigger("flip");
+        }
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bus"))

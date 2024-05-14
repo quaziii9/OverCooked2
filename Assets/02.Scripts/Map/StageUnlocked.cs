@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
+using UnityEngine.UI;
 
 public class StageUnlocked : MonoBehaviour
 {
@@ -10,6 +10,11 @@ public class StageUnlocked : MonoBehaviour
     public float midScale = 0.5f;
     public float maxScale = 1.0f;   
     public GameObject[] childObjects;
+    public GameObject[] star;
+    //[SerializeField]
+    public int StageNum;
+    public int StarNum;
+    public Sprite YellowStar;
 
     void Start()
     {
@@ -18,51 +23,113 @@ public class StageUnlocked : MonoBehaviour
         {
             childObjects[i] = transform.GetChild(i).gameObject;
         }
+        StarNum = StageManager.Instance.stages[StageNum];
+        SetStar();
+        
+    }
+    private void Update()
+    {
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // ÇØ´ç GameObject¿¡ "Bus" ÅÂ±×°¡ onenterµÇ¸é
+        // í•´ë‹¹ GameObjectì— "Bus" íƒœê·¸ê°€ onenterë˜ë©´
         if (other.CompareTag("Bus"))
         {
             SetChildrenActive(true);
-            foreach (GameObject childObject in childObjects)
-            {
-                //childObject.transform.localScale = Vector3.one;
-                childObject.transform.localScale = new Vector3 (midScale, midScale, midScale);
-            }
+            //foreach (GameObject childObject in childObjects)
+            //{
+            //    //childObject.transform.localScale = Vector3.one;
+            //    childObject.transform.localScale = new Vector3 (midScale, midScale, midScale);
+            //}
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        // ÇØ´ç GameObject¿¡ "Bus" ÅÂ±×°¡ exitµÇ¸é
+        // í•´ë‹¹ GameObjectì— "Bus" íƒœê·¸ê°€ exitë˜ë©´
         if (other.CompareTag("Bus"))
         {
-            // ½ºÄÉÀÏÀ» ÃÖ¼Ò Å©±â·Î ¼³Á¤
-            foreach (GameObject childObject in childObjects)
-            {
-                childObject.transform.localScale = Vector3.one * minScale;
-            }
+            // ìŠ¤ì¼€ì¼ì„ ì¤‘ê°„ í¬ê¸°ë¡œ ì„¤ì •
+            //foreach (GameObject childObject in childObjects)
+            //{
+            //    childObject.transform.localScale = Vector3.one * minScale;
+            //}
 
-            // ÀÚ½Ä GameObjectµéÀ» ºñÈ°¼ºÈ­
+            // ìì‹ GameObjectë“¤ì„ ë¹„í™œì„±í™”
             SetChildrenActive(false);
         }
     }
 
-    // ÀÚ½Ä GameObjectµéÀÇ È°¼ºÈ­ ¿©ºÎ¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+    // ìì‹ GameObjectë“¤ì˜ í™œì„±í™” ì—¬ë¶€ë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
     void SetChildrenActive(bool active)
     {
-        foreach (GameObject childObject in childObjects)
+        if (StageManager.Instance.stages[StageNum] >= 0)//ìŠ¤í…Œì´ì§€ë§¤ë‹ˆì € ë‚´ë¶€ì˜ ìì‹ ì˜ ë²ˆí˜¸ì™€ ë™ì¼í•œ ìŠ¤í…Œì´ì§€ì˜ ê°’ì„ì¡°íšŒ
         {
-            childObject.SetActive(active);
+            foreach (GameObject childObject in childObjects) //ìì‹ë“¤ì„ ì¡°íšŒí•œë’¤ì— childObjectì¤‘ unlockë¥¼ í™œì„±í™”
+            {
+                if (childObject.name == "unlock")
+                {
+                    childObject.SetActive(active);
+
+                    //foreach (Transform child in childObject.transform)
+                    //{
+                    //    if (child.name == "square")
+                    //    {
+                    //        foreach (Transform squareChild in child)
+                    //        {
+                    //            if (squareChild.name == "unlock")
+                    //            {
+                    //                GameObject[] star = new GameObject[squareChild.transform.childCount];
+                    //                for (int i = 0; i < squareChild.transform.childCount; i++)
+                    //                {
+                    //                    Transform ob = squareChild.transform.GetChild(i);
+
+                    //                    star[i] = ob.gameObject;
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
+
+
+                }
+            }
+        }
+        else if (StageManager.Instance.stages[StageNum] <= 0)
+        {
+            foreach (GameObject childObject in childObjects) //ìì‹ë“¤ì„ ì¡°íšŒí•œë’¤ì— childObjectì¤‘ lockë¥¼ í™œì„±í™”
+            {
+                if (childObject.name == "lock")
+                {
+                    childObject.SetActive(active);
+                }
+            }
         }
     }
+
+    void SetStar()
+    {
+        if (StarNum > 0)
+        {
+            {
+                for (int i = 0; i < StarNum; i++)
+                {
+                    Image starSprite = star[i].GetComponent<Image>();
+                    Debug.Log(i);
+                    Debug.Log(StarNum);
+                    starSprite.sprite = YellowStar;
+                }
+            }
+        }
+        
+    }
+
     IEnumerator ScaleDown()
     {
         while (childObjects[0].transform.localScale.magnitude > minScale)
         {
-            // StageUI ÅÂ±×¸¦ °¡Áø ÀÚ½Ä GameObjectµéÀÇ ½ºÄÉÀÏÀ» Ãà¼Ò
+            // StageUI íƒœê·¸ë¥¼ ê°€ì§„ ìì‹ GameObjectë“¤ì˜ ìŠ¤ì¼€ì¼ì„ ì¶•ì†Œ
             foreach (GameObject stageUIObject in childObjects)
             {
                 stageUIObject.transform.localScale -= Vector3.one * scaleSpeed * Time.deltaTime;
@@ -74,10 +141,10 @@ public class StageUnlocked : MonoBehaviour
 
     IEnumerator ScaleUp()
     {
-        // ÃÖ´ë Å©±â¿¡ µµ´ŞÇÒ ¶§±îÁö ¹İº¹
+        // ìµœëŒ€ í¬ê¸°ì— ë„ë‹¬í•  ë•Œê¹Œì§€ ë°˜ë³µ
         while (childObjects[0].transform.localScale.magnitude < maxScale)
         {
-            // StageUI ÅÂ±×¸¦ °¡Áø ÀÚ½Ä GameObjectµéÀÇ ½ºÄÉÀÏÀ» È®´ë
+            // StageUI íƒœê·¸ë¥¼ ê°€ì§„ ìì‹ GameObjectë“¤ì˜ ìŠ¤ì¼€ì¼ì„ í™•ëŒ€
             foreach (GameObject stageUIObject in childObjects)
             {
                 stageUIObject.transform.localScale += Vector3.one * scaleSpeed * Time.deltaTime;
@@ -86,7 +153,4 @@ public class StageUnlocked : MonoBehaviour
             yield return null;
         }
     }
-
-
-
 }
