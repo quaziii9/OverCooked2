@@ -22,6 +22,8 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip UIPop;
     public AudioClip UITick;
     public AudioClip UIStart;
+    public AudioClip screenInUI;
+    public AudioClip screenOutUI;
 
     [Header("Audio Source")]
     public AudioSource BgmAudioSource;
@@ -158,5 +160,15 @@ public class SoundManager : Singleton<SoundManager>
     public void StartPlay()
     {
         EffectAudioSource.PlayOneShot(UIStart);
+    }
+
+    public void ScreenInUI()
+    {
+        EffectAudioSource.PlayOneShot(screenInUI);
+    }
+
+    public void ScreenOutUI()
+    {
+        EffectAudioSource.PlayOneShot(screenOutUI);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
@@ -16,7 +17,7 @@ public class UIManager : Singleton<UIManager>
     [Header("Option")]
     public GameObject settingUI;
     public GameObject stopUI;
-    public GameObject popupBackGroundUI;
+    public GameObject optionBlackUI;
 
     [Header("UnderBar")]
     public GameObject underBarCancle;
@@ -26,19 +27,20 @@ public class UIManager : Singleton<UIManager>
     public Animator shutterAnim;
 
     [Header("MaskTransitionUI")]
-    public GameObject maskInUI; // 크기를 변경할 RectTransform
-    public GameObject maskOutUI; // 크기를 변경할 RectTransform
-    private RectTransform maskInUIRect;
-    private RectTransform maskOutUIRect;
-    private Vector2 maskOutTargetRect = new Vector2(7300, 7300);
-    public float inDuration = 0.3f; // 변화에 걸리는 시간
-    public float outDuration = 0.5f; // 변화에 걸리는 시간
+    public GameObject broccoliMask; // 크기를 변경할 RectTransform
+    public GameObject pineappleMask; // 크기를 변경할 RectTransform
+    private RectTransform broccoliMaskRect;
+    private RectTransform pineappleMaskRect;
+    private Vector2 pineappleOutMaskRect = new Vector2(7300, 7300);
+    public float broccoliInDuration = 0.3f; // 변화에 걸리는 시간
+    public float pineappleOutDuration = 0.5f; // 변화에 걸리는 시간
 
     [Header("Battle")]
     public GameObject battleUI;
 
     [Header("ExitLobbyUI")]
     public GameObject exitLobbyUI;
+    public GameObject exitLobbyBlackUI;
 
     public bool maskInEnd;
     public bool maskOutEnd;
@@ -57,28 +59,28 @@ public class UIManager : Singleton<UIManager>
 
     public void SettingOn()
     {
-        popupBackGroundUI.SetActive(true);
+        optionBlackUI.SetActive(true);
         settingUI.SetActive(true);
         //isSetting = true;
     }
 
     public void SeetingOff()
     {
-        popupBackGroundUI.SetActive(false);
+        optionBlackUI.SetActive(false);
         settingUI.SetActive(false);
         //isSetting = false;
     }
 
     public void StopUIOn()
     {
-        popupBackGroundUI.SetActive(true);
+        optionBlackUI.SetActive(true);
         stopUI.SetActive(true);
        // isExit = true;
     }
 
     public void StopUIOff()
     {
-        popupBackGroundUI.SetActive(false);
+        optionBlackUI.SetActive(false);
         stopUI.SetActive(false);
         // isExit = false;
     }
@@ -142,27 +144,31 @@ public class UIManager : Singleton<UIManager>
 
 
     // PopUpIn -> UI팝업 띄우기 -> PopUpOut 
-    #region Scene Change UI
+    #region Mask InOut UI
    
-    public void MaskInUI()
+    public void MaskInUI(GameObject inMask, RectTransform inMaskRect, float Duration)
     {
-        maskInUI.SetActive(true);
-        maskInUIRect = maskInUI.GetComponent<RectTransform>();
-        StartCoroutine(MaskInOut(maskInUIRect, Vector2.zero, inDuration));
+        SoundManager.Instance.ScreenInUI();
+        inMask.SetActive(true);
+        inMaskRect = inMask.GetComponent<RectTransform>();
+        StartCoroutine(MaskInOut(inMaskRect, Vector2.zero, Duration, () => maskInEnd = true));
         maskInEnd = true;
     }
 
-    public void MaskOutUI()
+    public void MaskOutUI(GameObject inMask, GameObject outMask, RectTransform outMaskRect, Vector2 targetRect ,float Duration)
     {
-        maskInUI.SetActive(false);
-        maskOutUI.SetActive(true);
-        maskOutUIRect = maskOutUI.GetComponent<RectTransform>();
-        StartCoroutine(MaskInOut(maskOutUIRect, maskOutTargetRect, outDuration));
-
-        maskOutEnd = true;
+        SoundManager.Instance.ScreenOutUI();
+        inMask.SetActive(false);
+        outMask.SetActive(true);
+        outMaskRect = outMask.GetComponent<RectTransform>();
+        StartCoroutine(MaskInOut(outMaskRect, targetRect, Duration, () =>
+        {
+            maskOutEnd = true;
+            outMask.SetActive(false);
+        }));
     }
 
-    IEnumerator MaskInOut(RectTransform rt, Vector2 toSize, float time)
+    IEnumerator MaskInOut(RectTransform rt, Vector2 toSize, float time, System.Action onComplete)
     {
         Vector2 fromSize = rt.sizeDelta;
         float elapsedTime = 0f;
@@ -175,34 +181,36 @@ public class UIManager : Singleton<UIManager>
         }
 
         rt.sizeDelta = toSize; // 최종 크기 설정
+        onComplete?.Invoke(); // 완료 시 콜백 호출
     }
 
     #endregion
 
+
+    #region EnterBattleUI
     public void EnterBattleUI()
     {
-        MaskInUI();
-        if(maskInEnd == true) Invoke("BattleUI", 2F);
-
-        if (maskOutEnd == true) maskOutUI.SetActive(false);
+        MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration);
+        if(maskInEnd == true) Invoke("BattleUI", 2F);    
     }
 
     public void BattleUI()
     {
         battleUI.SetActive(true);
-        MaskOutUI();
-        //battleIn = true;
+        MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleOutDuration);
     }
+
+    #endregion
 
     public void ExitLobbyUIOn()
     {
-        popupBackGroundUI.SetActive(true);
+        exitLobbyBlackUI.SetActive(true);
         exitLobbyUI.SetActive(true);
     }
 
     public void ExitLobbyUIOff()
     {
-        popupBackGroundUI.SetActive(false);
+        exitLobbyBlackUI.SetActive(false);
         exitLobbyUI.SetActive(false);
     }
 
