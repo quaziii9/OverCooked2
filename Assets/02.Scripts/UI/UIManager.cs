@@ -1,6 +1,5 @@
 using System.Collections;
 using TMPro;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,8 +49,8 @@ public class UIManager : Singleton<UIManager>
     public TextMeshProUGUI resolutionText;
     public GameObject fullScreenButton;
     public GameObject fullScreenCheck;
-    public bool fullScreen = false;
-    public bool settingFullScreen = false;
+    public bool windowScreen = true;
+    public bool settingWindowScreen = true;
     public int resolutionArrNum = 4;
     public int settingResolutionArrNum = 4;
     public string[] resolutionTextArr = new string[] { "1280 x 720", "1280 x 800", "1680 x 1050", "1920 x 1080", "1920 x 1200", "2560 x 1600", "3072 x 1920" };
@@ -64,14 +63,13 @@ public class UIManager : Singleton<UIManager>
     public void Start()
     {
         resolutionText.text = resolutionTextArr[resolutionArrNum];
-        fullScreenCheck.SetActive(false);
+        fullScreenCheck.SetActive(windowScreen);
     }
 
     private void Update()
     {
         //if(!isSetting && !isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOn();
         //if (!isSetting && isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOff();
-
     }
 
     #region Intro UI
@@ -274,28 +272,29 @@ public class UIManager : Singleton<UIManager>
     public void ResolutionChange()
     {
         settingResolutionArrNum = resolutionArrNum;
+        settingWindowScreen = windowScreen;
         switch(resolutionArrNum)
         {
             case 0:
-                Screen.SetResolution(1280, 720, fullScreen);
+                Screen.SetResolution(1280, 720, !windowScreen);
                 break;
             case 1:
-                Screen.SetResolution(1280, 800, fullScreen);
+                Screen.SetResolution(1280, 800, !windowScreen);
                 break;
             case 2:
-                Screen.SetResolution(1680, 1050, fullScreen);
+                Screen.SetResolution(1680, 1050, !windowScreen);
                 break;
             case 3:
-                Screen.SetResolution(1920, 1080, fullScreen);
+                Screen.SetResolution(1920, 1080, !windowScreen);
                 break;
             case 4:
-                Screen.SetResolution(1920, 1200, fullScreen);
+                Screen.SetResolution(1920, 1200, !windowScreen);
                 break;
             case 5:
-                Screen.SetResolution(2560, 1600, fullScreen);
+                Screen.SetResolution(2560, 1600, !windowScreen);
                 break;
             case 6:
-                Screen.SetResolution(3070, 1920, fullScreen);
+                Screen.SetResolution(3070, 1920, !windowScreen);
                 break;
         }
         
@@ -305,13 +304,12 @@ public class UIManager : Singleton<UIManager>
     {
         resolutionArrNum = settingResolutionArrNum;
         resolutionText.text = resolutionTextArr[resolutionArrNum];
-        fullScreen = settingFullScreen;
-        fullScreenCheck.SetActive(fullScreen);
+        windowScreen = settingWindowScreen;
+        fullScreenCheck.SetActive(windowScreen);
     }
     public void OnClickFullScreenButton()
     {
-        fullScreen = !fullScreen;
-            fullScreenCheck.SetActive(fullScreen);
-
+        windowScreen = !windowScreen;
+            fullScreenCheck.SetActive(windowScreen);
     }
 }
