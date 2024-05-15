@@ -17,7 +17,7 @@ public class UIManager : Singleton<UIManager>
     [Header("Option")]
     public GameObject settingUI;
     public GameObject stopUI;
-    public GameObject popupBackGroundUI;
+    public GameObject optionBlackUI;
 
     [Header("UnderBar")]
     public GameObject underBarCancle;
@@ -40,6 +40,7 @@ public class UIManager : Singleton<UIManager>
 
     [Header("ExitLobbyUI")]
     public GameObject exitLobbyUI;
+    public GameObject exitLobbyBlackUI;
 
     public bool maskInEnd;
     public bool maskOutEnd;
@@ -58,28 +59,28 @@ public class UIManager : Singleton<UIManager>
 
     public void SettingOn()
     {
-        popupBackGroundUI.SetActive(true);
+        optionBlackUI.SetActive(true);
         settingUI.SetActive(true);
         //isSetting = true;
     }
 
     public void SeetingOff()
     {
-        popupBackGroundUI.SetActive(false);
+        optionBlackUI.SetActive(false);
         settingUI.SetActive(false);
         //isSetting = false;
     }
 
     public void StopUIOn()
     {
-        popupBackGroundUI.SetActive(true);
+        optionBlackUI.SetActive(true);
         stopUI.SetActive(true);
        // isExit = true;
     }
 
     public void StopUIOff()
     {
-        popupBackGroundUI.SetActive(false);
+        optionBlackUI.SetActive(false);
         stopUI.SetActive(false);
         // isExit = false;
     }
@@ -147,6 +148,7 @@ public class UIManager : Singleton<UIManager>
    
     public void MaskInUI(GameObject inMask, RectTransform inMaskRect, float Duration)
     {
+        SoundManager.Instance.ScreenInUI();
         inMask.SetActive(true);
         inMaskRect = inMask.GetComponent<RectTransform>();
         StartCoroutine(MaskInOut(inMaskRect, Vector2.zero, Duration, () => maskInEnd = true));
@@ -155,6 +157,7 @@ public class UIManager : Singleton<UIManager>
 
     public void MaskOutUI(GameObject inMask, GameObject outMask, RectTransform outMaskRect, Vector2 targetRect ,float Duration)
     {
+        SoundManager.Instance.ScreenOutUI();
         inMask.SetActive(false);
         outMask.SetActive(true);
         outMaskRect = outMask.GetComponent<RectTransform>();
@@ -201,13 +204,13 @@ public class UIManager : Singleton<UIManager>
 
     public void ExitLobbyUIOn()
     {
-        popupBackGroundUI.SetActive(true);
+        exitLobbyBlackUI.SetActive(true);
         exitLobbyUI.SetActive(true);
     }
 
     public void ExitLobbyUIOff()
     {
-        popupBackGroundUI.SetActive(false);
+        exitLobbyBlackUI.SetActive(false);
         exitLobbyUI.SetActive(false);
     }
 
