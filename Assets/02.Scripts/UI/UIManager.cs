@@ -44,7 +44,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject exitLobbyBlackUI;
 
     private bool maskInEnd;
-    private bool maskOutEnd;
+    //private bool maskOutEnd;
     //private bool isExit = false;
     //private bool isSetting = false;
 
@@ -149,7 +149,7 @@ public class UIManager : Singleton<UIManager>
         outMaskRect = outMask.GetComponent<RectTransform>();
         StartCoroutine(MaskInOut(outMaskRect, targetRect, Duration, () =>
         {
-            maskOutEnd = true;
+            //maskOutEnd = true;
             outMask.SetActive(false);
         }));
     }
@@ -183,12 +183,17 @@ public class UIManager : Singleton<UIManager>
     {
         battleUI.SetActive(true);
         MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleOutDuration);
+        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, "Battle");
+        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
     }
 
     public void BattleUIOff()
     {
         battleUI.SetActive(false);
+        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, "Intro");
+        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
         MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliInDuration);
+       
     }
 
     #endregion
