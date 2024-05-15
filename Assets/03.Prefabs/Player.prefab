@@ -1162,6 +1162,7 @@ GameObject:
   - component: {fileID: 7604232999279904366}
   - component: {fileID: 6353399755794853273}
   - component: {fileID: 1623282265}
+  - component: {fileID: 1138465525}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1258,9 +1259,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2484040779482123671}
-  rb: {fileID: 5265518529961989399}
   moveSpeed: 10
   turnSpeed: 10
+  dashSpeed: 0
+  dashForce: 500
+  dashDuration: 0.5
+  dashCooldown: 0.5
 --- !u!114 &1623282265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1279,11 +1283,31 @@ MonoBehaviour:
   nextInteractObject: {fileID: 0}
   isHolding: 0
   canActive: 0
+  throwPower: {x: 0, y: 2, z: 15}
   idleR: {fileID: 6602487466136167198}
   idleL: {fileID: 1794974379860270053}
   grabR: {fileID: 3731519959740930594}
   grabL: {fileID: 3036346185458243783}
   knife: {fileID: 1870155906328477177}
+--- !u!114 &1138465525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265518529961989418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2637e3e3b9d80924a908f9a752ec29d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 0}
+  dashForce: 6
+  dashDuration: 1
+  allowAllDirections: 1
+  disableGravity: 0
+  resetVel: 1
+  dashCd: 1
 --- !u!1 &5265518530452819521
 GameObject:
   m_ObjectHideFlags: 0
