@@ -32,8 +32,9 @@ public class UIManager : Singleton<UIManager>
     private RectTransform broccoliMaskRect;
     private RectTransform pineappleMaskRect;
     private Vector2 pineappleOutMaskRect = new Vector2(7300, 7300);
-    public float broccoliInDuration = 0.3f; // 변화에 걸리는 시간
-    public float pineappleOutDuration = 0.5f; // 변화에 걸리는 시간
+    private Vector2 broccoliOutMaskRect = new Vector2(4300, 4300);
+    private float broccoliInDuration = 0.3f; // 변화에 걸리는 시간
+    private float pineappleOutDuration = 0.5f; // 변화에 걸리는 시간
 
     [Header("Battle")]
     public GameObject battleUI;
@@ -42,9 +43,8 @@ public class UIManager : Singleton<UIManager>
     public GameObject exitLobbyUI;
     public GameObject exitLobbyBlackUI;
 
-    public bool maskInEnd;
-    public bool maskOutEnd;
-    public bool battleIn;
+    private bool maskInEnd;
+    private bool maskOutEnd;
     //private bool isExit = false;
     //private bool isSetting = false;
 
@@ -87,7 +87,7 @@ public class UIManager : Singleton<UIManager>
     #endregion
 
 
-    #region
+    #region SoundSquares
 
     public void SetBGMSquares(float volumeBGM, GameObject[] BGMSquares)
     {
@@ -129,21 +129,7 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
-    public void ExitGame()
-    {
-
-        #if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPlaying = false;
-        #else
-                    Application.Quit();
-        #endif
-
-    }
-
-
-
-
-    // PopUpIn -> UI팝업 띄우기 -> PopUpOut 
+ 
     #region Mask InOut UI
    
     public void MaskInUI(GameObject inMask, RectTransform inMaskRect, float Duration)
@@ -186,12 +172,11 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
-
     #region EnterBattleUI
     public void EnterBattleUI()
     {
         MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration);
-        if(maskInEnd == true) Invoke("BattleUI", 2F);    
+        if(maskInEnd == true) Invoke("BattleUI", 1.5F);    
     }
 
     public void BattleUI()
@@ -200,7 +185,16 @@ public class UIManager : Singleton<UIManager>
         MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleOutDuration);
     }
 
+    public void BattleUIOff()
+    {
+        battleUI.SetActive(false);
+        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliInDuration);
+    }
+
     #endregion
+
+
+    #region ExitBattleUI
 
     public void ExitLobbyUIOn()
     {
@@ -208,14 +202,31 @@ public class UIManager : Singleton<UIManager>
         exitLobbyUI.SetActive(true);
     }
 
-    public void ExitLobbyUIOff()
+    public void CancleExitLobby()
     {
         exitLobbyBlackUI.SetActive(false);
         exitLobbyUI.SetActive(false);
     }
 
-    public void Enter()
+    public void ExitLobby()
     {
-        battleUI.SetActive(false);
+        exitLobbyBlackUI.SetActive(false);
+        exitLobbyUI.SetActive(false);
+        MaskInUI(pineappleMask, pineappleMaskRect, pineappleOutDuration);
+        if (maskInEnd == true) Invoke("BattleUIOff", 1.5F);
+        //battleUI.SetActive(false);
+    }
+
+    #endregion
+
+    public void ExitGame()
+    {
+
+    #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+    #else
+                    Application.Quit();
+    #endif
+
     }
 }
