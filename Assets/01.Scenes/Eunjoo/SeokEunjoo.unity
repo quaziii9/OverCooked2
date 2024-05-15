@@ -2066,7 +2066,7 @@ GameObject:
   - component: {fileID: 272438090}
   - component: {fileID: 272438089}
   m_Layer: 5
-  m_Name: Fight Lobby Background
+  m_Name: Battle Lobby Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3042,7 +3042,7 @@ GameObject:
   - component: {fileID: 376953320}
   - component: {fileID: 376953319}
   m_Layer: 5
-  m_Name: Popup In
+  m_Name: broccoliMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5159,10 +5159,10 @@ MonoBehaviour:
   underBarCancle: {fileID: 7308605951645431938}
   underBarStop: {fileID: 5719555851397800729}
   shutterAnim: {fileID: 828961695}
-  maskInUI: {fileID: 376953317}
-  maskOutUI: {fileID: 666488939}
-  inDuration: 0.3
-  outDuration: 0.5
+  broccoliMask: {fileID: 376953317}
+  pineappleMask: {fileID: 666488939}
+  broccoliInDuration: 0.3
+  pineappleOutDuration: 0.5
   battleUI: {fileID: 1282710794}
   exitLobbyUI: {fileID: 0}
   maskInEnd: 0
@@ -5213,7 +5213,7 @@ GameObject:
   - component: {fileID: 666488941}
   - component: {fileID: 666488940}
   m_Layer: 5
-  m_Name: Popup Out
+  m_Name: pineappleMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10236,7 +10236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1282710795}
   m_Layer: 5
-  m_Name: Fight UI
+  m_Name: Battle UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
