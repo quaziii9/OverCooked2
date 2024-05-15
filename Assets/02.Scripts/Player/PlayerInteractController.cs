@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 using static UnityEngine.RuleTile.TilingRuleOutput;
+using Transform = UnityEngine.Transform;
 
 public class PlayerInteractController : MonoBehaviour
 {
@@ -26,7 +27,10 @@ public class PlayerInteractController : MonoBehaviour
     // 변경되는 Bool값
     [SerializeField] public bool isHolding = false;
     // 재료를 제외한 모든 오브젝트 활성화 확인값
-    [SerializeField] public bool canActive = false; 
+    [SerializeField] public bool canActive = false;
+
+    // 던지는 힘
+    [SerializeField] private Vector3 throwPower;
 
     [Header("Grab Object Control")]
     [SerializeField] private GameObject idleR;
@@ -42,11 +46,18 @@ public class PlayerInteractController : MonoBehaviour
         holdState = new HoldState(this);
         currentState = freeState;  // 초기 상태 설정
     }
-    
-    #region 인터렉션 부분
 
+    private void Update()
+    {
+        SetHand();
+    }
+
+    #region 인터렉션 부분
+    public void ChangeState(IPlayerState newState)
+    {
+        currentState = newState;
+    }
     #endregion
-    
 
     #region CatchOrKnockback,CookOrThrow, PickupOrPlace
     public void CatchOrKnockback()
@@ -63,16 +74,16 @@ public class PlayerInteractController : MonoBehaviour
     }
     #endregion
 
-    private void Update()
-    {
-        SetHand();
-    }
 
     #region OnCookOrThrow
     public void OnCookOrThrow(InputValue inputValue)
     {
         Debug.Log("OnCookOrThrow");
-        if (ShouldStartCutting())
+        if (isHolding && CanThrowIngredient())
+        {
+            ThrowIngredient();
+        }
+        else if (ShouldStartCutting() && objectHighlight.objectType == ObjectHighlight.ObjectType.Board)
         {
             StartCuttingProcess();
         }
@@ -102,6 +113,71 @@ public class PlayerInteractController : MonoBehaviour
             anim.SetTrigger("startCut");
             cuttingBoard.PauseSlider(false);
         }
+    }
+
+    bool CanThrowIngredient()
+    {
+        return transform.GetChild(1).GetComponent<Ingredient>() == null;
+    }
+
+    void ThrowIngredient()
+    {
+        PlayThrowSound();
+        SetThrowAnimation();
+        UpdateHoldingStatus(false);
+        AdjustIngredientPosition();
+        ApplyThrowForce();
+        EnableIngredientCollision();
+        ReleaseIngredient();
+    }
+
+    void PlayThrowSound()
+    {
+        //SoundManager.instance.PlayEffect("throw");
+    }
+
+    void SetThrowAnimation()
+    {
+        anim.SetTrigger("throw");
+    }
+
+    void UpdateHoldingStatus(bool status)
+    {
+        isHolding = status;
+        anim.SetBool("isHolding", isHolding);
+    }
+
+    void AdjustIngredientPosition()
+    {
+        Transform ingredient = GetIngredientTransform();
+        ingredient.localPosition += new Vector3(0, 0.3f, 0);
+    }
+
+    Transform GetIngredientTransform()
+    {
+        return transform.GetChild(1).GetChild(0);
+    }
+
+    void ApplyThrowForce()
+    {
+        Transform ingredient = GetIngredientTransform();
+        Rigidbody ingreRigid = ingredient.GetComponent<Rigidbody>();
+        Vector3 dir = transform.TransformDirection(throwPower);
+        ingreRigid.AddForce(dir, ForceMode.Impulse);
+    }
+
+    void EnableIngredientCollision()
+    {
+        Transform ingredient = GetIngredientTransform();
+        MeshCollider ingreCollider = ingredient.GetComponent<MeshCollider>();
+        ingreCollider.isTrigger = false;
+        Rigidbody ingreRigid = ingredient.GetComponent<Rigidbody>();
+        ingreRigid.constraints = RigidbodyConstraints.None;
+    }
+
+    void ReleaseIngredient()
+    {
+        transform.GetChild(1).SetParent(transform.parent);
     }
     #endregion
 
@@ -422,11 +498,6 @@ public class PlayerInteractController : MonoBehaviour
 
     #endregion
 
-    public void ChangeState(IPlayerState newState)
-    {
-        currentState = newState;
-    }
-
     #region OnTriggerEnter
     private void OnTriggerEnter(Collider other)
     {
@@ -672,6 +743,7 @@ public class PlayerInteractController : MonoBehaviour
     }
     #endregion
 
+    #region SetPosition
     private void SetHand()
     {
         if (isHolding) //뭘 집었다면 손 접기
@@ -725,4 +797,6 @@ public class PlayerInteractController : MonoBehaviour
                 break;
         }
     }
+    #endregion
+
 }
