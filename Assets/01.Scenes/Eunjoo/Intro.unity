@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18158135, g: 0.22341505, b: 0.28529692, a: 1}
+  m_IndirectSpecularColor: {r: 0.18158162, g: 0.22341546, b: 0.28529748, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1616,14 +1616,16 @@ MonoBehaviour:
   settingBGM: 0.2
   settingEffect: 0.2
   introBGM: {fileID: 8300000, guid: 01b1aaca2935834478c244b44a7ce6ee, type: 3}
+  battleBGM: {fileID: 0}
   UISelect: {fileID: 8300000, guid: 7a2bb122907680a458abe20e7304ed4e, type: 3}
   UIPop: {fileID: 8300000, guid: 6eef09767a920754b86996449b28c999, type: 3}
   UITick: {fileID: 8300000, guid: d14262497474d834d98b6d9b1dacca12, type: 3}
   UIStart: {fileID: 8300000, guid: 0b086d21fe987cb46b1a568f39271434, type: 3}
   screenInUI: {fileID: 8300000, guid: c0a59799b6003bd448c54045833f8616, type: 3}
   screenOutUI: {fileID: 8300000, guid: 90035643d5caa5e4d8182ebd36270897, type: 3}
-  BgmAudioSource: {fileID: 4103381849058424483}
-  EffectAudioSource: {fileID: 4103381848875900730}
+  bgmAudioSource: {fileID: 4103381849058424483}
+  bgmChangeAudioSource: {fileID: 0}
+  effectAudioSource: {fileID: 4103381848875900730}
   musicGroup: {fileID: 0}
   effectGroup: {fileID: 0}
 --- !u!1 &163268962
@@ -3279,7 +3281,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 22fd50941765da940ac481fe7db4f356, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f87aa1555eacf3d45980c6aea66bf442, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5254,14 +5256,9 @@ MonoBehaviour:
   shutterAnim: {fileID: 828961695}
   broccoliMask: {fileID: 376953317}
   pineappleMask: {fileID: 666488939}
-  broccoliInDuration: 0.3
-  pineappleOutDuration: 0.5
   battleUI: {fileID: 1282710794}
   exitLobbyUI: {fileID: 2008375746}
   exitLobbyBlackUI: {fileID: 551890443}
-  maskInEnd: 0
-  maskOutEnd: 0
-  battleIn: 0
 --- !u!1 &665619998
 GameObject:
   m_ObjectHideFlags: 0
@@ -6149,7 +6146,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 22fd50941765da940ac481fe7db4f356, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f87aa1555eacf3d45980c6aea66bf442, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6440,7 +6437,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6ad684648fa79a44ea444cb5323e7b81, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8452de4792f0d57428a8886b44d4965a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6644,6 +6641,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2480274425022927364, guid: b1e38e40253bc3e47b90ad7971347a47,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f7308dff4483d0744be0fd8361621ded, type: 2}
     - target: {fileID: 5272129735475820211, guid: b1e38e40253bc3e47b90ad7971347a47,
         type: 3}
       propertyPath: m_Name
@@ -6714,6 +6716,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6755199759688569713, guid: b1e38e40253bc3e47b90ad7971347a47,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f7308dff4483d0744be0fd8361621ded, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1e38e40253bc3e47b90ad7971347a47, type: 3}
 --- !u!1 &850746436
@@ -6896,7 +6903,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6ad684648fa79a44ea444cb5323e7b81, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8452de4792f0d57428a8886b44d4965a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10756,6 +10763,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 692837296668181346, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 692837296668181346, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: 692837296668181346, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 113.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 692837296668181346, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -11551,7 +11573,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -55, y: 55}
+  m_AnchoredPosition: {x: -55, y: 70}
   m_SizeDelta: {x: 1200, y: 120}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1398520246
