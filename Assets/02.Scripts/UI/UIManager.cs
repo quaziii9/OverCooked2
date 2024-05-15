@@ -1,6 +1,8 @@
 using System.Collections;
+using TMPro;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -43,10 +45,27 @@ public class UIManager : Singleton<UIManager>
     public GameObject exitLobbyUI;
     public GameObject exitLobbyBlackUI;
 
+    [Header("Resolution")]
+    
+    public TextMeshProUGUI resolutionText;
+    public GameObject fullScreenButton;
+    public GameObject fullScreenCheck;
+    public bool fullScreen = false;
+    public bool settingFullScreen = false;
+    public int resolutionArrNum = 4;
+    public int settingResolutionArrNum = 4;
+    public string[] resolutionTextArr = new string[] { "1280 x 720", "1280 x 800", "1680 x 1050", "1920 x 1080", "1920 x 1200", "2560 x 1600", "3072 x 1920" };
+
     private bool maskInEnd;
     //private bool maskOutEnd;
     //private bool isExit = false;
     //private bool isSetting = false;
+
+    public void Start()
+    {
+        resolutionText.text = resolutionTextArr[resolutionArrNum];
+        fullScreenCheck.SetActive(false);
+    }
 
     private void Update()
     {
@@ -232,6 +251,67 @@ public class UIManager : Singleton<UIManager>
     #else
                     Application.Quit();
     #endif
+
+    }
+
+
+    public void ResolutionRightButton()
+    {
+        resolutionArrNum= (resolutionArrNum +1) % 7;
+        resolutionText.text = resolutionTextArr[resolutionArrNum];
+    }
+
+    public void ResolutionLeftButton()
+    {
+        if (resolutionArrNum == 0) resolutionArrNum = 6;
+        else
+            resolutionArrNum = (resolutionArrNum - 1) % 7;
+
+        resolutionText.text = resolutionTextArr[resolutionArrNum];
+    }
+
+
+    public void ResolutionChange()
+    {
+        settingResolutionArrNum = resolutionArrNum;
+        switch(resolutionArrNum)
+        {
+            case 0:
+                Screen.SetResolution(1280, 720, fullScreen);
+                break;
+            case 1:
+                Screen.SetResolution(1280, 800, fullScreen);
+                break;
+            case 2:
+                Screen.SetResolution(1680, 1050, fullScreen);
+                break;
+            case 3:
+                Screen.SetResolution(1920, 1080, fullScreen);
+                break;
+            case 4:
+                Screen.SetResolution(1920, 1200, fullScreen);
+                break;
+            case 5:
+                Screen.SetResolution(2560, 1600, fullScreen);
+                break;
+            case 6:
+                Screen.SetResolution(3070, 1920, fullScreen);
+                break;
+        }
+        
+    }
+
+    public void CancleChange()
+    {
+        resolutionArrNum = settingResolutionArrNum;
+        resolutionText.text = resolutionTextArr[resolutionArrNum];
+        fullScreen = settingFullScreen;
+        fullScreenCheck.SetActive(fullScreen);
+    }
+    public void OnClickFullScreenButton()
+    {
+        fullScreen = !fullScreen;
+            fullScreenCheck.SetActive(fullScreen);
 
     }
 }
