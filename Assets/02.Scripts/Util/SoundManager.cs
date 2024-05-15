@@ -5,7 +5,7 @@ using UnityEngine.Audio;
 
 public class SoundManager : Singleton<SoundManager>
 {
-    [SerializeField] private GameObject[] BGMSquares; //음량 네모네모
+    [SerializeField] private GameObject[] BGMSquares; // 음량 네모네모
     [SerializeField] private GameObject[] effectSquares;
 
     [Header("Volume")]
