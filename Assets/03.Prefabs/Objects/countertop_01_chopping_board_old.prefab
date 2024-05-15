@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7140796322875416301}
   m_Layer: 0
-  m_Name: countertop_01_chopping_board_old
+  m_Name: Countertop_01_chopping_board_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
