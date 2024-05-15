@@ -79,14 +79,30 @@ public class PlayerInteractController : MonoBehaviour
     public void OnCookOrThrow(InputValue inputValue)
     {
         Debug.Log("OnCookOrThrow");
-        if (isHolding && CanThrowIngredient())
+        if (checkInteractObject())
         {
-            ThrowIngredient();
+            if(ShouldStartCutting())
+                StartCuttingProcess();
         }
-        else if (ShouldStartCutting() && objectHighlight.objectType == ObjectHighlight.ObjectType.Board)
+        else
         {
-            StartCuttingProcess();
+            if (isHolding && CanThrowIngredient())
+            {
+                ThrowIngredient();
+            }
         }
+    }
+
+    bool checkInteractObject()
+    {
+        if (interactObject != null)
+        {
+            if (interactObject.GetComponent<ObjectHighlight>().objectType == ObjectHighlight.ObjectType.Ingredient)
+                return false;
+            else
+                return true;
+        }
+        return false;
     }
 
     bool ShouldStartCutting()
