@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2428906063573497243}
-  - component: {fileID: 6262642897208766146}
   m_Layer: 0
   m_Name: Potato
   m_TagString: Ingredient
@@ -27,23 +26,12 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 20.3, y: 0, z: -12}
   m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7777659391125940415}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6262642897208766146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3098166063442390817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d47c89e9ec0f2e9478409cf545c9b035, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3489502715910222622
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,8 +42,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3489502715910222621}
   - component: {fileID: 3489502715910222618}
-  - component: {fileID: 3489502715910222619}
-  - component: {fileID: 3489502715910222620}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Ingredient
@@ -73,6 +59,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7777659391125940415}
   m_RootOrder: 0
@@ -90,43 +77,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.3, z: 0}
---- !u!114 &3489502715910222619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3489502715910222622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0713fb8c0c7de4348b118c07896a2eb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hand: 7
-  isOnDesk: 1
-  isCooked: 0
-  cookedIngredient: {fileID: -1919992762434619352, guid: 28cf59aaff89aae4395a2b313b476348, type: 3}
-  cookedFish: {fileID: 0}
---- !u!114 &3489502715910222620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3489502715910222622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 45b7f7ddd432fa04791fd829a1c5a84e, type: 2}
-  - {fileID: 2100000, guid: 5734aaf266ac4fe4b8825db91fa38186, type: 2}
-  - {fileID: 2100000, guid: 45b7f7ddd432fa04791fd829a1c5a84e, type: 2}
-  - {fileID: 2100000, guid: 5734aaf266ac4fe4b8825db91fa38186, type: 2}
-  type: 5
 --- !u!1 &7477117404526446167
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,6 +107,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3489502715910222621}
   m_Father: {fileID: 2428906063573497243}
@@ -181,6 +132,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
