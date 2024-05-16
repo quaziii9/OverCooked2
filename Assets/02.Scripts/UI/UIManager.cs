@@ -149,14 +149,29 @@ public class UIManager : Singleton<UIManager>
  
     #region Mask InOut UI
    
-    public void MaskInUI(GameObject inMask, RectTransform inMaskRect, float Duration)
+    public void MaskInUI(GameObject inMask, RectTransform inMaskRect, float Duration, string goTo)
     {
         maskInEnd = false;
         SoundManager.Instance.ScreenInUI();
         inMask.SetActive(true);
         inMaskRect = inMask.GetComponent<RectTransform>();
-        StartCoroutine(MaskInOut(inMaskRect, Vector2.zero, Duration, () => maskInEnd = true));
-        maskInEnd = true;
+        StartCoroutine(MaskInOut(inMaskRect, Vector2.zero, Duration, () =>
+        {
+            maskInEnd = true;
+            switch(goTo)
+            {
+                case "BattleUI":
+                    Invoke("BattleUI", 2F);
+                    break;
+                case "BattleUIOff":
+                    Invoke("BattleUIOff", 2F);
+                    break;
+                case "GoToBusMap":
+                    Invoke("GoToBusMap",0f);
+                    break;
+            }
+            
+        }));
     }
 
     public void MaskOutUI(GameObject inMask, GameObject outMask, RectTransform outMaskRect, Vector2 targetRect ,float Duration)
@@ -179,6 +194,7 @@ public class UIManager : Singleton<UIManager>
 
         while (elapsedTime < time)
         {
+            Debug.Log(elapsedTime);
             rt.sizeDelta = Vector2.Lerp(fromSize, toSize, (elapsedTime / time));
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -193,8 +209,8 @@ public class UIManager : Singleton<UIManager>
     #region EnterBattleUI
     public void EnterBattleUI()
     {
-        MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration);
-        if(maskInEnd == true) Invoke("BattleUI", 1.5F);    
+        MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration, "BattleUI");
+       // if(maskInEnd == true) Invoke("BattleUI", 1.5F);    
     }
 
     public void BattleUI()
@@ -235,8 +251,8 @@ public class UIManager : Singleton<UIManager>
     {
         exitLobbyBlackUI.SetActive(false);
         exitLobbyUI.SetActive(false);
-        MaskInUI(pineappleMask, pineappleMaskRect, pineappleOutDuration);
-        if (maskInEnd == true) Invoke("BattleUIOff", 1.5F);
+        MaskInUI(pineappleMask, pineappleMaskRect, pineappleOutDuration, "BattleUIOff");
+        //if (maskInEnd == true) Invoke("BattleUIOff", 1.5F);
         //battleUI.SetActive(false);
     }
 
@@ -317,11 +333,16 @@ public class UIManager : Singleton<UIManager>
     public void EnterBusMap()
     {
         Debug.Log(maskInEnd);
-        MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration);
+        MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration, "GoToBusMap");
 
         Debug.Log(maskInEnd);
         //if (maskInEnd == true) SceneChangeManager.Instance.ChangeToBusMap();
 
+    }
+
+    public void GoToBusMap()
+    {
+        SceneChangeManager.Instance.ChangeToBusMap();
     }
 
     public void ChangeToBusMapMask()

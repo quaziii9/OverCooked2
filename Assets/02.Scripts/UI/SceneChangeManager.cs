@@ -14,22 +14,26 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     }
 
     public void ChangeToBusMap()
-    {        
-        StartCoroutine(LoadSceneAsyncCoroutine());
+    {
+        //UIManager.Instance.EnterBusMap();
+        //Debug.Log(UIManager.Instance.maskInEnd);
+        //if(UIManager.Instance.maskInEnd == true) Invoke("LoadSceneAsyncCoroutine", 2F);
+       StartCoroutine(LoadSceneAsyncCoroutine());
+
+        
     }
 
     IEnumerator LoadSceneAsyncCoroutine()
     {
-        UIManager.Instance.EnterBusMap();
-
         operation = SceneManager.LoadSceneAsync("Map");
+
 
         operation.allowSceneActivation = false;
 
         while (!operation.isDone)
         {
-            time += Time.time;
-            if (time > 5)
+
+            if (operation.progress >= 0.9f)
             {
                 operation.allowSceneActivation = true;
             }
@@ -37,6 +41,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         }
 
     }
+
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
