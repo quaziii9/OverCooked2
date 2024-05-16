@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Principal;
 using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+using Transform = UnityEngine.Transform;
 
 public class Player2InteractController : MonoBehaviour
 {
@@ -24,7 +27,10 @@ public class Player2InteractController : MonoBehaviour
     // 변경되는 Bool값
     [SerializeField] public bool isHolding = false;
     // 재료를 제외한 모든 오브젝트 활성화 확인값
-    [SerializeField] public bool canActive = false; 
+    [SerializeField] public bool canActive = false;
+
+    // 던지는 힘
+    [SerializeField] private Vector3 throwPower;
 
     [Header("Grab Object Control")]
     [SerializeField] private GameObject idleR;
@@ -33,18 +39,28 @@ public class Player2InteractController : MonoBehaviour
     [SerializeField] private GameObject grabL;
     [SerializeField] private GameObject knife;
 
+    [Header("PlayerInputSystem")]
+    [SerializeField] private GameObject PlayerInputSystem;
+
 
     private void Awake()
     {
         //freeState = new FreeState(this);
         //holdState = new HoldState(this);
-        currentState = freeState;  // 초기 상태 설정
+        //currentState = freeState;  // 초기 상태 설정
     }
-    
-    #region 인터렉션 부분
 
+    private void Update()
+    {
+        SetHand();
+    }
+
+    #region OnSwitch
+    public void OnSwitch(InputValue inputValue)
+    {
+        PlayerInputSystem.GetComponent<PlayerMasterController>().SwitchPlayerComponent();
+    }
     #endregion
-    
 
     #region CatchOrKnockback,CookOrThrow, PickupOrPlace
     public void CatchOrKnockback()
@@ -65,6 +81,121 @@ public class Player2InteractController : MonoBehaviour
     public void OnCookOrThrow(InputValue inputValue)
     {
         Debug.Log("OnCookOrThrow");
+        if (checkInteractObject())
+        {
+            if(ShouldStartCutting())
+                StartCuttingProcess();
+        }
+        else
+        {
+            if (isHolding && CanThrowIngredient())
+            {
+                ThrowIngredient();
+            }
+        }
+    }
+
+    bool checkInteractObject()
+    {
+        if (interactObject != null)
+        {
+            if (interactObject.GetComponent<ObjectHighlight>().objectType == ObjectHighlight.ObjectType.Ingredient)
+                return false;
+            else
+                return true;
+        }
+        return false;
+    }
+
+    bool ShouldStartCutting()
+    {
+        return objectHighlight.objectType == ObjectHighlight.ObjectType.Board &&
+               interactObject.transform.parent.childCount > 2 &&
+               !interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked &&
+               !isHolding;
+    }
+
+    void StartCuttingProcess()
+    {
+        var cuttingBoard = interactObject.transform.GetChild(0).GetComponent<CuttingBoard>();
+
+        if (cuttingBoard._CoTimer == null) // 한번도 실행 안된거면 시작 가능
+        {
+            anim.SetTrigger("startCut");
+            cuttingBoard.Pause = false;
+            cuttingBoard.CuttingTime = 0;
+            cuttingBoard.StartCutting1();
+        }
+        else if (cuttingBoard.Pause) // 실행되다 만거라면
+        {
+            anim.SetTrigger("startCut");
+            cuttingBoard.PauseSlider(false);
+        }
+    }
+
+    bool CanThrowIngredient()
+    {
+        return transform.GetChild(1).GetComponent<Ingredient>() == null;
+    }
+
+    void ThrowIngredient()
+    {
+        PlayThrowSound();
+        SetThrowAnimation();
+        UpdateHoldingStatus(false);
+        AdjustIngredientPosition();
+        ApplyThrowForce();
+        EnableIngredientCollision();
+        ReleaseIngredient();
+    }
+
+    void PlayThrowSound()
+    {
+        SoundManager.Instance.PlayEffect("throwItem");
+    }
+
+    void SetThrowAnimation()
+    {
+        anim.SetTrigger("throw");
+    }
+
+    void UpdateHoldingStatus(bool status)
+    {
+        isHolding = status;
+        anim.SetBool("isHolding", isHolding);
+    }
+
+    void AdjustIngredientPosition()
+    {
+        Transform ingredient = GetIngredientTransform();
+        ingredient.localPosition += new Vector3(0, 0.3f, 0);
+    }
+
+    Transform GetIngredientTransform()
+    {
+        return transform.GetChild(1).GetChild(0);
+    }
+
+    void ApplyThrowForce()
+    {
+        Transform ingredient = GetIngredientTransform();
+        Rigidbody ingreRigid = ingredient.GetComponent<Rigidbody>();
+        Vector3 dir = transform.TransformDirection(throwPower);
+        ingreRigid.AddForce(dir, ForceMode.Impulse);
+    }
+
+    void EnableIngredientCollision()
+    {
+        Transform ingredient = GetIngredientTransform();
+        MeshCollider ingreCollider = ingredient.GetComponent<MeshCollider>();
+        ingreCollider.isTrigger = false;
+        Rigidbody ingreRigid = ingredient.GetComponent<Rigidbody>();
+        ingreRigid.constraints = RigidbodyConstraints.None;
+    }
+
+    void ReleaseIngredient()
+    {
+        transform.GetChild(1).SetParent(transform.parent);
     }
     #endregion
 
@@ -72,17 +203,17 @@ public class Player2InteractController : MonoBehaviour
     public void OnPickupOrPlace(InputValue inputValue)
     {
         ProcessInteraction();
-        SetHand();
+        //SetHand();
     }
 
     private void ProcessInteraction()
     {
         if (interactObject == null && !isHolding) return;
 
-        if(isHolding)
+        if(isHolding && objectHighlight == null)
         {
-            // 뭔가 들고있을때 처리
-            HandleGeneralObjectInteraction();
+            // 뭔가 들고있고 앞에 상호작용 객체가 없을때
+            HoldingItemDropObject();
             return;
         }
 
@@ -91,6 +222,7 @@ public class Player2InteractController : MonoBehaviour
         {
             case ObjectHighlight.ObjectType.CounterTop:
             case ObjectHighlight.ObjectType.Board:
+            case ObjectHighlight.ObjectType.Return:
                 HandleCounterTopOrBoardInteraction();
                 break;
             case ObjectHighlight.ObjectType.Craft:
@@ -99,15 +231,61 @@ public class Player2InteractController : MonoBehaviour
             case ObjectHighlight.ObjectType.Bin:
                 HandleBinInteraction();
                 break;
+            case ObjectHighlight.ObjectType.Station:
+                HandleStationInteraction();
+                break;
             default:
                 HandleGeneralObjectInteraction();
                 break;
         }
     }
 
+    // Station
+    private void HandleStationInteraction()
+    {
+        if (isHolding && transform.GetChild(1).gameObject.GetComponent<Ingredient>() != null 
+            && transform.GetChild(1).gameObject.GetComponent<Ingredient>().type == Ingredient.IngredientType.Plate)
+        {
+            // Handle 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
+            Plates plateComponent = transform.GetChild(1).gameObject.GetComponent<Plates>();  // Plates 컴포넌트를 가져옴
+
+            if (GameManager.instance.CheckMenu(plateComponent.containIngredients))
+            {
+                // 접시의 재료가 메뉴와 일치하면
+                SoundManager.Instance.PlayEffect("right");  // 성공 효과음 재생
+                GameManager.instance.MakeOrder();  // 주문을 만듦
+            }
+            else
+            {
+                // 접시의 재료가 메뉴와 일치하지 않으면
+                SoundManager.Instance.PlayEffect("no");  // 실패 효과음 재생
+                //TriggerFailureEffect();  // 실패 시 빨간색 불 들어오는 함수 호출 (추가 구현 필요)
+            }
+
+            Destroy(transform.GetChild(1).gameObject);  // 접시 전체를 삭제 (추후 재활용을 고려)
+            isHolding = false;  // 아이템을 들고 있는 상태를 해제
+            anim.SetBool("isHolding", isHolding);  // 애니메이션 상태를 업데이트
+            GameManager.instance.PlateReturn();  // 접시 반환 처리
+        }
+
+    }
+
+    // CounterTop, Board
     private void HandleCounterTopOrBoardInteraction()
     {
-        if (canActive && interactObject.GetComponent<ObjectHighlight>().onSomething)
+        
+        if (canActive && isHolding && !objectHighlight.onSomething)
+        {
+            // 내가 뭘 들고있고, 테이블이나 찹핑테이블 위에 없을떄
+            TablePlaceOrDropObject(false);
+        }
+        else if (canActive && isHolding && objectHighlight.onSomething)
+        {
+            // 내가 뭘 들고있고, 테이블이나 찹핑테이블 리턴 위에 있을때
+            Debug.Log("뭔가 있냐?");
+            TablePlaceOrDropObject(true);
+        }
+        else if (canActive && interactObject.GetComponent<ObjectHighlight>().onSomething)
         {
             GameObject handleThing = interactObject.transform.parent.GetChild(2).gameObject;
 
@@ -118,21 +296,16 @@ public class Player2InteractController : MonoBehaviour
             }
             else
             {
+                Debug.Log($"handleThing.name : {handleThing.name}");
                 TryPickupObject(handleThing);
             }
         }
-        else if (canActive && !objectHighlight.onSomething && isHolding)
-        {
-            PlaceOrDropObject(false);
-        }
-        else if (canActive && isHolding && objectHighlight.onSomething)
-        {
-            PlaceOrDropObject(true);
-        }
     }
-
+    // Craft
     private void HandleCraftInteraction()
     {
+        Debug.Log($"objectHighlight.onSomething : {objectHighlight.onSomething}");
+        // Craft 위에 뭔가 없을때
         if (!objectHighlight.onSomething)
         {
             if (!isHolding)
@@ -141,15 +314,15 @@ public class Player2InteractController : MonoBehaviour
             }
             else
             {
-                PlaceOrDropObject(false);
+                //PlaceOrDropObject(false);
             }
         }
-        else if (!isHolding)
+        else if (!isHolding) // 테이블 위에 뭔가 있는데, 손에 든게 아무것도 없을때
         {
             PickupFromCraft();
         }
     }
-
+    // Bin
     private void HandleBinInteraction()
     {
         if (isHolding && transform.GetChild(1).GetComponent<Ingredient>()?.type == Ingredient.IngredientType.Plate)
@@ -168,36 +341,108 @@ public class Player2InteractController : MonoBehaviour
         {
             PickupIngredient();
         }
-        else if (isHolding)
+        else if (!isHolding && interactObject.CompareTag("Plate")) 
         {
-            PlaceOrDropObject(false);
+            PickupPlate();
         }
+        //else if (isHolding)
+        //{
+        //
+        //}
+    }
+
+    void HoldingItemDropObject()
+    {
+        // 떨어트리기 로직 상세 구현 필요
+        GameObject handlingThing = transform.GetChild(1).gameObject;
+        // 객체를 내려놓을 때의 로직
+        Debug.Log($"handlingThing name : {handlingThing.name}");
+
+        if (handlingThing.CompareTag("Plate"))
+        {
+            // 떨구는 객체가 접시면.
+            //Debug.Log("접시 내려");
+            handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        }
+        else
+        {
+            handlingThing.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            handlingThing.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
+        }
+
+        handlingThing.transform.SetParent(null); // 부모 설정 해제
+        anim.SetBool("isHolding", false);
+        isHolding = false;
     }
 
     private void TryPickupObject(GameObject handleThing)
     {
-        //SoundManager.instance.PlayEffect("take");
+        SoundManager.Instance.PlayEffect("take");
         objectHighlight.onSomething = false;
-        isHolding = true;
-        anim.SetBool("isHolding", isHolding);
+        //isHolding = true;
+        //anim.SetBool("isHolding", isHolding);
         HandleObject(handleThing);
     }
 
-    private void PlaceOrDropObject(bool drop)
+    // 내가 뭔가를 들고있을때
+    // true 테이블 위에 뭔가 있음 , false 테이블 위에 뭔가 없음
+    private void TablePlaceOrDropObject(bool drop)
     {
-        //SoundManager.instance.PlayEffect(drop ? "put" : "place");
+        SoundManager.Instance.PlayEffect(drop ? "put" : "put");
         if (drop)
         {
-            DropObject(); // 로직 상세 구현 필요
+            // true 테이블 위에 뭔가 있는데 내가 가진게 접시고, 음식이면 담음
+            if (CanPlaceIngredient())
+            {
+                PlaceIngredient();
+            }
         }
         else
         {
-            // 땅에 놓기 로직 구현
+            // false 테이블 위에 뭔가 없음 => 놓기.
             GameObject handlingThing = transform.GetChild(1).gameObject;
-            //Debug.Log($"handlingThing : {handlingThing.name}");
-            //objectHighlight.onSomething = true;
-            //isHolding = false;
+            Debug.Log($"handlingThing.name : {handlingThing.name}");
             HandleObject(handlingThing, false);
+        }
+    }
+
+    private bool CanPlaceIngredient()
+    {
+        return canActive && objectHighlight.onSomething
+               && interactObject.transform.parent.childCount > 2
+               && IsPlate(interactObject.transform.parent.GetChild(2))
+               && isHolding
+               && IsHoldingCookedIngredient();
+    }
+
+    private bool IsPlate(UnityEngine.Transform obj)
+    {
+        var handle = obj.GetComponent<Ingredient>();
+        return handle != null && handle.type == Ingredient.IngredientType.Plate;
+    }
+
+    private bool IsHoldingCookedIngredient()
+    {
+        var holdingObj = transform.GetChild(1).GetChild(0);
+        if (holdingObj.childCount > 0)
+        {
+            var handle = holdingObj.GetChild(0).GetComponent<Ingredient>();
+            return handle != null && handle.isCooked;
+        }
+        return false;
+    }
+
+    private void PlaceIngredient()
+    {
+        var plate = interactObject.transform.parent.GetChild(2).GetComponent<Plates>();
+        var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient>().type;
+        if (plate.AddIngredient(ingredient))
+        {
+            SoundManager.Instance.PlayEffect("put");
+            plate.InstantiateUI();
+            Destroy(transform.GetChild(1).gameObject);
+            isHolding = false;
+            anim.SetBool("isHolding", false);
         }
     }
 
@@ -207,25 +452,62 @@ public class Player2InteractController : MonoBehaviour
         {
             // 객체를 들어 올릴 때의 로직
             Debug.Log("올려");
-            obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            if (obj.CompareTag("Plate"))
+            {
+                obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            }
+            else
+            {
+                obj.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                obj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().HandleIngredient(transform, obj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type, true);
+            }
             obj.transform.SetParent(transform); // 플레이어의 하위 객체로 설정
+            // 플레이어에서 위치 잡기
+            SetPositionbetweenPlayerandObject(obj);
             anim.SetBool("isHolding", true);
             isHolding = true;
         }
         else
         {
             // 객체를 내려놓을 때의 로직
-            Debug.Log("내려");
-            obj.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-            obj.transform.SetParent(null); // 부모 설정 해제
-            anim.SetBool("isHolding", false);
-            isHolding = false;
+            //Debug.Log("내려");
+            //obj.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            //obj.transform.SetParent(null); // 부모 설정 해제
+            //anim.SetBool("isHolding", false);
+            //isHolding = false;
+            SoundManager.Instance.PlayEffect("put");
+            GameObject handleThing = transform.GetChild(1).gameObject;
+            if (handleThing.CompareTag("Ingredient"))
+            {
+                objectHighlight.onSomething = true;
+                isHolding = false;
+                handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient>().isOnDesk = true;
+                handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient>().
+                    IngredientHandleOff(
+                    interactObject.transform.parent,
+                    interactObject.transform.parent.GetChild(1).localPosition, 
+                    handleThing.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type);
+            }
+            else //접시
+            {
+                if (objectHighlight.objectType != ObjectHighlight.ObjectType.Board)
+                {
+                    objectHighlight.onSomething = true;
+                    isHolding = false;
+                    handleThing.GetComponent<Ingredient>().isOnDesk = true;
+                    handleThing.GetComponent<Ingredient>().
+                        PlayerHandleOff(interactObject.transform.parent,
+                        interactObject.transform.parent.GetChild(1).localPosition);
+                }
+
+            }
+            anim.SetBool("isHolding", isHolding);
         }
     }
 
     private void PickupFromCraft()
     {
-        //SoundManager.instance.PlayEffect("take");
+        SoundManager.Instance.PlayEffect("take");
         // Craft에서 아이템 꺼내기 로직 구현
         interactObject.GetComponent<Craft>().OpenCraftPlayer2();
         objectHighlight.onSomething = false;
@@ -247,7 +529,7 @@ public class Player2InteractController : MonoBehaviour
 
     private void PickupIngredient()
     {
-        //SoundManager.instance.PlayEffect("take");
+        SoundManager.Instance.PlayEffect("take");
         isHolding = true;
         anim.SetBool("isHolding", isHolding);
         // 재료 줍기 로직 상세 구현 필요
@@ -256,17 +538,18 @@ public class Player2InteractController : MonoBehaviour
         ingredientObj.transform.GetChild(0).GetComponent<Ingredient>().HandleIngredient(transform, ingredientObj.transform.GetChild(0).GetComponent<Ingredient>().type, true);
     }
 
-    private void DropObject()
+    private void PickupPlate() 
     {
-        // 떨어트리기 로직 상세 구현 필요
+        //isHolding = true;
+        //anim.SetBool("isHolding", isHolding);
+        // 접시인식.
+        GameObject plateObject = interactObject.transform.parent.gameObject;
+        TryPickupObject(plateObject);
+        //plateObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        //SetPositionbetweenPlayerandObject(plateObject);
     }
 
     #endregion
-
-    public void ChangeState(IPlayerState newState)
-    {
-        currentState = newState;
-    }
 
     #region OnTriggerEnter
     private void OnTriggerEnter(Collider other)
@@ -286,7 +569,7 @@ public class Player2InteractController : MonoBehaviour
     private void HandleDeadZone()
     {
         // 사운드 메니져
-        //SoundManager.instance.PlayEffect("fall");
+        SoundManager.Instance.PlayEffect("fall");
         //DieRespawn();
     }
     
@@ -513,6 +796,7 @@ public class Player2InteractController : MonoBehaviour
     }
     #endregion
 
+    #region SetPosition
     private void SetHand()
     {
         if (isHolding) //뭘 집었다면 손 접기
@@ -543,4 +827,35 @@ public class Player2InteractController : MonoBehaviour
             }
         }
     }
+
+    void SetPositionbetweenPlayerandObject(GameObject obj) 
+    {
+        //string name = obj.name;
+
+        Vector3 localPosition = Vector3.zero;
+        Quaternion localRotation = Quaternion.identity;
+
+        if (obj.CompareTag("Plate"))
+        {
+            obj.transform.localRotation = Quaternion.identity;
+            obj.transform.localPosition = new Vector3(-0.409999996f, 0.4700001f, 1.84000003f);
+        }
+
+        //switch (name)
+        //{
+        //    case "Plate":
+        //        //obj.GetComponent<Ingredient>().HandleIngredient(obj.transform, obj.transform.GetComponent<Ingredient>().type, true);
+        //        //Transform parentTransform = obj.transform.parent;
+        //        //parentTransform.localPosition = localPosition;
+        //        //parentTransform.localRotation = localRotation;
+        //        //parentTransform.parent.SetParent(something);
+        //        obj.transform.localRotation = Quaternion.identity;
+        //        obj.transform.localPosition = new Vector3(-0.409999996f, 0.4700001f, 1.84000003f);
+        //        break;
+        //    default:
+        //        break;
+        //}
+    }
+    #endregion
+
 }

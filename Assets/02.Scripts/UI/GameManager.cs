@@ -371,7 +371,11 @@ public class GameManager : MonoBehaviour
         // 일정 시간 후에 접시를 생성하여 반환 카운터에 추가
         yield return new WaitForSeconds(respawnTime);
         GameObject newPlate = Instantiate(platePrefabs, Vector3.zero, Quaternion.identity);
-        if (state == State.stage2)
+        if (state == State.stage1)
+        {
+            newPlate.GetComponent<Plates>().limit = 3;
+        }
+        else if(state == State.stage2)
         {
             newPlate.GetComponent<Plates>().limit = 3;
         }
@@ -380,6 +384,7 @@ public class GameManager : MonoBehaviour
             newPlate.GetComponent<Plates>().limit = 3;
         }
         newPlate.transform.SetParent(ReturnCounter.transform);
+        newPlate.transform.localScale = Vector3.one;
         ReturnCounter.transform.GetChild(1).GetComponent<Return>().returnPlates.Add(newPlate);
         Vector3 spawnPos = ReturnCounter.transform.GetChild(1).GetComponent<Return>().SetPosition();
         newPlate.transform.localPosition = spawnPos;
@@ -517,7 +522,7 @@ public class GameManager : MonoBehaviour
                             CurrentOrderUI[i].SetActive(false);
                             if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
                             Coin += CurrentOrder[i].Price;
-                            CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
+                            CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
                             SetPosition(i);
                             CurrentOrder.RemoveAt(i);
@@ -551,7 +556,7 @@ public class GameManager : MonoBehaviour
                             CurrentOrderUI[i].SetActive(false);
                             if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
                             Coin += CurrentOrder[i].Price;
-                            CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
+                            CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
                             SetPosition(i);
                             CurrentOrder.RemoveAt(i);
@@ -597,7 +602,7 @@ public class GameManager : MonoBehaviour
                             CurrentOrderUI[i].SetActive(false);
                             if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
                             Coin += CurrentOrder[i].Price;
-                            CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
+                            CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
                             SetPosition(i);
                             CurrentOrder.RemoveAt(i);

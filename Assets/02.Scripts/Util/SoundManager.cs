@@ -238,11 +238,13 @@ public class SoundManager : Singleton<SoundManager>
     [Header("Game Play Sound Effect")]
     public AudioClip itemTake;
     public AudioClip put;
-    public AudioClip place;
     public AudioClip fall;
     public AudioClip throwItem;
     public AudioClip ready;
     public AudioClip go;
+    public AudioClip bin;
+    public AudioClip right;
+    public AudioClip no;
 
     public void PlayEffect(string effect)
     {
@@ -253,9 +255,6 @@ public class SoundManager : Singleton<SoundManager>
                 break;
             case "put":
                 effectAudioSource.clip = put;
-                break;
-            case "place":
-                effectAudioSource.clip = place;
                 break;
             case "fall":
                 effectAudioSource.clip = fall;
@@ -268,6 +267,15 @@ public class SoundManager : Singleton<SoundManager>
                 break;
             case "go":
                 effectAudioSource.clip = go;
+                break;
+            case "bin":
+                effectAudioSource.clip = bin;
+                break;
+            case "right":
+                effectAudioSource.clip = right;
+                break;
+            case "no":
+                effectAudioSource.clip = no;
                 break;
         }
         effectAudioSource.volume = volumeEffect;
