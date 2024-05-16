@@ -1,10 +1,14 @@
+using Cinemachine;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
+    public CinemachineVirtualCamera vanCamera;
+    public CinemachineVirtualCamera shutterCamera;
 
     [Header("Van")]
     public GameObject shutter;
@@ -34,8 +38,8 @@ public class UIManager : Singleton<UIManager>
     private RectTransform pineappleMaskRect;
     private Vector2 pineappleOutMaskRect = new Vector2(7300, 7300);
     private Vector2 broccoliOutMaskRect = new Vector2(4300, 4300);
-    private float broccoliInDuration = 0.3f; // 변화에 걸리는 시간
-    private float pineappleOutDuration = 0.5f; // 변화에 걸리는 시간
+    private float broccoliDuration = 0.3f; // 변화에 걸리는 시간
+    private float pineappleDuration = 0.5f; // 변화에 걸리는 시간
 
     [Header("Battle")]
     public GameObject battleUI;
@@ -44,30 +48,47 @@ public class UIManager : Singleton<UIManager>
     public GameObject exitLobbyUI;
     public GameObject exitLobbyBlackUI;
 
-    [Header("Resolution")]
-    
+    [Header("LoadingKeyUI")]
+    public GameObject loadingKeyUI;
+    public Image loadingKeyBar;
+
+    [Header("BusMapEscUI")]
+    public GameObject busMapEscUI;
+    public GameObject busMapEscBlackUI;
+
+
+    [Header("Resolution")]  
     public TextMeshProUGUI resolutionText;
     public GameObject fullScreenButton;
     public GameObject fullScreenCheck;
-    public bool windowScreen = true;
-    public bool settingWindowScreen = true;
-    public int resolutionArrNum = 4;
-    public int settingResolutionArrNum = 4;
-    public string[] resolutionTextArr = new string[] { "1280 x 720", "1280 x 800", "1680 x 1050", "1920 x 1080", "1920 x 1200", "2560 x 1600", "3072 x 1920" };
+    private bool windowScreen = true;
+    private bool settingWindowScreen = true;
+    private int resolutionArrNum = 4;
+    private int settingResolutionArrNum = 4;
+    private string[] resolutionTextArr = new string[] { "1280 x 720", "1280 x 800", "1680 x 1050", "1920 x 1080", "1920 x 1200", "2560 x 1600", "3072 x 1920" };
 
-    private bool maskInEnd;
+
+    public bool First = true;
+    //private bool maskInEnd;
     //private bool maskOutEnd;
     //private bool isExit = false;
     //private bool isSetting = false;
 
     public void Start()
     {
+        //shutter = GameObject.Find("Van Shutter");
+        //buttonUI = GameObject.Find("Button Canvas");
+        //ingamePlayerUI = GameObject.Find("m_chalkboard Canvas");
+        //shutterAnim = GameObject.("Van Shutter");
         resolutionText.text = resolutionTextArr[resolutionArrNum];
         fullScreenCheck.SetActive(windowScreen);
+        broccoliMaskRect = broccoliMask.GetComponent<RectTransform>();
+        pineappleMaskRect = pineappleMask.GetComponent<RectTransform>();
     }
 
     private void Update()
     {
+        EscUI();
         //if(!isSetting && !isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOn();
         //if (!isSetting && isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOff();
     }
@@ -92,14 +113,19 @@ public class UIManager : Singleton<UIManager>
     {
         optionBlackUI.SetActive(true);
         stopUI.SetActive(true);
-       // isExit = true;
+       
     }
 
     public void StopUIOff()
     {
         optionBlackUI.SetActive(false);
         stopUI.SetActive(false);
-        // isExit = false;
+
+        if(SceneManager.GetActiveScene().name == "Map")
+        {
+            busMapEscBlackUI.SetActive(false);
+            busMapEscUI.SetActive(false);
+        }
     }
     #endregion
 
@@ -146,19 +172,107 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
- 
-    #region Mask InOut UI
-   
-    public void MaskInUI(GameObject inMask, RectTransform inMaskRect, float Duration)
+
+    #region Resolution
+    public void ResolutionRightButton()
     {
+        resolutionArrNum = (resolutionArrNum + 1) % 7;
+        resolutionText.text = resolutionTextArr[resolutionArrNum];
+    }
+
+    public void ResolutionLeftButton()
+    {
+        if (resolutionArrNum == 0) resolutionArrNum = 6;
+        else
+            resolutionArrNum = (resolutionArrNum - 1) % 7;
+
+        resolutionText.text = resolutionTextArr[resolutionArrNum];
+    }
+
+    public void ResolutionChange()
+    {
+        settingResolutionArrNum = resolutionArrNum;
+        settingWindowScreen = windowScreen;
+        switch (resolutionArrNum)
+        {
+            case 0:
+                Screen.SetResolution(1280, 720, !windowScreen);
+                break;
+            case 1:
+                Screen.SetResolution(1280, 800, !windowScreen);
+                break;
+            case 2:
+                Screen.SetResolution(1680, 1050, !windowScreen);
+                break;
+            case 3:
+                Screen.SetResolution(1920, 1080, !windowScreen);
+                break;
+            case 4:
+                Screen.SetResolution(1920, 1200, !windowScreen);
+                break;
+            case 5:
+                Screen.SetResolution(2560, 1600, !windowScreen);
+                break;
+            case 6:
+                Screen.SetResolution(3070, 1920, !windowScreen);
+                break;
+        }
+    }
+
+    public void CancleChange()
+    {
+        resolutionArrNum = settingResolutionArrNum;
+        resolutionText.text = resolutionTextArr[resolutionArrNum];
+        windowScreen = settingWindowScreen;
+        fullScreenCheck.SetActive(windowScreen);
+    }
+    public void OnClickFullScreenButton()
+    {
+        windowScreen = !windowScreen;
+        fullScreenCheck.SetActive(windowScreen);
+    }
+    #endregion
+
+
+
+    #region Mask InOut UI
+
+    public void MaskInUI(GameObject inMask, RectTransform inMaskRect, float Duration, string goTo)
+    {
+        //maskInEnd = false;
         SoundManager.Instance.ScreenInUI();
         inMask.SetActive(true);
         inMaskRect = inMask.GetComponent<RectTransform>();
-        StartCoroutine(MaskInOut(inMaskRect, Vector2.zero, Duration, () => maskInEnd = true));
-        maskInEnd = true;
+        StartCoroutine(MaskInOut(inMaskRect, Vector2.zero, Duration, () =>
+        {
+           // maskInEnd = true;
+            switch(goTo)
+            {
+                case "BattleUI":
+                    Invoke("BattleUI", 1F);
+                    break;
+                case "BattleUIOff":
+                    Invoke("BattleUIOff", 1F);
+                    break;
+                case "LoadingKeyUIOn":
+                    Invoke("LoadingKeyUIOn", 1f);
+                    break;
+                case "EnterBusMapMaskOut":
+                    Invoke("EnterBusMapMaskOut", 1f);
+                    break;
+                case "LoadingKeyUIToIntro":
+                    Invoke("LoadingKeyUIToIntro", 1f);
+                    break;
+                case "EnterIntroMapMaskOut":
+                    Invoke("EnterIntroMapMaskOut", 1f);
+                    break;
+
+
+            }        
+        }));
     }
 
-    public void MaskOutUI(GameObject inMask, GameObject outMask, RectTransform outMaskRect, Vector2 targetRect ,float Duration)
+    public void MaskOutUI(GameObject inMask, GameObject outMask, RectTransform outMaskRect, Vector2 targetRect ,float Duration, string goTo)
     {
         SoundManager.Instance.ScreenOutUI();
         inMask.SetActive(false);
@@ -168,6 +282,18 @@ public class UIManager : Singleton<UIManager>
         {
             //maskOutEnd = true;
             outMask.SetActive(false);
+
+            switch (goTo)
+            {
+                case "GoToBusMap":
+                    SceneChangeManager.Instance.ChangeToBusMap();
+                    break;
+                case "GoToIntroMap":
+                    SceneChangeManager.Instance.ChangeToIntroMap();
+                    break;
+                default:
+                    break;
+            }
         }));
     }
 
@@ -192,14 +318,13 @@ public class UIManager : Singleton<UIManager>
     #region EnterBattleUI
     public void EnterBattleUI()
     {
-        MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration);
-        if(maskInEnd == true) Invoke("BattleUI", 1.5F);    
+        MaskInUI(broccoliMask, broccoliMaskRect, broccoliDuration, "BattleUI");
     }
 
     public void BattleUI()
     {
         battleUI.SetActive(true);
-        MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleOutDuration);
+        MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "");
         SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, "Battle");
         SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
     }
@@ -209,7 +334,7 @@ public class UIManager : Singleton<UIManager>
         battleUI.SetActive(false);
         SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, "Intro");
         SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
-        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliInDuration);
+        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "");
        
     }
 
@@ -234,87 +359,105 @@ public class UIManager : Singleton<UIManager>
     {
         exitLobbyBlackUI.SetActive(false);
         exitLobbyUI.SetActive(false);
-        MaskInUI(pineappleMask, pineappleMaskRect, pineappleOutDuration);
-        if (maskInEnd == true) Invoke("BattleUIOff", 1.5F);
-        //battleUI.SetActive(false);
+        MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "BattleUIOff");
     }
 
     #endregion
 
+
+    public void EnterLoadingKeyUI()
+    {
+        MaskInUI(broccoliMask, broccoliMaskRect, broccoliDuration, "LoadingKeyUIOn");
+    }
+
+    public void LoadingKeyUIOn()
+    {
+        loadingKeyUI.SetActive(true);
+        MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "GoToBusMap");
+    }
+
+    public void EnterBusMapMaskIn()
+    {
+        MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "EnterBusMapMaskOut");
+    }
+
+    public void EnterIntroMapMaskIn()
+    {
+        Debug.Log("?");
+        MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "EnterIntroMapMaskOut");
+    }
+
+    public void EnterBusMapMaskOut()
+    {
+        loadingKeyUI.SetActive(false);
+        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "");
+    }
+
+    public void EnterIntroMapMaskOut()
+    {
+        Debug.Log("!");
+
+        loadingKeyUI.SetActive(false);
+        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "");
+    }
+
+
+    public void EscUI()
+    {
+        if(SceneManager.GetActiveScene().name == "Map")
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                busMapEscBlackUI.SetActive(true);
+                busMapEscUI.SetActive(true);
+                SoundManager.Instance.ButtonTick();
+
+            }
+        }
+    }
+
+    public void EscUICancle()
+    {
+        busMapEscBlackUI.SetActive(false);
+        busMapEscUI.SetActive(false);
+    }
+
+    public void EscUIStop()
+    {
+        optionBlackUI.SetActive(true);
+        stopUI.SetActive(true);
+    }
+
+    public void EnterIntro()
+    {
+        MaskInUI(broccoliMask, broccoliMaskRect, broccoliDuration, "LoadingKeyUIToIntro");
+    }
+
+    public void LoadingKeyUIToIntro()
+    {
+        loadingKeyUI.SetActive(true);
+        MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "GoToIntroMap");
+    }
+
+
+
     public void ExitGame()
     {
-
-    #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-    #else
-                    Application.Quit();
-    #endif
-
-    }
-
-
-    public void ResolutionRightButton()
-    {
-        resolutionArrNum= (resolutionArrNum +1) % 7;
-        resolutionText.text = resolutionTextArr[resolutionArrNum];
-    }
-
-    public void ResolutionLeftButton()
-    {
-        if (resolutionArrNum == 0) resolutionArrNum = 6;
-        else
-            resolutionArrNum = (resolutionArrNum - 1) % 7;
-
-        resolutionText.text = resolutionTextArr[resolutionArrNum];
-    }
-
-
-    public void ResolutionChange()
-    {
-        settingResolutionArrNum = resolutionArrNum;
-        settingWindowScreen = windowScreen;
-        switch(resolutionArrNum)
+        if (SceneManager.GetActiveScene().name == "Map")
         {
-            case 0:
-                Screen.SetResolution(1280, 720, !windowScreen);
-                break;
-            case 1:
-                Screen.SetResolution(1280, 800, !windowScreen);
-                break;
-            case 2:
-                Screen.SetResolution(1680, 1050, !windowScreen);
-                break;
-            case 3:
-                Screen.SetResolution(1920, 1080, !windowScreen);
-                break;
-            case 4:
-                Screen.SetResolution(1920, 1200, !windowScreen);
-                break;
-            case 5:
-                Screen.SetResolution(2560, 1600, !windowScreen);
-                break;
-            case 6:
-                Screen.SetResolution(3070, 1920, !windowScreen);
-                break;
+            optionBlackUI.SetActive(false);
+            stopUI.SetActive(false);
+            busMapEscBlackUI.SetActive(false);
+            busMapEscUI.SetActive(false);
+            EnterIntro();
         }
-        
-    }
-
-    public void CancleChange()
-    {
-        resolutionArrNum = settingResolutionArrNum;
-        resolutionText.text = resolutionTextArr[resolutionArrNum];
-        windowScreen = settingWindowScreen;
-        fullScreenCheck.SetActive(windowScreen);
-    }
-    public void OnClickFullScreenButton()
-    {
-        windowScreen = !windowScreen;
-            fullScreenCheck.SetActive(windowScreen);
-    }
-
-    public void EnterBusMap()
-    {
-        MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration);
+        else
+        {
+            #if UNITY_EDITOR
+                        UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                                                    Application.Quit();
+            #endif
+        }
     }
 }
