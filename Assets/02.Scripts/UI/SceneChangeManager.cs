@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class SceneChangeManager : Singleton<SceneChangeManager>
 {
     AsyncOperation operation;
-    private float time;
 
     private void OnEnable()
     {
@@ -21,7 +20,6 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     IEnumerator LoadSceneAsyncCoroutine()
     {
         operation = SceneManager.LoadSceneAsync("Map");
-
 
         operation.allowSceneActivation = false;
 
