@@ -55,7 +55,7 @@ public class UIManager : Singleton<UIManager>
     public int settingResolutionArrNum = 4;
     public string[] resolutionTextArr = new string[] { "1280 x 720", "1280 x 800", "1680 x 1050", "1920 x 1080", "1920 x 1200", "2560 x 1600", "3072 x 1920" };
 
-    private bool maskInEnd;
+    public bool maskInEnd;
     //private bool maskOutEnd;
     //private bool isExit = false;
     //private bool isSetting = false;
@@ -151,6 +151,7 @@ public class UIManager : Singleton<UIManager>
    
     public void MaskInUI(GameObject inMask, RectTransform inMaskRect, float Duration)
     {
+        maskInEnd = false;
         SoundManager.Instance.ScreenInUI();
         inMask.SetActive(true);
         inMaskRect = inMask.GetComponent<RectTransform>();
@@ -315,6 +316,16 @@ public class UIManager : Singleton<UIManager>
 
     public void EnterBusMap()
     {
+        Debug.Log(maskInEnd);
         MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration);
+
+        Debug.Log(maskInEnd);
+        //if (maskInEnd == true) SceneChangeManager.Instance.ChangeToBusMap();
+
+    }
+
+    public void ChangeToBusMapMask()
+    {
+        MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleOutDuration);
     }
 }

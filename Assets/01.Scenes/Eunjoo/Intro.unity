@@ -2204,6 +2204,15 @@ MonoBehaviour:
   effectAudioSource: {fileID: 4103381848875900730}
   musicGroup: {fileID: 0}
   effectGroup: {fileID: 0}
+  isSingle: 1
+  alreadyPlayed: 0
+  itemTake: {fileID: 0}
+  put: {fileID: 0}
+  place: {fileID: 0}
+  fall: {fileID: 0}
+  throwItem: {fileID: 0}
+  ready: {fileID: 0}
+  go: {fileID: 0}
 --- !u!1 &163268962
 GameObject:
   m_ObjectHideFlags: 0
@@ -7554,6 +7563,7 @@ MonoBehaviour:
   - 1920 x 1200
   - 2560 x 1600
   - 3072 x 1920
+  maskInEnd: 0
 --- !u!1 &644941479
 GameObject:
   m_ObjectHideFlags: 0
@@ -7719,6 +7729,7 @@ Transform:
   m_Children:
   - {fileID: 609752091}
   - {fileID: 154817029}
+  - {fileID: 958730601}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10416,6 +10427,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 956531952}
   m_CullTransparentMesh: 1
+--- !u!1 &958730600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 958730601}
+  - component: {fileID: 958730602}
+  m_Layer: 0
+  m_Name: SceneChangeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &958730601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958730600}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 665619999}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &958730602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958730600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e22ff9ed1495b944f9e15804ca5bf96a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &967875804
 GameObject:
   m_ObjectHideFlags: 0
@@ -14654,7 +14709,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 637988502}
+      objectReference: {fileID: 958730602}
     - target: {fileID: 692837296430522121, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -14663,7 +14718,7 @@ PrefabInstance:
     - target: {fileID: 692837296430522121, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: EnterBusMap
+      value: ChangeToBusMap
       objectReference: {fileID: 0}
     - target: {fileID: 692837296430522121, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}
@@ -14673,7 +14728,7 @@ PrefabInstance:
     - target: {fileID: 692837296430522121, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UIManager, Assembly-CSharp
+      value: SceneChangeManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 692837296430522122, guid: 98218b4ae6787fc4ca11b2f8b0676ee1,
         type: 3}

@@ -43,13 +43,10 @@ public class SoundManager : Singleton<SoundManager>
     AudioSource musicSource;            // Reference to the generated music Audio Source
     AudioSource effectSource;           // Reference to the generated effect Audio Source
 
-    private void Awake()
-    {
-        SettingAudioVolume();
-    }
 
     void Start()
     {
+        SettingAudioVolume();
         StartCoroutine(FadeInVolume(bgmAudioSource, 8f, "Intro"));
 
         musicSource = gameObject.AddComponent<AudioSource>();
