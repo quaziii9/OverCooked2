@@ -101,7 +101,6 @@ public class Bus : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             
-
             rb.AddForce(transform.forward, ForceMode.Impulse);
             yield return new WaitForSecondsRealtime(0.05f);
         }
