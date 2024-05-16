@@ -249,28 +249,28 @@ public class SoundManager : Singleton<SoundManager>
         switch (effect)
         {
             case "take":
-                EffectAudioSource.clip = itemTake;
+                effectAudioSource.clip = itemTake;
                 break;
             case "put":
-                EffectAudioSource.clip = put;
+                effectAudioSource.clip = put;
                 break;
             case "place":
-                EffectAudioSource.clip = place;
+                effectAudioSource.clip = place;
                 break;
             case "fall":
-                EffectAudioSource.clip = fall;
+                effectAudioSource.clip = fall;
                 break;
             case "throwItem":
-                EffectAudioSource.clip = throwItem;
+                effectAudioSource.clip = throwItem;
                 break;
             case "ready":
-                EffectAudioSource.clip = ready;
+                effectAudioSource.clip = ready;
                 break;
             case "go":
-                EffectAudioSource.clip = go;
+                effectAudioSource.clip = go;
                 break;
         }
-        EffectAudioSource.volume = volumeEffect;
-        EffectAudioSource.PlayOneShot(EffectAudioSource.clip);
+        effectAudioSource.volume = volumeEffect;
+        effectAudioSource.PlayOneShot(effectAudioSource.clip);
     }
 }

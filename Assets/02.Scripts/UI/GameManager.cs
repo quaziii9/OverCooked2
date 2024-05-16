@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
         // 싱글플레이가 아닐 때 초기화 작업
         if (!SoundManager.Instance.isSingle)
         {
-            SoundManager.Instance.BgmAudioSource.volume = 0;
+            SoundManager.Instance.bgmAudioSource.volume = 0;
             SoundManager.Instance.alreadyPlayed = false;
             OppositeUI.SetActive(true);
         }
@@ -274,13 +274,13 @@ public class GameManager : MonoBehaviour
         // 게임 시간 감소 및 처리
         GameTime -= Time.deltaTime;
         ToClock();
-        if (GameTime < 30 && SoundManager.Instance.BgmAudioSource.pitch == 1)
+        if (GameTime < 30 && SoundManager.Instance.bgmAudioSource.pitch == 1)
         {
-            SoundManager.Instance.BgmAudioSource.pitch = 1.5f;
+            SoundManager.Instance.bgmAudioSource.pitch = 1.5f;
         }
-        else if (GameTime < 15 && SoundManager.Instance.BgmAudioSource.pitch == 1.5f)
+        else if (GameTime < 15 && SoundManager.Instance.bgmAudioSource.pitch == 1.5f)
         {
-            SoundManager.Instance.BgmAudioSource.pitch = 2;
+            SoundManager.Instance.bgmAudioSource.pitch = 2;
         }
 
         if (GameTime < 30)
@@ -295,8 +295,8 @@ public class GameManager : MonoBehaviour
         }
         if (GameTime <= 0 && !isDone) // 시간이 다 되면 멈추기
         {
-            SoundManager.Instance.BgmAudioSource.pitch = 1;
-            SoundManager.Instance.BgmAudioSource.Stop();
+            SoundManager.Instance.bgmAudioSource.pitch = 1;
+            SoundManager.Instance.bgmAudioSource.Stop();
             SoundManager.Instance.PlayEffect("timesUp");
             Time.timeScale = 0;
             if (StageManager.instance != null) StageManager.instance.totalMoney = Coin;
