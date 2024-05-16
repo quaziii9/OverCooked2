@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 5205897676933105719}
   - component: {fileID: 8881024582590317421}
   m_Layer: 0
-  m_Name: Mesh 6
+  m_Name: PlateReturn
   m_TagString: Return
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

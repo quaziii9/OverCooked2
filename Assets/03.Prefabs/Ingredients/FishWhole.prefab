@@ -30,6 +30,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.13800001, z: 0.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1988286225239023869}
   m_Father: {fileID: 1262166320754552028}
@@ -54,6 +55,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -124,8 +126,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1988286225239023869}
   - component: {fileID: 8960716518751172789}
-  - component: {fileID: 7719943722329935524}
-  - component: {fileID: 3423423071116868458}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Ingredient
@@ -143,6 +143,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2727957548120369714}
   m_RootOrder: 0
@@ -160,43 +161,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.916337, y: 0.73395133, z: 0.93020976}
   m_Center: {x: -0.051773358, y: -0.13302438, z: -0.063157275}
---- !u!114 &7719943722329935524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5349593236225748489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0713fb8c0c7de4348b118c07896a2eb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hand: 0
-  isOnDesk: 1
-  isCooked: 0
-  cookedIngredient: {fileID: -4128499884555316590, guid: c7642c54dd04da943a017d614d0cb665, type: 3}
-  cookedFish: {fileID: 2100000, guid: c09639f93bb398343b7de506532f1c4f, type: 2}
---- !u!114 &3423423071116868458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5349593236225748489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: 7e3bed856ea8be2478951f70d301aa76, type: 2}
-  - {fileID: 2100000, guid: 9f1b3fcb25300a746aa7efbd086eb36c, type: 2}
-  - {fileID: 2100000, guid: c09639f93bb398343b7de506532f1c4f, type: 2}
-  - {fileID: 2100000, guid: 2fae5d8e097d64b47ba74f8db10d8a9d, type: 2}
-  type: 5
 --- !u!1 &7928919074424237346
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +170,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1262166320754552028}
-  - component: {fileID: 3615397536839734969}
   m_Layer: 0
   m_Name: FishWhole
   m_TagString: Ingredient
@@ -224,20 +187,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.00002, y: 0.00501, z: 0.00084}
   m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2727957548120369714}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3615397536839734969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7928919074424237346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d47c89e9ec0f2e9478409cf545c9b035, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

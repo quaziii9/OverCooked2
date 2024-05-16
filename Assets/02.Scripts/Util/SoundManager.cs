@@ -34,6 +34,19 @@ public class SoundManager : Singleton<SoundManager>
     public AudioSource bgmChangeAudioSource;
     public AudioSource effectAudioSource;
 
+    [Header("MultiPlay")]
+    public bool isSingle = true; // 싱글 멀티 구분
+    public bool alreadyPlayed = false;
+
+    [Header("Game Play Sound Effect")]
+    public AudioClip put;
+    public AudioClip place;
+    public AudioClip itemTake;
+    public AudioClip fall;
+    public AudioClip throwItem;
+    public AudioClip ready;
+    public AudioClip go;
+
 
     [Header("Mixer Groups")]
     public AudioMixerGroup musicGroup;  // The music mixer group
@@ -243,23 +256,6 @@ public class SoundManager : Singleton<SoundManager>
     {
         effectAudioSource.PlayOneShot(screenOutUI);
     }
-
-
-
-    [Header("MultiPlay")]
-    public bool isSingle = true; //싱글 멀티 구분
-    public bool alreadyPlayed = false;
-
-    [Header("Game Play Sound Effect")]
-    public AudioClip itemTake;
-    public AudioClip put;
-    public AudioClip fall;
-    public AudioClip throwItem;
-    public AudioClip ready;
-    public AudioClip go;
-    public AudioClip bin;
-    public AudioClip right;
-    public AudioClip no;
 
     public void PlayEffect(string effect)
     {

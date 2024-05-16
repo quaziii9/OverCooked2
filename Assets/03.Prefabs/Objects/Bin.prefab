@@ -143,26 +143,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.7940562, y: 1.1790695, z: 1.0774618}
-  m_Center: {x: 0.005863571, y: 0.08953362, z: 0.03873041}
---- !u!114 &394178528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5263894690249625294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19435dd8b8dc43e438677d6b368032b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeObject: 0
-  onSomething: 0
-  hightlightMaterials:
-  - {fileID: 2100000, guid: fdf7873d4377e524e8dd55c65e8309bd, type: 2}
-  - {fileID: 2100000, guid: 57649f06986bdc4498bc3b8eeeebcf06, type: 2}
-  objectType: 7
+  m_Size: {x: 1.8, y: 0.5, z: 1.8}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1 &5456895571927088320
 GameObject:
   m_ObjectHideFlags: 0

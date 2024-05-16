@@ -3,7 +3,7 @@ using UnityEngine;
 namespace EnumTypes
 {
     public enum LookDirection { Up, Down, Left, Right }
-    public enum PlayerState { Stand, Move, Run, Cook }
+    public enum PlayerState { Stand, Move, Run, Hold, Cook }
     public enum Layers
     {
         Default,
@@ -27,7 +27,6 @@ namespace EnumTypes
     {
         PlayerDead,
         PlayerSpawned,
-        PlayerStabbed,
         PlayerInactive,
         PlayerDamaged,
     }

@@ -129,7 +129,6 @@ public class UIManager : Singleton<UIManager>
     }
     #endregion
 
-
     #region SoundSquares
 
     public void SetBGMSquares(float volumeBGM, GameObject[] BGMSquares)
@@ -339,7 +338,6 @@ public class UIManager : Singleton<UIManager>
     }
 
     #endregion
-
 
     #region ExitBattleUI
 
