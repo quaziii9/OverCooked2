@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8161801173550297914}
   - component: {fileID: 3356936769959748367}
+  - component: {fileID: 80473785}
   m_Layer: 0
   m_Name: AutoCheck
   m_TagString: Untagged
@@ -46,6 +47,18 @@ CapsuleCollider:
   m_Height: 0.005
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &80473785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3115504974705066912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1da1d426fe581478c48a9292e67dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3544367886536949754
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,6 +152,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4728805702479662506}
   - component: {fileID: 3523932458212851789}
+  - component: {fileID: 1970922286}
+  - component: {fileID: 1970922287}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Craft
@@ -174,6 +189,40 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.013, y: 0.0043214993, z: 0.01037902}
   m_Center: {x: -0.005893215, y: -0.002839265, z: -0.00018952011}
+--- !u!114 &1970922286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3935614941159645537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 574a2e47e9f67084a9b60bcbb1e0f468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CraftAnim: {fileID: 4856758924214003666}
+  food: 3
+  foodPrefabs: {fileID: 3531954308380559026, guid: 7273b9070641a3641b374dbe6b1efbb1,
+    type: 3}
+--- !u!114 &1970922287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3935614941159645537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19435dd8b8dc43e438677d6b368032b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeObject: 0
+  onSomething: 0
+  hightlightMaterials:
+  - {fileID: 2100000, guid: e85434d27394186448f4d867a40600cd, type: 2}
+  - {fileID: 2100000, guid: 96b684af4a6a4614880b1b3ad9dee9e8, type: 2}
+  objectType: 1
 --- !u!1 &4856758924214003667
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +498,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8706678007929410492}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 11.562851, y: -8.170786, z: 4.5463314}
   m_LocalScale: {x: 270, y: 250, z: 299.99997}
   m_ConstrainProportionsScale: 0

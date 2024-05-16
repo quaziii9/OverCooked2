@@ -278,7 +278,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795290139023854945}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.00018, y: 0.005014, z: 0.00103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -377,9 +377,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   containIngredients: 
-  limit: 1
+  limit: 3
   Canvas: {fileID: 0}
-  IngredientUI: {fileID: 3456285177428942253, guid: b25bbb6c6bdd0cd4ca169f99f718d3f6,
+  IngredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
     type: 3}
   Icons:
   - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
@@ -389,6 +389,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 76d14744947c6c5409f533990372ab43, type: 3}
   - {fileID: 21300000, guid: 35470bc04a80228478213f2ff56b6471, type: 3}
   - {fileID: 21300000, guid: 3c7bf3321bd71924aa300a5ac4bfdc15, type: 3}
+  madeUI: {fileID: 0}
 --- !u!65 &3885048504406792282
 BoxCollider:
   m_ObjectHideFlags: 0
