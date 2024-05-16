@@ -161,10 +161,10 @@ public class UIManager : Singleton<UIManager>
             switch(goTo)
             {
                 case "BattleUI":
-                    Invoke("BattleUI", 2F);
+                    Invoke("BattleUI", 1F);
                     break;
                 case "BattleUIOff":
-                    Invoke("BattleUIOff", 2F);
+                    Invoke("BattleUIOff", 1F);
                     break;
                 case "GoToBusMap":
                     SceneChangeManager.Instance.ChangeToBusMap();
