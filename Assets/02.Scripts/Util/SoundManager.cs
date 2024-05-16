@@ -48,7 +48,7 @@ public class SoundManager : Singleton<SoundManager>
 
     void Start()
     {
-        StartCoroutine(FadeInVolume(bgmAudioSource, 8f));
+        StartCoroutine(FadeInVolume(bgmAudioSource, 8f, "Intro"));
 
         musicSource = gameObject.AddComponent<AudioSource>();
         effectSource = gameObject.AddComponent<AudioSource>();
@@ -61,6 +61,7 @@ public class SoundManager : Singleton<SoundManager>
     public void SettingAudioVolume()
     {
         bgmAudioSource.volume = 0.1f;
+        bgmChangeAudioSource.volume = 0.1f;
         effectAudioSource.volume = volumeEffect;
     }
 
@@ -72,6 +73,8 @@ public class SoundManager : Singleton<SoundManager>
             volumeBGM = 1f;
         }
         bgmAudioSource.volume = volumeBGM;
+        bgmChangeAudioSource.volume = volumeBGM;
+
 
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
     }
@@ -84,6 +87,8 @@ public class SoundManager : Singleton<SoundManager>
             volumeBGM = 0;
         }
         bgmAudioSource.volume = volumeBGM;
+        bgmChangeAudioSource.volume = volumeBGM;
+
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
     }
 
@@ -114,6 +119,7 @@ public class SoundManager : Singleton<SoundManager>
         settingBGM = volumeBGM;
         settingEffect = volumeEffect;
         bgmAudioSource.volume = volumeBGM;
+        bgmChangeAudioSource.volume = volumeBGM;
         effectAudioSource.volume = volumeEffect;
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
@@ -124,28 +130,71 @@ public class SoundManager : Singleton<SoundManager>
         volumeBGM = settingBGM;
         volumeEffect = settingEffect;
         bgmAudioSource.volume = volumeBGM;
+        bgmChangeAudioSource.volume = volumeBGM;
         effectAudioSource.volume = volumeEffect;
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
 
-    IEnumerator FadeInVolume(AudioSource AudioSource, float waitTime)
+    public void FadeInAudio(AudioSource audioSource, float waitTime, string bgmName)
+    {
+        StartCoroutine(FadeInVolume(audioSource, waitTime, bgmName));
+    }
+
+    public void FadeOutAudio(AudioSource audioSource, float waitTime)
+    {
+        StartCoroutine(FadeOutVolume(audioSource, waitTime));
+    }
+
+    IEnumerator FadeInVolume(AudioSource audioSource, float waitTime, string bgmName)
     {
         yield return new WaitForSeconds(waitTime);
-        IntroBGM();
-        while (AudioSource.volume < volumeBGM)
+        playBgm(bgmName);
+        while (audioSource.volume < volumeBGM)
         {
-            AudioSource.volume += Time.deltaTime * 0.2f;
+            audioSource.volume += Time.deltaTime * 0.2f;
             yield return new WaitForSeconds(Time.deltaTime * 0.5f);
         }
     }
 
+    IEnumerator FadeOutVolume(AudioSource audioSource, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= Time.deltaTime * 0.5f;
+            yield return new WaitForSeconds(Time.deltaTime * 0.1f);
+        }
+        audioSource.volume = 0;
+        audioSource.Stop();
+    }
+
+
+    void playBgm(string bgmName)
+    {
+        switch (bgmName)
+        {
+            case "Intro":
+                IntroBGM();
+                break;
+            case "Battle":
+                BattleBGM();
+                    break;
+        }
+    }
 
     void IntroBGM()
     {
         bgmAudioSource.clip = introBGM;
         bgmAudioSource.loop = true;
         bgmAudioSource.Play();
+    }
+
+    void BattleBGM()
+    {
+        bgmChangeAudioSource.clip = battleBGM;
+        bgmChangeAudioSource.loop = true;
+        bgmChangeAudioSource.Play();
     }
 
     public void ButtonPop()
@@ -177,4 +226,6 @@ public class SoundManager : Singleton<SoundManager>
     {
         effectAudioSource.PlayOneShot(screenOutUI);
     }
+
+
 }
