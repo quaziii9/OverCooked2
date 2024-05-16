@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using UnityEngine.UI;
 public class SceneChangeManager : Singleton<SceneChangeManager>
 {
     AsyncOperation operation;
+    GameObject van;
     
     private void OnEnable()
     {
@@ -17,9 +19,16 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
 
     public void ChangeToBusMap()
     {
-        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, "BusMap");
         SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
+        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, "BusMap");
         StartCoroutine(LoadSceneAsyncCoroutine("Map", UIManager.Instance.loadingKeyBar));
+    }
+
+    public void ChangeToIntroMap()
+    {
+        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
+        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, "Intro");
+        StartCoroutine(LoadSceneAsyncCoroutine("Intro", UIManager.Instance.loadingKeyBar));
     }
 
     IEnumerator LoadSceneAsyncCoroutine(string Map, Image loadingKeyBar)
@@ -60,7 +69,27 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         switch(scene.name)
         {
             case "Map":
+                UIManager.Instance.First = false;
                 UIManager.Instance.EnterBusMapMaskIn();
+                UIManager.Instance.loadingKeyBar.fillAmount = 0;               
+                break;
+            case "Intro":
+                van = GameObject.Find("Van");
+                UIManager.Instance.shutter = van.transform.GetChild(8).gameObject;
+                UIManager.Instance.buttonUI = van.transform.GetChild(0).gameObject;
+                UIManager.Instance.ingamePlayerUI = van.transform.GetChild(1).GetChild(0).gameObject;
+                UIManager.Instance.shutterAnim = van.transform.GetChild(8).gameObject.GetComponent<Animator>();
+                
+                UIManager.Instance.vanCamera = GameObject.Find("VanCam").GetComponent<CinemachineVirtualCamera>();
+                UIManager.Instance.shutterCamera = GameObject.Find("ShutterCam").GetComponent<CinemachineVirtualCamera>();
+                if (UIManager.Instance.First == false)
+                {
+                    UIManager.Instance.shutterCamera.Priority = 9;
+                    UIManager.Instance.buttonUI.SetActive(true);
+                    Debug.Log("intro");
+                    UIManager.Instance.EnterIntroMapMaskIn();
+                    UIManager.Instance.loadingKeyBar.fillAmount = 0;
+                }
                 break;
         }
     }

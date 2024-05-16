@@ -25,6 +25,16 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     public void Awake()
     {
+        if (instance == null)
+        {
+            instance = this as T;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // DontSestroyOnLoad가 다른 오브젝트의 하위에 있다면 작동 X, 매니저가 부모이거나, 자식일 때 작동
         if (transform.parent != null && transform.root != null)
         {

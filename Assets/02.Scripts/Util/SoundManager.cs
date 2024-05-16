@@ -168,7 +168,7 @@ public class SoundManager : Singleton<SoundManager>
         yield return new WaitForSeconds(waitTime);
         while (audioSource.volume > 0)
         {
-            Debug.Log(audioSource.volume);
+           // Debug.Log(audioSource.volume);
             audioSource.volume -= Time.deltaTime * 0.2f;
             yield return new WaitForSeconds(Time.deltaTime * 0.5f);
         }
