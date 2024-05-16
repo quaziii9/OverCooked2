@@ -26,7 +26,7 @@ public class PressSkip : MonoBehaviour
         else
         {
             // 스페이스바를 누르고 있지 않을 때 fillAmount 감소
-            fillImage.fillAmount -= fillSpeed * Time.deltaTime;
+            fillImage.fillAmount = 0f;
         }
 
         // fillAmount 값 제한 (0과 1 사이로 클램핑)
