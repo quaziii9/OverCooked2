@@ -220,6 +220,7 @@ public class PlayerInteractController : MonoBehaviour
         {
             case ObjectHighlight.ObjectType.CounterTop:
             case ObjectHighlight.ObjectType.Board:
+            case ObjectHighlight.ObjectType.Return:
                 HandleCounterTopOrBoardInteraction();
                 break;
             case ObjectHighlight.ObjectType.Craft:
@@ -278,7 +279,7 @@ public class PlayerInteractController : MonoBehaviour
         }
         else if (canActive && isHolding && objectHighlight.onSomething)
         {
-            // 내가 뭘 들고있고, 테이블이나 찹핑테이블 위에 있을때
+            // 내가 뭘 들고있고, 테이블이나 찹핑테이블 리턴 위에 있을때
             Debug.Log("뭔가 있냐?");
             TablePlaceOrDropObject(true);
         }
@@ -355,7 +356,7 @@ public class PlayerInteractController : MonoBehaviour
         // 객체를 내려놓을 때의 로직
         Debug.Log($"handlingThing name : {handlingThing.name}");
 
-        if (handlingThing.name.Equals("Plate"))
+        if (handlingThing.CompareTag("Plate"))
         {
             // 떨구는 객체가 접시면.
             //Debug.Log("접시 내려");
@@ -449,7 +450,7 @@ public class PlayerInteractController : MonoBehaviour
         {
             // 객체를 들어 올릴 때의 로직
             Debug.Log("올려");
-            if (obj.name.Equals("Plate"))
+            if (obj.CompareTag("Plate"))
             {
                 obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             }
@@ -827,25 +828,31 @@ public class PlayerInteractController : MonoBehaviour
 
     void SetPositionbetweenPlayerandObject(GameObject obj) 
     {
-        string name = obj.name;
+        //string name = obj.name;
 
         Vector3 localPosition = Vector3.zero;
         Quaternion localRotation = Quaternion.identity;
 
-        switch (name)
+        if (obj.CompareTag("Plate"))
         {
-            case "Plate":
-                //obj.GetComponent<Ingredient>().HandleIngredient(obj.transform, obj.transform.GetComponent<Ingredient>().type, true);
-                //Transform parentTransform = obj.transform.parent;
-                //parentTransform.localPosition = localPosition;
-                //parentTransform.localRotation = localRotation;
-                //parentTransform.parent.SetParent(something);
-                obj.transform.localRotation = Quaternion.identity;
-                obj.transform.localPosition = new Vector3(-0.409999996f, 0.4700001f, 1.84000003f);
-                break;
-            default:
-                break;
+            obj.transform.localRotation = Quaternion.identity;
+            obj.transform.localPosition = new Vector3(-0.409999996f, 0.4700001f, 1.84000003f);
         }
+
+        //switch (name)
+        //{
+        //    case "Plate":
+        //        //obj.GetComponent<Ingredient>().HandleIngredient(obj.transform, obj.transform.GetComponent<Ingredient>().type, true);
+        //        //Transform parentTransform = obj.transform.parent;
+        //        //parentTransform.localPosition = localPosition;
+        //        //parentTransform.localRotation = localRotation;
+        //        //parentTransform.parent.SetParent(something);
+        //        obj.transform.localRotation = Quaternion.identity;
+        //        obj.transform.localPosition = new Vector3(-0.409999996f, 0.4700001f, 1.84000003f);
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
     #endregion
 
