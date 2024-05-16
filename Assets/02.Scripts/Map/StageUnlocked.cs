@@ -25,7 +25,7 @@ public class StageUnlocked : MonoBehaviour
         {
             childObjects[i] = transform.GetChild(i).gameObject;
         }
-        StarNum = StageManager.instance.stages[StageNum];
+        StarNum = MapManager.Instance.stages[StageNum];
         SetStar();
         //Flip();
     }
@@ -65,7 +65,7 @@ public class StageUnlocked : MonoBehaviour
     // 자식 GameObject들의 활성화 여부를 설정하는 함수
     void SetChildrenActive(bool active)
     {
-        if (StageManager.instance.stages[StageNum] >= 0)//스테이지매니저 내부의 자신의 번호와 동일한 스테이지의 값을조회
+        if (MapManager.Instance.stages[StageNum] >= 0)//스테이지매니저 내부의 자신의 번호와 동일한 스테이지의 값을조회
         {
             foreach (GameObject childObject in childObjects) //자식들을 조회한뒤에 childObject중 unlock를 활성화
             {
@@ -75,7 +75,7 @@ public class StageUnlocked : MonoBehaviour
                 }
             }
         }
-        else if (StageManager.instance.stages[StageNum] <= 0)
+        else if (MapManager.Instance.stages[StageNum] <= 0)
         {
             foreach (GameObject childObject in childObjects) //자식들을 조회한뒤에 childObject중 lock를 활성화
             {
