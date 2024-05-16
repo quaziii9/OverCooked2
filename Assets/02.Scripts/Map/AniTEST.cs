@@ -1,13 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AniTEST : MonoBehaviour
 {
     // 자식 객체의 애니메이터 컴포넌트를 저장할 배열
     private Animator[] childAnimators;
-
+    void Awake()
+    {
+        // 모든 자식 객체의 애니메이터 컴포넌트를 가져옴
+        childAnimators = GetComponentsInChildren<Animator>();
+    }
     void Start()
+    {
+        // 모든 자식 객체의 애니메이터 컴포넌트를 가져옴
+        childAnimators = GetComponentsInChildren<Animator>();
+    }
+    void OnEnable()
     {
         // 모든 자식 객체의 애니메이터 컴포넌트를 가져옴
         childAnimators = GetComponentsInChildren<Animator>();
@@ -22,23 +32,23 @@ public class AniTEST : MonoBehaviour
         }
     }
 
-    void PlayChildAnimations()
+    public void PlayChildAnimations()
     {
-
         foreach (Animator animator in childAnimators)
         {
             animator.SetTrigger("flip");
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Bus"))
-        {
-            foreach (Animator animator in childAnimators)
-            {
-                animator.SetTrigger("flip");
-            }
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Bus"))
+    //    {
+    //        foreach (Animator animator in childAnimators)
+    //        {
+    //            animator.SetTrigger("flip");
+    //        }
+    //    }
+    //}
+
 }

@@ -11,6 +11,8 @@ public class StageUnlocked : MonoBehaviour
     public float maxScale = 1.0f;   
     public GameObject[] childObjects;
     public GameObject[] star;
+    public GameObject[] level;
+    public GameObject[] levelFlag;
     //[SerializeField]
     public int StageNum;
     public int StarNum;
@@ -25,11 +27,20 @@ public class StageUnlocked : MonoBehaviour
         }
         StarNum = StageManager.Instance.stages[StageNum];
         SetStar();
-        
+        //Flip();
     }
-    private void Update()
-    {
-    }
+    //void Flip()
+    //{
+    //    for(int i = 1;i < childObjects.Length;i++)
+    //    {
+    //        if (StageManager.Instance.stages[StageNum - 1] > 0)
+    //        {
+    //            level[i].GetComponent<AniTEST>().PlayChildAnimations();
+    //            levelFlag[i].SetActive(true);
+    //        }
+    //    }
+
+    //}
 
     void OnTriggerEnter(Collider other)
     {
@@ -37,11 +48,7 @@ public class StageUnlocked : MonoBehaviour
         if (other.CompareTag("Bus"))
         {
             SetChildrenActive(true);
-            //foreach (GameObject childObject in childObjects)
-            //{
-            //    //childObject.transform.localScale = Vector3.one;
-            //    childObject.transform.localScale = new Vector3 (midScale, midScale, midScale);
-            //}
+
         }
     }
 
@@ -50,12 +57,6 @@ public class StageUnlocked : MonoBehaviour
         // 해당 GameObject에 "Bus" 태그가 exit되면
         if (other.CompareTag("Bus"))
         {
-            // 스케일을 중간 크기로 설정
-            //foreach (GameObject childObject in childObjects)
-            //{
-            //    childObject.transform.localScale = Vector3.one * minScale;
-            //}
-
             // 자식 GameObject들을 비활성화
             SetChildrenActive(false);
         }
@@ -71,28 +72,6 @@ public class StageUnlocked : MonoBehaviour
                 if (childObject.name == "unlock")
                 {
                     childObject.SetActive(active);
-
-                    //foreach (Transform child in childObject.transform)
-                    //{
-                    //    if (child.name == "square")
-                    //    {
-                    //        foreach (Transform squareChild in child)
-                    //        {
-                    //            if (squareChild.name == "unlock")
-                    //            {
-                    //                GameObject[] star = new GameObject[squareChild.transform.childCount];
-                    //                for (int i = 0; i < squareChild.transform.childCount; i++)
-                    //                {
-                    //                    Transform ob = squareChild.transform.GetChild(i);
-
-                    //                    star[i] = ob.gameObject;
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //}
-
-
                 }
             }
         }

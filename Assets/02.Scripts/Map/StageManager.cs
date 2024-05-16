@@ -6,18 +6,35 @@ using UnityEngine;
 public class StageManager : Singleton<StageManager>
 {
     [SerializeField]
-    public int[] stages = {3,1,2,3};
+    public int[] stages = {3,0,1,0};
     public bool[] unlock;
     public int starSum = 0;
-    public TextMeshProUGUI Stars;
-    
+    public TextMeshProUGUI stars;
+    public GameObject[] levelFlagUi;
+    public GameObject[] level;
+
 
     void Start()
     {
-        unlock = new bool[StageManager.Instance.stages.Length];
+        unlock = new bool[StageManager.Instance.stages.Length+1];
         Debug.Log(unlock.Length);
         Unlocknode();
+        starSum = 0;
         Sum();
+        Flip();
+    }
+    void Flip()
+    {
+        for (int i = 1; i < stages.Length; i++)
+        {
+            if (stages[i - 1] > 0)
+            {
+                AniTEST Ani = level[i].GetComponent<AniTEST>();
+                Ani.PlayChildAnimations();
+                levelFlagUi[i].SetActive(true);
+            }
+        }
+
     }
 
     void Unlocknode()
@@ -26,9 +43,8 @@ public class StageManager : Singleton<StageManager>
         {
             if (stages[i] > 0)
             {
-                unlock[i] = true;
+                unlock[i+1] = true;
             }
-
         }
     }
     void Sum()
@@ -37,11 +53,7 @@ public class StageManager : Singleton<StageManager>
         {
             starSum += Star;
         }
-        Stars.text = "" + starSum;
+        stars.text = "" + starSum;
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
