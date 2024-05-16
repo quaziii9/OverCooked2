@@ -11,7 +11,7 @@ public class ScrollMT : MonoBehaviour
 
     // 오프셋 변화에 대한 속성
     public float startYOffset = 0.25f; // 시작 Y 오프셋
-    public float endYOffset = -0.23f; // 도달해야 할 Y 오프셋
+    public float endYOffset = -0.24f; // 도달해야 할 Y 오프셋
     public float speed = 0.01f; // 오프셋 변화 속도
 
     private void Start()
