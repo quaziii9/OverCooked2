@@ -17,10 +17,10 @@ public class Bus : MonoBehaviour
     public GameObject puffTransform; //퍼프가 실행되는 위치
     public bool isboost=false;
 
-    public GameObject puffWalkPrefab; //것는 퍼프 프리팹
-    public GameObject puffBustPrefab;//부스트 퍼프 프리팹
-    private IObjectPool<Puff> walkPool;//걷는 퍼프 풀
-    private IObjectPool<Puff> bustPool;//버스트 퍼프 풀
+    public GameObject puffWalkPrefab;   // 걷는 퍼프 프리팹
+    public GameObject puffBustPrefab;   // 버스트 퍼프 프리팹
+    private IObjectPool<Puff> walkPool; // 걷는 퍼프 풀
+    private IObjectPool<Puff> bustPool; // 버스트 퍼프 풀
     public int PuffCount = 0;
 
 
@@ -88,7 +88,6 @@ public class Bus : MonoBehaviour
         }
     }
 
-
     IEnumerator BoostCoroutine()
     {
         Debug.Log("Boost");
@@ -96,12 +95,8 @@ public class Bus : MonoBehaviour
         Rigidbody rb= GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * 20,ForceMode.Impulse);
 
-
-
         for (int i = 0; i < 4; i++)
         {
-            
-
             rb.AddForce(transform.forward, ForceMode.Impulse);
             yield return new WaitForSecondsRealtime(0.05f);
         }
@@ -112,39 +107,37 @@ public class Bus : MonoBehaviour
     }
 
 
-    //아래부터는 퍼프 관련 함수
-    void BoostPuff() //부스트 퍼프 실행
+    // 아래부터는 퍼프 관련 함수
+    void BoostPuff() // 부스트 퍼프 실행
     {
         var bust = bustPool.Get();
         bust.transform.position = puffTransform.transform.position;
     }
-    private Puff CreateWalk() //워크퍼프생성후 풀에 담음
+    private Puff CreateWalk() // 워크퍼프 생성 후 풀에 담음
     {
         Puff puff = Instantiate(puffWalkPrefab).GetComponent<Puff>();
         puff.SetManagedPool(walkPool);
         return puff;
     }
-    private Puff CreateBust() //버스트퍼프생성
+    private Puff CreateBust() // 버스트 퍼프 생성
     {
         Puff puff = Instantiate(puffBustPrefab).GetComponent<Puff>();
         puff.SetManagedPool(bustPool);
         return puff;
     }
 
-    private void OnGetPuff(Puff puff) //퍼프를 불러옴
+    private void OnGetPuff(Puff puff) // 퍼프를 불러옴
     {
         puff.gameObject.SetActive(true);
     }
 
-    private void OnReleasePuff(Puff puff) //퍼프비활성화
+    private void OnReleasePuff(Puff puff) // 퍼프 비활성화
     {
         puff.gameObject.SetActive(false);
     }
 
-    private void OnDestroyPuff(Puff puff) //퍼프삭제
+    private void OnDestroyPuff(Puff puff) // 퍼프 삭제
     {
         Destroy(puff.gameObject);
     }
-
 }
-

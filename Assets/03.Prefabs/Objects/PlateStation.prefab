@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 2556165443406546596}
   - component: {fileID: 7668845711894856618}
   m_Layer: 0
-  m_Name: Mesh 7
+  m_Name: Mesh
   m_TagString: Station
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
