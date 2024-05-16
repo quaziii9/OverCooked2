@@ -39,6 +39,9 @@ public class PlayerInteractController : MonoBehaviour
     [SerializeField] private GameObject grabL;
     [SerializeField] private GameObject knife;
 
+    [Header("PlayerInputSystem")]
+    [SerializeField] private GameObject PlayerInputSystem;
+
 
     private void Awake()
     {
@@ -52,10 +55,10 @@ public class PlayerInteractController : MonoBehaviour
         SetHand();
     }
 
-    #region 인터렉션 부분
-    public void ChangeState(IPlayerState newState)
+    #region OnSwitch
+    public void OnSwitch(InputValue inputValue)
     {
-        currentState = newState;
+        PlayerInputSystem.GetComponent<PlayerMasterController>().SwitchPlayerComponent();
     }
     #endregion
 
@@ -73,7 +76,6 @@ public class PlayerInteractController : MonoBehaviour
         
     }
     #endregion
-
 
     #region OnCookOrThrow
     public void OnCookOrThrow(InputValue inputValue)
