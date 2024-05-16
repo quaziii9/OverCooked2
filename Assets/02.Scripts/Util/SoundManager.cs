@@ -19,6 +19,7 @@ public class SoundManager : Singleton<SoundManager>
     [Header("BGM")]
     public AudioClip introBGM;
     public AudioClip battleBGM;
+    public AudioClip busMapBGM;
 
     [Header("Sound Effect")]
     public AudioClip UISelect;
@@ -57,6 +58,8 @@ public class SoundManager : Singleton<SoundManager>
         //IntroBGM();
     }
 
+
+    #region settingAuido
     public void SettingAudioVolume()
     {
         bgmAudioSource.volume = 0.1f;
@@ -134,7 +137,11 @@ public class SoundManager : Singleton<SoundManager>
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
+    #endregion
 
+
+
+    #region FadeInOut
     public void FadeInAudio(AudioSource audioSource, float waitTime, string bgmName)
     {
         StartCoroutine(FadeInVolume(audioSource, waitTime, bgmName));
@@ -167,7 +174,7 @@ public class SoundManager : Singleton<SoundManager>
         audioSource.volume = 0;
         audioSource.Stop();
     }
-
+    #endregion
 
     void playBgm(string bgmName)
     {
@@ -179,6 +186,9 @@ public class SoundManager : Singleton<SoundManager>
             case "Battle":
                 BattleBGM();
                     break;
+            case "BusMap":
+                BusMapBGM();
+                break;
         }
     }
 
@@ -192,6 +202,13 @@ public class SoundManager : Singleton<SoundManager>
     void BattleBGM()
     {
         bgmChangeAudioSource.clip = battleBGM;
+        bgmChangeAudioSource.loop = true;
+        bgmChangeAudioSource.Play();
+    }
+
+    void BusMapBGM()
+    {
+        bgmChangeAudioSource.clip = busMapBGM;
         bgmChangeAudioSource.loop = true;
         bgmChangeAudioSource.Play();
     }

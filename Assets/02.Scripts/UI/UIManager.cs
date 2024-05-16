@@ -253,18 +253,10 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
-    public void ExitGame()
-    {
-
-    #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-    #else
-                    Application.Quit();
-    #endif
-
-    }
+    
 
 
+    #region Resolution
     public void ResolutionRightButton()
     {
         resolutionArrNum= (resolutionArrNum +1) % 7;
@@ -279,7 +271,6 @@ public class UIManager : Singleton<UIManager>
 
         resolutionText.text = resolutionTextArr[resolutionArrNum];
     }
-
 
     public void ResolutionChange()
     {
@@ -322,8 +313,12 @@ public class UIManager : Singleton<UIManager>
     public void OnClickFullScreenButton()
     {
         windowScreen = !windowScreen;
-            fullScreenCheck.SetActive(windowScreen);
+        fullScreenCheck.SetActive(windowScreen);
     }
+    #endregion
+
+
+
 
     public void EnterBusMap()
     {
@@ -338,5 +333,16 @@ public class UIManager : Singleton<UIManager>
     public void ChangeToBusMapMask()
     {
         MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleOutDuration);
+    }
+
+
+    public void ExitGame()
+    {
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                            Application.Quit();
+        #endif
+        
     }
 }

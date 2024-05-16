@@ -13,7 +13,9 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     }
 
     public void ChangeToBusMap()
-    {       
+    {
+        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, "BusMap");
+        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
         StartCoroutine(LoadSceneAsyncCoroutine());
     }
 
