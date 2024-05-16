@@ -2,7 +2,7 @@ using Cinemachine;
 using System.Collections;
 using UnityEngine;
 
-public class IntroManager : Singleton<IntroManager>
+public class IntroManager : MonoBehaviour
 {
     private bool isSpace;
     private bool isLoading = true;

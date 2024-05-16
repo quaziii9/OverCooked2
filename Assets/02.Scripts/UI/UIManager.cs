@@ -312,4 +312,9 @@ public class UIManager : Singleton<UIManager>
         windowScreen = !windowScreen;
             fullScreenCheck.SetActive(windowScreen);
     }
+
+    public void EnterBusMap()
+    {
+        MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration);
+    }
 }
