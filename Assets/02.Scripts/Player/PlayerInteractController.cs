@@ -149,7 +149,7 @@ public class PlayerInteractController : MonoBehaviour
 
     void PlayThrowSound()
     {
-        //SoundManager.instance.PlayEffect("throw");
+        SoundManager.Instance.PlayEffect("throwItem");
     }
 
     void SetThrowAnimation()
@@ -340,7 +340,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void TryPickupObject(GameObject handleThing)
     {
-        //SoundManager.instance.PlayEffect("take");
+        SoundManager.Instance.PlayEffect("take");
         objectHighlight.onSomething = false;
         //isHolding = true;
         //anim.SetBool("isHolding", isHolding);
@@ -351,7 +351,7 @@ public class PlayerInteractController : MonoBehaviour
     // true 테이블 위에 뭔가 있음 , false 테이블 위에 뭔가 없음
     private void TablePlaceOrDropObject(bool drop)
     {
-        //SoundManager.instance.PlayEffect(drop ? "put" : "place");
+        SoundManager.Instance.PlayEffect(drop ? "put" : "place");
         if (drop)
         {
             // true 테이블 위에 뭔가 있는데 내가 가진게 접시고, 음식이면 담음
@@ -401,7 +401,7 @@ public class PlayerInteractController : MonoBehaviour
         var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient>().type;
         if (plate.AddIngredient(ingredient))
         {
-            //SoundManager.instance.PlayEffect("put");
+            SoundManager.Instance.PlayEffect("put");
             plate.InstantiateUI();
             Destroy(transform.GetChild(1).gameObject);
             isHolding = false;
@@ -434,11 +434,11 @@ public class PlayerInteractController : MonoBehaviour
         {
             // 객체를 내려놓을 때의 로직
             //Debug.Log("내려");
-            //SoundManager.instance.PlayEffect("put");
             //obj.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             //obj.transform.SetParent(null); // 부모 설정 해제
             //anim.SetBool("isHolding", false);
             //isHolding = false;
+            SoundManager.Instance.PlayEffect("put");
             GameObject handleThing = transform.GetChild(1).gameObject;
             if (handleThing.CompareTag("Ingredient"))
             {
@@ -470,7 +470,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void PickupFromCraft()
     {
-        //SoundManager.instance.PlayEffect("take");
+        SoundManager.Instance.PlayEffect("take");
         // Craft에서 아이템 꺼내기 로직 구현
         interactObject.GetComponent<Craft>().OpenCraftPlayer1();
         objectHighlight.onSomething = false;
@@ -492,7 +492,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void PickupIngredient()
     {
-        //SoundManager.instance.PlayEffect("take");
+        SoundManager.Instance.PlayEffect("take");
         isHolding = true;
         anim.SetBool("isHolding", isHolding);
         // 재료 줍기 로직 상세 구현 필요
@@ -532,7 +532,7 @@ public class PlayerInteractController : MonoBehaviour
     private void HandleDeadZone()
     {
         // 사운드 메니져
-        //SoundManager.instance.PlayEffect("fall");
+        SoundManager.Instance.PlayEffect("fall");
         //DieRespawn();
     }
     

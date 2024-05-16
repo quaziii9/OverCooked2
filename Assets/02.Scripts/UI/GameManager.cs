@@ -7,7 +7,7 @@ using static System.Collections.Specialized.BitVector32;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class GameManager : MonoBehaviour
-{/*
+{
     public static GameManager instance = null; // 싱글톤 인스턴스 선언
 
     private Coroutine alphaCo = null; // 알파값 변화 코루틴 저장용 변수
@@ -140,10 +140,10 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         // 싱글플레이가 아닐 때 초기화 작업
-        if (!SoundManager.instance.isSingle)
+        if (!SoundManager.Instance.isSingle)
         {
-            SoundManager.instance.asBGM.volume = 0;
-            SoundManager.instance.alreadyPlayed = false;
+            SoundManager.Instance.BgmAudioSource.volume = 0;
+            SoundManager.Instance.alreadyPlayed = false;
             OppositeUI.SetActive(true);
         }
         else
@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             if (StartTime > 1 && !PlayOnce)
             {
-                SoundManager.instance.PlayEffect("ready");
+                SoundManager.Instance.PlayEffect("ready");
                 Ready.SetActive(true);
                 PlayOnce = true;
             }
@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour
                 Ready.SetActive(false);
                 PlayTwice = true;
                 Go.SetActive(true);
-                SoundManager.instance.PlayEffect("go");
+                SoundManager.Instance.PlayEffect("go");
             }
             else if (PlayTwice && Go.transform.localScale.x < 1)
             {
@@ -234,8 +234,8 @@ public class GameManager : MonoBehaviour
             }
             else if (StartTime > 6 && PlayTwice && Go.transform.localScale.x > 1)
             {
-                SoundManager.instance.StagePlay(SoundManager.instance.StageName);
-                if (!SoundManager.instance.isSingle) SoundManager.instance.StagePlay("SampleScene");
+                //SoundManager.Instance.StagePlay(SoundManager.Instance.StageName);
+                //if (!SoundManager.Instance.isSingle) SoundManager.Instance.StagePlay("SampleScene");
                 Go.SetActive(false);
                 isStop = false;
                 StartSetting = true;
@@ -253,7 +253,7 @@ public class GameManager : MonoBehaviour
             Invoke("MakeOrder", 80f);
             Invoke("MakeOrder", 150f);
         }
-        else if (SoundManager.instance.isSingle && StartSetting && once)
+        else if (SoundManager.Instance.isSingle && StartSetting && once)
         {
             // 싱글플레이 일시정지 처리
             if (Input.GetKeyDown(KeyCode.P))
@@ -274,13 +274,13 @@ public class GameManager : MonoBehaviour
         // 게임 시간 감소 및 처리
         GameTime -= Time.deltaTime;
         ToClock();
-        if (GameTime < 30 && SoundManager.instance.asBGM.pitch == 1)
+        if (GameTime < 30 && SoundManager.Instance.BgmAudioSource.pitch == 1)
         {
-            SoundManager.instance.asBGM.pitch = 1.5f;
+            SoundManager.Instance.BgmAudioSource.pitch = 1.5f;
         }
-        else if (GameTime < 15 && SoundManager.instance.asBGM.pitch == 1.5f)
+        else if (GameTime < 15 && SoundManager.Instance.BgmAudioSource.pitch == 1.5f)
         {
-            SoundManager.instance.asBGM.pitch = 2;
+            SoundManager.Instance.BgmAudioSource.pitch = 2;
         }
 
         if (GameTime < 30)
@@ -291,13 +291,13 @@ public class GameManager : MonoBehaviour
         if (countSec >= 1)
         {
             countSec = 0;
-            SoundManager.instance.PlayEffect("beep");
+            SoundManager.Instance.PlayEffect("beep");
         }
         if (GameTime <= 0 && !isDone) // 시간이 다 되면 멈추기
         {
-            SoundManager.instance.asBGM.pitch = 1;
-            SoundManager.instance.asBGM.Stop();
-            SoundManager.instance.PlayEffect("timesUp");
+            SoundManager.Instance.BgmAudioSource.pitch = 1;
+            SoundManager.Instance.BgmAudioSource.Stop();
+            SoundManager.Instance.PlayEffect("timesUp");
             Time.timeScale = 0;
             if (StageManager.instance != null) StageManager.instance.totalMoney = Coin;
             Timesup.SetActive(true);
@@ -331,7 +331,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                if (SoundManager.instance.isSingle)
+                if (SoundManager.Instance.isSingle)
                 { // 싱글플레이
                     lastSec += Time.unscaledDeltaTime;
                     if (lastSec > 1)
@@ -750,5 +750,5 @@ public class GameManager : MonoBehaviour
                 CurrentOrderUI[j].transform.position = CurrentPosition;
             }
         }
-    }*/
+    }
 }

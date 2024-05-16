@@ -1,5 +1,7 @@
 using DG.Tweening.Core.Easing;
 using System.Collections;
+using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -158,5 +160,48 @@ public class SoundManager : Singleton<SoundManager>
     public void StartPlay()
     {
         EffectAudioSource.PlayOneShot(UIStart);
+    }
+
+    [Header("MultiPlay")]
+    public bool isSingle = true; //싱글 멀티 구분
+    public bool alreadyPlayed = false;
+
+    [Header("Game Play Sound Effect")]
+    public AudioClip itemTake;
+    public AudioClip put;
+    public AudioClip place;
+    public AudioClip fall;
+    public AudioClip throwItem;
+    public AudioClip ready;
+    public AudioClip go;
+
+    public void PlayEffect(string effect)
+    {
+        switch (effect)
+        {
+            case "take":
+                EffectAudioSource.clip = itemTake;
+                break;
+            case "put":
+                EffectAudioSource.clip = put;
+                break;
+            case "place":
+                EffectAudioSource.clip = place;
+                break;
+            case "fall":
+                EffectAudioSource.clip = fall;
+                break;
+            case "throwItem":
+                EffectAudioSource.clip = throwItem;
+                break;
+            case "ready":
+                EffectAudioSource.clip = ready;
+                break;
+            case "go":
+                EffectAudioSource.clip = go;
+                break;
+        }
+        EffectAudioSource.volume = volumeEffect;
+        EffectAudioSource.PlayOneShot(EffectAudioSource.clip);
     }
 }
