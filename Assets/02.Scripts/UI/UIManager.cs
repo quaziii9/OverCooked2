@@ -1,11 +1,9 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-
     [Header("Van")]
     public GameObject shutter;
     public GameObject buttonUI;
@@ -45,7 +43,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject exitLobbyBlackUI;
 
     [Header("Resolution")]
-    
+
     public TextMeshProUGUI resolutionText;
     public GameObject fullScreenButton;
     public GameObject fullScreenCheck;
@@ -92,7 +90,7 @@ public class UIManager : Singleton<UIManager>
     {
         optionBlackUI.SetActive(true);
         stopUI.SetActive(true);
-       // isExit = true;
+        // isExit = true;
     }
 
     public void StopUIOff()
@@ -102,7 +100,6 @@ public class UIManager : Singleton<UIManager>
         // isExit = false;
     }
     #endregion
-
 
     #region SoundSquares
 
@@ -146,9 +143,8 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
- 
     #region Mask InOut UI
-   
+
     public void MaskInUI(GameObject inMask, RectTransform inMaskRect, float Duration)
     {
         SoundManager.Instance.ScreenInUI();
@@ -158,7 +154,7 @@ public class UIManager : Singleton<UIManager>
         maskInEnd = true;
     }
 
-    public void MaskOutUI(GameObject inMask, GameObject outMask, RectTransform outMaskRect, Vector2 targetRect ,float Duration)
+    public void MaskOutUI(GameObject inMask, GameObject outMask, RectTransform outMaskRect, Vector2 targetRect, float Duration)
     {
         SoundManager.Instance.ScreenOutUI();
         inMask.SetActive(false);
@@ -193,7 +189,7 @@ public class UIManager : Singleton<UIManager>
     public void EnterBattleUI()
     {
         MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration);
-        if(maskInEnd == true) Invoke("BattleUI", 1.5F);    
+        if (maskInEnd == true) Invoke("BattleUI", 1.5F);
     }
 
     public void BattleUI()
@@ -210,11 +206,10 @@ public class UIManager : Singleton<UIManager>
         SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, "Intro");
         SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
         MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliInDuration);
-       
+
     }
 
     #endregion
-
 
     #region ExitBattleUI
 
@@ -244,18 +239,18 @@ public class UIManager : Singleton<UIManager>
     public void ExitGame()
     {
 
-    #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-    #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
                     Application.Quit();
-    #endif
+#endif
 
     }
 
 
     public void ResolutionRightButton()
     {
-        resolutionArrNum= (resolutionArrNum +1) % 7;
+        resolutionArrNum = (resolutionArrNum + 1) % 7;
         resolutionText.text = resolutionTextArr[resolutionArrNum];
     }
 
@@ -268,12 +263,11 @@ public class UIManager : Singleton<UIManager>
         resolutionText.text = resolutionTextArr[resolutionArrNum];
     }
 
-
     public void ResolutionChange()
     {
         settingResolutionArrNum = resolutionArrNum;
         settingWindowScreen = windowScreen;
-        switch(resolutionArrNum)
+        switch (resolutionArrNum)
         {
             case 0:
                 Screen.SetResolution(1280, 720, !windowScreen);
@@ -297,7 +291,6 @@ public class UIManager : Singleton<UIManager>
                 Screen.SetResolution(3070, 1920, !windowScreen);
                 break;
         }
-        
     }
 
     public void CancleChange()
@@ -310,7 +303,7 @@ public class UIManager : Singleton<UIManager>
     public void OnClickFullScreenButton()
     {
         windowScreen = !windowScreen;
-            fullScreenCheck.SetActive(windowScreen);
+        fullScreenCheck.SetActive(windowScreen);
     }
 
     public void EnterBusMap()
