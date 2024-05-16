@@ -14,13 +14,8 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     }
 
     public void ChangeToBusMap()
-    {
-        //UIManager.Instance.EnterBusMap();
-        //Debug.Log(UIManager.Instance.maskInEnd);
-        //if(UIManager.Instance.maskInEnd == true) Invoke("LoadSceneAsyncCoroutine", 2F);
-       StartCoroutine(LoadSceneAsyncCoroutine());
-
-        
+    {       
+        StartCoroutine(LoadSceneAsyncCoroutine());
     }
 
     IEnumerator LoadSceneAsyncCoroutine()

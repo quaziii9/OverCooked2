@@ -167,10 +167,9 @@ public class UIManager : Singleton<UIManager>
                     Invoke("BattleUIOff", 2F);
                     break;
                 case "GoToBusMap":
-                    Invoke("GoToBusMap",0f);
+                    SceneChangeManager.Instance.ChangeToBusMap();
                     break;
-            }
-            
+            }        
         }));
     }
 
@@ -194,7 +193,6 @@ public class UIManager : Singleton<UIManager>
 
         while (elapsedTime < time)
         {
-            Debug.Log(elapsedTime);
             rt.sizeDelta = Vector2.Lerp(fromSize, toSize, (elapsedTime / time));
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -210,7 +208,6 @@ public class UIManager : Singleton<UIManager>
     public void EnterBattleUI()
     {
         MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration, "BattleUI");
-       // if(maskInEnd == true) Invoke("BattleUI", 1.5F);    
     }
 
     public void BattleUI()
@@ -252,8 +249,6 @@ public class UIManager : Singleton<UIManager>
         exitLobbyBlackUI.SetActive(false);
         exitLobbyUI.SetActive(false);
         MaskInUI(pineappleMask, pineappleMaskRect, pineappleOutDuration, "BattleUIOff");
-        //if (maskInEnd == true) Invoke("BattleUIOff", 1.5F);
-        //battleUI.SetActive(false);
     }
 
     #endregion
@@ -332,12 +327,7 @@ public class UIManager : Singleton<UIManager>
 
     public void EnterBusMap()
     {
-        Debug.Log(maskInEnd);
         MaskInUI(broccoliMask, broccoliMaskRect, broccoliInDuration, "GoToBusMap");
-
-        Debug.Log(maskInEnd);
-        //if (maskInEnd == true) SceneChangeManager.Instance.ChangeToBusMap();
-
     }
 
     public void GoToBusMap()
