@@ -10,7 +10,7 @@ public class Menu : ScriptableObject
 {
     public int Level;
     public string MenuName;
-    public List<IngredientType> Ingredient;
+    public List<Ingredient.IngredientType> Ingredient;
     public float LimitTime;
     public Sprite MenuIcon;
     public List<Sprite> IngredientIcon;

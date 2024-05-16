@@ -228,11 +228,45 @@ public class PlayerInteractController : MonoBehaviour
             case ObjectHighlight.ObjectType.Bin:
                 HandleBinInteraction();
                 break;
+            case ObjectHighlight.ObjectType.Station:
+                HandleStationInteraction();
+                break;
             default:
                 HandleGeneralObjectInteraction();
                 break;
         }
     }
+
+    // Station
+    private void HandleStationInteraction()
+    {
+        if (isHolding && transform.GetChild(1).gameObject.GetComponent<Ingredient>() != null 
+            && transform.GetChild(1).gameObject.GetComponent<Ingredient>().type == Ingredient.IngredientType.Plate)
+        {
+            // Handle 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
+            Plates plateComponent = transform.GetChild(1).gameObject.GetComponent<Plates>();  // Plates 컴포넌트를 가져옴
+
+            if (GameManager.instance.CheckMenu(plateComponent.containIngredients))
+            {
+                // 접시의 재료가 메뉴와 일치하면
+                SoundManager.Instance.PlayEffect("right");  // 성공 효과음 재생
+                GameManager.instance.MakeOrder();  // 주문을 만듦
+            }
+            else
+            {
+                // 접시의 재료가 메뉴와 일치하지 않으면
+                SoundManager.Instance.PlayEffect("no");  // 실패 효과음 재생
+                //TriggerFailureEffect();  // 실패 시 빨간색 불 들어오는 함수 호출 (추가 구현 필요)
+            }
+
+            Destroy(transform.GetChild(1).gameObject);  // 접시 전체를 삭제 (추후 재활용을 고려)
+            isHolding = false;  // 아이템을 들고 있는 상태를 해제
+            anim.SetBool("isHolding", isHolding);  // 애니메이션 상태를 업데이트
+            GameManager.instance.PlateReturn();  // 접시 반환 처리
+        }
+
+    }
+
     // CounterTop, Board
     private void HandleCounterTopOrBoardInteraction()
     {
@@ -351,7 +385,7 @@ public class PlayerInteractController : MonoBehaviour
     // true 테이블 위에 뭔가 있음 , false 테이블 위에 뭔가 없음
     private void TablePlaceOrDropObject(bool drop)
     {
-        SoundManager.Instance.PlayEffect(drop ? "put" : "place");
+        SoundManager.Instance.PlayEffect(drop ? "put" : "put");
         if (drop)
         {
             // true 테이블 위에 뭔가 있는데 내가 가진게 접시고, 음식이면 담음
