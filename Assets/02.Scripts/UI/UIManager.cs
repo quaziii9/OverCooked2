@@ -49,9 +49,10 @@ public class UIManager : Singleton<UIManager>
     public GameObject exitLobbyUI;
     public GameObject exitLobbyBlackUI;
 
-    [Header("LoadingKeyUI")]
+    [Header("Loading")]
     public GameObject loadingKeyUI;
-    public Image loadingKeyBar;
+    public GameObject[] loadingFoodArr;
+    public Image loadingKeyBar; 
 
     [Header("BusMap")]
     public GameObject busTopUI;
@@ -243,8 +244,10 @@ public class UIManager : Singleton<UIManager>
         inMaskRect = inMask.GetComponent<RectTransform>();
         StartCoroutine(MaskInOut(inMaskRect, Vector2.zero, Duration, () =>
         {
-           // maskInEnd = true;
-            switch(goTo)
+            LoadingFood();
+
+            // maskInEnd = true;
+            switch (goTo)
             {
                 case "BattleUI":
                     Invoke("BattleUI", 1F);
@@ -277,6 +280,8 @@ public class UIManager : Singleton<UIManager>
         inMask.SetActive(false);
         outMask.SetActive(true);
         outMaskRect = outMask.GetComponent<RectTransform>();
+        if (goTo == "") Invoke("LoadingFoodOff", 0.5f);
+        else LoadingFoodOff();
         StartCoroutine(MaskInOut(outMaskRect, targetRect, Duration, () =>
         {
             //maskOutEnd = true;
@@ -286,9 +291,11 @@ public class UIManager : Singleton<UIManager>
             {
                 case "GoToBusMap":
                     SceneChangeManager.Instance.ChangeToBusMap();
+                    loadingKeyBar.fillAmount = 0;
                     break;
                 case "GoToIntroMap":
                     SceneChangeManager.Instance.ChangeToIntroMap();
+                    loadingKeyBar.fillAmount = 0;
                     break;
                 case "busTopUI":
                     busTopUI.SetActive(true);
@@ -437,7 +444,34 @@ public class UIManager : Singleton<UIManager>
         MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "GoToIntroMap");
     }
 
+    public void LoadingFood()
+    {
+        switch(Random.Range(0, 2))
+        {
+            case 0:
+                loadingFoodArr[0].SetActive(true);
+                loadingFoodArr[1].SetActive(false);
+                loadingFoodArr[2].SetActive(false);
+                break;
+            case 1:
+                loadingFoodArr[0].SetActive(false);
+                loadingFoodArr[1].SetActive(true);
+                loadingFoodArr[2].SetActive(false);
+                break;
+            case 2:
+                loadingFoodArr[0].SetActive(false);
+                loadingFoodArr[1].SetActive(false);
+                loadingFoodArr[2].SetActive(true);
+                break;
+        }
+    }
 
+    public void LoadingFoodOff()
+    {
+        loadingFoodArr[0].SetActive(false);
+        loadingFoodArr[1].SetActive(false);
+        loadingFoodArr[2].SetActive(false);
+    }
 
     public void ExitGame()
     {
