@@ -1738,7 +1738,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8452de4792f0d57428a8886b44d4965a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 888bc57ddaf3cb54699722a6654c09ca, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2494,7 +2494,7 @@ GameObject:
   m_Component:
   - component: {fileID: 329520387}
   m_Layer: 5
-  m_Name: LoadingKeyUI
+  m_Name: ResultUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2582,7 +2582,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e4796337e87bcc94ca20e31208cb0501, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 888bc57ddaf3cb54699722a6654c09ca, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2746,7 +2746,7 @@ GameObject:
   m_Component:
   - component: {fileID: 397383442}
   m_Layer: 5
-  m_Name: Loading Background
+  m_Name: ResultUI Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6843,7 +6843,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8452de4792f0d57428a8886b44d4965a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e4796337e87bcc94ca20e31208cb0501, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8603,7 +8603,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 888bc57ddaf3cb54699722a6654c09ca, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e4796337e87bcc94ca20e31208cb0501, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
