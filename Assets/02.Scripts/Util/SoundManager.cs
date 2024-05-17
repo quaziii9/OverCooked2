@@ -45,6 +45,7 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip bin;
     public AudioClip right;
     public AudioClip no;
+    public AudioClip cut;
 
     [Header("Mixer Groups")]
     public AudioMixerGroup musicGroup;  // The music mixer group
@@ -280,6 +281,9 @@ public class SoundManager : Singleton<SoundManager>
                 break;
             case "no":
                 effectAudioSource.clip = no;
+                break;
+            case "cut":
+                effectAudioSource.clip = cut;
                 break;
         }
         effectAudioSource.volume = volumeEffect;

@@ -61,7 +61,7 @@ public class CuttingBoard : MonoBehaviour
     {
         if (parentObject.onSomething)
         {
-            //SoundManager.instance.PlayEffect("cut");
+            SoundManager.Instance.PlayEffect("cut");
             cookingBar.gameObject.SetActive(true);
             ClearTime();
             _CoTimer = StartCoroutine(CoStartCutting(EndCallBack));
@@ -73,7 +73,7 @@ public class CuttingBoard : MonoBehaviour
     {
         if (parentObject.onSomething)
         {
-            //SoundManager.instance.PlayEffect("cut");
+            SoundManager.Instance.PlayEffect("cut");
             cookingBar.gameObject.SetActive(true);
             ClearTime();
             _CoTimer = StartCoroutine(CoStartCutting(EndCallBack));
