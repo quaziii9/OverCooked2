@@ -4,13 +4,13 @@ using UnityEngine;
 using static Ingredient;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
-[CreateAssetMenu(fileName = "Menu Data", menuName = "Scriptable Object/Menu data", order = int.MaxValue)]
+[CreateAssetMenu(fileName = "Menu Data Net", menuName = "Scriptable Object Net/Menu data Net", order = int.MaxValue)]
 
 public class Menu_Net : ScriptableObject
 {
     public int Level;
     public string MenuName;
-    public List<Ingredient.IngredientType> Ingredient;
+    public List<Ingredient_Net.IngredientType> Ingredient;
     public float LimitTime;
     public Sprite MenuIcon;
     public List<Sprite> IngredientIcon;

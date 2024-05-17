@@ -1,7 +1,7 @@
 using UnityEngine;
 using static CookingAppliance;
 
-public class CookingTool_Net : GameItem
+public class CookingTool_Net : GameItem_Net
 {
     public enum ToolType { Pan, Pot, Frybasket, Plate, Extinguisher };
     public ToolType toolType; // 도구 유형: 프라이팬, 냄비, 튀김망, 접시, 소화기? 등
@@ -10,7 +10,7 @@ public class CookingTool_Net : GameItem
     public CookingToolState currentState = CookingToolState.NotInUse;
 
 
-    public override void Interact(PlayerInteractController player)
+    public override void Interact(PlayerInteractController_Net player)
     {
         // 작업대와의 상호작용 로직 구현
         Debug.Log("Player has interacted with a craft station.");

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0705c0c02d105e4fa1f435a7f28d2cf, type: 3}
-  m_Name: Star Limit
+  m_Script: {fileID: 11500000, guid: 3d21e0b6a786c864d9ea8efc3ae8055a, type: 3}
+  m_Name: Star Limit Net
   m_EditorClassIdentifier: 
   Stage: 1
   oneStarLimit: 20

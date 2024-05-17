@@ -99,6 +99,6 @@ public class OrderUI_Net : MonoBehaviour
             timer.value -= 1f;
         }
         // 타이머가 0이 되면 실패 처리 (메뉴 실패 메서드 호출)
-        GameManager.instance.MenuFail(gameObject);
+        GameManager_Net.instance.MenuFail(gameObject);
     }
 }
