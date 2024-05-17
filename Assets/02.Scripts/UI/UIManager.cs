@@ -52,7 +52,8 @@ public class UIManager : Singleton<UIManager>
     public GameObject loadingKeyUI;
     public Image loadingKeyBar;
 
-    [Header("BusMapEscUI")]
+    [Header("BusMap")]
+    public GameObject busTopUI;
     public GameObject busMapEscUI;
     public GameObject busMapEscBlackUI;
 
@@ -76,10 +77,6 @@ public class UIManager : Singleton<UIManager>
 
     public void Start()
     {
-        //shutter = GameObject.Find("Van Shutter");
-        //buttonUI = GameObject.Find("Button Canvas");
-        //ingamePlayerUI = GameObject.Find("m_chalkboard Canvas");
-        //shutterAnim = GameObject.("Van Shutter");
         resolutionText.text = resolutionTextArr[resolutionArrNum];
         fullScreenCheck.SetActive(windowScreen);
         broccoliMaskRect = broccoliMask.GetComponent<RectTransform>();
@@ -261,6 +258,7 @@ public class UIManager : Singleton<UIManager>
                     Invoke("EnterBusMapMaskOut", 1f);
                     break;
                 case "LoadingKeyUIToIntro":
+                    busTopUI.SetActive(false);
                     Invoke("LoadingKeyUIToIntro", 1f);
                     break;
                 case "EnterIntroMapMaskOut":
@@ -290,6 +288,9 @@ public class UIManager : Singleton<UIManager>
                     break;
                 case "GoToIntroMap":
                     SceneChangeManager.Instance.ChangeToIntroMap();
+                    break;
+                case "busTopUI":
+                    busTopUI.SetActive(true);
                     break;
                 default:
                     break;
@@ -389,7 +390,7 @@ public class UIManager : Singleton<UIManager>
     public void EnterBusMapMaskOut()
     {
         loadingKeyUI.SetActive(false);
-        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "");
+        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "busTopUI");
     }
 
     public void EnterIntroMapMaskOut()

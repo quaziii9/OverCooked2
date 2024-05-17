@@ -72,6 +72,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.first = false;
                 UIManager.Instance.EnterBusMapMaskIn();
+                
                 StartCoroutine("LoadingBarReset");         
                 break;
             case "Intro":
@@ -79,6 +80,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 UIManager.Instance.shutterCamera = GameObject.Find("ShutterCam").GetComponent<CinemachineVirtualCamera>();
                 if (UIManager.Instance.first == false)
                 {
+                    UIManager.Instance.busTopUI.SetActive(false);
                     VanSingleton.Instance.van.SetActive(true);
                     UIManager.Instance.buttonUI.SetActive(true);
                     UIManager.Instance.shutterCamera.Priority = 9;
