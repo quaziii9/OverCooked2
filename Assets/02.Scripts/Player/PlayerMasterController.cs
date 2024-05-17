@@ -22,6 +22,8 @@ public class PlayerMasterController : MonoBehaviour
 
     public void SwitchPlayerComponent()
     {
+        currentPlayer.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+
         PlayerInput oldPlayerInput = null;
         if (currentPlayer.GetComponent<PlayerInput>() != null)
             oldPlayerInput = currentPlayer.GetComponent<PlayerInput>();
@@ -53,5 +55,7 @@ public class PlayerMasterController : MonoBehaviour
 
         // PlayerInput 활성화
         playerInput.ActivateInput();
+
+        currentPlayer.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
     }
 }

@@ -1356,7 +1356,7 @@ MonoBehaviour:
   nextInteractObject: {fileID: 0}
   isHolding: 0
   canActive: 0
-  throwPower: {x: 0, y: 0, z: 0}
+  throwPower: {x: 0, y: 3, z: 15}
   idleR: {fileID: 8175616114288975065}
   idleL: {fileID: 3619811512716829730}
   grabR: {fileID: 1809362340467434981}

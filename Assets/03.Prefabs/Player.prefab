@@ -1159,6 +1159,9 @@ GameObject:
   - component: {fileID: 5265518529961989397}
   - component: {fileID: 5265518529961989399}
   - component: {fileID: 5265518529961989393}
+  - component: {fileID: 99277825}
+  - component: {fileID: 99277826}
+  - component: {fileID: 243495158}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1211,6 +1214,70 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.494843, y: 1.6721357, z: 2.035496}
   m_Center: {x: -0.2810943, y: -0.7687109, z: 0.51774734}
+--- !u!114 &99277825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265518529961989418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2637e3e3b9d80924a908f9a752ec29d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 0}
+  dashForce: 6
+  dashDuration: 1
+  allowAllDirections: 1
+  disableGravity: 0
+  resetVel: 1
+  dashCd: 1
+--- !u!114 &99277826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265518529961989418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88f53cc7059a0b74c8244ee5c073bca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 2484040779482123671}
+  interactObject: {fileID: 0}
+  objectHighlight: {fileID: 0}
+  nextInteractObject: {fileID: 0}
+  isHolding: 0
+  canActive: 0
+  throwPower: {x: 0, y: 3, z: 15}
+  idleR: {fileID: 6602487466136167198}
+  idleL: {fileID: 1794974379860270053}
+  grabR: {fileID: 3731519959740930594}
+  grabL: {fileID: 3036346185458243783}
+  knife: {fileID: 1870155906328477177}
+  PlayerInputSystem: {fileID: 0}
+--- !u!114 &243495158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265518529961989418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29c00a4588d2ffd40aa487c56eed0c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2484040779482123671}
+  rb: {fileID: 0}
+  moveSpeed: 15
+  turnSpeed: 10
+  dashSpeed: 0
+  dashForce: 500
+  dashDuration: 0.5
+  dashCooldown: 0.5
 --- !u!1 &5265518530452819521
 GameObject:
   m_ObjectHideFlags: 0
