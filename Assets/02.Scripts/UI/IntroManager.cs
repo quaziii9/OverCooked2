@@ -9,9 +9,10 @@ public class IntroManager : MonoBehaviour
 
 
 
-    void Awake()
+    void Start()
     {
-        if (UIManager.Instance.First) InitUI();
+        if(UIManager.Instance.first == true)
+            InitUI();
     }
 
     void FixedUpdate()
@@ -76,5 +77,6 @@ public class IntroManager : MonoBehaviour
 
         UIManager.Instance.shutter.SetActive(true);  
         isLoading = false;
+        
     }
 }

@@ -69,28 +69,30 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         switch(scene.name)
         {
             case "Map":
-                UIManager.Instance.First = false;
+                VanSingleton.Instance.van.SetActive(false);
+                UIManager.Instance.first = false;
                 UIManager.Instance.EnterBusMapMaskIn();
-                UIManager.Instance.loadingKeyBar.fillAmount = 0;               
+                StartCoroutine("LoadingBarReset");         
                 break;
             case "Intro":
-                van = GameObject.Find("Van");
-                UIManager.Instance.shutter = van.transform.GetChild(8).gameObject;
-                UIManager.Instance.buttonUI = van.transform.GetChild(0).gameObject;
-                UIManager.Instance.ingamePlayerUI = van.transform.GetChild(1).GetChild(0).gameObject;
-                UIManager.Instance.shutterAnim = van.transform.GetChild(8).gameObject.GetComponent<Animator>();
-                
                 UIManager.Instance.vanCamera = GameObject.Find("VanCam").GetComponent<CinemachineVirtualCamera>();
                 UIManager.Instance.shutterCamera = GameObject.Find("ShutterCam").GetComponent<CinemachineVirtualCamera>();
-                if (UIManager.Instance.First == false)
+                if (UIManager.Instance.first == false)
                 {
-                    UIManager.Instance.shutterCamera.Priority = 9;
+                    VanSingleton.Instance.van.SetActive(true);
                     UIManager.Instance.buttonUI.SetActive(true);
-                    Debug.Log("intro");
+                    UIManager.Instance.shutterCamera.Priority = 9;
                     UIManager.Instance.EnterIntroMapMaskIn();
-                    UIManager.Instance.loadingKeyBar.fillAmount = 0;
+                    StartCoroutine("LoadingBarReset");
+
                 }
                 break;
         }
+    }
+
+    IEnumerator LoadingBarReset()
+    {
+        yield return new WaitForSeconds(2f);
+        UIManager.Instance.loadingKeyBar.fillAmount = 0;
     }
 }

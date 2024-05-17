@@ -68,7 +68,7 @@ public class UIManager : Singleton<UIManager>
     private string[] resolutionTextArr = new string[] { "1280 x 720", "1280 x 800", "1680 x 1050", "1920 x 1080", "1920 x 1200", "2560 x 1600", "3072 x 1920" };
 
 
-    public bool First = true;
+    public bool first = true;
     //private bool maskInEnd;
     //private bool maskOutEnd;
     //private bool isExit = false;
@@ -383,7 +383,6 @@ public class UIManager : Singleton<UIManager>
 
     public void EnterIntroMapMaskIn()
     {
-        Debug.Log("?");
         MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "EnterIntroMapMaskOut");
     }
 
@@ -395,8 +394,6 @@ public class UIManager : Singleton<UIManager>
 
     public void EnterIntroMapMaskOut()
     {
-        Debug.Log("!");
-
         loadingKeyUI.SetActive(false);
         MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "");
     }
