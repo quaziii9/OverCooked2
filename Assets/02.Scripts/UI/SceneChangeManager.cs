@@ -35,10 +35,11 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     {
         yield return null;
         operation = SceneManager.LoadSceneAsync(Map);
+        UIManager.Instance.LoadingFood();
 
         operation.allowSceneActivation = false;
         float timer = 0;
-
+        
         while (!operation.isDone)
         {
             yield return null;
@@ -49,6 +50,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 if (loadingKeyBar.fillAmount >= operation.progress)
                 {
                     timer = 0f;
+                    
                 }
             }
             else
@@ -57,6 +59,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 if (loadingKeyBar.fillAmount == 1.0f)
                 {
                     operation.allowSceneActivation = true;
+                    UIManager.Instance.LoadingFoodOff();
                     yield break;
                 }
             }
@@ -71,9 +74,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
             case "Map":
                 VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.first = false;
-                UIManager.Instance.EnterBusMapMaskIn();
-                
-                StartCoroutine("LoadingBarReset");         
+                UIManager.Instance.EnterBusMapMaskIn();                                  
                 break;
             case "Intro":
                 UIManager.Instance.vanCamera = GameObject.Find("VanCam").GetComponent<CinemachineVirtualCamera>();
@@ -85,16 +86,8 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                     UIManager.Instance.buttonUI.SetActive(true);
                     UIManager.Instance.shutterCamera.Priority = 9;
                     UIManager.Instance.EnterIntroMapMaskIn();
-                    StartCoroutine("LoadingBarReset");
-
                 }
                 break;
         }
-    }
-
-    IEnumerator LoadingBarReset()
-    {
-        yield return new WaitForSeconds(2f);
-        UIManager.Instance.loadingKeyBar.fillAmount = 0;
     }
 }
