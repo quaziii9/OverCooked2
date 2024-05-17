@@ -10,11 +10,11 @@ public class Return_Net : MonoBehaviour
     {
         if (returnPlates.Count != 0)
         {
-            GetComponent<ObjectHighlight>().onSomething = true;
+            GetComponent<ObjectHighlight_Net>().onSomething = true;
         }
         else
         {
-            GetComponent<ObjectHighlight>().onSomething = false;
+            GetComponent<ObjectHighlight_Net>().onSomething = false;
         }
     }
 

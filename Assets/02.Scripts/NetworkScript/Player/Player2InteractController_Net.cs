@@ -11,17 +11,12 @@ using Transform = UnityEngine.Transform;
 
 public class Player2InteractController_Net : MonoBehaviour
 {
-    // 상태 변화 패턴
-    private IPlayerState currentState;
-    private FreeState freeState;
-    private HoldState holdState;
-
     // 애니메이션
     public Animator anim;
 
     // 상호작용 할 수 있는 오브젝트
     public GameObject interactObject;
-    public ObjectHighlight objectHighlight;
+    public ObjectHighlight_Net objectHighlight;
     public GameObject nextInteractObject;
 
     // 변경되는 Bool값
@@ -45,9 +40,7 @@ public class Player2InteractController_Net : MonoBehaviour
 
     private void Awake()
     {
-        //freeState = new FreeState(this);
-        //holdState = new HoldState(this);
-        //currentState = freeState;  // 초기 상태 설정
+
     }
 
     private void Update()
@@ -58,7 +51,7 @@ public class Player2InteractController_Net : MonoBehaviour
     #region OnSwitch
     public void OnSwitch(InputValue inputValue)
     {
-        PlayerInputSystem.GetComponent<PlayerMasterController>().SwitchPlayerComponent();
+        PlayerInputSystem.GetComponent<PlayerMasterController_Net>().SwitchPlayerComponent();
     }
     #endregion
 
@@ -70,20 +63,20 @@ public class Player2InteractController_Net : MonoBehaviour
     public void CookOrThrow()
     {
     }
-    
+
     public void PickupOrPlace()
     {
-        
+
     }
     #endregion
 
     #region OnCookOrThrow
     public void OnCookOrThrow(InputValue inputValue)
     {
-        Debug.Log("OnCookOrThrow");
+        //Debug.Log("OnCookOrThrow");
         if (checkInteractObject())
         {
-            if(ShouldStartCutting())
+            if (ShouldStartCutting())
                 StartCuttingProcess();
         }
         else
@@ -99,7 +92,7 @@ public class Player2InteractController_Net : MonoBehaviour
     {
         if (interactObject != null)
         {
-            if (interactObject.GetComponent<ObjectHighlight>().objectType == ObjectHighlight.ObjectType.Ingredient)
+            if (interactObject.GetComponent<ObjectHighlight_Net>().objectType == ObjectHighlight_Net.ObjectType.Ingredient)
                 return false;
             else
                 return true;
@@ -109,22 +102,22 @@ public class Player2InteractController_Net : MonoBehaviour
 
     bool ShouldStartCutting()
     {
-        return objectHighlight.objectType == ObjectHighlight.ObjectType.Board &&
+        return objectHighlight.objectType == ObjectHighlight_Net.ObjectType.Board &&
                interactObject.transform.parent.childCount > 2 &&
-               !interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked &&
+               !interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().isCooked &&
                !isHolding;
     }
 
     void StartCuttingProcess()
     {
-        var cuttingBoard = interactObject.transform.GetChild(0).GetComponent<CuttingBoard>();
+        var cuttingBoard = interactObject.transform.GetChild(0).GetComponent<CuttingBoard_Net>();
 
         if (cuttingBoard._CoTimer == null) // 한번도 실행 안된거면 시작 가능
         {
             anim.SetTrigger("startCut");
             cuttingBoard.Pause = false;
             cuttingBoard.CuttingTime = 0;
-            cuttingBoard.StartCutting1();
+            cuttingBoard.StartCutting2();
         }
         else if (cuttingBoard.Pause) // 실행되다 만거라면
         {
@@ -135,7 +128,7 @@ public class Player2InteractController_Net : MonoBehaviour
 
     bool CanThrowIngredient()
     {
-        return transform.GetChild(1).GetComponent<Ingredient>() == null;
+        return transform.GetChild(1).GetComponent<Ingredient_Net>() == null;
     }
 
     void ThrowIngredient()
@@ -210,7 +203,7 @@ public class Player2InteractController_Net : MonoBehaviour
     {
         if (interactObject == null && !isHolding) return;
 
-        if(isHolding && objectHighlight == null)
+        if (isHolding && objectHighlight == null)
         {
             // 뭔가 들고있고 앞에 상호작용 객체가 없을때
             HoldingItemDropObject();
@@ -220,18 +213,18 @@ public class Player2InteractController_Net : MonoBehaviour
         Debug.Log($"objectHighlight.objectType : {objectHighlight.objectType}");
         switch (objectHighlight.objectType)
         {
-            case ObjectHighlight.ObjectType.CounterTop:
-            case ObjectHighlight.ObjectType.Board:
-            case ObjectHighlight.ObjectType.Return:
+            case ObjectHighlight_Net.ObjectType.CounterTop:
+            case ObjectHighlight_Net.ObjectType.Board:
+            case ObjectHighlight_Net.ObjectType.Return:
                 HandleCounterTopOrBoardInteraction();
                 break;
-            case ObjectHighlight.ObjectType.Craft:
+            case ObjectHighlight_Net.ObjectType.Craft:
                 HandleCraftInteraction();
                 break;
-            case ObjectHighlight.ObjectType.Bin:
+            case ObjectHighlight_Net.ObjectType.Bin:
                 HandleBinInteraction();
                 break;
-            case ObjectHighlight.ObjectType.Station:
+            case ObjectHighlight_Net.ObjectType.Station:
                 HandleStationInteraction();
                 break;
             default:
@@ -243,17 +236,17 @@ public class Player2InteractController_Net : MonoBehaviour
     // Station
     private void HandleStationInteraction()
     {
-        if (isHolding && transform.GetChild(1).gameObject.GetComponent<Ingredient>() != null 
-            && transform.GetChild(1).gameObject.GetComponent<Ingredient>().type == Ingredient.IngredientType.Plate)
+        if (isHolding && transform.GetChild(1).gameObject.GetComponent<Ingredient_Net>() != null
+            && transform.GetChild(1).gameObject.GetComponent<Ingredient_Net>().type == Ingredient_Net.IngredientType.Plate)
         {
             // Handle 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
-            Plates plateComponent = transform.GetChild(1).gameObject.GetComponent<Plates>();  // Plates 컴포넌트를 가져옴
+            Plates_Net plateComponent = transform.GetChild(1).gameObject.GetComponent<Plates_Net>();  // Plates 컴포넌트를 가져옴
 
-            if (GameManager.instance.CheckMenu(plateComponent.containIngredients))
+            if (GameManager_Net.instance.CheckMenu(plateComponent.containIngredients))
             {
                 // 접시의 재료가 메뉴와 일치하면
                 SoundManager.Instance.PlayEffect("right");  // 성공 효과음 재생
-                GameManager.instance.MakeOrder();  // 주문을 만듦
+                GameManager_Net.instance.MakeOrder();  // 주문을 만듦
             }
             else
             {
@@ -265,7 +258,7 @@ public class Player2InteractController_Net : MonoBehaviour
             Destroy(transform.GetChild(1).gameObject);  // 접시 전체를 삭제 (추후 재활용을 고려)
             isHolding = false;  // 아이템을 들고 있는 상태를 해제
             anim.SetBool("isHolding", isHolding);  // 애니메이션 상태를 업데이트
-            GameManager.instance.PlateReturn();  // 접시 반환 처리
+            GameManager_Net.instance.PlateReturn();  // 접시 반환 처리
         }
 
     }
@@ -273,7 +266,7 @@ public class Player2InteractController_Net : MonoBehaviour
     // CounterTop, Board
     private void HandleCounterTopOrBoardInteraction()
     {
-        
+
         if (canActive && isHolding && !objectHighlight.onSomething)
         {
             // 내가 뭘 들고있고, 테이블이나 찹핑테이블 위에 없을떄
@@ -285,12 +278,12 @@ public class Player2InteractController_Net : MonoBehaviour
             Debug.Log("뭔가 있냐?");
             TablePlaceOrDropObject(true);
         }
-        else if (canActive && interactObject.GetComponent<ObjectHighlight>().onSomething)
+        else if (canActive && interactObject.GetComponent<ObjectHighlight_Net>().onSomething)
         {
             GameObject handleThing = interactObject.transform.parent.GetChild(2).gameObject;
 
-            if (handleThing.CompareTag("Ingredient") && objectHighlight.objectType == ObjectHighlight.ObjectType.Board &&
-                interactObject.transform.GetChild(0).GetComponent<CuttingBoard>().cookingBar.IsActive())
+            if (handleThing.CompareTag("Ingredient") && objectHighlight.objectType == ObjectHighlight_Net.ObjectType.Board &&
+                interactObject.transform.GetChild(0).GetComponent<CuttingBoard_Net>().cookingBar.IsActive())
             {
                 // 손질 중인 재료는 집을 수 없음
             }
@@ -325,7 +318,7 @@ public class Player2InteractController_Net : MonoBehaviour
     // Bin
     private void HandleBinInteraction()
     {
-        if (isHolding && transform.GetChild(1).GetComponent<Ingredient>()?.type == Ingredient.IngredientType.Plate)
+        if (isHolding && transform.GetChild(1).GetComponent<Ingredient_Net>()?.type == Ingredient_Net.IngredientType.Plate)
         {
             DisposePlate();
         }
@@ -341,7 +334,7 @@ public class Player2InteractController_Net : MonoBehaviour
         {
             PickupIngredient();
         }
-        else if (!isHolding && interactObject.CompareTag("Plate")) 
+        else if (!isHolding && interactObject.CompareTag("Plate"))
         {
             PickupPlate();
         }
@@ -417,8 +410,8 @@ public class Player2InteractController_Net : MonoBehaviour
 
     private bool IsPlate(UnityEngine.Transform obj)
     {
-        var handle = obj.GetComponent<Ingredient>();
-        return handle != null && handle.type == Ingredient.IngredientType.Plate;
+        var handle = obj.GetComponent<Ingredient_Net>();
+        return handle != null && handle.type == Ingredient_Net.IngredientType.Plate;
     }
 
     private bool IsHoldingCookedIngredient()
@@ -426,7 +419,7 @@ public class Player2InteractController_Net : MonoBehaviour
         var holdingObj = transform.GetChild(1).GetChild(0);
         if (holdingObj.childCount > 0)
         {
-            var handle = holdingObj.GetChild(0).GetComponent<Ingredient>();
+            var handle = holdingObj.GetChild(0).GetComponent<Ingredient_Net>();
             return handle != null && handle.isCooked;
         }
         return false;
@@ -434,8 +427,8 @@ public class Player2InteractController_Net : MonoBehaviour
 
     private void PlaceIngredient()
     {
-        var plate = interactObject.transform.parent.GetChild(2).GetComponent<Plates>();
-        var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient>().type;
+        var plate = interactObject.transform.parent.GetChild(2).GetComponent<Plates_Net>();
+        var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient_Net>().type;
         if (plate.AddIngredient(ingredient))
         {
             SoundManager.Instance.PlayEffect("put");
@@ -459,7 +452,7 @@ public class Player2InteractController_Net : MonoBehaviour
             else
             {
                 obj.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                obj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().HandleIngredient(transform, obj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type, true);
+                obj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().HandleIngredient(transform, obj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().type, true);
             }
             obj.transform.SetParent(transform); // 플레이어의 하위 객체로 설정
             // 플레이어에서 위치 잡기
@@ -481,21 +474,21 @@ public class Player2InteractController_Net : MonoBehaviour
             {
                 objectHighlight.onSomething = true;
                 isHolding = false;
-                handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient>().isOnDesk = true;
-                handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient>().
+                handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient_Net>().isOnDesk = true;
+                handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient_Net>().
                     IngredientHandleOff(
                     interactObject.transform.parent,
-                    interactObject.transform.parent.GetChild(1).localPosition, 
-                    handleThing.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type);
+                    interactObject.transform.parent.GetChild(1).localPosition,
+                    handleThing.transform.GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().type);
             }
             else //접시
             {
-                if (objectHighlight.objectType != ObjectHighlight.ObjectType.Board)
+                if (objectHighlight.objectType != ObjectHighlight_Net.ObjectType.Board)
                 {
                     objectHighlight.onSomething = true;
                     isHolding = false;
-                    handleThing.GetComponent<Ingredient>().isOnDesk = true;
-                    handleThing.GetComponent<Ingredient>().
+                    handleThing.GetComponent<Ingredient_Net>().isOnDesk = true;
+                    handleThing.GetComponent<Ingredient_Net>().
                         PlayerHandleOff(interactObject.transform.parent,
                         interactObject.transform.parent.GetChild(1).localPosition);
                 }
@@ -509,7 +502,7 @@ public class Player2InteractController_Net : MonoBehaviour
     {
         SoundManager.Instance.PlayEffect("take");
         // Craft에서 아이템 꺼내기 로직 구현
-        interactObject.GetComponent<Craft>().OpenCraftPlayer2();
+        interactObject.GetComponent<Craft_Net>().OpenCraftPlayer2();
         objectHighlight.onSomething = false;
         isHolding = true;
         anim.SetBool("isHolding", isHolding);
@@ -517,7 +510,7 @@ public class Player2InteractController_Net : MonoBehaviour
 
     private void DisposePlate()
     {
-        transform.GetChild(1).gameObject.GetComponent<Plates>().ClearIngredient();
+        transform.GetChild(1).gameObject.GetComponent<Plates_Net>().ClearIngredient();
     }
 
     private void DisposeObject()
@@ -535,10 +528,10 @@ public class Player2InteractController_Net : MonoBehaviour
         // 재료 줍기 로직 상세 구현 필요
         GameObject ingredientObj = interactObject.transform.parent.gameObject;
         ingredientObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        ingredientObj.transform.GetChild(0).GetComponent<Ingredient>().HandleIngredient(transform, ingredientObj.transform.GetChild(0).GetComponent<Ingredient>().type, true);
+        ingredientObj.transform.GetChild(0).GetComponent<Ingredient_Net>().HandleIngredient(transform, ingredientObj.transform.GetChild(0).GetComponent<Ingredient_Net>().type, true);
     }
 
-    private void PickupPlate() 
+    private void PickupPlate()
     {
         //isHolding = true;
         //anim.SetBool("isHolding", isHolding);
@@ -559,7 +552,7 @@ public class Player2InteractController_Net : MonoBehaviour
         //    HandleDeadZone();
         //    return;
         //}
-        
+
         if (CheckForIngredientHandling(other))
             return;
 
@@ -572,7 +565,7 @@ public class Player2InteractController_Net : MonoBehaviour
         SoundManager.Instance.PlayEffect("fall");
         //DieRespawn();
     }
-    
+
     private bool CheckForIngredientHandling(Collider other)
     {
         // 손에 잡고있고, interactObject가 Null이 아니고, 그 태그가 Ingredient일때 True
@@ -595,17 +588,17 @@ public class Player2InteractController_Net : MonoBehaviour
 
     private void DeactivateObjectHighlight()
     {
-        interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(interactObject.GetComponent<Ingredient>().isCooked);
+        interactObject.GetComponent<ObjectHighlight_Net>().DeactivateHighlight(interactObject.GetComponent<Ingredient_Net>().isCooked);
     }
 
     private bool HandlePickupIngredient(Collider other)
     {
         if (other.CompareTag("Ingredient"))
         {
-            if (interactObject == null && !other.GetComponent<Ingredient>().isOnDesk)
+            if (interactObject == null && !other.GetComponent<Ingredient_Net>().isOnDesk)
             {
                 SetinteractObject(other.gameObject);
-                other.GetComponent<ObjectHighlight>().ActivateHighlight(other.GetComponent<Ingredient>().isCooked);
+                other.GetComponent<ObjectHighlight_Net>().ActivateHighlight(other.GetComponent<Ingredient_Net>().isCooked);
                 return true;
             }
         }
@@ -615,7 +608,7 @@ public class Player2InteractController_Net : MonoBehaviour
     private void SetinteractObject(GameObject obj)
     {
         interactObject = obj;
-        objectHighlight = obj.GetComponent<ObjectHighlight>();
+        objectHighlight = obj.GetComponent<ObjectHighlight_Net>();
     }
 
     private void HandleActiveObjectInteraction(Collider other)
@@ -623,24 +616,24 @@ public class Player2InteractController_Net : MonoBehaviour
         if (other == interactObject || interactObject != null)
             return;
 
-        if (other.GetComponent<ObjectHighlight>() == null)
+        if (other.GetComponent<ObjectHighlight_Net>() == null)
             return;
 
         canActive = true;
 
         SetinteractObject(other.gameObject);
-        other.GetComponent<ObjectHighlight>().activeObject = true;
+        other.GetComponent<ObjectHighlight_Net>().activeObject = true;
 
         if (other.CompareTag("Ingredient"))
         {
-            other.GetComponent<ObjectHighlight>().ActivateHighlight(other.GetComponent<Ingredient>().isCooked);
+            other.GetComponent<ObjectHighlight_Net>().ActivateHighlight(other.GetComponent<Ingredient_Net>().isCooked);
         }
         else
         {
-            other.GetComponent<ObjectHighlight>().ActivateHighlight(other.GetComponent<ObjectHighlight>().onSomething);
+            other.GetComponent<ObjectHighlight_Net>().ActivateHighlight(other.GetComponent<ObjectHighlight_Net>().onSomething);
         }
 
-        if (interactObject.GetComponent<ObjectHighlight>().objectType == ObjectHighlight.ObjectType.Board)
+        if (interactObject.GetComponent<ObjectHighlight_Net>().objectType == ObjectHighlight_Net.ObjectType.Board)
         {
             anim.SetBool("canCut", true);
         }
@@ -683,16 +676,16 @@ public class Player2InteractController_Net : MonoBehaviour
 
     private void SwitchActiveObject()
     {
-        interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(interactObject.GetComponent<Ingredient>().isCooked);
+        interactObject.GetComponent<ObjectHighlight_Net>().DeactivateHighlight(interactObject.GetComponent<Ingredient_Net>().isCooked);
         interactObject = nextInteractObject;
-        objectHighlight = interactObject.GetComponent<ObjectHighlight>();
-        interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(interactObject.GetComponent<Ingredient>().isCooked);
+        objectHighlight = interactObject.GetComponent<ObjectHighlight_Net>();
+        interactObject.GetComponent<ObjectHighlight_Net>().DeactivateHighlight(interactObject.GetComponent<Ingredient_Net>().isCooked);
         nextInteractObject = null;
     }
 
     private void ClearActiveObjects()
     {
-        interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(interactObject.GetComponent<Ingredient>().isCooked);
+        interactObject.GetComponent<ObjectHighlight_Net>().DeactivateHighlight(interactObject.GetComponent<Ingredient_Net>().isCooked);
         ResetinteractObjects();
     }
 
@@ -701,10 +694,10 @@ public class Player2InteractController_Net : MonoBehaviour
         if (interactObject == null)
         {
             canActive = true;
-            if (other.GetComponent<ObjectHighlight>() != null)
+            if (other.GetComponent<ObjectHighlight_Net>() != null)
             {
                 SetinteractObject(other.gameObject);
-                other.GetComponent<ObjectHighlight>().activeObject = true;
+                other.GetComponent<ObjectHighlight_Net>().activeObject = true;
                 HighlightBasedOnTag(other);
             }
         }
@@ -712,8 +705,8 @@ public class Player2InteractController_Net : MonoBehaviour
 
     private void HighlightBasedOnTag(Collider other)
     {
-        bool highlightState = other.CompareTag("Ingredient") ? other.GetComponent<Ingredient>().isCooked : true;
-        other.GetComponent<ObjectHighlight>().ActivateHighlight(highlightState);
+        bool highlightState = other.CompareTag("Ingredient") ? other.GetComponent<Ingredient_Net>().isCooked : true;
+        other.GetComponent<ObjectHighlight_Net>().ActivateHighlight(highlightState);
     }
     #endregion
 
@@ -747,10 +740,10 @@ public class Player2InteractController_Net : MonoBehaviour
 
     private void HandleBoardInteraction()
     {
-        if (interactObject.GetComponent<ObjectHighlight>().objectType == ObjectHighlight.ObjectType.Board)
+        if (interactObject.GetComponent<ObjectHighlight_Net>().objectType == ObjectHighlight_Net.ObjectType.Board)
         {
             anim.SetBool("canCut", false);
-            interactObject.transform.GetChild(0).GetComponent<CuttingBoard>().PauseSlider(true);
+            interactObject.transform.GetChild(0).GetComponent<CuttingBoard_Net>().PauseSlider(true);
         }
     }
 
@@ -767,7 +760,7 @@ public class Player2InteractController_Net : MonoBehaviour
         anim.SetBool("canCut", false);
         OffHighlightCurrentObject();
         interactObject = nextInteractObject;
-        objectHighlight = interactObject?.GetComponent<ObjectHighlight>();
+        objectHighlight = interactObject?.GetComponent<ObjectHighlight_Net>();
         nextInteractObject = null;
         OnHighlightCurrentObject();
     }
@@ -779,19 +772,19 @@ public class Player2InteractController_Net : MonoBehaviour
 
     private void OffHighlightCurrentObject()
     {
-        if (interactObject != null && interactObject.GetComponent<ObjectHighlight>() != null)
+        if (interactObject != null && interactObject.GetComponent<ObjectHighlight_Net>() != null)
         {
-            bool highlightState = interactObject.CompareTag("Ingredient") ? interactObject.GetComponent<Ingredient>().isCooked : true;
+            bool highlightState = interactObject.CompareTag("Ingredient") ? interactObject.GetComponent<Ingredient_Net>().isCooked : true;
             interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(highlightState);
         }
     }
 
     private void OnHighlightCurrentObject()
     {
-        if (interactObject != null && interactObject.GetComponent<Object>() != null)
+        if (interactObject != null && interactObject.GetComponent<ObjectHighlight_Net>() != null)
         {
-            bool highlightState = interactObject.CompareTag("Ingredient") ? interactObject.GetComponent<Ingredient>().isCooked : true;
-            interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(highlightState);
+            bool highlightState = interactObject.CompareTag("Ingredient") ? interactObject.GetComponent<Ingredient_Net>().isCooked : true;
+            interactObject.GetComponent<ObjectHighlight_Net>().DeactivateHighlight(highlightState);
         }
     }
     #endregion
@@ -828,7 +821,7 @@ public class Player2InteractController_Net : MonoBehaviour
         }
     }
 
-    void SetPositionbetweenPlayerandObject(GameObject obj) 
+    void SetPositionbetweenPlayerandObject(GameObject obj)
     {
         //string name = obj.name;
 

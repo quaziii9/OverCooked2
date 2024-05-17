@@ -60,11 +60,11 @@ public class GameManager_Net : MonoBehaviour
     [SerializeField] private float respawnTime = 3f; // 리스폰 시간
     [SerializeField] private GameObject ReturnCounter; // 반환 카운터
 
-    [SerializeField] private Menu[] Menus; // 이번 스테이지에 등장할 메뉴들
+    [SerializeField] private Menu_Net[] Menus; // 이번 스테이지에 등장할 메뉴들
     [SerializeField] private int maxMenuLimit; // 이번 스테이지에서 최대로 쌓일 수 있는 메뉴 개수들
     [SerializeField] private GameObject[] Single_Double_PoolUIs; // 오브젝트 풀링으로 쓸 단일 메뉴 UI들
     [SerializeField] private GameObject[] Triple_PoolUIs; // 오브젝트 풀링으로 쓸 3개짜리 메뉴 UI들
-    public List<Menu> CurrentOrder; // 현재 주문 목록
+    public List<Menu_Net> CurrentOrder; // 현재 주문 목록
     public List<GameObject> CurrentOrderUI; // 현재 주문 UI 목록
     public Vector3 poolPos; // 풀 위치
     [SerializeField] private GameObject Canvas; // 캔버스
@@ -164,25 +164,25 @@ public class GameManager_Net : MonoBehaviour
         }
 
         // 스테이지 매니저 초기화
-        if (StageManager.instance != null)
+        if (StageManager_Net.instance != null)
         {
-            StageManager.instance.success = 0;
-            StageManager.instance.tipMoney = 0;
-            StageManager.instance.fail = 0;
-            StageManager.instance.totalMoney = 0;
-            StageManager.instance.successMoney = 0;
-            StageManager.instance.failMoney = 0;
+            StageManager_Net.instance.success = 0;
+            StageManager_Net.instance.tipMoney = 0;
+            StageManager_Net.instance.fail = 0;
+            StageManager_Net.instance.totalMoney = 0;
+            StageManager_Net.instance.successMoney = 0;
+            StageManager_Net.instance.failMoney = 0;
             if (state == State.stage1)
             {
-                StageManager.instance.playStage = StageManager.State.stage1;
+                StageManager_Net.instance.playStage = StageManager_Net.State.stage1;
             }
             else if (state == State.stage2)
             {
-                StageManager.instance.playStage = StageManager.State.stage2;
+                StageManager_Net.instance.playStage = StageManager_Net.State.stage2;
             }
             else if (state == State.stage3)
             {
-                StageManager.instance.playStage = StageManager.State.stage3;
+                StageManager_Net.instance.playStage = StageManager_Net.State.stage3;
             }
         }
 
@@ -299,21 +299,21 @@ public class GameManager_Net : MonoBehaviour
             SoundManager.Instance.bgmAudioSource.Stop();
             SoundManager.Instance.PlayEffect("timesUp");
             Time.timeScale = 0;
-            if (StageManager.instance != null) StageManager.instance.totalMoney = Coin;
+            if (StageManager_Net.instance != null) StageManager_Net.instance.totalMoney = Coin;
             Timesup.SetActive(true);
-            if (StageManager.instance != null && StageManager.instance.totalMoney >= 0)
+            if (StageManager_Net.instance != null && StageManager_Net.instance.totalMoney >= 0)
             {
                 if (state == State.stage1)
                 {
-                    StageManager.instance.isClearMap1 = true;
+                    StageManager_Net.instance.isClearMap1 = true;
                 }
                 else if (state == State.stage2)
                 {
-                    StageManager.instance.isClearMap2 = true;
+                    StageManager_Net.instance.isClearMap2 = true;
                 }
                 else if (state == State.stage3)
                 {
-                    StageManager.instance.isClearMap3 = true;
+                    StageManager_Net.instance.isClearMap3 = true;
                 }
             }
             isDone = true;
@@ -476,7 +476,7 @@ public class GameManager_Net : MonoBehaviour
         // 성공 효과
     }
 
-    public bool CheckMenu(List<Ingredient.IngredientType> containIngredients) // plate의 재료 list들 통으로 받아서 비교
+    public bool CheckMenu(List<Ingredient_Net.IngredientType> containIngredients) // plate의 재료 list들 통으로 받아서 비교
     {
         // 메뉴 확인 및 처리
         OriginalMoney = Coin;
@@ -520,14 +520,14 @@ public class GameManager_Net : MonoBehaviour
                             }
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
-                            if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
+                            if (StageManager_Net.instance != null) StageManager_Net.instance.successMoney += CurrentOrder[i].Price;
                             Coin += CurrentOrder[i].Price;
                             CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
                             SetPosition(i);
                             CurrentOrder.RemoveAt(i);
                             CurrentOrderUI.RemoveAt(i);
-                            if (StageManager.instance != null) StageManager.instance.success += 1;
+                            if (StageManager_Net.instance != null) StageManager_Net.instance.success += 1;
                             return true;
                         }
                     }
@@ -554,14 +554,14 @@ public class GameManager_Net : MonoBehaviour
                             }
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
-                            if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
+                            if (StageManager_Net.instance != null) StageManager_Net.instance.successMoney += CurrentOrder[i].Price;
                             Coin += CurrentOrder[i].Price;
                             CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
                             SetPosition(i);
                             CurrentOrder.RemoveAt(i);
                             CurrentOrderUI.RemoveAt(i);
-                            if (StageManager.instance != null) StageManager.instance.success += 1;
+                            if (StageManager_Net.instance != null) StageManager_Net.instance.success += 1;
                             return true;
                         }
                     }
@@ -600,14 +600,14 @@ public class GameManager_Net : MonoBehaviour
                             }
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
-                            if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
+                            if (StageManager_Net.instance != null) StageManager_Net.instance.successMoney += CurrentOrder[i].Price;
                             Coin += CurrentOrder[i].Price;
                             CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
                             SetPosition(i);
                             CurrentOrder.RemoveAt(i);
                             CurrentOrderUI.RemoveAt(i);
-                            if (StageManager.instance != null) StageManager.instance.success += 1;
+                            if (StageManager_Net.instance != null) StageManager_Net.instance.success += 1;
                             return true;
                         }
                         else
@@ -626,11 +626,11 @@ public class GameManager_Net : MonoBehaviour
     private void AddTip(int i)
     {
         // 팁 추가 처리
-        if (CurrentOrderUI[i].GetComponent<OrderUI>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI>().timer.maxValue * 0.6f)
+        if (CurrentOrderUI[i].GetComponent<OrderUI_Net>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI_Net>().timer.maxValue * 0.6f)
         {
             Tip = 8;
         }
-        else if (CurrentOrderUI[i].GetComponent<OrderUI>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI>().timer.maxValue * 0.3f)
+        else if (CurrentOrderUI[i].GetComponent<OrderUI_Net>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI_Net>().timer.maxValue * 0.3f)
         {
             Tip = 5;
         }
@@ -655,13 +655,13 @@ public class GameManager_Net : MonoBehaviour
             Tip *= tipCombo;
         }
         TipSlider.value = tipCombo;
-        if (StageManager.instance != null) StageManager.instance.tipMoney += Tip;
+        if (StageManager_Net.instance != null) StageManager_Net.instance.tipMoney += Tip;
         Coin += Tip;
         TextCoin.text = Coin.ToString(); // 돈 얼마됐다고 업데이트
 
         if (Tip != 0)
         {
-            GameObject tipText = Instantiate(TextPrefabs, Camera.main.WorldToScreenPoint(FindObjectOfType<Station>().transform.position), Quaternion.identity, Canvas.transform);
+            GameObject tipText = Instantiate(TextPrefabs, Camera.main.WorldToScreenPoint(FindObjectOfType<Station_Net>().transform.position), Quaternion.identity, Canvas.transform);
             tipText.GetComponent<Text>().text = "+" + Tip + " 팁!";
         }
     }
@@ -708,9 +708,9 @@ public class GameManager_Net : MonoBehaviour
     public void MenuFail(GameObject whichUI) // 메뉴를 주어진 시간 내로 전달 못했을 때 작동
     {
         // 메뉴 실패 처리
-        if (StageManager.instance != null)
+        if (StageManager_Net.instance != null)
         {
-            StageManager.instance.fail += 1;
+            StageManager_Net.instance.fail += 1;
         }
         for (int i = 0; i < CurrentOrderUI.Count; i++)
         {
@@ -720,7 +720,7 @@ public class GameManager_Net : MonoBehaviour
                 Tip = 0;
                 TextTip.text = "";
                 TipSlider.value = tipCombo;
-                if (StageManager.instance != null) StageManager.instance.failMoney += (int)(CurrentOrder[i].Price * 0.5f);
+                if (StageManager_Net.instance != null) StageManager_Net.instance.failMoney += (int)(CurrentOrder[i].Price * 0.5f);
                 Coin -= (int)(CurrentOrder[i].Price * 0.5f);
                 TextCoin.text = Coin.ToString(); // 돈 얼마됐다고 업데이트
                 if (alphaCo == null)
@@ -748,7 +748,7 @@ public class GameManager_Net : MonoBehaviour
 
         for (int j = 0; j < CurrentOrderUI.Count; j++)
         {
-            if (i < j && !CurrentOrderUI[j].GetComponent<OrderUI>().goLeft)
+            if (i < j && !CurrentOrderUI[j].GetComponent<OrderUI_Net>().goLeft)
             {
                 Vector3 CurrentPosition = CurrentOrderUI[j].transform.position;
                 CurrentPosition.x -= width * 0.92f;

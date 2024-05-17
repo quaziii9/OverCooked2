@@ -8,7 +8,14 @@ public class AutoTrash_Net : MonoBehaviour  // AutoTrash 클래스는 MonoBehavi
     {
         // 충돌한 오브젝트가 'Ingredient' 태그를 가졌는지 확인하고,
         // 그 오브젝트의 부모가 PlayerController나 Player2Controller의 자식이 아닌지 확인함.
-        if (other.CompareTag("Ingredient") && (!other.transform.parent.IsChildOf(FindObjectOfType<PlayerInteractController>().transform) && !other.transform.parent.IsChildOf(FindObjectOfType<Player2InteractController>().transform)))
+        if (other.CompareTag("Ingredient") && 
+                (
+                    !other.transform.parent.IsChildOf(FindObjectOfType<PlayerInteractController_Net>().transform) 
+                    && !other.transform.parent.IsChildOf(FindObjectOfType<Player2InteractController_Net>().transform)
+                    && !other.transform.parent.IsChildOf(FindObjectOfType<Player3InteractController_Net>().transform)
+                    && !other.transform.parent.IsChildOf(FindObjectOfType<Player4InteractController_Net>().transform)
+                )
+            )
         {
             // 없어지는 소리 효과 재생 (ScaleSmaller 코루틴 호출 대신).
             //StartCoroutine(ScaleSmaller(other));
@@ -32,16 +39,16 @@ public class AutoTrash_Net : MonoBehaviour  // AutoTrash 클래스는 MonoBehavi
             Vector3 pos = transform.position;  // 현재 오브젝트의 위치를 pos 변수에 저장.
 
             // Ingredient 컴포넌트가 존재하고, 그 type이 Fish인지 확인.
-            if (other.GetComponent<Ingredient>().type == Ingredient.IngredientType.Fish)
+            if (other.GetComponent<Ingredient_Net>().type == Ingredient_Net.IngredientType.Fish)
             {
                 // 부모 오브젝트의 로컬 위치를 fishLocalPos로 설정.
                 other.transform.parent.localPosition = other.GetComponent<Ingredient>().fishLocalPos;
             }
             // Ingredient 컴포넌트가 존재하고, 그 hand 타입이 Shrimp인지 확인.
-            else if (other.GetComponent<Ingredient>().type == Ingredient.IngredientType.Shrimp)
+            else if (other.GetComponent<Ingredient_Net>().type == Ingredient_Net.IngredientType.Shrimp)
             {
                 // 부모 오브젝트의 로컬 위치를 shrimpLocalPos로 설정.
-                other.transform.parent.localPosition = other.GetComponent<Ingredient>().shrimpLocalPos;
+                other.transform.parent.localPosition = other.GetComponent<Ingredient_Net>().shrimpLocalPos;
             }
             // 부모의 부모 오브젝트의 위치를 현재 오브젝트의 위치로 설정.
             other.transform.parent.parent.position = pos;
