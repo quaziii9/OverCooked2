@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3293,6 +3293,7 @@ MonoBehaviour:
   bin: {fileID: 8300000, guid: 1ae8c97e3a4529741a6e7de9bca4344e, type: 3}
   right: {fileID: 8300000, guid: f8aa4d805a355d54384d320a4a4c3027, type: 3}
   no: {fileID: 8300000, guid: 1652df6488568f5469ac3388ac9479ba, type: 3}
+  cut: {fileID: 0}
   musicGroup: {fileID: 0}
   effectGroup: {fileID: 0}
 --- !u!4 &497154770
@@ -6212,8 +6213,36 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 99277825, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
+      propertyPath: dashCd
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 99277825, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
       propertyPath: dashForce
-      value: 10
+      value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 99277825, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
+      propertyPath: dashDuration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 99277825, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
+      propertyPath: dashCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 99277825, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
+      propertyPath: dashCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 99277825, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
+      propertyPath: dashCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 99277825, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
+      propertyPath: dashCurve.m_Curve.Array.data[0].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 99277825, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
+      propertyPath: dashCurve.m_Curve.Array.data[0].outSlope
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 99277826, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
       propertyPath: PlayerInputSystem

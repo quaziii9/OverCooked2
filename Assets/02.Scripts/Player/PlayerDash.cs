@@ -22,6 +22,9 @@ public class PlayerDash : MonoBehaviour
     public float dashCd;
     private float dashCdTimer;
 
+    [Header("Dash Curve")]
+    public AnimationCurve dashCurve; // AnimationCurve를 대시의 세기 변화에 사용
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -44,29 +47,29 @@ public class PlayerDash : MonoBehaviour
 
         isDashing = true;
 
-        Vector3 forceToApply = transform.forward * dashForce;
-
         if (disableGravity) rb.useGravity = false;
 
-        StartCoroutine(ExecuteDash(forceToApply));
-    }
-
-    private IEnumerator ExecuteDash(Vector3 force)
-    {
         if (resetVel) rb.velocity = Vector3.zero;
 
+        StartCoroutine(ExecuteDash());
+    }
+
+    private IEnumerator ExecuteDash()
+    {
         float elapsedTime = 0f;
+
         while (elapsedTime < dashDuration)
         {
             float dashProgress = elapsedTime / dashDuration;
-            float currentForce = dashForce * Mathf.Lerp(0.5f, 1f, dashProgress);
-            rb.AddForce(force.normalized * currentForce, ForceMode.Impulse);
+            float curveValue = dashCurve.Evaluate(dashProgress); // AnimationCurve에서 값을 평가
+            Vector3 forceToApply = transform.forward * dashForce * curveValue;
+            rb.AddForce(forceToApply, ForceMode.Force); // Impulse 대신 Force를 사용
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         isDashing = false;
-
         if (disableGravity) rb.useGravity = true;
     }
 }
