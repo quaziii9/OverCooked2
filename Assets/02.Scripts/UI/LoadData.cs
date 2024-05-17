@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 public class LoadData : Singleton<LoadData>
 {
     public OptionData optionData;
-
 
     private void Start()
     {      
@@ -31,22 +29,22 @@ public class LoadData : Singleton<LoadData>
     {       
         string path = Path.Combine(Application.dataPath, "optionData.json");
         if(File.Exists(path))
-        {
+        {           
             Debug.Log("불러오기 성공");
             string jsonData = File.ReadAllText(path);
             optionData = JsonUtility.FromJson<OptionData>(jsonData);
         }
         else
         {
-            Debug.Log("새로운 파일 생성");
-            
-            optionData.saveWindowMode = UIManager.Instance.windowScreen;
-            optionData.saveResolutionNum = UIManager.Instance.resolutionArrNum;
-            optionData.saveBgmVolume = SoundManager.Instance.volumeBGM;
-            optionData.saveEffectVolume = SoundManager.Instance.volumeEffect;
+            Debug.Log("새로운 파일 생성");       
+            optionData.saveWindowMode = true;
+            optionData.saveResolutionNum = 4;
+            optionData.saveBgmVolume = 0.2f;
+            optionData.saveEffectVolume = 0.2f;
         }      
     }
 
+    
 
     private void OnApplicationQuit()
     {
@@ -61,4 +59,5 @@ public class LoadData : Singleton<LoadData>
         public float saveBgmVolume;
         public float saveEffectVolume;
     }
+    //
 }

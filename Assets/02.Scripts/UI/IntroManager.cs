@@ -42,9 +42,10 @@ public class IntroManager : MonoBehaviour
 
     public void StartSpace()
     {
+        SoundManager.Instance.Load();
+        UIManager.Instance.Load();
         isSpace = true;
         SoundManager.Instance.StartPlay();
-
         UIManager.Instance.shutterAnim.SetTrigger("ShutterOn");
 
         UIManager.Instance.shutterCamera.Priority = 9;
@@ -75,6 +76,6 @@ public class IntroManager : MonoBehaviour
 
         UIManager.Instance.shutter.SetActive(true);  
         isLoading = false;
-        
     }
+
 }

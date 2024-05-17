@@ -65,12 +65,12 @@ public class SoundManager : Singleton<SoundManager>
         effectAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
         volumeEffect = LoadData.Instance.optionData.saveEffectVolume;
         settingEffect = LoadData.Instance.optionData.saveEffectVolume;
-
+        UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
 
     void Start()
-    {
-        Load();
+    {      
         SettingAudioVolume();
         StartCoroutine(FadeInVolume(bgmAudioSource, 8f, "Intro"));
 
@@ -148,7 +148,6 @@ public class SoundManager : Singleton<SoundManager>
         effectAudioSource.volume = volumeEffect;
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
-
     }
 
     public void SettingCancle()

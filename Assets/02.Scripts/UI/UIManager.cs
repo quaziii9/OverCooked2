@@ -64,11 +64,11 @@ public class UIManager : Singleton<UIManager>
     public TextMeshProUGUI resolutionText;
     public GameObject fullScreenButton;
     public GameObject fullScreenCheck;
-    public bool windowScreen = true;
-    private bool settingWindowScreen = true;
-    public int resolutionArrNum = 4;
-    private int settingResolutionArrNum = 4;
-    private string[] resolutionTextArr 
+    public bool windowScreen;
+    private bool settingWindowScreen;
+    public int resolutionArrNum;
+    private int settingResolutionArrNum;
+    public string[] resolutionTextArr 
         = new string[] { "1280 x 720", "1280 x 800", "1680 x 1050", "1920 x 1080", "1920 x 1200", "2560 x 1600", "3072 x 1920" };
 
 
@@ -85,37 +85,13 @@ public class UIManager : Singleton<UIManager>
         windowScreen = LoadData.Instance.optionData.saveWindowMode;
         resolutionArrNum = LoadData.Instance.optionData.saveResolutionNum;
         settingResolutionArrNum = LoadData.Instance.optionData.saveResolutionNum;
-
-        switch (resolutionArrNum)
-        {
-            case 0:
-                Screen.SetResolution(1280, 720, !windowScreen);
-                break;
-            case 1:
-                Screen.SetResolution(1280, 800, !windowScreen);
-                break;
-            case 2:
-                Screen.SetResolution(1680, 1050, !windowScreen);
-                break;
-            case 3:
-                Screen.SetResolution(1920, 1080, !windowScreen);
-                break;
-            case 4:
-                Screen.SetResolution(1920, 1200, !windowScreen);
-                break;
-            case 5:
-                Screen.SetResolution(2560, 1600, !windowScreen);
-                break;
-            case 6:
-                Screen.SetResolution(3070, 1920, !windowScreen);
-                break;
-        }
+        resolutionText.text = resolutionTextArr[resolutionArrNum];
+        fullScreenCheck.SetActive(windowScreen);
     }
 
 
     public void Start()
     {
-        Load();
         resolutionText.text = resolutionTextArr[resolutionArrNum];
         fullScreenCheck.SetActive(windowScreen);
         broccoliMaskRect = broccoliMask.GetComponent<RectTransform>();
