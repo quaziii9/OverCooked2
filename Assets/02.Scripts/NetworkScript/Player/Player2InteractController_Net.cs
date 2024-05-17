@@ -775,7 +775,7 @@ public class Player2InteractController_Net : MonoBehaviour
         if (interactObject != null && interactObject.GetComponent<ObjectHighlight_Net>() != null)
         {
             bool highlightState = interactObject.CompareTag("Ingredient") ? interactObject.GetComponent<Ingredient_Net>().isCooked : true;
-            interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(highlightState);
+            interactObject.GetComponent<ObjectHighlight_Net>().DeactivateHighlight(highlightState);
         }
     }
 

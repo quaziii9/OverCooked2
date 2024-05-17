@@ -50,7 +50,7 @@ MonoBehaviour:
   Ready: {fileID: 0}
   Go: {fileID: 0}
   Timesup: {fileID: 0}
-  GameTime: 160
+  GameTime: 71
   TimeSlider: {fileID: 0}
   TextTime: {fileID: 0}
   SandTimer: {fileID: 0}
@@ -66,17 +66,25 @@ MonoBehaviour:
   TextTip: {fileID: 0}
   tipCombo: 0
   flame: {fileID: 0}
-  TextPrefabs: {fileID: 0}
+  TextPrefabs: {fileID: 4292160052129700289, guid: eb687120811876e45aa5625b1b1772e1,
+    type: 3}
   wrong: {fileID: 0}
   platePrefabs: {fileID: 0}
   respawnTime: 3
   ReturnCounter: {fileID: 0}
-  Menus: []
-  maxMenuLimit: 0
-  Single_Double_PoolUIs: []
+  Menus:
+  - {fileID: 11400000, guid: 719fb01be55401a4eabc729523e9b393, type: 2}
+  - {fileID: 11400000, guid: efe2495f04776e741807ef5fd6dd2743, type: 2}
+  maxMenuLimit: 4
+  Single_Double_PoolUIs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   Triple_PoolUIs: []
   CurrentOrder: []
   CurrentOrderUI: []
-  poolPos: {x: 0, y: 0, z: 0}
+  poolPos: {x: 1200, y: 468, z: 0}
   Canvas: {fileID: 0}
   i: -1
