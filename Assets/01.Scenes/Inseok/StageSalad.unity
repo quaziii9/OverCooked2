@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -776,12 +776,13 @@ MonoBehaviour:
   nextInteractObject: {fileID: 0}
   isHolding: 0
   canActive: 0
-  throwPower: {x: 0, y: 2, z: 15}
+  throwPower: {x: 0, y: 3, z: 15}
   idleR: {fileID: 1060287809}
   idleL: {fileID: 1060287808}
   grabR: {fileID: 1060287807}
   grabL: {fileID: 1060287806}
   knife: {fileID: 1060287805}
+  PlayerInputSystem: {fileID: 914589796}
 --- !u!1 &102835028 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7816515593208429023, guid: 9ad131eff27935447b3d0c05faf2398e,
@@ -5292,8 +5293,6 @@ MonoBehaviour:
   - {fileID: 1060287804}
   - {fileID: 1741212496}
   currentPlayer: {fileID: 0}
-  anim: {fileID: 0}
-  rigidbody: {fileID: 0}
   inputActionAsset: {fileID: -944628639613478452, guid: 095f4c2992ee42543b3b45e2271eff1e,
     type: 3}
 --- !u!1 &920911704 stripped
@@ -9280,6 +9279,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2043153386415452618, guid: 34349e550a021054e9c591529e667c3a,
+        type: 3}
+      propertyPath: throwPower.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2043153386415452618, guid: 34349e550a021054e9c591529e667c3a,
+        type: 3}
+      propertyPath: throwPower.z
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2043153386415452618, guid: 34349e550a021054e9c591529e667c3a,
+        type: 3}
+      propertyPath: PlayerInputSystem
+      value: 
+      objectReference: {fileID: 914589796}
     - target: {fileID: 7189928501657184978, guid: 34349e550a021054e9c591529e667c3a,
         type: 3}
       propertyPath: m_RootOrder
@@ -9345,85 +9359,6 @@ PrefabInstance:
 --- !u!1 &1741212496 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7189928501657185005, guid: 34349e550a021054e9c591529e667c3a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1741212495}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1741212497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741212496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2637e3e3b9d80924a908f9a752ec29d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orientation: {fileID: 0}
-  dashForce: 6
-  dashDuration: 1
-  allowAllDirections: 1
-  disableGravity: 0
-  resetVel: 1
-  dashCd: 1
---- !u!114 &1741212498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741212496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88f53cc7059a0b74c8244ee5c073bca8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 1741212504}
-  interactObject: {fileID: 0}
-  objectHighlight: {fileID: 0}
-  nextInteractObject: {fileID: 0}
-  isHolding: 0
-  canActive: 0
-  throwPower: {x: 0, y: 2, z: 15}
-  idleR: {fileID: 1741212503}
-  idleL: {fileID: 1741212502}
-  grabR: {fileID: 1741212501}
-  grabL: {fileID: 1741212500}
-  knife: {fileID: 1741212499}
---- !u!1 &1741212499 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3684226207369003582, guid: 34349e550a021054e9c591529e667c3a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1741212495}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1741212500 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 69352868087162624, guid: 34349e550a021054e9c591529e667c3a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1741212495}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1741212501 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1809362340467434981, guid: 34349e550a021054e9c591529e667c3a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1741212495}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1741212502 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3619811512716829730, guid: 34349e550a021054e9c591529e667c3a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1741212495}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1741212503 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8175616114288975065, guid: 34349e550a021054e9c591529e667c3a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1741212495}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1741212504 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 624932970745655888, guid: 34349e550a021054e9c591529e667c3a,
     type: 3}
   m_PrefabInstance: {fileID: 1741212495}
   m_PrefabAsset: {fileID: 0}
@@ -10924,26 +10859,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1da1d426fe581478c48a9292e67dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2114920574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741212496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29c00a4588d2ffd40aa487c56eed0c5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1741212504}
-  rb: {fileID: 0}
-  moveSpeed: 15
-  turnSpeed: 10
-  dashSpeed: 0
-  dashForce: 500
-  dashDuration: 0.5
-  dashCooldown: 0.5
 --- !u!1 &2126688160
 GameObject:
   m_ObjectHideFlags: 0
