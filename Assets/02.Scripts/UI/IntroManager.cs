@@ -7,8 +7,6 @@ public class IntroManager : MonoBehaviour
     private bool isSpace;
     private bool isLoading = true;
 
-
-
     void Start()
     {
         if(UIManager.Instance.first == true)
