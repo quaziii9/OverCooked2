@@ -31,43 +31,6 @@ public class StageManager : MonoBehaviour
     [SerializeField] public int failMoney = 0; // 실패 금액
     [SerializeField] public int successMoney = 0; // 성공 금액
 
-    #region 이전 StageManger
-    [SerializeField]
-    public int[] stages = { 3, 1, 2, 3 };
-    public bool[] unlock;
-    public int starSum = 0;
-    public TextMeshProUGUI Stars;
-
-
-    void Start()
-    {
-        unlock = new bool[StageManager.instance.stages.Length];
-        Debug.Log(unlock.Length);
-        Unlocknode();
-        Sum();
-    }
-
-    void Unlocknode()
-    {
-        for (int i = 0; i < stages.Length; i++)
-        {
-            if (stages[i] > 0)
-            {
-                unlock[i] = true;
-            }
-
-        }
-    }
-    void Sum()
-    {
-        foreach (int Star in stages)
-        {
-            starSum += Star;
-        }
-        Stars.text = "" + starSum;
-    }
-    #endregion
-
     private void Awake()
     {
         // 싱글톤 패턴 구현

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8636880590317367883}
   - component: {fileID: 8636880590317367880}
   - component: {fileID: 8636880590317367885}
-  - component: {fileID: 8636880590317367882}
+  - component: {fileID: 9058180509793522352}
   m_Layer: 5
   m_Name: tiptext
   m_TagString: Untagged
@@ -30,6 +30,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -96,7 +97,7 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0.24528301, b: 0.04594378, a: 0.5}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
---- !u!114 &8636880590317367882
+--- !u!114 &9058180509793522352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,6 +106,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8636880590317367878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fc4c8626c8292f43b26b5ae7a62b3bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 8da5992899e061242ab990a927dbfca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

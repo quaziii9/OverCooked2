@@ -7,17 +7,17 @@ public class IntroManager : MonoBehaviour
     private bool isSpace;
     private bool isLoading = true;
 
-    public CinemachineVirtualCamera vanCamera;
-    public CinemachineVirtualCamera shutterCamera;
 
-    void Awake()
+
+    void Start()
     {
-        InitUI();
+        if(UIManager.Instance.first == true)
+            InitUI();
     }
 
     void FixedUpdate()
     {
-        if (!isSpace && !isLoading && Input.GetKeyDown(KeyCode.Space))
+        if (isSpace==false && isLoading==false && Input.GetKeyDown(KeyCode.Space))
         {           
             StartSpace();
         }
@@ -41,6 +41,7 @@ public class IntroManager : MonoBehaviour
         StartCoroutine("IntroSetting");
     }
 
+
     public void StartSpace()
     {
         isSpace = true;
@@ -48,7 +49,7 @@ public class IntroManager : MonoBehaviour
 
         UIManager.Instance.shutterAnim.SetTrigger("ShutterOn");
 
-        shutterCamera.Priority = 9;
+        UIManager.Instance.shutterCamera.Priority = 9;
 
         StartCoroutine("ShutterOut");
         
@@ -76,5 +77,6 @@ public class IntroManager : MonoBehaviour
 
         UIManager.Instance.shutter.SetActive(true);  
         isLoading = false;
+        
     }
 }

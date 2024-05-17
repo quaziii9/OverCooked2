@@ -1,7 +1,4 @@
-using DG.Tweening.Core.Easing;
 using System.Collections;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -19,6 +16,7 @@ public class SoundManager : Singleton<SoundManager>
     [Header("BGM")]
     public AudioClip introBGM;
     public AudioClip battleBGM;
+    public AudioClip busMapBGM;
 
     [Header("Sound Effect")]
     public AudioClip UISelect;
@@ -34,35 +32,31 @@ public class SoundManager : Singleton<SoundManager>
     public AudioSource effectAudioSource;
 
     [Header("MultiPlay")]
-    public bool isSingle = true; // 싱글 멀티 구분
+    public bool isSingle = true; //싱글 멀티 구분
     public bool alreadyPlayed = false;
 
     [Header("Game Play Sound Effect")]
-    public AudioClip put;
-    public AudioClip place;
     public AudioClip itemTake;
+    public AudioClip put;
     public AudioClip fall;
     public AudioClip throwItem;
     public AudioClip ready;
     public AudioClip go;
-
+    public AudioClip bin;
+    public AudioClip right;
+    public AudioClip no;
 
     [Header("Mixer Groups")]
     public AudioMixerGroup musicGroup;  // The music mixer group
     public AudioMixerGroup effectGroup; // The effect mixer group
     //public AudioMixerGroup BgmChangeGroup
 
-
     AudioSource musicSource;            // Reference to the generated music Audio Source
     AudioSource effectSource;           // Reference to the generated effect Audio Source
 
-    private void Awake()
-    {
-        SettingAudioVolume();
-    }
-
     void Start()
     {
+        SettingAudioVolume();
         StartCoroutine(FadeInVolume(bgmAudioSource, 8f, "Intro"));
 
         musicSource = gameObject.AddComponent<AudioSource>();
@@ -73,6 +67,7 @@ public class SoundManager : Singleton<SoundManager>
         //IntroBGM();
     }
 
+    #region settingAuido
     public void SettingAudioVolume()
     {
         bgmAudioSource.volume = 0.1f;
@@ -150,7 +145,9 @@ public class SoundManager : Singleton<SoundManager>
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
+    #endregion
 
+    #region FadeInOut
     public void FadeInAudio(AudioSource audioSource, float waitTime, string bgmName)
     {
         StartCoroutine(FadeInVolume(audioSource, waitTime, bgmName));
@@ -177,13 +174,14 @@ public class SoundManager : Singleton<SoundManager>
         yield return new WaitForSeconds(waitTime);
         while (audioSource.volume > 0)
         {
-            audioSource.volume -= Time.deltaTime * 0.5f;
-            yield return new WaitForSeconds(Time.deltaTime * 0.1f);
+           // Debug.Log(audioSource.volume);
+            audioSource.volume -= Time.deltaTime * 0.2f;
+            yield return new WaitForSeconds(Time.deltaTime * 0.5f);
         }
         audioSource.volume = 0;
         audioSource.Stop();
     }
-
+    #endregion
 
     void playBgm(string bgmName)
     {
@@ -195,6 +193,9 @@ public class SoundManager : Singleton<SoundManager>
             case "Battle":
                 BattleBGM();
                     break;
+            case "BusMap":
+                BusMapBGM();
+                break;
         }
     }
 
@@ -208,6 +209,13 @@ public class SoundManager : Singleton<SoundManager>
     void BattleBGM()
     {
         bgmChangeAudioSource.clip = battleBGM;
+        bgmChangeAudioSource.loop = true;
+        bgmChangeAudioSource.Play();
+    }
+
+    void BusMapBGM()
+    {
+        bgmChangeAudioSource.clip = busMapBGM;
         bgmChangeAudioSource.loop = true;
         bgmChangeAudioSource.Play();
     }
@@ -252,9 +260,6 @@ public class SoundManager : Singleton<SoundManager>
             case "put":
                 effectAudioSource.clip = put;
                 break;
-            case "place":
-                effectAudioSource.clip = place;
-                break;
             case "fall":
                 effectAudioSource.clip = fall;
                 break;
@@ -266,6 +271,15 @@ public class SoundManager : Singleton<SoundManager>
                 break;
             case "go":
                 effectAudioSource.clip = go;
+                break;
+            case "bin":
+                effectAudioSource.clip = bin;
+                break;
+            case "right":
+                effectAudioSource.clip = right;
+                break;
+            case "no":
+                effectAudioSource.clip = no;
                 break;
         }
         effectAudioSource.volume = volumeEffect;
