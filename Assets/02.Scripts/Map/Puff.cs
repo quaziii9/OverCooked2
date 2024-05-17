@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class Puff : MonoBehaviour
 {
-    private IObjectPool<Puff> _ManagedPool;
-    private Vector3 _Direction;
+    private IObjectPool<Puff> managedPool;
     public ParticleSystem Pts;
 
     private void OnEnable()
@@ -15,17 +12,19 @@ public class Puff : MonoBehaviour
         Pts.Play();
         Enable();
     }
+
     public void SetManagedPool(IObjectPool<Puff> pool)
     {
-        _ManagedPool = pool;
+        managedPool = pool;
     }
 
     public void Enable()
-    {Invoke("DestroyPuff", 1f);
+    {
+        Invoke("DestroyPuff", 1f);
     }
 
     public void DestroyPuff()
     {
-        _ManagedPool.Release(this);
+        managedPool.Release(this);
     }
 }
