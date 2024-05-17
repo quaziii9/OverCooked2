@@ -25,15 +25,15 @@ public class ScrollMT1 : MonoBehaviour
 
         Vector2 currentOffset = meshRenderer.sharedMaterial.mainTextureOffset;
 
-        if(currentOffset.y <= startYOffset)
-        {
+        //if(currentOffset.y <= startYOffset)
+        //{
             currentOffset.y -= speed * Time.deltaTime;
-        }
+        //}
 
-        if (currentOffset.y <= endYOffset)
-        {
-            currentOffset.y = startYOffset;
-        }
+        //if (currentOffset.y <= endYOffset)
+        //{
+        //    currentOffset.y = startYOffset;
+        //}
 
         meshRenderer.sharedMaterial.mainTextureOffset = currentOffset;
     }
