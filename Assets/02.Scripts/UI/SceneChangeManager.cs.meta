@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: e22ff9ed1495b944f9e15804ca5bf96a
+<<<<<<<< HEAD:Assets/02.Scripts/UI/SceneChangeManager.cs.meta
+guid: 384e382508ba87746aa1bba643df5b2c
+========
+guid: 215435a10659e2e4fa14f6b22bc23390
+>>>>>>>> Seongwook:Assets/02.Scripts/UI/PressSkip.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

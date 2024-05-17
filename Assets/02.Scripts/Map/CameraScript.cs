@@ -10,13 +10,14 @@ public class CameraScript : MonoBehaviour
 
     public Vector3 offset; // 카메라와 타겟 사이의 거리
 
+    public Vector3 startVector;
     public float smoothSpeed = 0.125f; // 카메라 이동 속도
 
 
     void Start()
     {
+        startVector = transform.position;
         BusFind();
-
     }
 
     // Update is called once per frame
@@ -41,7 +42,8 @@ public class CameraScript : MonoBehaviour
     void FlowBus()
     {
        
-        //gameObject.transform.position = new Vector3(bus.transform.position.x, gameObject.transform.position.y, bus.transform.position.z);
+        offset = bus.transform.position + startVector;
+        gameObject.transform.position = new Vector3(offset.x, startVector.y, offset.z);
 
     }
 }

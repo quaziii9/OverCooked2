@@ -1,7 +1,4 @@
-using DG.Tweening.Core.Easing;
 using System.Collections;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -34,16 +31,28 @@ public class SoundManager : Singleton<SoundManager>
     public AudioSource bgmChangeAudioSource;
     public AudioSource effectAudioSource;
 
+    [Header("MultiPlay")]
+    public bool isSingle = true; //싱글 멀티 구분
+    public bool alreadyPlayed = false;
+
+    [Header("Game Play Sound Effect")]
+    public AudioClip itemTake;
+    public AudioClip put;
+    public AudioClip fall;
+    public AudioClip throwItem;
+    public AudioClip ready;
+    public AudioClip go;
+    public AudioClip bin;
+    public AudioClip right;
+    public AudioClip no;
 
     [Header("Mixer Groups")]
     public AudioMixerGroup musicGroup;  // The music mixer group
     public AudioMixerGroup effectGroup; // The effect mixer group
     //public AudioMixerGroup BgmChangeGroup
 
-
     AudioSource musicSource;            // Reference to the generated music Audio Source
     AudioSource effectSource;           // Reference to the generated effect Audio Source
-
 
     void Start()
     {
@@ -57,7 +66,6 @@ public class SoundManager : Singleton<SoundManager>
         effectSource.outputAudioMixerGroup = effectGroup;
         //IntroBGM();
     }
-
 
     #region settingAuido
     public void SettingAudioVolume()
@@ -138,8 +146,6 @@ public class SoundManager : Singleton<SoundManager>
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
     #endregion
-
-
 
     #region FadeInOut
     public void FadeInAudio(AudioSource audioSource, float waitTime, string bgmName)
@@ -244,21 +250,6 @@ public class SoundManager : Singleton<SoundManager>
         effectAudioSource.PlayOneShot(screenOutUI);
     }
 
-
-
-    [Header("MultiPlay")]
-    public bool isSingle = true; //싱글 멀티 구분
-    public bool alreadyPlayed = false;
-
-    [Header("Game Play Sound Effect")]
-    public AudioClip itemTake;
-    public AudioClip put;
-    public AudioClip place;
-    public AudioClip fall;
-    public AudioClip throwItem;
-    public AudioClip ready;
-    public AudioClip go;
-
     public void PlayEffect(string effect)
     {
         switch (effect)
@@ -268,9 +259,6 @@ public class SoundManager : Singleton<SoundManager>
                 break;
             case "put":
                 effectAudioSource.clip = put;
-                break;
-            case "place":
-                effectAudioSource.clip = place;
                 break;
             case "fall":
                 effectAudioSource.clip = fall;
@@ -283,6 +271,15 @@ public class SoundManager : Singleton<SoundManager>
                 break;
             case "go":
                 effectAudioSource.clip = go;
+                break;
+            case "bin":
+                effectAudioSource.clip = bin;
+                break;
+            case "right":
+                effectAudioSource.clip = right;
+                break;
+            case "no":
+                effectAudioSource.clip = no;
                 break;
         }
         effectAudioSource.volume = volumeEffect;

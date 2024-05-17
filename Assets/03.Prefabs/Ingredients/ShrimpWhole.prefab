@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1000850549454544565}
-  - component: {fileID: 1000850549454544562}
-  - component: {fileID: 1000850549454544563}
   - component: {fileID: 5068147682752448007}
   m_Layer: 0
   m_Name: ShrimpCollider
@@ -29,47 +27,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1000850550104139875}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1000850549454544562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000850549454544566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0713fb8c0c7de4348b118c07896a2eb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hand: 1
-  isOnDesk: 1
-  isCooked: 0
-  cookedIngredient: {fileID: -4099940822298934987, guid: 27f76654db989d248b71c253e968a911, type: 3}
-  cookedFish: {fileID: 0}
---- !u!114 &1000850549454544563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000850549454544566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSomething: 0
-  canActive: 0
-  materials:
-  - {fileID: 2100000, guid: dbb3eaf009d7b14458d1ef71bb855cba, type: 2}
-  - {fileID: 2100000, guid: 6838ec4b4c87eb34c94c26d7ec8f2f8b, type: 2}
-  - {fileID: 2100000, guid: dbb3eaf009d7b14458d1ef71bb855cba, type: 2}
-  - {fileID: 2100000, guid: 6838ec4b4c87eb34c94c26d7ec8f2f8b, type: 2}
-  type: 5
 --- !u!65 &5068147682752448007
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -92,7 +54,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1000850549753151895}
-  - component: {fileID: 652312002520694903}
   m_Layer: 0
   m_Name: ShrimpWhole
   m_TagString: Ingredient
@@ -110,23 +71,12 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.00018399951, y: 0.0055620004, z: 0.0005280038}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1000850550104139875}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &652312002520694903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000850549753151896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d47c89e9ec0f2e9478409cf545c9b035, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1000850550104139876
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,6 +107,7 @@ Transform:
   m_LocalRotation: {x: 0.28792766, y: 0.087588884, z: -0.27754316, w: 0.91235715}
   m_LocalPosition: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
   m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1000850549454544565}
   m_Father: {fileID: 1000850549753151895}
@@ -181,6 +132,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

@@ -39,6 +39,9 @@ public class PlayerInteractController : MonoBehaviour
     [SerializeField] private GameObject grabL;
     [SerializeField] private GameObject knife;
 
+    [Header("PlayerInputSystem")]
+    [SerializeField] private GameObject PlayerInputSystem;
+
 
     private void Awake()
     {
@@ -52,10 +55,10 @@ public class PlayerInteractController : MonoBehaviour
         SetHand();
     }
 
-    #region 인터렉션 부분
-    public void ChangeState(IPlayerState newState)
+    #region OnSwitch
+    public void OnSwitch(InputValue inputValue)
     {
-        currentState = newState;
+        PlayerInputSystem.GetComponent<PlayerMasterController>().SwitchPlayerComponent();
     }
     #endregion
 
@@ -73,7 +76,6 @@ public class PlayerInteractController : MonoBehaviour
         
     }
     #endregion
-
 
     #region OnCookOrThrow
     public void OnCookOrThrow(InputValue inputValue)
@@ -220,6 +222,7 @@ public class PlayerInteractController : MonoBehaviour
         {
             case ObjectHighlight.ObjectType.CounterTop:
             case ObjectHighlight.ObjectType.Board:
+            case ObjectHighlight.ObjectType.Return:
                 HandleCounterTopOrBoardInteraction();
                 break;
             case ObjectHighlight.ObjectType.Craft:
@@ -228,11 +231,45 @@ public class PlayerInteractController : MonoBehaviour
             case ObjectHighlight.ObjectType.Bin:
                 HandleBinInteraction();
                 break;
+            case ObjectHighlight.ObjectType.Station:
+                HandleStationInteraction();
+                break;
             default:
                 HandleGeneralObjectInteraction();
                 break;
         }
     }
+
+    // Station
+    private void HandleStationInteraction()
+    {
+        if (isHolding && transform.GetChild(1).gameObject.GetComponent<Ingredient>() != null 
+            && transform.GetChild(1).gameObject.GetComponent<Ingredient>().type == Ingredient.IngredientType.Plate)
+        {
+            // Handle 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
+            Plates plateComponent = transform.GetChild(1).gameObject.GetComponent<Plates>();  // Plates 컴포넌트를 가져옴
+
+            if (GameManager.instance.CheckMenu(plateComponent.containIngredients))
+            {
+                // 접시의 재료가 메뉴와 일치하면
+                SoundManager.Instance.PlayEffect("right");  // 성공 효과음 재생
+                GameManager.instance.MakeOrder();  // 주문을 만듦
+            }
+            else
+            {
+                // 접시의 재료가 메뉴와 일치하지 않으면
+                SoundManager.Instance.PlayEffect("no");  // 실패 효과음 재생
+                //TriggerFailureEffect();  // 실패 시 빨간색 불 들어오는 함수 호출 (추가 구현 필요)
+            }
+
+            Destroy(transform.GetChild(1).gameObject);  // 접시 전체를 삭제 (추후 재활용을 고려)
+            isHolding = false;  // 아이템을 들고 있는 상태를 해제
+            anim.SetBool("isHolding", isHolding);  // 애니메이션 상태를 업데이트
+            GameManager.instance.PlateReturn();  // 접시 반환 처리
+        }
+
+    }
+
     // CounterTop, Board
     private void HandleCounterTopOrBoardInteraction()
     {
@@ -244,7 +281,7 @@ public class PlayerInteractController : MonoBehaviour
         }
         else if (canActive && isHolding && objectHighlight.onSomething)
         {
-            // 내가 뭘 들고있고, 테이블이나 찹핑테이블 위에 있을때
+            // 내가 뭘 들고있고, 테이블이나 찹핑테이블 리턴 위에 있을때
             Debug.Log("뭔가 있냐?");
             TablePlaceOrDropObject(true);
         }
@@ -321,7 +358,7 @@ public class PlayerInteractController : MonoBehaviour
         // 객체를 내려놓을 때의 로직
         Debug.Log($"handlingThing name : {handlingThing.name}");
 
-        if (handlingThing.name.Equals("Plate"))
+        if (handlingThing.CompareTag("Plate"))
         {
             // 떨구는 객체가 접시면.
             //Debug.Log("접시 내려");
@@ -351,7 +388,7 @@ public class PlayerInteractController : MonoBehaviour
     // true 테이블 위에 뭔가 있음 , false 테이블 위에 뭔가 없음
     private void TablePlaceOrDropObject(bool drop)
     {
-        SoundManager.Instance.PlayEffect(drop ? "put" : "place");
+        SoundManager.Instance.PlayEffect(drop ? "put" : "put");
         if (drop)
         {
             // true 테이블 위에 뭔가 있는데 내가 가진게 접시고, 음식이면 담음
@@ -415,7 +452,7 @@ public class PlayerInteractController : MonoBehaviour
         {
             // 객체를 들어 올릴 때의 로직
             Debug.Log("올려");
-            if (obj.name.Equals("Plate"))
+            if (obj.CompareTag("Plate"))
             {
                 obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             }
@@ -793,25 +830,31 @@ public class PlayerInteractController : MonoBehaviour
 
     void SetPositionbetweenPlayerandObject(GameObject obj) 
     {
-        string name = obj.name;
+        //string name = obj.name;
 
         Vector3 localPosition = Vector3.zero;
         Quaternion localRotation = Quaternion.identity;
 
-        switch (name)
+        if (obj.CompareTag("Plate"))
         {
-            case "Plate":
-                //obj.GetComponent<Ingredient>().HandleIngredient(obj.transform, obj.transform.GetComponent<Ingredient>().type, true);
-                //Transform parentTransform = obj.transform.parent;
-                //parentTransform.localPosition = localPosition;
-                //parentTransform.localRotation = localRotation;
-                //parentTransform.parent.SetParent(something);
-                obj.transform.localRotation = Quaternion.identity;
-                obj.transform.localPosition = new Vector3(-0.409999996f, 0.4700001f, 1.84000003f);
-                break;
-            default:
-                break;
+            obj.transform.localRotation = Quaternion.identity;
+            obj.transform.localPosition = new Vector3(-0.409999996f, 0.4700001f, 1.84000003f);
         }
+
+        //switch (name)
+        //{
+        //    case "Plate":
+        //        //obj.GetComponent<Ingredient>().HandleIngredient(obj.transform, obj.transform.GetComponent<Ingredient>().type, true);
+        //        //Transform parentTransform = obj.transform.parent;
+        //        //parentTransform.localPosition = localPosition;
+        //        //parentTransform.localRotation = localRotation;
+        //        //parentTransform.parent.SetParent(something);
+        //        obj.transform.localRotation = Quaternion.identity;
+        //        obj.transform.localPosition = new Vector3(-0.409999996f, 0.4700001f, 1.84000003f);
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
     #endregion
 
