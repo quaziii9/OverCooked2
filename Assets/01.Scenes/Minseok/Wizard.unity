@@ -5609,6 +5609,37 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8796183698933298498, guid: 04485f7dff4ff3f45b715fef1f7145df, type: 3}
+--- !u!1 &700122465 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5512865851456825616, guid: 03f80bdd062783f48bb4fc582c798d50,
+    type: 3}
+  m_PrefabInstance: {fileID: 1944707786}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &700122467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700122465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d051ba4eb6798254eabcc0dae96102f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderer: {fileID: 0}
+  materialIndex: 3
+  speed: 0.5
+  YPlus: 0
+  y: 1
+  yLimit: 0
+  startYOffset: 0
+  endYOffset: -0
+  XPlus: 0
+  x: 0
+  xLimit: 0
+  startXOffset: 0
+  endXOffset: -0
 --- !u!1 &844002840 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3988534038106326259, guid: 7585cd7f18200924f91d59200a1d2c9a,
@@ -5804,6 +5835,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03f80bdd062783f48bb4fc582c798d50, type: 3}
+--- !u!1 &1068908697 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5512865851456825616, guid: 03f80bdd062783f48bb4fc582c798d50,
+    type: 3}
+  m_PrefabInstance: {fileID: 978778405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1068908699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068908697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d051ba4eb6798254eabcc0dae96102f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderer: {fileID: 0}
+  materialIndex: 3
+  speed: 0.5
+  YPlus: 0
+  y: 1
+  yLimit: 0
+  startYOffset: 0
+  endYOffset: -0
+  XPlus: 0
+  x: 0
+  xLimit: 0
+  startXOffset: 0
+  endXOffset: -0
 --- !u!1 &1111510649 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2905560056404403087, guid: 04485f7dff4ff3f45b715fef1f7145df,
@@ -8432,7 +8494,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueStation
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 309622927, guid: 03f80bdd062783f48bb4fc582c798d50, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 03f80bdd062783f48bb4fc582c798d50, type: 3}
 --- !u!1 &1980540689 stripped
 GameObject:
