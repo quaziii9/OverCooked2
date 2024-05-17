@@ -43,6 +43,7 @@ public class UIManager : Singleton<UIManager>
 
     [Header("Battle")]
     public GameObject battleUI;
+    public GameObject battleResultUI;
 
     [Header("ExitLobbyUI")]
     public GameObject exitLobbyUI;
@@ -66,7 +67,8 @@ public class UIManager : Singleton<UIManager>
     private bool settingWindowScreen = true;
     private int resolutionArrNum = 4;
     private int settingResolutionArrNum = 4;
-    private string[] resolutionTextArr = new string[] { "1280 x 720", "1280 x 800", "1680 x 1050", "1920 x 1080", "1920 x 1200", "2560 x 1600", "3072 x 1920" };
+    private string[] resolutionTextArr 
+        = new string[] { "1280 x 720", "1280 x 800", "1680 x 1050", "1920 x 1080", "1920 x 1200", "2560 x 1600", "3072 x 1920" };
 
 
     public bool first = true;

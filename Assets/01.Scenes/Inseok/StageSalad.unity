@@ -6211,6 +6211,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 99277825, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
+      propertyPath: dashForce
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 99277826, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27, type: 3}
       propertyPath: PlayerInputSystem
       value: 
@@ -9184,6 +9188,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1741212497, guid: 34349e550a021054e9c591529e667c3a, type: 3}
+      propertyPath: dashForce
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2043153386415452618, guid: 34349e550a021054e9c591529e667c3a,
         type: 3}
       propertyPath: PlayerInputSystem
