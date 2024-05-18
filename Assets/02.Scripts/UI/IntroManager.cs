@@ -43,7 +43,7 @@ public class IntroManager : MonoBehaviour
     public void StartSpace()
     {
         SoundManager.Instance.Load();
-        UIManager.Instance.Load();
+       
         isSpace = true;
         SoundManager.Instance.StartPlay();
         UIManager.Instance.shutterAnim.SetTrigger("ShutterOn");

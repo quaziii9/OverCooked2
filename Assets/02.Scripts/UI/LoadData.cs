@@ -6,9 +6,16 @@ public class LoadData : Singleton<LoadData>
 {
     public OptionData optionData;
 
+    private void Awake()
+    {
+        base.Awake();
+        LoadOptionDataFromJson();
+        UIManager.Instance.Load();
+        UIManager.Instance.SetResolution();
+    }
     private void Start()
     {      
-        LoadOptionDataFromJson();
+        
     }
 
     [ContextMenu("To Json Data")]
@@ -38,9 +45,11 @@ public class LoadData : Singleton<LoadData>
         {
             Debug.Log("새로운 파일 생성");       
             optionData.saveWindowMode = true;
-            optionData.saveResolutionNum = 4;
+            optionData.saveResolutionNum = 3;
             optionData.saveBgmVolume = 0.2f;
             optionData.saveEffectVolume = 0.2f;
+            UIManager.Instance.Load();
+            UIManager.Instance.SetResolution();
         }      
     }
 

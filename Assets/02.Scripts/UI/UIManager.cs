@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -85,6 +86,7 @@ public class UIManager : Singleton<UIManager>
         windowScreen = LoadData.Instance.optionData.saveWindowMode;
         resolutionArrNum = LoadData.Instance.optionData.saveResolutionNum;
         settingResolutionArrNum = LoadData.Instance.optionData.saveResolutionNum;
+        SetResolution();
         resolutionText.text = resolutionTextArr[resolutionArrNum];
         fullScreenCheck.SetActive(windowScreen);
     }
@@ -206,7 +208,12 @@ public class UIManager : Singleton<UIManager>
         settingWindowScreen = windowScreen;
 
         LoadData.Instance.SaveOptionDataToJson();
-        
+
+        SetResolution();
+    }
+
+    public void SetResolution()
+    {
         switch (resolutionArrNum)
         {
             case 0:
