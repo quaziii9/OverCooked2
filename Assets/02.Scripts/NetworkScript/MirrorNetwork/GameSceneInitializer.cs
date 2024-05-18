@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GameSceneInitializer : MonoBehaviour
 {
+    // Branch Flag
     private void Start()
     {
         CustomNetworkManager networkManager = (CustomNetworkManager)NetworkManager.singleton;
