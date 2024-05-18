@@ -511,6 +511,7 @@ public class UIManager : Singleton<UIManager>
 
     public void EnterIntro()
     {
+        //broccoliMaskRect.sizeDelta = new Vector2(4300, 4300);
         MaskInUI(broccoliMask, broccoliMaskRect, broccoliDuration, "LoadingKeyUIToIntro");
     }
 
@@ -559,6 +560,15 @@ public class UIManager : Singleton<UIManager>
             busMapEscUI.SetActive(false);
             EnterIntro();
         }
+        else if (SceneManager.GetActiveScene().name == "TestStage")
+        {
+            optionBlackUI.SetActive(false);
+            stopUI.SetActive(false);
+            stageMapEscBlackUI.SetActive(false);
+            stageMapEscUI.SetActive(false);
+            EnterIntro();
+        }
+
         else
         {
             #if UNITY_EDITOR
