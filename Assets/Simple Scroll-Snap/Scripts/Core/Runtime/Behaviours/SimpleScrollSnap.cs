@@ -274,6 +274,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         #region Methods
         private void Start()
         {
+            //OnPanelSelected.AddListener(OnPanelSelectedHandler);
             if (ValidConfig)
             {
                 Setup();
@@ -283,9 +284,19 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 throw new Exception("Invalid configuration.");
             }
         }
+        public string OnPanelSelectedGetName()
+        {
+            // 선택된 패널의 이름을 가져옵니다.
+            string selectedPanelName = Panels[SelectedPanel].name;
+
+            return selectedPanelName;
+
+        }
         private void Update()
         {
             if (NumberOfPanels == 0) return;
+
+           Debug.Log("snap select "+ OnPanelSelectedGetName());
 
             HandleOcclusionCulling();
             HandleSelectingAndSnapping();
