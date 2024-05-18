@@ -11343,19 +11343,19 @@ MonoBehaviour:
   busTopUI: {fileID: 1178815807}
   busMapEscUI: {fileID: 2045186622}
   busMapEscBlackUI: {fileID: 420993431}
+  stageMapEscUI: {fileID: 1526499135}
+  stageMapEscBlackUI: {fileID: 1926811332}
   resolutionText: {fileID: 1732526018}
   fullScreenButton: {fileID: 1478566060}
   fullScreenCheck: {fileID: 1378693494}
   windowScreen: 1
-  resolutionArrNum: 4
+  resolutionArrNum: 2
   resolutionTextArr:
   - 1280 x 720
-  - 1280 x 800
   - 1680 x 1050
   - 1920 x 1080
-  - 1920 x 1200
-  - 2560 x 1600
-  - 3072 x 1920
+  - 2560 x 1440
+  - 3840 x 2160
   first: 1
 --- !u!1 &644941479
 GameObject:
@@ -15251,13 +15251,28 @@ PrefabInstance:
       objectReference: {fileID: 154817030}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 637988502}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnClickButton
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: StageEscUICancle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SoundManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2922589969209275285, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -21394,7 +21409,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1226484129
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23168,7 +23183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1336685423
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24394,13 +24409,28 @@ PrefabInstance:
       objectReference: {fileID: 154817030}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 637988502}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnClickButton
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: EscUIStop
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SoundManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2922589969209275285, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}

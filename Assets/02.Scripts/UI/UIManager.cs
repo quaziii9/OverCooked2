@@ -62,6 +62,10 @@ public class UIManager : Singleton<UIManager>
     public GameObject busMapEscUI;
     public GameObject busMapEscBlackUI;
 
+    [Header("StageMap")]
+    public GameObject stageMapEscUI;
+    public GameObject stageMapEscBlackUI;
+
 
     [Header("Resolution")]  
     public TextMeshProUGUI resolutionText;
@@ -105,6 +109,7 @@ public class UIManager : Singleton<UIManager>
     private void Update()
     {
         EscUI();
+        StageEscUI();
         //if(!isSetting && !isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOn();
         //if (!isSetting && isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOff();
     }
@@ -469,10 +474,28 @@ public class UIManager : Singleton<UIManager>
                 busMapEscBlackUI.SetActive(true);
                 busMapEscUI.SetActive(true);
                 SoundManager.Instance.ButtonTick();
-
             }
         }
     }
+
+    public void StageEscUI()
+    {
+        if (SceneManager.GetActiveScene().name == "TestStage")
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                stageMapEscBlackUI.SetActive(true);
+                stageMapEscUI.SetActive(true);
+                SoundManager.Instance.ButtonTick();
+            }
+        }
+    }
+    public void StageEscUICancle()
+    {
+        stageMapEscBlackUI.SetActive(false);
+        stageMapEscUI.SetActive(false);
+    }
+
 
     public void EscUICancle()
     {
