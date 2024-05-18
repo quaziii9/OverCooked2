@@ -53,7 +53,9 @@ public class UIManager : Singleton<UIManager>
     [Header("Loading")]
     public GameObject loadingKeyUI;
     public GameObject[] loadingFoodArr;
-    public Image loadingKeyBar; 
+    public Image loadingKeyBar;
+    public GameObject loadingMapUI;
+    public Image loadingMapBar;
 
     [Header("BusMap")]
     public GameObject busTopUI;
@@ -281,10 +283,15 @@ public class UIManager : Singleton<UIManager>
                     busTopUI.SetActive(false);
                     Invoke("LoadingKeyUIToIntro", 1f);
                     break;
+                case "LoadingMapUIOn":                   
+                    Invoke("LoadingMapUIOn", 1f);
+                    break;
                 case "EnterIntroMapMaskOut":
                     Invoke("EnterIntroMapMaskOut", 1f);
                     break;
-
+                case "EnterTestStageMaskIn":
+                    Invoke("EnterTestStageMaskOut", 1f);
+                    break;
 
             }        
         }));
@@ -315,6 +322,10 @@ public class UIManager : Singleton<UIManager>
                     break;
                 case "busTopUI":
                     busTopUI.SetActive(true);
+                    break;
+                case "GoToTestStage":
+                    SceneChangeManager.Instance.ChangeToTestStage();
+                    loadingKeyBar.fillAmount = 0;
                     break;
                 default:
                     break;
@@ -400,6 +411,20 @@ public class UIManager : Singleton<UIManager>
         MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "GoToBusMap");
     }
 
+
+    public void EnterLoadingMapUI()
+    {
+        MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "LoadingMapUIOn");
+    }
+
+    public void LoadingMapUIOn()
+    {
+        loadingMapUI.SetActive(true);
+        battleUI.SetActive(false);
+        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "GoToTestStage");
+    }
+
+
     public void EnterBusMapMaskIn()
     {
         MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "EnterBusMapMaskOut");
@@ -409,6 +434,18 @@ public class UIManager : Singleton<UIManager>
     {
         MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "EnterIntroMapMaskOut");
     }
+
+    public void EnterTestStageMaskIn()
+    {
+        MaskInUI(broccoliMask, broccoliMaskRect, broccoliDuration, "EnterTestStageMaskIn");
+    }
+
+    public void EnterTestStageMaskOut()
+    {
+        loadingMapUI.SetActive(false);
+        MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "");
+    }
+
 
     public void EnterBusMapMaskOut()
     {
@@ -422,7 +459,7 @@ public class UIManager : Singleton<UIManager>
         MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "");
     }
 
-
+  
     public void EscUI()
     {
         if(SceneManager.GetActiveScene().name == "Map")

@@ -290,13 +290,10 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             string selectedPanelName = Panels[SelectedPanel].name;
 
             return selectedPanelName;
-
         }
         private void Update()
         {
             if (NumberOfPanels == 0) return;
-
-           Debug.Log("snap select "+ OnPanelSelectedGetName());
 
             HandleOcclusionCulling();
             HandleSelectingAndSnapping();
@@ -564,7 +561,6 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             int nearestPanel = GetNearestPanel();
             Vector2 displacementFromCenter = GetDisplacementFromCenter(nearestPanel);
-            Debug.Log(nearestPanel);
 
             if (snapTarget == SnapTarget.Nearest || releaseSpeed <= minimumSwipeSpeed)
             {

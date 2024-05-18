@@ -31,6 +31,14 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         StartCoroutine(LoadSceneAsyncCoroutine("Intro", UIManager.Instance.loadingKeyBar));
     }
 
+    public void ChangeToTestStage()
+    {
+        
+        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
+        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, "StageMap");
+        StartCoroutine(LoadSceneAsyncCoroutine("TestStage", UIManager.Instance.loadingMapBar));
+    }
+
     IEnumerator LoadSceneAsyncCoroutine(string Map, Image loadingKeyBar)
     {
         yield return null;
@@ -88,6 +96,11 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                     UIManager.Instance.EnterIntroMapMaskIn();
                 }
                 break;
+            case "TestStage":
+                VanSingleton.Instance.van.SetActive(false);
+                UIManager.Instance.EnterTestStageMaskIn();
+                break;
         }
     }
+
 }

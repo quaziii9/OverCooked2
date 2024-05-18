@@ -1,18 +1,34 @@
 using DanielLochner.Assets.SimpleScrollSnap;
-using System.Collections;
-using System.Collections.Generic;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ScrollSnapButton : MonoBehaviour
 {
     public SimpleScrollSnap snap;
-
+    public Sprite selectImg;
+    public Sprite notselectImg;
+    public Image backImage;
+    public GameObject MapObject;
+    
     string name;
 
     public void Start()
     {
         snap.GetComponent<SimpleScrollSnap>();
+    }
+
+    public void Update()
+    {
+        if (snap.OnPanelSelectedGetName() == MapObject.name)
+        {
+            backImage.sprite = selectImg;
+        }
+        else
+        {
+            backImage.sprite = notselectImg;
+        }
     }
 
     public void SnapMapClick()
@@ -21,7 +37,7 @@ public class ScrollSnapButton : MonoBehaviour
         name = clickObject.name;
         if (snap.OnPanelSelectedGetName() == name)
         {
-            Debug.Log("성공 : " +name);
+            UIManager.Instance.EnterLoadingMapUI();
         }
     }
 }
