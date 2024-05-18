@@ -1,8 +1,9 @@
+using Mirror;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerDash_Net : MonoBehaviour
+public class PlayerDash_Net : NetworkBehaviour
 {
     [Header("References")]
     public Transform orientation;

@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Principal;
@@ -9,7 +10,7 @@ using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using Transform = UnityEngine.Transform;
 
-public class PlayerInteractController_Net : MonoBehaviour
+public class PlayerInteractController_Net : NetworkBehaviour
 {
     // 애니메이션
     public Animator anim;
