@@ -1357,6 +1357,8 @@ GameObject:
   - component: {fileID: 8130858025802842098}
   - component: {fileID: 8130858025802842099}
   - component: {fileID: 8130858025802841868}
+  - component: {fileID: 574069711772268269}
+  - component: {fileID: 3902015928838122533}
   m_Layer: 0
   m_Name: Player2_Net
   m_TagString: Player
@@ -1421,18 +1423,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dce9335556899b4e886fae9c304c958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  anim: {fileID: 1998868788432234383}
   interactObject: {fileID: 0}
   objectHighlight: {fileID: 0}
   nextInteractObject: {fileID: 0}
   isHolding: 0
   canActive: 0
-  throwPower: {x: 0, y: 0, z: 0}
-  idleR: {fileID: 0}
-  idleL: {fileID: 0}
-  grabR: {fileID: 0}
-  grabL: {fileID: 0}
-  knife: {fileID: 0}
+  throwPower: {x: 0, y: 3, z: 15}
+  idleR: {fileID: 7090005162231613702}
+  idleL: {fileID: 2390702007485477373}
+  grabR: {fileID: 724368005980549178}
+  grabL: {fileID: 1434178484562457311}
+  knife: {fileID: 2319456734785902561}
   PlayerInputSystem: {fileID: 0}
 --- !u!114 &8130858025802842099
 MonoBehaviour:
@@ -1446,13 +1451,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c0edf92b65504d498813f2e249633c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   orientation: {fileID: 0}
-  dashForce: 0
-  dashDuration: 0
+  dashForce: 5
+  dashDuration: 1
   allowAllDirections: 1
   disableGravity: 0
   resetVel: 1
-  dashCd: 0
+  dashCd: 1
 --- !u!114 &8130858025802841868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1465,14 +1473,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 750cfb42cf30b544ea6dfa11ed8c3096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  rb: {fileID: 0}
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  animator: {fileID: 1998868788432234383}
+  rb: {fileID: 8130858025802841871}
   moveSpeed: 15
   turnSpeed: 10
   dashSpeed: 0
   dashForce: 500
   dashDuration: 0.5
   dashCooldown: 0.5
+--- !u!114 &574069711772268269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8130858025802841906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 2632352862
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
+--- !u!114 &3902015928838122533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8130858025802841906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 8130858025802841869}
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  sendIntervalMultiplier: 1
+  timelineOffset: 0
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChangeCorrectionMultiplier: 2
+  rotationSensitivity: 0.01
+  positionPrecision: 0.01
+  scalePrecision: 0.01
 --- !u!1 &8130858025946237457
 GameObject:
   m_ObjectHideFlags: 0

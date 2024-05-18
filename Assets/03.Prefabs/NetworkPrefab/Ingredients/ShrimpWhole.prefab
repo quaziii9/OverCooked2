@@ -182,7 +182,7 @@ MonoBehaviour:
   currentState: 0
   cookedIngredient: {fileID: -4099940822298934987, guid: 27f76654db989d248b71c253e968a911,
     type: 3}
-  cookedFish: {fileID: 0}
+  cookedFish: {fileID: 2100000, guid: dbb3eaf009d7b14458d1ef71bb855cba, type: 2}
   fishLocalPos: {x: 0, y: 0.138, z: 0.08}
   shrimpLocalPos: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
   lettuceLocalPos: {x: 0, y: 0.418, z: 0}

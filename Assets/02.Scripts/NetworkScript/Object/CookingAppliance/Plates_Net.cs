@@ -112,7 +112,7 @@ public class Plates_Net : MonoBehaviour
             {
                 image.sprite = Icons[6];
             }
-            madeUI.GetComponent<IngredientUI>().Target = transform;
+            madeUI.GetComponent<IngredientUI_Net>().Target = transform;
         }
         else if (containIngredients.Count == 2) //접시에 합쳐진게 2개면
         {

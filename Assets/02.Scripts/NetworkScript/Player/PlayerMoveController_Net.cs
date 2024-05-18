@@ -1,7 +1,8 @@
+using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMoveController_Net : MonoBehaviour
+public class PlayerMoveController_Net : NetworkBehaviour
 {
     public Animator animator;
     public Rigidbody rb;

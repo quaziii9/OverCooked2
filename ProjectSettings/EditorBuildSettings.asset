@@ -6,14 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/01.Scenes/Eunjoo/Intro.unity
-    guid: 5e6208ebd628aad4194e0ad15c25e9e5
-  - enabled: 1
-    path: Assets/01.Scenes/Seongwook/BootStrapScene.unity
-    guid: e729dad897acdf14a94013de18433701
-  - enabled: 1
-    path: Assets/01.Scenes/Minseok/Map.unity
-    guid: 1d98b15de8d83e041820f583bfea06a4
+    path: Assets/01.Scenes/Inseok/NetworkScenes/FishSushi_Stage.unity
+    guid: f532e7242ca9ac645acb4c36397a3161
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c6c6f27b5f47b074396d1e2d4b77956a,
       type: 2}
