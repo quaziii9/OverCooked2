@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -64,11 +65,11 @@ public class UIManager : Singleton<UIManager>
     public TextMeshProUGUI resolutionText;
     public GameObject fullScreenButton;
     public GameObject fullScreenCheck;
-    private bool windowScreen = true;
-    private bool settingWindowScreen = true;
-    private int resolutionArrNum = 4;
-    private int settingResolutionArrNum = 4;
-    private string[] resolutionTextArr 
+    public bool windowScreen;
+    private bool settingWindowScreen;
+    public int resolutionArrNum;
+    private int settingResolutionArrNum;
+    public string[] resolutionTextArr 
         = new string[] { "1280 x 720", "1280 x 800", "1680 x 1050", "1920 x 1080", "1920 x 1200", "2560 x 1600", "3072 x 1920" };
 
 
@@ -77,6 +78,19 @@ public class UIManager : Singleton<UIManager>
     //private bool maskOutEnd;
     //private bool isExit = false;
     //private bool isSetting = false;
+
+
+    public void Load()
+    {
+        settingWindowScreen = LoadData.Instance.optionData.saveWindowMode;
+        windowScreen = LoadData.Instance.optionData.saveWindowMode;
+        resolutionArrNum = LoadData.Instance.optionData.saveResolutionNum;
+        settingResolutionArrNum = LoadData.Instance.optionData.saveResolutionNum;
+        SetResolution();
+        resolutionText.text = resolutionTextArr[resolutionArrNum];
+        fullScreenCheck.SetActive(windowScreen);
+    }
+
 
     public void Start()
     {
@@ -192,6 +206,14 @@ public class UIManager : Singleton<UIManager>
     {
         settingResolutionArrNum = resolutionArrNum;
         settingWindowScreen = windowScreen;
+
+        LoadData.Instance.SaveOptionDataToJson();
+
+        SetResolution();
+    }
+
+    public void SetResolution()
+    {
         switch (resolutionArrNum)
         {
             case 0:

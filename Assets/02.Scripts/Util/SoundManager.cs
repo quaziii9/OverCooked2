@@ -55,8 +55,22 @@ public class SoundManager : Singleton<SoundManager>
     AudioSource musicSource;            // Reference to the generated music Audio Source
     AudioSource effectSource;           // Reference to the generated effect Audio Source
 
-    void Start()
+
+    public void Load()
     {
+        bgmAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
+        bgmChangeAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
+        volumeBGM = LoadData.Instance.optionData.saveBgmVolume;
+        settingBGM = LoadData.Instance.optionData.saveBgmVolume;
+        effectAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
+        volumeEffect = LoadData.Instance.optionData.saveEffectVolume;
+        settingEffect = LoadData.Instance.optionData.saveEffectVolume;
+        UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
+    }
+
+    void Start()
+    {      
         SettingAudioVolume();
         StartCoroutine(FadeInVolume(bgmAudioSource, 8f, "Intro"));
 
