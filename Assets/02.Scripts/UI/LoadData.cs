@@ -45,7 +45,7 @@ public class LoadData : Singleton<LoadData>
         {
             Debug.Log("새로운 파일 생성");       
             optionData.saveWindowMode = true;
-            optionData.saveResolutionNum = 3;
+            optionData.saveResolutionNum = 2;
             optionData.saveBgmVolume = 0.2f;
             optionData.saveEffectVolume = 0.2f;
             UIManager.Instance.Load();
@@ -68,5 +68,4 @@ public class LoadData : Singleton<LoadData>
         public float saveBgmVolume;
         public float saveEffectVolume;
     }
-    //
 }

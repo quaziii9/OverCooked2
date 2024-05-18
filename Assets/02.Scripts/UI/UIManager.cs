@@ -70,7 +70,7 @@ public class UIManager : Singleton<UIManager>
     public int resolutionArrNum;
     private int settingResolutionArrNum;
     public string[] resolutionTextArr 
-        = new string[] { "1280 x 720", "1280 x 800", "1680 x 1050", "1920 x 1080", "1920 x 1200", "2560 x 1600", "3072 x 1920" };
+        = new string[] { "1280 x 720", "1680 x 1050", "1920 x 1080", "2560 x 1440", "3840 x 2160" };
 
 
     public bool first = true;
@@ -189,15 +189,15 @@ public class UIManager : Singleton<UIManager>
     #region Resolution
     public void ResolutionRightButton()
     {
-        resolutionArrNum = (resolutionArrNum + 1) % 7;
+        resolutionArrNum = (resolutionArrNum + 1) % 5;
         resolutionText.text = resolutionTextArr[resolutionArrNum];
     }
 
     public void ResolutionLeftButton()
     {
-        if (resolutionArrNum == 0) resolutionArrNum = 6;
+        if (resolutionArrNum == 0) resolutionArrNum = 4;
         else
-            resolutionArrNum = (resolutionArrNum - 1) % 7;
+            resolutionArrNum = (resolutionArrNum - 1) % 5;
 
         resolutionText.text = resolutionTextArr[resolutionArrNum];
     }
@@ -220,22 +220,16 @@ public class UIManager : Singleton<UIManager>
                 Screen.SetResolution(1280, 720, !windowScreen);
                 break;
             case 1:
-                Screen.SetResolution(1280, 800, !windowScreen);
-                break;
-            case 2:
                 Screen.SetResolution(1680, 1050, !windowScreen);
                 break;
-            case 3:
+            case 2:
                 Screen.SetResolution(1920, 1080, !windowScreen);
                 break;
+            case 3:
+                Screen.SetResolution(2560, 1440, !windowScreen);
+                break;
             case 4:
-                Screen.SetResolution(1920, 1200, !windowScreen);
-                break;
-            case 5:
-                Screen.SetResolution(2560, 1600, !windowScreen);
-                break;
-            case 6:
-                Screen.SetResolution(3070, 1920, !windowScreen);
+                Screen.SetResolution(3840, 2160, !windowScreen);
                 break;
         }
     }
