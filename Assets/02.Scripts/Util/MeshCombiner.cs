@@ -15,13 +15,12 @@ public class MeshCombiner : MonoBehaviour
     // 병합 또는 클리어 동작을 수행하는 메서드
     public void MergeOrClearMeshes()
     {
-        // 여러 개의 머테리얼을 가진 오브젝트가 있는지 확인
-        hasMultipleMaterials = ContainsMultipleMaterials(objectsToMerge);
+        InitializeObjects(); // 초기화 메서드 호출
 
         // 병합할 수 없는 경우 경고 메시지 출력 및 상태 업데이트
         if (hasMultipleMaterials)
         {
-            Debug.LogWarning("여러 개의 머테리얼을 가진 오브젝트가 포함되어 있습니다. 병합할 수 없습니다.");
+            Debug.LogWarning("병합할 수 없습니다. 여러 개의 머테리얼을 가진 오브젝트가 포함되어 있습니다.");
             UpdateStateAndButtonLabel(false);
             return;
         }
@@ -34,27 +33,26 @@ public class MeshCombiner : MonoBehaviour
             return;
         }
 
-        // 현재 병합 상태에 따라 병합 또는 클리어 동작 수행
-        if (isCombined)
-        {
-            ClearObjects();
-            Debug.Log("병합된 오브젝트가 클리어되었습니다.");
-        }
-        else
-        {
-            MergeMeshes();
-            UpdateStateAndButtonLabel(true);
-            Debug.Log("오브젝트가 성공적으로 병합되었습니다.");
-        }
+        MergeMeshes();
+        ClearObjects(); // 병합 후 오브젝트 리스트를 클리어
+        UpdateStateAndButtonLabel(true);
+        Debug.Log("오브젝트가 성공적으로 병합되었습니다.");
+    }
+
+    // 오브젝트 리스트를 초기화하는 메서드
+    public void InitializeObjects()
+    {
+        isCombined = false;
+        hasMultipleMaterials = ContainsMultipleMaterials(objectsToMerge);
     }
 
     // 병합할 오브젝트 리스트를 비우는 메서드
     public void ClearObjects()
     {
         objectsToMerge.Clear();
+        isCombined = false;
         hasMultipleMaterials = false;
         UpdateStateAndButtonLabel(false);
-        Debug.Log("병합할 오브젝트 리스트가 클리어되었습니다.");
     }
 
     // 여러 개의 머테리얼을 가진 오브젝트가 포함되어 있는지 확인하는 메서드
@@ -79,6 +77,7 @@ public class MeshCombiner : MonoBehaviour
     {
         isCombined = combinedState;
         UpdateButtonLabel?.Invoke(isCombined);
+        isCombined = false;
     }
 
     // 버튼 레이블 업데이트를 위한 델리게이트 및 이벤트 정의
@@ -145,7 +144,10 @@ public class MeshCombiner : MonoBehaviour
     // 병합된 오브젝트를 생성하고 설정하는 메서드
     private GameObject CreateCombinedObject(List<CombineInstance> combineList, List<MeshRenderer> meshRenderers)
     {
-        var combinedObject = new GameObject("Combined Mesh");
+        var combinedObject = new GameObject("Combined Mesh")
+        {
+            isStatic = true // 생성된 오브젝트를 정적 오브젝트로 설정
+        };
         var meshFilter = combinedObject.AddComponent<MeshFilter>();
         var meshRenderer = combinedObject.AddComponent<MeshRenderer>();
 

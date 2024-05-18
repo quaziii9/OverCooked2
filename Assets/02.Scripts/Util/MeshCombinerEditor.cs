@@ -44,10 +44,6 @@ public class MeshCombinerEditor : Editor
                 meshCombiner.MergeOrClearMeshes();
                 Debug.Log("오브젝트가 성공적으로 병합되었습니다.");
             }
-            else
-            {
-                Debug.LogWarning("병합할 수 없습니다. 여러 개의 머테리얼을 가진 오브젝트가 포함되어 있습니다.");
-            }
         }
 
         EditorGUILayout.EndHorizontal(); // 수평 레이아웃 종료
@@ -62,9 +58,15 @@ public class MeshCombinerEditor : Editor
             return false;
         }
 
-        if (meshCombiner.objectsToMerge.Count == 1 || meshCombiner.hasMultipleMaterials)
+        if (meshCombiner.hasMultipleMaterials)
         {
-            Debug.LogWarning("여러 개의 머테리얼을 가진 오브젝트가 포함되어 있습니다. 병합할 수 없습니다.");
+            Debug.LogWarning("병합할 수 없습니다. 여러 개의 머테리얼을 가진 오브젝트가 포함되어 있습니다.");
+            return false;
+        }
+
+        if(meshCombiner.objectsToMerge.Count == 1)
+        {
+            Debug.LogWarning("1개의 오브젝트는 병합할 수 없습니다.");
             return false;
         }
 

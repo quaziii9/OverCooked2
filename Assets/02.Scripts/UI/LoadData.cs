@@ -13,6 +13,7 @@ public class LoadData : Singleton<LoadData>
         UIManager.Instance.Load();
         UIManager.Instance.SetResolution();
     }
+
     private void Start()
     {      
         
