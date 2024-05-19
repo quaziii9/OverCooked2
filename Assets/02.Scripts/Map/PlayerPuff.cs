@@ -4,10 +4,9 @@ using UnityEngine.Pool;
 public class PlayerPuff : Singleton<PlayerPuff>
 {
     public GameObject puffWalkPrefab;   // 걷는 퍼프 프리팹
-    public GameObject puffBurstPrefab;   // 버스트 퍼프 프리팹
+    public GameObject puffBurstPrefab;  // 버스트 퍼프 프리팹
     private IObjectPool<Puff> walkPool; // 걷는 퍼프 풀
     private IObjectPool<Puff> burstPool; // 버스트 퍼프 풀
-    //public Transform puffPostion;
 
     private void Awake()
     {
@@ -15,48 +14,57 @@ public class PlayerPuff : Singleton<PlayerPuff>
         burstPool = new ObjectPool<Puff>(CreateBurst, OnGetPuff, OnReleasePuff, OnDestroyPuff, maxSize: 1000);
     }
 
-    // 아래부터는 퍼프 관련 함수
-    public void BoostPuff(Transform puffPostion) // 부스트 퍼프 실행
+    // 부스트 퍼프 실행
+    public void BoostPuff(Transform puffPosition)
     {
-        var bust = burstPool.Get();
-        bust.transform.position = puffPostion.transform.position;
-        //bust.transform.rotation = puffPostion.transform.rotation;
+        var burst = burstPool.Get();
+        burst.transform.position = puffPosition.position;
+        // burst.transform.rotation = puffPosition.rotation;
     }
 
-    public void MovePuff(Transform puffPostion) //무브 퍼프 실행
+    // 무브 퍼프 실행
+    public void MovePuff(Transform puffPosition)
     {
         var walk = walkPool.Get();
-        walk.transform.position = puffPostion.transform.position;
-        //walk.transform.rotation=puffPostion.transform.rotation;
+        walk.transform.position = puffPosition.position;
+        // walk.transform.rotation = puffPosition.rotation;
     }
 
-    private Puff CreateWalk() // 워크퍼프 생성 후 풀에 담음
+    // 워크 퍼프 생성 후 풀에 담음
+    private Puff CreateWalk()
     {
-        Puff puff = Instantiate(puffWalkPrefab).GetComponent<Puff>();
-        puff.SetManagedPool(walkPool);
-        puff.transform.localScale = Vector3.one*2;
+        return CreatePuff(puffWalkPrefab, walkPool);
+    }
+
+    // 버스트 퍼프 생성 후 풀에 담음
+    private Puff CreateBurst()
+    {
+        return CreatePuff(puffBurstPrefab, burstPool);
+    }
+
+    // 퍼프를 생성하고 풀에 담음
+    private Puff CreatePuff(GameObject prefab, IObjectPool<Puff> pool)
+    {
+        Puff puff = Instantiate(prefab, transform).GetComponent<Puff>();
+        puff.SetManagedPool(pool);
+        puff.transform.localScale = Vector3.one * 2;
         return puff;
     }
 
-    private Puff CreateBurst() // 버스트 퍼프 생성
-    {
-        Puff puff = Instantiate(puffBurstPrefab).GetComponent<Puff>();
-        puff.SetManagedPool(burstPool);
-        puff.transform.localScale = Vector3.one*2;
-        return puff;
-    }
-
-    private void OnGetPuff(Puff puff) // 퍼프를 불러옴
+    // 퍼프를 불러옴
+    private void OnGetPuff(Puff puff)
     {
         puff.gameObject.SetActive(true);
     }
 
-    private void OnReleasePuff(Puff puff) // 퍼프 비활성화
+    // 퍼프 비활성화
+    private void OnReleasePuff(Puff puff)
     {
         puff.gameObject.SetActive(false);
     }
 
-    private void OnDestroyPuff(Puff puff) // 퍼프 삭제
+    // 퍼프 삭제
+    private void OnDestroyPuff(Puff puff)
     {
         Destroy(puff.gameObject);
     }

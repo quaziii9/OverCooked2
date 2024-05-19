@@ -1,31 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Travelator : MonoBehaviour
 {
     public float speed = 1.0f; // 트레블레이터의 기본 이동 속도
-    public float playerSpeedMultiplier = 2.0f; // 플레이어가 트레블레이터의 방향과 같은 경우 속도 배율
-    public float playerSpeedReduction = 0.5f; // 플레이어가 트레블레이터의 방향과 반대인 경우 속도 배율
+    public bool moveRight = true; // 오른쪽으로 이동할지 여부. false이면 왼쪽으로 이동
 
     private Vector3 moveDirection;
+    private Dictionary<Rigidbody, Coroutine> activeCoroutines = new Dictionary<Rigidbody, Coroutine>(); // 현재 이동 중인 오브젝트와 코루틴
 
     private void Start()
     {
-        // y 값에 따라 이동 방향을 설정
-        if (Mathf.Approximately(transform.eulerAngles.y, 180.0f))
-        {
-            moveDirection = Vector3.right; // y 값이 180이면 오른쪽으로 이동
-        }
-        else if (Mathf.Approximately(transform.eulerAngles.y, 0.0f))
-        {
-            moveDirection = Vector3.left; // y 값이 0이면 왼쪽으로 이동
-        }
-        else
-        {
-            Debug.LogWarning("Unexpected y rotation value. Defaulting to right direction.");
-            moveDirection = Vector3.right;
-        }
+        // 이동 방향 설정
+        moveDirection = moveRight ? Vector3.right : Vector3.left;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,14 +21,21 @@ public class Travelator : MonoBehaviour
         // 트레블레이터 위에 올라간 오브젝트가 Rigidbody를 가지고 있는지 확인
         if (other.attachedRigidbody != null)
         {
-            if (other.CompareTag("Player"))
+            if (!activeCoroutines.ContainsKey(other.attachedRigidbody))
             {
-                // 플레이어의 경우 별도 처리
-                StartCoroutine(MovePlayer(other.attachedRigidbody));
-            }
-            else
-            {
-                StartCoroutine(MoveObject(other.attachedRigidbody));
+                Coroutine moveCoroutine;
+
+                if (other.CompareTag("Player"))
+                {
+                    // 플레이어의 경우 별도 처리
+                    moveCoroutine = StartCoroutine(MovePlayer(other.attachedRigidbody));
+                }
+                else
+                {
+                    moveCoroutine = StartCoroutine(MoveObject(other.attachedRigidbody));
+                }
+
+                activeCoroutines[other.attachedRigidbody] = moveCoroutine;
             }
         }
     }
@@ -48,15 +43,18 @@ public class Travelator : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         // 트레블레이터를 벗어난 오브젝트가 Rigidbody를 가지고 있는지 확인
-        if (other.attachedRigidbody != null)
+        if (other.attachedRigidbody != null && activeCoroutines.ContainsKey(other.attachedRigidbody))
         {
+            StopCoroutine(activeCoroutines[other.attachedRigidbody]);
+            activeCoroutines.Remove(other.attachedRigidbody);
+
             if (other.CompareTag("Player"))
             {
-                StopCoroutine(MovePlayer(other.attachedRigidbody));
+                other.attachedRigidbody.velocity = Vector3.zero;
             }
             else
             {
-                StopCoroutine(MoveObject(other.attachedRigidbody));
+                other.attachedRigidbody.velocity = Vector3.zero;
             }
         }
     }
@@ -66,7 +64,7 @@ public class Travelator : MonoBehaviour
         while (true)
         {
             // Rigidbody의 위치를 이동 방향으로 업데이트
-            obj.MovePosition(obj.position + moveDirection.normalized * speed * Time.deltaTime);
+            obj.MovePosition(obj.position + new Vector3(moveDirection.x * speed * Time.deltaTime, 0, 0));
             yield return null; // 다음 프레임까지 대기
         }
     }
@@ -75,25 +73,8 @@ public class Travelator : MonoBehaviour
     {
         while (true)
         {
-            // 플레이어가 현재 이동하고 있는 방향을 가져옴
-            Vector3 playerMoveDirection = playerRb.velocity.normalized;
-
-            // 트레블레이터와 같은 방향으로 이동 중인지 확인
-            float dotProduct = Vector3.Dot(playerMoveDirection, moveDirection.normalized);
-
-            if (dotProduct > 0) // 같은 방향
-            {
-                playerRb.MovePosition(playerRb.position + moveDirection.normalized * speed * playerSpeedMultiplier * Time.deltaTime);
-            }
-            else if (dotProduct < 0) // 반대 방향
-            {
-                playerRb.MovePosition(playerRb.position + moveDirection.normalized * speed * playerSpeedReduction * Time.deltaTime);
-            }
-            else // 직각 방향
-            {
-                playerRb.MovePosition(playerRb.position + moveDirection.normalized * speed * Time.deltaTime);
-            }
-
+            // 플레이어의 속도와 관계없이 트레블레이터 방향으로 이동
+            playerRb.MovePosition(playerRb.position + new Vector3(moveDirection.x * speed * Time.deltaTime, 0, 0));
             yield return null; // 다음 프레임까지 대기
         }
     }
