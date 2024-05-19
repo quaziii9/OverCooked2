@@ -3,71 +3,72 @@ using UnityEngine;
 
 public class CustomNetworkManager : NetworkManager
 {
-    [Header("Server Setting")]
-    public bool autoStartServer = false;
-    public bool autoStartClient = false;
-    public string serverAddress = "localhost";
+    [Header("Server/Client Settings")]
+    public string networkAddress_local = "localhost";
 
-    [Header("Player Prefabs")]
-    public GameObject[] playerAObjects; // 플레이어 A가 조작할 오브젝트들
-    public GameObject[] playerBObjects; // 플레이어 B가 조작할 오브젝트들
+    [Header("UI Elements")]
+    public GameObject[] playerSlots; // 플레이어 슬롯 UI 배열
 
-    public override void Awake()
+    #region StartServerManually / StartClientManually / StopBattle
+    public void StartServerManually()
     {
-        base.Awake();
-
-        if (autoStartServer)
-        {
-            StartServer();
-        }
-        else if (autoStartClient)
-        {
-            networkAddress = this.serverAddress;
-            StartClient();
-        }
+        StartServer();
     }
 
-    public void StartGameDirectly()
+    public void StartClientManually()
     {
-        if (autoStartServer)
-        {
-            StartServer();
-        }
-        else if (autoStartClient)
-        {
-            networkAddress = this.serverAddress;
-            StartClient();
-        }
+        networkAddress = networkAddress_local;
+        StartClient();
     }
+    
+
+    public void StopBattle()
+    {
+        base.StopHost();
+
+        if (NetworkServer.active)
+        {
+            StopServer();
+        }
+        if (NetworkClient.isConnected)
+        {
+            StopClient();
+        }
+
+        // 슬롯 상태 초기화
+        UpdatePlayerSlots();
+    }
+    #endregion
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
         base.OnServerAddPlayer(conn);
-
-        if (numPlayers == 1)
-        {
-            // 첫 번째 플레이어 (A)
-            foreach (var obj in playerAObjects)
-            {
-                AssignOwnership(conn, obj);
-            }
-        }
-        else if (numPlayers == 2)
-        {
-            // 두 번째 플레이어 (B)
-            foreach (var obj in playerBObjects)
-            {
-                AssignOwnership(conn, obj);
-            }
-        }
+        UpdatePlayerSlots();
     }
 
-    void AssignOwnership(NetworkConnectionToClient conn, GameObject obj)
+    public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
-        NetworkIdentity networkIdentity = obj.GetComponent<NetworkIdentity>();
-        if (networkIdentity != null)
+        base.OnServerDisconnect(conn);
+        UpdatePlayerSlots();
+    }
+
+    private void UpdatePlayerSlots()
+    {
+        // 모든 플레이어 슬롯을 초기화 (비활성화)
+        foreach (GameObject slot in playerSlots)
         {
-            networkIdentity.AssignClientAuthority(conn);
+            slot.SetActive(false);
+        }
+
+        // 활성화된 플레이어 수에 따라 슬롯 활성화
+        int index = 0;
+        foreach (NetworkConnectionToClient conn in NetworkServer.connections.Values)
+        {
+            if (index < playerSlots.Length)
+            {
+                playerSlots[index].SetActive(true);
+                index++;
+            }
         }
     }
 }

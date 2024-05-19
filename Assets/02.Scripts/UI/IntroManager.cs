@@ -28,7 +28,7 @@ public class IntroManager : MonoBehaviour
 
         UIManager.Instance.ingamePlayerUI.SetActive(false);
 
-        UIManager.Instance.buttonUI.SetActive(false);
+        //UIManager.Instance.buttonUI.SetActive(false);
         UIManager.Instance.settingUI.SetActive(false);
 
         UIManager.Instance.underBarStop.SetActive(false);
