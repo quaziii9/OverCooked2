@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2620353419467707058}
   - component: {fileID: 8435709831361130638}
   m_Layer: 0
-  m_Name: Countertop_01_standard_old_corner
+  m_Name: countertop_standard_old_corner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

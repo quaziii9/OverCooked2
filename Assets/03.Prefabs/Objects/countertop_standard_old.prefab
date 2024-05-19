@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 3546520476689397016}
   - component: {fileID: 9137167605407497343}
   m_Layer: 0
-  m_Name: Countertop_01_standard_old
+  m_Name: countertop_standard_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

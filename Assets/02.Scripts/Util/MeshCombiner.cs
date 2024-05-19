@@ -9,6 +9,7 @@ public class MeshCombiner : MonoBehaviour
     public bool addMeshCollider = false; // 병합된 메쉬에 메쉬 콜라이더를 추가할지 결정하는 변수
     public bool deactivateObjectsAfterMerge = true; // 병합 후 병합된 오브젝트들을 비활성화할지 결정하는 변수
     public bool destroyObjectsAfterMerge = false; // 병합 후 병합된 오브젝트들을 삭제할지 결정하는 변수
+    public bool makeStatic = true; // 병합된 오브젝트를 정적 오브젝트로 만들지 결정하는 변수
 
     public bool isCombined = false; // 현재 병합 상태를 나타내는 변수
 
@@ -158,10 +159,10 @@ public class MeshCombiner : MonoBehaviour
     // 병합된 오브젝트를 생성하고 설정하는 메서드
     private GameObject CreateCombinedObject(Dictionary<Material, List<CombineInstance>> materialMeshMap)
     {
-        var combinedObject = new GameObject("Combined Mesh")
-        {
-            isStatic = true // 생성된 오브젝트를 정적 오브젝트로 설정
-        };
+        var combinedObject = new GameObject("Combined Mesh");
+
+        // 사용자가 정적 오브젝트로 만들지 선택할 수 있게 설정
+        if (makeStatic) combinedObject.isStatic = true;
 
         foreach (var kvp in materialMeshMap)
         {
@@ -178,6 +179,7 @@ public class MeshCombiner : MonoBehaviour
 
             var child = new GameObject(material.name);
             child.transform.SetParent(combinedObject.transform, false);
+            if(makeStatic) child.isStatic = true;
 
             var meshFilter = child.AddComponent<MeshFilter>();
             meshFilter.sharedMesh = combinedMesh;
