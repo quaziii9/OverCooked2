@@ -1,6 +1,7 @@
 using UnityEngine.Events;
 using System.Collections.Generic;
 using System;
+using UnityEngine;
 
 namespace EventLibrary
 {
@@ -20,21 +21,9 @@ namespace EventLibrary
         {
             lock (lockObj)
             {
-                // eventDictionary에서 해당 이벤트를 찾고, 리스너를 추가
-                if (eventDictionary.TryGetValue(eventName, out var thisEvent))
-                {
-                    if (thisEvent is UnityEvent unityEvent)
-                    {
-                        unityEvent.AddListener(listener);
-                    }
-                }
-                else
-                {
-                    // 이벤트가 존재하지 않으면 새로 생성하고 추가
-                    var unityEvent = new UnityEvent();
-                    unityEvent.AddListener(listener);
-                    eventDictionary.Add(eventName, unityEvent);
-                }
+                UnityEvent unityEvent = GetOrCreateEvent<UnityEvent>(eventName);
+                unityEvent.AddListener(listener);
+                Debug.Log($"Listener added to event: {eventName}");
             }
         }
 
@@ -43,21 +32,9 @@ namespace EventLibrary
         {
             lock (lockObj)
             {
-                // eventDictionary에서 해당 이벤트를 찾고, 리스너를 추가
-                if (eventDictionary.TryGetValue(eventName, out var thisEvent))
-                {
-                    if (thisEvent is GenericEvent<T> genericEvent)
-                    {
-                        genericEvent.AddListener(listener);
-                    }
-                }
-                else
-                {
-                    // 이벤트가 존재하지 않으면 새로 생성하고 추가
-                    var genericEvent = new GenericEvent<T>();
-                    genericEvent.AddListener(listener);
-                    eventDictionary.Add(eventName, genericEvent);
-                }
+                GenericEvent<T> genericEvent = GetOrCreateEvent<GenericEvent<T>>(eventName);
+                genericEvent.AddListener(listener);
+                Debug.Log($"Listener added to event: {eventName}");
             }
         }
 
@@ -66,15 +43,11 @@ namespace EventLibrary
         {
             lock (lockObj)
             {
-                // eventDictionary에서 해당 이벤트를 찾아 리스너를 제거
                 if (eventDictionary.TryGetValue(eventName, out var thisEvent) && thisEvent is UnityEvent unityEvent)
                 {
                     unityEvent.RemoveListener(listener);
-                    // 리스너가 모두 제거된 경우 딕셔너리에서 이벤트 삭제
-                    if (unityEvent.GetPersistentEventCount() == 0)
-                    {
-                        eventDictionary.Remove(eventName);
-                    }
+                    Debug.Log($"Listener removed from event: {eventName}");
+                    RemoveEventIfEmpty(eventName, unityEvent);
                 }
             }
         }
@@ -84,15 +57,11 @@ namespace EventLibrary
         {
             lock (lockObj)
             {
-                // eventDictionary에서 해당 이벤트를 찾아 리스너를 제거
                 if (eventDictionary.TryGetValue(eventName, out var thisEvent) && thisEvent is GenericEvent<T> genericEvent)
                 {
                     genericEvent.RemoveListener(listener);
-                    // 리스너가 모두 제거된 경우 딕셔너리에서 이벤트 삭제
-                    if (genericEvent.GetPersistentEventCount() == 0)
-                    {
-                        eventDictionary.Remove(eventName);
-                    }
+                    Debug.Log($"Listener removed from event: {eventName}");
+                    RemoveEventIfEmpty(eventName, genericEvent);
                 }
             }
         }
@@ -102,10 +71,17 @@ namespace EventLibrary
         {
             lock (lockObj)
             {
-                // eventDictionary에서 해당 이벤트를 찾아 트리거
-                if (eventDictionary.TryGetValue(eventName, out var thisEvent) && thisEvent is UnityEvent unityEvent)
+                try
                 {
-                    unityEvent.Invoke();
+                    if (eventDictionary.TryGetValue(eventName, out var thisEvent) && thisEvent is UnityEvent unityEvent)
+                    {
+                        unityEvent.Invoke();
+                        Debug.Log($"Event triggered: {eventName}");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Error triggering event {eventName}: {e.Message}");
                 }
             }
         }
@@ -115,11 +91,40 @@ namespace EventLibrary
         {
             lock (lockObj)
             {
-                // eventDictionary에서 해당 이벤트를 찾아 트리거
-                if (eventDictionary.TryGetValue(eventName, out var thisEvent) && thisEvent is GenericEvent<T> genericEvent)
+                try
                 {
-                    genericEvent.Invoke(parameter);
+                    if (eventDictionary.TryGetValue(eventName, out var thisEvent) && thisEvent is GenericEvent<T> genericEvent)
+                    {
+                        genericEvent.Invoke(parameter);
+                        Debug.Log($"Event triggered: {eventName} with parameter: {parameter}");
+                    }
                 }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Error triggering event {eventName} with parameter {parameter}: {e.Message}");
+                }
+            }
+        }
+
+        // 이벤트가 존재하지 않으면 생성하여 반환하는 메서드
+        private static TEvent GetOrCreateEvent<TEvent>(E eventName) where TEvent : UnityEventBase, new()
+        {
+            if (!eventDictionary.TryGetValue(eventName, out var thisEvent))
+            {
+                thisEvent = new TEvent();
+                eventDictionary.Add(eventName, thisEvent);
+                Debug.Log($"Event created: {eventName}");
+            }
+            return thisEvent as TEvent;
+        }
+
+        // 이벤트가 비어 있으면 딕셔너리에서 제거하는 메서드
+        private static void RemoveEventIfEmpty(E eventName, UnityEventBase thisEvent)
+        {
+            if (thisEvent.GetPersistentEventCount() == 0)
+            {
+                eventDictionary.Remove(eventName);
+                Debug.Log($"Event removed: {eventName}");
             }
         }
     }

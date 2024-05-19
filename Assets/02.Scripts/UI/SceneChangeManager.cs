@@ -1,68 +1,80 @@
 using Cinemachine;
+using EnumTypes;
+using EventLibrary;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-//using UnityEngine.UIElements;
 using UnityEngine.UI;
 
 public class SceneChangeManager : Singleton<SceneChangeManager>
 {
     AsyncOperation operation;
-    GameObject van;
-    
+
     private void OnEnable()
     {
+        // 씬 로드 완료 이벤트에 OnSceneLoaded 메서드를 등록
         SceneManager.sceneLoaded += OnSceneLoaded;
+        EventManager<UIEvents>.StartListening(UIEvents.WorldMapOpen, ChangeToBusMap);
     }
 
+    private void OnDisable()
+    {
+        // 씬 로드 완료 이벤트에서 OnSceneLoaded 메서드를 제거
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // 버스 맵으로 전환
     public void ChangeToBusMap()
     {
-        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
-        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, "BusMap");
-        StartCoroutine(LoadSceneAsyncCoroutine("Map", UIManager.Instance.loadingKeyBar));
+        ChangeScene("BusMap", "Map", UIManager.Instance.loadingKeyBar);
     }
 
+    // 인트로 맵으로 전환
     public void ChangeToIntroMap()
     {
-        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
-        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, "Intro");
-        StartCoroutine(LoadSceneAsyncCoroutine("Intro", UIManager.Instance.loadingKeyBar));
+        ChangeScene("Intro", "Intro", UIManager.Instance.loadingKeyBar);
     }
 
+    // 테스트 스테이지로 전환
     public void ChangeToTestStage()
     {
-        
-        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
-        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, "StageMap");
-        StartCoroutine(LoadSceneAsyncCoroutine("TestStage", UIManager.Instance.loadingMapBar));
+        ChangeScene("StageMap", "TestStage", UIManager.Instance.loadingMapBar);
     }
 
-    IEnumerator LoadSceneAsyncCoroutine(string Map, Image loadingKeyBar)
+    // 씬 전환을 위한 공통 메서드
+    private void ChangeScene(string bgmName, string sceneName, Image loadingBar)
+    {
+        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
+        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, bgmName);
+        StartCoroutine(LoadSceneAsyncCoroutine(sceneName, loadingBar));
+    }
+
+    // 씬을 비동기로 로드하는 코루틴
+    IEnumerator LoadSceneAsyncCoroutine(string sceneName, Image loadingBar)
     {
         yield return null;
-        operation = SceneManager.LoadSceneAsync(Map);
+        operation = SceneManager.LoadSceneAsync(sceneName);
         UIManager.Instance.LoadingFood();
 
         operation.allowSceneActivation = false;
         float timer = 0;
-        
+
         while (!operation.isDone)
         {
             yield return null;
             timer += Time.deltaTime;
             if (operation.progress < 0.9f)
             {
-                loadingKeyBar.fillAmount = Mathf.Lerp(loadingKeyBar.fillAmount, operation.progress, timer);
-                if (loadingKeyBar.fillAmount >= operation.progress)
+                loadingBar.fillAmount = Mathf.Lerp(loadingBar.fillAmount, operation.progress, timer);
+                if (loadingBar.fillAmount >= operation.progress)
                 {
                     timer = 0f;
-                    
                 }
             }
             else
             {
-                loadingKeyBar.fillAmount = Mathf.Lerp(loadingKeyBar.fillAmount, 1f, timer);
-                if (loadingKeyBar.fillAmount == 1.0f)
+                loadingBar.fillAmount = Mathf.Lerp(loadingBar.fillAmount, 1f, timer);
+                if (loadingBar.fillAmount == 1.0f)
                 {
                     operation.allowSceneActivation = true;
                     UIManager.Instance.LoadingFoodOff();
@@ -72,20 +84,20 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         }
     }
 
-
+    // 씬 로드 완료 후 호출되는 메서드
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log($"씬 로드 완료: {scene.name}");
         switch (scene.name)
         {
             case "Map":
                 VanSingleton.Instance.van.SetActive(false);
-                UIManager.Instance.EnterBusMapMaskIn();     
-                
+                UIManager.Instance.EnterBusMapMaskIn();
                 break;
             case "Intro":
                 UIManager.Instance.vanCamera = GameObject.Find("VanCam").GetComponent<CinemachineVirtualCamera>();
                 UIManager.Instance.shutterCamera = GameObject.Find("ShutterCam").GetComponent<CinemachineVirtualCamera>();
-                if (UIManager.Instance.first == false)
+                if (!UIManager.Instance.first)
                 {
                     VanSingleton.Instance.van.SetActive(true);
                     UIManager.Instance.busTopUI.SetActive(false);
@@ -101,5 +113,4 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 break;
         }
     }
-
 }

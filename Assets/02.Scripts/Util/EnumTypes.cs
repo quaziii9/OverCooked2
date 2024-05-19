@@ -35,7 +35,11 @@ namespace EnumTypes
     {
         FirstSetIntroUI,
         FrirstIntrSpace,
+    }
 
+    public enum UIEvents
+    {
+        WorldMapOpen,
     }
 
     public class EnumTypes : MonoBehaviour { }

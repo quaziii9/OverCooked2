@@ -13,7 +13,6 @@ public class IntroManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        
         if (isSpace==false && isLoading==false && Input.GetKeyDown(KeyCode.Space))
         {           
             StartSpace();
@@ -75,8 +74,7 @@ public class IntroManager : MonoBehaviour
         UIManager.Instance.shutter.SetActive(false);
     }
 
-
-    // 처음 인트로 로딩영상 끝나는 시간
+    // 처음 인트로 로딩 영상
     IEnumerator IntroSetting()
     {
         yield return new WaitForSeconds(18f);

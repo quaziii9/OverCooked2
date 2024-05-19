@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using EnumTypes;
+using EventLibrary;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -88,7 +90,6 @@ public class UIManager : Singleton<UIManager>
         resolutionText.text = resolutionTextArr[resolutionArrNum]; 
         fullScreenCheck.SetActive(windowScreen);
     }
-
 
     public void Start()
     {
@@ -260,8 +261,6 @@ public class UIManager : Singleton<UIManager>
         stageMapEscUI.SetActive(false);
         
     }
-   
-
 
     #region Mask InOut UI
 
@@ -356,7 +355,8 @@ public class UIManager : Singleton<UIManager>
             switch (goTo)
             {
                 case "GoToBusMap":
-                    SceneChangeManager.Instance.ChangeToBusMap();
+                    // SceneChangeManager.Instance.ChangeToBusMap();
+                    EventManager<UIEvents>.TriggerEvent(UIEvents.WorldMapOpen);
                     break;
                 case "GoToIntroMap":
                     SceneChangeManager.Instance.ChangeToIntroMap();
@@ -391,8 +391,6 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
-
-
     #region BattileUIOn
     public void BattleUIOn()
     {
@@ -408,7 +406,6 @@ public class UIManager : Singleton<UIManager>
         MaskOutUI(broccoliMask, pineappleMask, "");
     }
     #endregion
-
 
     #region ExitLobbyUI & BattleUIOff
 
@@ -441,7 +438,6 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
-
     #region LoadingKeyUI
     public void EnterLoadingKeyUI()
     {
@@ -468,7 +464,6 @@ public class UIManager : Singleton<UIManager>
         MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
     }
     #endregion
-
 
     #region EnterBusMap
     public void EnterBusMapMaskIn()
@@ -515,7 +510,6 @@ public class UIManager : Singleton<UIManager>
     }
     #endregion
 
-
     #region EnterTestStage
     public void EnterTestStageMaskIn()
     {
@@ -530,8 +524,6 @@ public class UIManager : Singleton<UIManager>
     }
     #endregion
 
-
-
     #region EscUI
     public void BusMapEscUI()
     {
@@ -545,13 +537,12 @@ public class UIManager : Singleton<UIManager>
             }
         }
     }
+
     public void BusMapEscUICancle()
     {
         busMapEscBlackUI.SetActive(false);
         busMapEscUI.SetActive(false);
     }
-
-
 
     public void StageEscUI()
     {
@@ -571,7 +562,6 @@ public class UIManager : Singleton<UIManager>
         stageMapEscUI.SetActive(false);
     }
 
-
     public void EscUIStopOn()
     {
         optionBlackUI.SetActive(true);
@@ -584,11 +574,6 @@ public class UIManager : Singleton<UIManager>
         stopUI.SetActive(false);
     }
     #endregion
-
-
-
-
-
 
     #region LoadingFood
     public void LoadingFood()
@@ -621,7 +606,6 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
-
     #region RecipeUI
     public void RecipeUIOn(int arr)
     {
@@ -653,7 +637,6 @@ public class UIManager : Singleton<UIManager>
             StageEscUICancle();
             EnterIntroLoadingMaskIn();
         }
-
         else
         {
             #if UNITY_EDITOR
@@ -663,6 +646,4 @@ public class UIManager : Singleton<UIManager>
             #endif
         }
     }
-
-
 }
