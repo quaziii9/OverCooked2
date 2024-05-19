@@ -7,37 +7,36 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
+    [Header("Camera")]
     public CinemachineVirtualCamera vanCamera;
     public CinemachineVirtualCamera shutterCamera;
 
     [Header("Van")]
-    public GameObject shutter;
     public GameObject buttonUI;
     public GameObject ingamePlayerUI;
+    public GameObject shutter;
+    public Animator shutterAnim;
 
-    [Header("Intro")]
+    [Header("FirstIntro")]
     public GameObject loadingUI;
     public GameObject spaceToStart;
 
-    [Header("Option")]
-    public GameObject settingUI;
-    public GameObject stopUI;
+    [Header("OptionUI")]
+    public GameObject optionSettingUI;
     public GameObject optionBlackUI;
+    public GameObject stopUI;
 
-    [Header("UnderBar")]
+    [Header("UnderBarUI")]
     public GameObject underBarCancle;
     public GameObject underBarStop;
-
-    [Header("Animator")]
-    public Animator shutterAnim;
 
     [Header("MaskTransitionUI")]
     public GameObject broccoliMask; // 크기를 변경할 RectTransform
     public GameObject pineappleMask; // 크기를 변경할 RectTransform
     private RectTransform broccoliMaskRect;
     private RectTransform pineappleMaskRect;
-    private Vector2 pineappleOutMaskRect = new Vector2(7300, 7300);
     private Vector2 broccoliOutMaskRect = new Vector2(4300, 4300);
+    private Vector2 pineappleOutMaskRect = new Vector2(7300, 7300);
     private float broccoliDuration = 0.3f; // 변화에 걸리는 시간
     private float pineappleDuration = 0.5f; // 변화에 걸리는 시간
 
@@ -50,21 +49,20 @@ public class UIManager : Singleton<UIManager>
     public GameObject exitLobbyBlackUI;
 
     [Header("Loading")]
-    public GameObject loadingKeyUI;
     public GameObject[] loadingFoodArr;
+    public GameObject loadingKeyUI;
     public Image loadingKeyBar;
     public GameObject loadingMapUI;
     public Image loadingMapBar;
 
     [Header("BusMap")]
-    public GameObject busTopUI;
     public GameObject busMapEscUI;
     public GameObject busMapEscBlackUI;
+    public GameObject busTopUI;
 
     [Header("StageMap")]
     public GameObject stageMapEscUI;
     public GameObject stageMapEscBlackUI;
-
 
     [Header("RecipeUI")]
     public GameObject recipeUI;
@@ -84,20 +82,16 @@ public class UIManager : Singleton<UIManager>
 
 
     public bool first = true;
-    //private bool maskInEnd;
-    //private bool maskOutEnd;
-    //private bool isExit = false;
-    //private bool isSetting = false;
 
-
-    public void Load()
+    public void JsonUILoad()
     {
         settingWindowScreen = LoadData.Instance.optionData.saveWindowMode;
         windowScreen = LoadData.Instance.optionData.saveWindowMode;
         resolutionArrNum = LoadData.Instance.optionData.saveResolutionNum;
         settingResolutionArrNum = LoadData.Instance.optionData.saveResolutionNum;
+
         SetResolution();
-        resolutionText.text = resolutionTextArr[resolutionArrNum];
+        resolutionText.text = resolutionTextArr[resolutionArrNum]; 
         fullScreenCheck.SetActive(windowScreen);
     }
 
@@ -112,54 +106,29 @@ public class UIManager : Singleton<UIManager>
 
     private void Update()
     {
-        EscUI();
+        BusMapEscUI();
         StageEscUI();
         //if(!isSetting && !isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOn();
         //if (!isSetting && isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOff();
     }
 
-    #region Intro UI
+    #region Option UI
 
+    // 옵션창 On
     public void SettingOn()
     {
         optionBlackUI.SetActive(true);
-        settingUI.SetActive(true);
-        //isSetting = true;
+        optionSettingUI.SetActive(true);
     }
 
+    // 옵션창 Off
     public void SeetingOff()
     {
         optionBlackUI.SetActive(false);
-        settingUI.SetActive(false);
-        //isSetting = false;
+        optionSettingUI.SetActive(false);
     }
 
-    public void StopUIOn()
-    {
-        optionBlackUI.SetActive(true);
-        stopUI.SetActive(true);
-       
-    }
-
-    public void StopUIOff()
-    {
-        optionBlackUI.SetActive(false);
-        stopUI.SetActive(false);
-
-        if(SceneManager.GetActiveScene().name == "Map")
-        {
-            busMapEscBlackUI.SetActive(false);
-            busMapEscUI.SetActive(false);
-        }
-
-        stageMapEscBlackUI.SetActive(false);
-        stageMapEscUI.SetActive(false);
-        
-    }
-    #endregion
-
-    #region SoundSquares
-
+    // BGM 볼륨 네모칸 UI
     public void SetBGMSquares(float volumeBGM, GameObject[] BGMSquares)
     {
         int j = 0;
@@ -179,6 +148,7 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
+    // EFFECT 볼륨 네모칸 UI
     public void SetEffectSquares(float volumeEffect, GameObject[] effectSquares)
     {
         int j = 0;
@@ -198,16 +168,17 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-    #endregion
 
 
-    #region Resolution
+ 
+    // 해상도 오른쪽 화살표 버튼클릭
     public void ResolutionRightButton()
     {
         resolutionArrNum = (resolutionArrNum + 1) % 5;
         resolutionText.text = resolutionTextArr[resolutionArrNum];
     }
 
+    // 해상도 왼쪽 화살표 버튼클릭
     public void ResolutionLeftButton()
     {
         if (resolutionArrNum == 0) resolutionArrNum = 4;
@@ -217,16 +188,25 @@ public class UIManager : Singleton<UIManager>
         resolutionText.text = resolutionTextArr[resolutionArrNum];
     }
 
-    public void ResolutionChange()
+    // 창모드 버튼 클릭
+    public void OnClickFullScreenButton()
+    {
+        windowScreen = !windowScreen;
+        fullScreenCheck.SetActive(windowScreen);
+    }
+
+    // 해상도 저장
+    public void SaveResolution()
     {
         settingResolutionArrNum = resolutionArrNum;
         settingWindowScreen = windowScreen;
 
-        LoadData.Instance.SaveOptionDataToJson();
+        //LoadData.Instance.SaveOptionDataToJson();
 
         SetResolution();
     }
 
+    // 해상도 적용
     public void SetResolution()
     {
         switch (resolutionArrNum)
@@ -249,24 +229,55 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-    public void CancleChange()
+    // 옵션 취소시
+    public void CancleResolution()
     {
+        // 원래 설정값으로 변경
         resolutionArrNum = settingResolutionArrNum;
-        resolutionText.text = resolutionTextArr[resolutionArrNum];
         windowScreen = settingWindowScreen;
+
+        // 적용
+        resolutionText.text = resolutionTextArr[resolutionArrNum];
         fullScreenCheck.SetActive(windowScreen);
     }
-    public void OnClickFullScreenButton()
-    {
-        windowScreen = !windowScreen;
-        fullScreenCheck.SetActive(windowScreen);
-    }
+
     #endregion
+
+    // 그만두기창 On
+    public void StopUIOn()
+    {
+        optionBlackUI.SetActive(true);
+        stopUI.SetActive(true);      
+    }
+
+    // 그만두기창 Off
+    public void StopUIOff()
+    {
+        optionBlackUI.SetActive(false);
+        stopUI.SetActive(false);
+
+        // BusMapEscUI도 같이 종료
+        if(SceneManager.GetActiveScene().name == "Map")
+        {
+            busMapEscBlackUI.SetActive(false);
+            busMapEscUI.SetActive(false);
+        }
+
+        // stageMapEscUI도 같이 종료
+        stageMapEscBlackUI.SetActive(false);
+        stageMapEscUI.SetActive(false);
+        
+    }
+   
+
+
+    
 
 
 
     #region Mask InOut UI
 
+    // 마스크 작아지는 UI
     public void MaskInUI(GameObject inMask, RectTransform inMaskRect, float Duration, string goTo)
     {
         //maskInEnd = false;
@@ -305,7 +316,6 @@ public class UIManager : Singleton<UIManager>
                 case "EnterTestStageMaskIn":
                     Invoke("EnterTestStageMaskOut", 1f);
                     break;
-
             }        
         }));
     }
@@ -473,7 +483,7 @@ public class UIManager : Singleton<UIManager>
     }
 
   
-    public void EscUI()
+    public void BusMapEscUI()
     {
         if(SceneManager.GetActiveScene().name == "Map")
         {

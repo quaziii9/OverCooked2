@@ -13,12 +13,14 @@ public class IntroManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        
         if (isSpace==false && isLoading==false && Input.GetKeyDown(KeyCode.Space))
         {           
             StartSpace();
         }
     }
 
+    // 처음 인트로 들어갈때 세팅
     public void InitUI()
     {
         if (UIManager.Instance.first == true)
@@ -41,6 +43,7 @@ public class IntroManager : MonoBehaviour
     }
 
 
+    // 게임을 시작하려면 스페이스바
     public void StartSpace()
     {
         UIManager.Instance.first = false;
@@ -64,6 +67,7 @@ public class IntroManager : MonoBehaviour
         // UIManager.Instance.UnderBarStop.SetActive(true);
     }
 
+    // 셔터 비활성화
     IEnumerator ShutterOut()
     {
         yield return new WaitForSeconds(2f);
@@ -71,6 +75,8 @@ public class IntroManager : MonoBehaviour
         UIManager.Instance.shutter.SetActive(false);
     }
 
+
+    // 처음 인트로 로딩영상 끝나는 시간
     IEnumerator IntroSetting()
     {
         yield return new WaitForSeconds(18f);

@@ -10,7 +10,7 @@ public class LoadData : Singleton<LoadData>
     {
         base.Awake();
         LoadOptionDataFromJson();
-        UIManager.Instance.Load();
+        UIManager.Instance.JsonUILoad();
         UIManager.Instance.SetResolution();
     }
 
@@ -49,7 +49,7 @@ public class LoadData : Singleton<LoadData>
             optionData.saveResolutionNum = 2;
             optionData.saveBgmVolume = 0.2f;
             optionData.saveEffectVolume = 0.2f;
-            UIManager.Instance.Load();
+            UIManager.Instance.JsonUILoad();
             UIManager.Instance.SetResolution();
         }      
     }
