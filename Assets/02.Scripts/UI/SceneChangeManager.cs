@@ -75,27 +75,28 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        switch(scene.name)
+        switch (scene.name)
         {
             case "Map":
                 VanSingleton.Instance.van.SetActive(false);
-                UIManager.Instance.EnterBusMapMaskIn();                                  
+                UIManager.Instance.EnterBusMapMaskIn();     
+                
                 break;
             case "Intro":
                 UIManager.Instance.vanCamera = GameObject.Find("VanCam").GetComponent<CinemachineVirtualCamera>();
                 UIManager.Instance.shutterCamera = GameObject.Find("ShutterCam").GetComponent<CinemachineVirtualCamera>();
                 if (UIManager.Instance.first == false)
                 {
-                    UIManager.Instance.busTopUI.SetActive(false);
                     VanSingleton.Instance.van.SetActive(true);
+                    UIManager.Instance.busTopUI.SetActive(false);
                     UIManager.Instance.buttonUI.SetActive(true);
                     UIManager.Instance.shutterCamera.Priority = 9;
-                    UIManager.Instance.EnterIntroMapMaskIn();
+                    UIManager.Instance.EnterIntroMaskIn();
                 }
                 break;
             case "TestStage":
-                UIManager.Instance.RecipeUIOn(0);
                 VanSingleton.Instance.van.SetActive(false);
+                UIManager.Instance.RecipeUIOn(0);
                 UIManager.Instance.EnterTestStageMaskIn();
                 break;
         }

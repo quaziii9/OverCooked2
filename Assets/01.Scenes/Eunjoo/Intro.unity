@@ -1737,7 +1737,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91428156}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1746,7 +1746,7 @@ RectTransform:
   - {fileID: 245485895}
   - {fileID: 7223238608456835621}
   m_Father: {fileID: 637988501}
-  m_RootOrder: 1
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4050,7 +4050,7 @@ PrefabInstance:
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ExitLobby
+      value: AgreeExitLobby
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -8949,7 +8949,7 @@ RectTransform:
   m_Children:
   - {fileID: 709642913}
   m_Father: {fileID: 637988501}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -11282,18 +11282,18 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1086745441}
-  - {fileID: 91428157}
   - {fileID: 1282710795}
   - {fileID: 1565352214}
   - {fileID: 1178815808}
   - {fileID: 1502624231}
-  - {fileID: 921309100}
   - {fileID: 1738204079}
+  - {fileID: 801894128}
+  - {fileID: 921309100}
   - {fileID: 1719696564}
   - {fileID: 1990564519}
-  - {fileID: 801894128}
   - {fileID: 511028192}
   - {fileID: 1772501566}
+  - {fileID: 91428157}
   - {fileID: 867731786}
   - {fileID: 1825150570}
   m_Father: {fileID: 0}
@@ -13811,7 +13811,7 @@ RectTransform:
   - {fileID: 1129917865}
   - {fileID: 1153531739}
   m_Father: {fileID: 637988501}
-  m_RootOrder: 10
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -16005,7 +16005,7 @@ RectTransform:
   - {fileID: 551890444}
   - {fileID: 2008375747}
   m_Father: {fileID: 637988501}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -18399,7 +18399,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1086745441
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20271,7 +20271,7 @@ RectTransform:
   - {fileID: 1785004135}
   - {fileID: 920640957}
   m_Father: {fileID: 637988501}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -22769,7 +22769,7 @@ RectTransform:
   - {fileID: 93389629}
   - {fileID: 864108903}
   m_Father: {fileID: 637988501}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -24235,7 +24235,7 @@ PrefabInstance:
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: EscUIStop
+      value: EscUIStopOn
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -24430,7 +24430,7 @@ PrefabInstance:
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: EscUIStop
+      value: EscUIStopOn
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -26244,7 +26244,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 637988501}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -28002,7 +28002,7 @@ RectTransform:
   - {fileID: 1147988323}
   - {fileID: 699894500}
   m_Father: {fileID: 637988501}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -28034,7 +28034,7 @@ PrefabInstance:
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: EscUICancle
+      value: BusMapEscUICancle
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -31170,7 +31170,7 @@ RectTransform:
   - {fileID: 5719555851397800730}
   - {fileID: 7308605951645431937}
   m_Father: {fileID: 637988501}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -31666,7 +31666,7 @@ RectTransform:
   - {fileID: 1147333224}
   - {fileID: 1170990458}
   m_Father: {fileID: 637988501}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -41623,7 +41623,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 637988502}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: EnterBattleUI
+        m_MethodName: BattleUIOn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

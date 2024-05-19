@@ -33,12 +33,6 @@ public class UIManager : Singleton<UIManager>
     [Header("MaskTransitionUI")]
     public GameObject broccoliMask; // 크기를 변경할 RectTransform
     public GameObject pineappleMask; // 크기를 변경할 RectTransform
-    private RectTransform broccoliMaskRect;
-    private RectTransform pineappleMaskRect;
-    private Vector2 broccoliOutMaskRect = new Vector2(4300, 4300);
-    private Vector2 pineappleOutMaskRect = new Vector2(7300, 7300);
-    private float broccoliDuration = 0.3f; // 변화에 걸리는 시간
-    private float pineappleDuration = 0.5f; // 변화에 걸리는 시간
 
     [Header("Battle")]
     public GameObject battleUI;
@@ -100,8 +94,6 @@ public class UIManager : Singleton<UIManager>
     {
         resolutionText.text = resolutionTextArr[resolutionArrNum];
         fullScreenCheck.SetActive(windowScreen);
-        broccoliMaskRect = broccoliMask.GetComponent<RectTransform>();
-        pineappleMaskRect = pineappleMask.GetComponent<RectTransform>();
     }
 
     private void Update()
@@ -271,84 +263,109 @@ public class UIManager : Singleton<UIManager>
    
 
 
-    
-
-
-
     #region Mask InOut UI
 
-    // 마스크 작아지는 UI
-    public void MaskInUI(GameObject inMask, RectTransform inMaskRect, float Duration, string goTo)
+    // 마스크 축소 UI
+    public void MaskInUI(GameObject inMask, string goTo)
     {
-        //maskInEnd = false;
         SoundManager.Instance.ScreenInUI();
         inMask.SetActive(true);
-        inMaskRect = inMask.GetComponent<RectTransform>();
-        StartCoroutine(MaskInOut(inMaskRect, Vector2.zero, Duration, () =>
+
+        RectTransform inMaskRect = inMask.GetComponent<RectTransform>();
+        float MaskInTime = 0;
+        
+        // 마스크 RECT 크게 설정
+        if (inMask == broccoliMask)
+        {
+            inMaskRect.sizeDelta = new Vector2(4300, 4300);
+            MaskInTime = 0.3f;
+        }
+        else if(inMask == pineappleMask) 
+        {
+            inMaskRect.sizeDelta = new Vector2(7300, 7300);
+            MaskInTime = 0.5f;
+        }
+
+        StartCoroutine(MaskInOut(inMaskRect, Vector2.zero, MaskInTime, () =>
         {
             LoadingFood();
-
-            // maskInEnd = true;
             switch (goTo)
             {
-                case "BattleUI":
-                    Invoke("BattleUI", 1F);
+                case "BattleUISet":
+                    Invoke(goTo, 1F);
                     break;
                 case "BattleUIOff":
-                    Invoke("BattleUIOff", 1F);
+                    Invoke(goTo, 1F);
                     break;
                 case "LoadingKeyUIOn":
-                    Invoke("LoadingKeyUIOn", 1f);
+                    Invoke(goTo, 1f);
                     break;
                 case "EnterBusMapMaskOut":
-                    Invoke("EnterBusMapMaskOut", 1f);
+                    Invoke(goTo, 1f);
                     break;
-                case "LoadingKeyUIToIntro":
+                case "EnterIntroLoadingMaskOut":
                     busTopUI.SetActive(false);
-                    Invoke("LoadingKeyUIToIntro", 1f);
+                    Invoke(goTo, 1f);
                     break;
                 case "LoadingMapUIOn":                   
-                    Invoke("LoadingMapUIOn", 1f);
+                    Invoke(goTo, 1f);
                     break;
-                case "EnterIntroMapMaskOut":
-                    Invoke("EnterIntroMapMaskOut", 1f);
+                case "EnterIntroMaskOut":
+                    Invoke(goTo, 1f);
                     break;
-                case "EnterTestStageMaskIn":
-                    Invoke("EnterTestStageMaskOut", 1f);
+                case "EnterTestStageMaskOut":
+                    Invoke(goTo, 1f);
                     break;
             }        
         }));
     }
 
-    public void MaskOutUI(GameObject inMask, GameObject outMask, RectTransform outMaskRect, Vector2 targetRect ,float Duration, string goTo)
+    // 마스크 확대 UI
+    public void MaskOutUI(GameObject inMask, GameObject outMask, string goTo)
     {
         SoundManager.Instance.ScreenOutUI();
         inMask.SetActive(false);
         outMask.SetActive(true);
-        outMaskRect = outMask.GetComponent<RectTransform>();
+
+        RectTransform outMaskRect = outMask.GetComponent<RectTransform>();
+        outMaskRect.sizeDelta = new Vector2(0, 0);
+
+        Vector2 targetRect = Vector2.zero;
+        float MaskOutTime = 0;
+        
+        // 마스크 타겟 RECT 설정
+        if (inMask == broccoliMask)
+        {
+            targetRect = new Vector2(4300, 4300);
+            MaskOutTime = 0.3f;
+        }
+        else if (inMask == pineappleMask)
+        {
+            targetRect = new Vector2(7300, 7300);
+            MaskOutTime = 0.5f;
+        }
+
+        // 씬 이동이 없을시 LoadingFoodOff 조금 느리게 꺼지게
         if (goTo == "") Invoke("LoadingFoodOff", 0.5f);
         else LoadingFoodOff();
-        StartCoroutine(MaskInOut(outMaskRect, targetRect, Duration, () =>
+
+        StartCoroutine(MaskInOut(outMaskRect, targetRect, MaskOutTime, () =>
         {
-            //maskOutEnd = true;
             outMask.SetActive(false);
 
             switch (goTo)
             {
                 case "GoToBusMap":
                     SceneChangeManager.Instance.ChangeToBusMap();
-                    loadingKeyBar.fillAmount = 0;
                     break;
                 case "GoToIntroMap":
                     SceneChangeManager.Instance.ChangeToIntroMap();
-                    loadingKeyBar.fillAmount = 0;
-                    break;
-                case "busTopUI":
-                    busTopUI.SetActive(true);
                     break;
                 case "GoToTestStage":
                     SceneChangeManager.Instance.ChangeToTestStage();
-                    loadingMapBar.fillAmount = 0;
+                    break;
+                case "busTopUIOn":
+                    busTopUI.SetActive(true);
                     break;
                 default:
                     break;
@@ -374,32 +391,26 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
-    #region EnterBattleUI
-    public void EnterBattleUI()
+
+
+    #region BattileUIOn
+    public void BattleUIOn()
     {
-        MaskInUI(broccoliMask, broccoliMaskRect, broccoliDuration, "BattleUI");
+        MaskInUI(broccoliMask, "BattleUISet");
     }
 
-    public void BattleUI()
+    private void BattleUISet()
     {
         battleUI.SetActive(true);
-        MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "");
+        buttonUI.SetActive(false);
         SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, "Battle");
         SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
+        MaskOutUI(broccoliMask, pineappleMask, "");
     }
-
-    public void BattleUIOff()
-    {
-        battleUI.SetActive(false);
-        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, "Intro");
-        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
-        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "");
-       
-    }
-
     #endregion
 
-    #region ExitBattleUI
+
+    #region ExitLobbyUI & BattleUIOff
 
     public void ExitLobbyUIOn()
     {
@@ -413,76 +424,115 @@ public class UIManager : Singleton<UIManager>
         exitLobbyUI.SetActive(false);
     }
 
-    public void ExitLobby()
+    public void AgreeExitLobby()
     {
-        exitLobbyBlackUI.SetActive(false);
-        exitLobbyUI.SetActive(false);
-        MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "BattleUIOff");
+        CancleExitLobby();
+        MaskInUI(pineappleMask, "BattleUIOff");
+    }
+
+    public void BattleUIOff()
+    {
+        buttonUI.SetActive(true);
+        battleUI.SetActive(false);
+        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, "Intro");
+        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
+        MaskOutUI(pineappleMask, broccoliMask, "");      
     }
 
     #endregion
 
 
+    #region LoadingKeyUI
     public void EnterLoadingKeyUI()
     {
-        MaskInUI(broccoliMask, broccoliMaskRect, broccoliDuration, "LoadingKeyUIOn");
+        MaskInUI(broccoliMask, "LoadingKeyUIOn");
     }
 
     public void LoadingKeyUIOn()
     {
         loadingKeyUI.SetActive(true);
-        MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "GoToBusMap");
+        MaskOutUI(broccoliMask, pineappleMask, "GoToBusMap");
     }
+    #endregion
 
-
+    #region LoadingMapUI
     public void EnterLoadingMapUI()
     {
-        MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "LoadingMapUIOn");
+        MaskInUI(pineappleMask, "LoadingMapUIOn");
     }
 
     public void LoadingMapUIOn()
     {
         loadingMapUI.SetActive(true);
         battleUI.SetActive(false);
-        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "GoToTestStage");
+        MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
     }
+    #endregion
 
 
+    #region EnterBusMap
     public void EnterBusMapMaskIn()
     {
-        MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "EnterBusMapMaskOut");
+        MaskInUI(pineappleMask, "EnterBusMapMaskOut");
     }
 
-    public void EnterIntroMapMaskIn()
+    public void EnterBusMapMaskOut()
     {
-        MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "EnterIntroMapMaskOut");
+        loadingKeyBar.fillAmount = 0f;
+        loadingKeyUI.SetActive(false);
+        MaskOutUI(pineappleMask, broccoliMask, "busTopUIOn");
     }
 
+    #endregion
+
+    #region EnterIntroMap
+    
+    // 인트로 들어가는 MaskIn
+    public void EnterIntroMaskIn()
+    {
+        MaskInUI(pineappleMask, "EnterIntroMaskOut");
+    }
+
+    // 인트로 들어가는 MaskOut
+    public void EnterIntroMaskOut()
+    {
+        loadingKeyBar.fillAmount = 0f;
+        loadingKeyUI.SetActive(false);
+        MaskOutUI(pineappleMask, broccoliMask, "");
+    }
+
+    // 인트로 들어가기 전 LoadingUI MaskIn
+    public void EnterIntroLoadingMaskIn()
+    {
+        MaskInUI(broccoliMask, "EnterIntroLoadingMaskOut");
+    }
+
+    // 인트로 들어가기 전 LoadingUI MaskOut
+    public void EnterIntroLoadingMaskOut()
+    {
+        loadingKeyUI.SetActive(true);
+        MaskOutUI(broccoliMask, pineappleMask, "GoToIntroMap");
+    }
+    #endregion
+
+
+    #region EnterTestStage
     public void EnterTestStageMaskIn()
     {
-        MaskInUI(broccoliMask, broccoliMaskRect, broccoliDuration, "EnterTestStageMaskIn");
+        MaskInUI(broccoliMask, "EnterTestStageMaskOut");
     }
 
     public void EnterTestStageMaskOut()
     {
+        loadingMapBar.fillAmount = 0f;
         loadingMapUI.SetActive(false);
-        MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "");
+        MaskOutUI(broccoliMask, pineappleMask, "");
     }
+    #endregion
 
 
-    public void EnterBusMapMaskOut()
-    {
-        loadingKeyUI.SetActive(false);
-        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "busTopUI");
-    }
 
-    public void EnterIntroMapMaskOut()
-    {
-        loadingKeyUI.SetActive(false);
-        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "");
-    }
-
-  
+    #region EscUI
     public void BusMapEscUI()
     {
         if(SceneManager.GetActiveScene().name == "Map")
@@ -495,6 +545,13 @@ public class UIManager : Singleton<UIManager>
             }
         }
     }
+    public void BusMapEscUICancle()
+    {
+        busMapEscBlackUI.SetActive(false);
+        busMapEscUI.SetActive(false);
+    }
+
+
 
     public void StageEscUI()
     {
@@ -515,31 +572,25 @@ public class UIManager : Singleton<UIManager>
     }
 
 
-    public void EscUICancle()
-    {
-        busMapEscBlackUI.SetActive(false);
-        busMapEscUI.SetActive(false);
-    }
-
-    public void EscUIStop()
+    public void EscUIStopOn()
     {
         optionBlackUI.SetActive(true);
         stopUI.SetActive(true);
     }
 
-    public void EnterIntro()
+    public void EscUIStopOff()
     {
-        broccoliMaskRect.sizeDelta = new Vector2(4300, 4300);
-        MaskInUI(broccoliMask, broccoliMaskRect, broccoliDuration, "LoadingKeyUIToIntro");
+        optionBlackUI.SetActive(false);
+        stopUI.SetActive(false);
     }
+    #endregion
 
-    public void LoadingKeyUIToIntro()
-    {
-        loadingKeyUI.SetActive(true);
-        pineappleMaskRect.sizeDelta = Vector2.zero;
-        MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "GoToIntroMap");
-    }
 
+
+
+
+
+    #region LoadingFood
     public void LoadingFood()
     {
         switch(Random.Range(0, 2))
@@ -564,11 +615,14 @@ public class UIManager : Singleton<UIManager>
 
     public void LoadingFoodOff()
     {
-        loadingFoodArr[0].SetActive(false);
-        loadingFoodArr[1].SetActive(false);
-        loadingFoodArr[2].SetActive(false);
+        for (int i = 0; i < loadingFoodArr.Length; i++)
+            loadingFoodArr[i].SetActive(false);
     }
 
+    #endregion
+
+
+    #region RecipeUI
     public void RecipeUIOn(int arr)
     {
         recipeBlackUI.SetActive(true);
@@ -583,24 +637,21 @@ public class UIManager : Singleton<UIManager>
         recipeArr[arr].SetActive(false);
         
     }
+    #endregion 
 
     public void ExitGame()
     {
         if (SceneManager.GetActiveScene().name == "Map")
         {
-            optionBlackUI.SetActive(false);
-            stopUI.SetActive(false);
-            busMapEscBlackUI.SetActive(false);
-            busMapEscUI.SetActive(false);
-            EnterIntro();
+            EscUIStopOff();
+            BusMapEscUICancle();
+            EnterIntroLoadingMaskIn();
         }
         else if (SceneManager.GetActiveScene().name == "TestStage")
         {
-            optionBlackUI.SetActive(false);
-            stopUI.SetActive(false);
-            stageMapEscBlackUI.SetActive(false);
-            stageMapEscUI.SetActive(false);
-            EnterIntro();
+            EscUIStopOff();
+            StageEscUICancle();
+            EnterIntroLoadingMaskIn();
         }
 
         else
@@ -612,4 +663,6 @@ public class UIManager : Singleton<UIManager>
             #endif
         }
     }
+
+
 }
