@@ -339,7 +339,7 @@ public class UIManager : Singleton<UIManager>
                     break;
                 case "GoToTestStage":
                     SceneChangeManager.Instance.ChangeToTestStage();
-                    loadingKeyBar.fillAmount = 0;
+                    loadingMapBar.fillAmount = 0;
                     break;
                 default:
                     break;
@@ -572,6 +572,7 @@ public class UIManager : Singleton<UIManager>
         recipeBlackUI.SetActive(false);
         recipeUI.SetActive(false);
         recipeArr[arr].SetActive(false);
+        
     }
 
     public void ExitGame()
