@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class MeshCombiner : MonoBehaviour
 {
@@ -10,20 +11,11 @@ public class MeshCombiner : MonoBehaviour
     public bool destroyObjectsAfterMerge = false; // 병합 후 병합된 오브젝트들을 삭제할지 결정하는 변수
 
     public bool isCombined = false; // 현재 병합 상태를 나타내는 변수
-    public bool hasMultipleMaterials = false; // 여러 개의 머테리얼을 가진 오브젝트가 있는지 확인하는 변수
 
     // 병합 또는 클리어 동작을 수행하는 메서드
     public void MergeOrClearMeshes()
     {
         InitializeObjects(); // 초기화 메서드 호출
-
-        // 병합할 수 없는 경우 경고 메시지 출력 및 상태 업데이트
-        if (hasMultipleMaterials)
-        {
-            Debug.LogWarning("병합할 수 없습니다. 여러 개의 머테리얼을 가진 오브젝트가 포함되어 있습니다.");
-            UpdateStateAndButtonLabel(false);
-            return;
-        }
 
         // 병합할 오브젝트가 1개 이하인 경우 경고 메시지 출력 및 상태 업데이트
         if (objectsToMerge.Count <= 1)
@@ -43,7 +35,6 @@ public class MeshCombiner : MonoBehaviour
     public void InitializeObjects()
     {
         isCombined = false;
-        hasMultipleMaterials = ContainsMultipleMaterials(objectsToMerge);
     }
 
     // 병합할 오브젝트 리스트를 비우는 메서드
@@ -51,25 +42,7 @@ public class MeshCombiner : MonoBehaviour
     {
         objectsToMerge.Clear();
         isCombined = false;
-        hasMultipleMaterials = false;
         UpdateStateAndButtonLabel(false);
-    }
-
-    // 여러 개의 머테리얼을 가진 오브젝트가 포함되어 있는지 확인하는 메서드
-    private bool ContainsMultipleMaterials(List<GameObject> objects)
-    {
-        foreach (var obj in objects)
-        {
-            var meshRenderers = obj.GetComponentsInChildren<MeshRenderer>();
-            foreach (var meshRenderer in meshRenderers)
-            {
-                if (meshRenderer.sharedMaterials.Length > 1)
-                {
-                    return true; // 하나라도 여러 개의 머테리얼을 가진 경우 true 반환
-                }
-            }
-        }
-        return false; // 모든 오브젝트가 단일 머테리얼을 가진 경우 false 반환
     }
 
     // 병합 상태와 버튼 레이블을 업데이트하는 메서드
@@ -88,13 +61,11 @@ public class MeshCombiner : MonoBehaviour
     private void MergeMeshes()
     {
         var meshFilters = new List<MeshFilter>();
-        var meshRenderers = new List<MeshRenderer>();
 
-        // 각 오브젝트에서 MeshFilter와 MeshRenderer 컴포넌트를 가져옴
+        // 각 오브젝트에서 MeshFilter를 가져옴
         foreach (var obj in objectsToMerge)
         {
             meshFilters.AddRange(obj.GetComponentsInChildren<MeshFilter>());
-            meshRenderers.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
         }
 
         // MeshFilter가 없으면 경고 메시지 출력 및 종료
@@ -104,11 +75,11 @@ public class MeshCombiner : MonoBehaviour
             return;
         }
 
-        // CombineInstance 리스트 생성
-        var combineList = CreateCombineInstanceList(meshFilters);
+        // Material을 기준으로 메쉬를 그룹화
+        var materialMeshMap = CreateMaterialMeshMap(meshFilters);
 
         // 병합된 오브젝트 생성 및 설정
-        var combinedObject = CreateCombinedObject(combineList, meshRenderers);
+        var combinedObject = CreateCombinedObject(materialMeshMap);
 
         // 필요한 경우 메쉬 콜라이더 추가
         if (addMeshCollider)
@@ -129,33 +100,91 @@ public class MeshCombiner : MonoBehaviour
         }
     }
 
-    // MeshFilter 리스트에서 CombineInstance 리스트를 생성하는 메서드
-    private List<CombineInstance> CreateCombineInstanceList(List<MeshFilter> meshFilters)
+    // MeshFilter 리스트에서 Material을 기준으로 메쉬를 그룹화하는 메서드
+    private Dictionary<Material, List<CombineInstance>> CreateMaterialMeshMap(List<MeshFilter> meshFilters)
     {
-        return meshFilters
-            .Where(mf => mf.sharedMesh != null)
-            .Select(mf => new CombineInstance
+        var materialMeshMap = new Dictionary<Material, List<CombineInstance>>();
+
+        foreach (var meshFilter in meshFilters)
+        {
+            var meshRenderer = meshFilter.GetComponent<MeshRenderer>();
+            if (meshRenderer == null || meshFilter.sharedMesh == null)
+                continue;
+
+            var sharedMaterials = meshRenderer.sharedMaterials;
+            for (int subMeshIndex = 0; subMeshIndex < meshFilter.sharedMesh.subMeshCount; subMeshIndex++)
             {
-                mesh = mf.sharedMesh,
-                transform = mf.transform.localToWorldMatrix
-            }).ToList();
+                if (subMeshIndex >= sharedMaterials.Length)
+                    continue;
+
+                var material = sharedMaterials[subMeshIndex];
+                if (material == null)
+                    continue;
+
+                if (!materialMeshMap.ContainsKey(material))
+                {
+                    materialMeshMap[material] = new List<CombineInstance>();
+                }
+
+                materialMeshMap[material].Add(new CombineInstance
+                {
+                    mesh = GetSubMesh(meshFilter.sharedMesh, subMeshIndex),
+                    transform = meshFilter.transform.localToWorldMatrix
+                });
+            }
+        }
+
+        return materialMeshMap;
+    }
+
+    // 서브 메쉬를 추출하는 메서드
+    private Mesh GetSubMesh(Mesh mesh, int index)
+    {
+        var subMesh = new Mesh
+        {
+            vertices = mesh.vertices,
+            normals = mesh.normals,
+            tangents = mesh.tangents,
+            uv = mesh.uv,
+            uv2 = mesh.uv2,
+            uv3 = mesh.uv3,
+            uv4 = mesh.uv4,
+            colors = mesh.colors
+        };
+        subMesh.SetTriangles(mesh.GetTriangles(index), 0);
+        return subMesh;
     }
 
     // 병합된 오브젝트를 생성하고 설정하는 메서드
-    private GameObject CreateCombinedObject(List<CombineInstance> combineList, List<MeshRenderer> meshRenderers)
+    private GameObject CreateCombinedObject(Dictionary<Material, List<CombineInstance>> materialMeshMap)
     {
         var combinedObject = new GameObject("Combined Mesh")
         {
             isStatic = true // 생성된 오브젝트를 정적 오브젝트로 설정
         };
-        var meshFilter = combinedObject.AddComponent<MeshFilter>();
-        var meshRenderer = combinedObject.AddComponent<MeshRenderer>();
 
-        var combinedMesh = new Mesh();
-        combinedMesh.CombineMeshes(combineList.ToArray(), true, true, false);
+        foreach (var kvp in materialMeshMap)
+        {
+            var material = kvp.Key;
+            var combineInstances = kvp.Value;
 
-        meshFilter.sharedMesh = combinedMesh;
-        meshRenderer.sharedMaterials = meshRenderers.SelectMany(mr => mr.sharedMaterials).Distinct().ToArray();
+            var combinedMesh = new Mesh();
+
+            // 버텍스 개수에 따라 인덱스 포맷 설정
+            int totalVertexCount = combineInstances.Sum(c => c.mesh.vertexCount);
+            combinedMesh.indexFormat = totalVertexCount > 65535 ? IndexFormat.UInt32 : IndexFormat.UInt16;
+
+            combinedMesh.CombineMeshes(combineInstances.ToArray(), true, true);
+
+            var child = new GameObject(material.name);
+            child.transform.SetParent(combinedObject.transform, false);
+
+            var meshFilter = child.AddComponent<MeshFilter>();
+            meshFilter.sharedMesh = combinedMesh;
+
+            var meshRenderer = child.AddComponent<MeshRenderer>();
+            meshRenderer.sharedMaterial = material;
+        }
 
         return combinedObject;
     }
@@ -163,8 +192,13 @@ public class MeshCombiner : MonoBehaviour
     // 병합된 오브젝트에 메쉬 콜라이더를 추가하는 메서드
     private void AddMeshCollider(GameObject combinedObject)
     {
-        var meshCollider = combinedObject.AddComponent<MeshCollider>();
-        meshCollider.sharedMesh = combinedObject.GetComponent<MeshFilter>().sharedMesh;
+        var meshColliders = combinedObject.GetComponentsInChildren<MeshFilter>()
+            .Select(mf => mf.gameObject.AddComponent<MeshCollider>());
+
+        foreach (var meshCollider in meshColliders)
+        {
+            meshCollider.sharedMesh = meshCollider.GetComponent<MeshFilter>().sharedMesh;
+        }
     }
 
     // 오브젝트 리스트의 오브젝트들을 비활성화하는 메서드

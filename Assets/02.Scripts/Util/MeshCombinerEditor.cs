@@ -58,13 +58,7 @@ public class MeshCombinerEditor : Editor
             return false;
         }
 
-        if (meshCombiner.hasMultipleMaterials)
-        {
-            Debug.LogWarning("병합할 수 없습니다. 여러 개의 머테리얼을 가진 오브젝트가 포함되어 있습니다.");
-            return false;
-        }
-
-        if(meshCombiner.objectsToMerge.Count == 1)
+        if (meshCombiner.objectsToMerge.Count == 1)
         {
             Debug.LogWarning("1개의 오브젝트는 병합할 수 없습니다.");
             return false;
