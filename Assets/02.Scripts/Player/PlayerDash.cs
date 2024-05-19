@@ -28,6 +28,7 @@ public class PlayerDash : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+       
     }
 
     private void Update()
@@ -57,7 +58,7 @@ public class PlayerDash : MonoBehaviour
     private IEnumerator ExecuteDash()
     {
         float elapsedTime = 0f;
-
+        PlayerPuff.Instance.BoostPuff(transform);
         while (elapsedTime < dashDuration)
         {
             float dashProgress = elapsedTime / dashDuration;
@@ -68,7 +69,7 @@ public class PlayerDash : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
+   
         isDashing = false;
         if (disableGravity) rb.useGravity = true;
     }

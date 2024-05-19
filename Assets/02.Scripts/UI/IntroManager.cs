@@ -1,4 +1,3 @@
-using Cinemachine;
 using System.Collections;
 using UnityEngine;
 
@@ -9,8 +8,7 @@ public class IntroManager : MonoBehaviour
 
     void Start()
     {
-        if(UIManager.Instance.first == true)
-            InitUI();
+        InitUI();
     }
 
     void FixedUpdate()
@@ -23,46 +21,47 @@ public class IntroManager : MonoBehaviour
 
     public void InitUI()
     {
-        UIManager.Instance.shutter.SetActive(false);
-        UIManager.Instance.spaceToStart.SetActive(true);
+        if (UIManager.Instance.first == true)
+        {
+            // First Intro UI
+            UIManager.Instance.loadingUI.SetActive(true);
+            UIManager.Instance.spaceToStart.SetActive(true);
 
-        UIManager.Instance.ingamePlayerUI.SetActive(false);
+            // VAN 
+            UIManager.Instance.ingamePlayerUI.SetActive(false);
+            UIManager.Instance.buttonUI.SetActive(false);
+            UIManager.Instance.shutter.SetActive(true);
 
-        //UIManager.Instance.buttonUI.SetActive(false);
-        UIManager.Instance.settingUI.SetActive(false);
+            // UnderBar UI
+            //UIManager.Instance.underBarStop.SetActive(false);
+            //UIManager.Instance.underBarCancle.SetActive(false);
 
-        UIManager.Instance.underBarStop.SetActive(false);
-        UIManager.Instance.underBarCancle.SetActive(false); 
-
-//        UIManager.Instance.loadingUI.SetActive(true);
-
-        StartCoroutine("IntroSetting");
+            StartCoroutine("IntroSetting");
+        }
     }
 
 
     public void StartSpace()
     {
         UIManager.Instance.first = false;
+        isSpace = true;
 
         SoundManager.Instance.Load();
-       
-        isSpace = true;
         SoundManager.Instance.StartPlay();
+
+        // VAN 
+        UIManager.Instance.ingamePlayerUI.SetActive(true);
+        UIManager.Instance.buttonUI.SetActive(true);
         UIManager.Instance.shutterAnim.SetTrigger("ShutterOn");
-
         UIManager.Instance.shutterCamera.Priority = 9;
-
         StartCoroutine("ShutterOut");
-        
+
+        // First Intro UI
+        UIManager.Instance.loadingUI.SetActive(false);
         UIManager.Instance.spaceToStart.SetActive(false);
 
-        UIManager.Instance.ingamePlayerUI.SetActive(true);
-
-        UIManager.Instance.buttonUI.SetActive(true);
+        // UnderBar UI
         // UIManager.Instance.UnderBarStop.SetActive(true);
-
-        UIManager.Instance.loadingUI.SetActive(false);
-
     }
 
     IEnumerator ShutterOut()
@@ -76,8 +75,6 @@ public class IntroManager : MonoBehaviour
     {
         yield return new WaitForSeconds(18f);
 
-        UIManager.Instance.shutter.SetActive(true);  
         isLoading = false;
     }
-
 }

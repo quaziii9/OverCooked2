@@ -1,7 +1,5 @@
 using Cinemachine;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 //using UnityEngine.UIElements;
@@ -81,7 +79,6 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         {
             case "Map":
                 VanSingleton.Instance.van.SetActive(false);
-                //UIManager.Instance.first = false;
                 UIManager.Instance.EnterBusMapMaskIn();                                  
                 break;
             case "Intro":

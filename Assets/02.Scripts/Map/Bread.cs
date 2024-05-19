@@ -31,6 +31,7 @@ public class Bread : MonoBehaviour
             transform.rotation = targetRotation;
             ani.SetTrigger("Die");
             die= true;
+            SoundManager.Instance.PlayEffect("boing");
             StartCoroutine(ReSpawn());
         }
     }

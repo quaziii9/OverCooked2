@@ -5,12 +5,12 @@ public class Puff : MonoBehaviour
 {
     private IObjectPool<Puff> managedPool;
     public ParticleSystem Pts;
-
+    public float lifeTime=1;
     private void OnEnable()
     {
         Pts = GetComponent<ParticleSystem>();
         Pts.Play();
-        Enable();
+        Enable(lifeTime);
     }
 
     public void SetManagedPool(IObjectPool<Puff> pool)
@@ -18,9 +18,9 @@ public class Puff : MonoBehaviour
         managedPool = pool;
     }
 
-    public void Enable()
+    public void Enable(float lifeTime)
     {
-        Invoke("DestroyPuff", 1f);
+        Invoke("DestroyPuff", lifeTime);
     }
 
     public void DestroyPuff()

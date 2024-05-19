@@ -117,12 +117,14 @@ public class Bus : MonoBehaviour
     {
         Puff puff = Instantiate(puffWalkPrefab).GetComponent<Puff>();
         puff.SetManagedPool(walkPool);
+        puff.transform.localScale = Vector3.one;
         return puff;
     }
     private Puff CreateBust() // 버스트 퍼프 생성
     {
         Puff puff = Instantiate(puffBustPrefab).GetComponent<Puff>();
         puff.SetManagedPool(bustPool);
+        puff.transform.localScale = Vector3.one;
         return puff;
     }
 

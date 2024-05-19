@@ -31,5 +31,12 @@ namespace EnumTypes
         PlayerDamaged,
     }
 
+    public enum FirstIntroEvents
+    {
+        FirstSetIntroUI,
+        FrirstIntrSpace,
+
+    }
+
     public class EnumTypes : MonoBehaviour { }
 }
