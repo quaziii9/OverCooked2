@@ -20,20 +20,15 @@ namespace EventLibrary
         {
             lock (lockObj)
             {
-                // eventDictionary에서 해당 이벤트를 찾고, 리스너를 추가
-                if (eventDictionary.TryGetValue(eventName, out var thisEvent))
+                if (!eventDictionary.TryGetValue(eventName, out var thisEvent))
                 {
-                    if (thisEvent is UnityEvent unityEvent)
-                    {
-                        unityEvent.AddListener(listener);
-                    }
+                    thisEvent = new UnityEvent(); // 새로운 UnityEvent 생성
+                    eventDictionary.Add(eventName, thisEvent); // 딕셔너리에 추가
                 }
-                else
+
+                if (thisEvent is UnityEvent unityEvent)
                 {
-                    // 이벤트가 존재하지 않으면 새로 생성하고 추가
-                    var unityEvent = new UnityEvent();
-                    unityEvent.AddListener(listener);
-                    eventDictionary.Add(eventName, unityEvent);
+                    unityEvent.AddListener(listener); // 리스너 추가
                 }
             }
         }
@@ -43,20 +38,15 @@ namespace EventLibrary
         {
             lock (lockObj)
             {
-                // eventDictionary에서 해당 이벤트를 찾고, 리스너를 추가
-                if (eventDictionary.TryGetValue(eventName, out var thisEvent))
+                if (!eventDictionary.TryGetValue(eventName, out var thisEvent))
                 {
-                    if (thisEvent is GenericEvent<T> genericEvent)
-                    {
-                        genericEvent.AddListener(listener);
-                    }
+                    thisEvent = new GenericEvent<T>(); // 새로운 GenericEvent 생성
+                    eventDictionary.Add(eventName, thisEvent); // 딕셔너리에 추가
                 }
-                else
+
+                if (thisEvent is GenericEvent<T> genericEvent)
                 {
-                    // 이벤트가 존재하지 않으면 새로 생성하고 추가
-                    var genericEvent = new GenericEvent<T>();
-                    genericEvent.AddListener(listener);
-                    eventDictionary.Add(eventName, genericEvent);
+                    genericEvent.AddListener(listener); // 리스너 추가
                 }
             }
         }
@@ -66,14 +56,12 @@ namespace EventLibrary
         {
             lock (lockObj)
             {
-                // eventDictionary에서 해당 이벤트를 찾아 리스너를 제거
                 if (eventDictionary.TryGetValue(eventName, out var thisEvent) && thisEvent is UnityEvent unityEvent)
                 {
-                    unityEvent.RemoveListener(listener);
-                    // 리스너가 모두 제거된 경우 딕셔너리에서 이벤트 삭제
+                    unityEvent.RemoveListener(listener); // 리스너 제거
                     if (unityEvent.GetPersistentEventCount() == 0)
                     {
-                        eventDictionary.Remove(eventName);
+                        eventDictionary.Remove(eventName); // 리스너가 모두 제거된 경우 이벤트 삭제
                     }
                 }
             }
@@ -84,14 +72,12 @@ namespace EventLibrary
         {
             lock (lockObj)
             {
-                // eventDictionary에서 해당 이벤트를 찾아 리스너를 제거
                 if (eventDictionary.TryGetValue(eventName, out var thisEvent) && thisEvent is GenericEvent<T> genericEvent)
                 {
-                    genericEvent.RemoveListener(listener);
-                    // 리스너가 모두 제거된 경우 딕셔너리에서 이벤트 삭제
+                    genericEvent.RemoveListener(listener); // 리스너 제거
                     if (genericEvent.GetPersistentEventCount() == 0)
                     {
-                        eventDictionary.Remove(eventName);
+                        eventDictionary.Remove(eventName); // 리스너가 모두 제거된 경우 이벤트 삭제
                     }
                 }
             }
@@ -102,10 +88,9 @@ namespace EventLibrary
         {
             lock (lockObj)
             {
-                // eventDictionary에서 해당 이벤트를 찾아 트리거
                 if (eventDictionary.TryGetValue(eventName, out var thisEvent) && thisEvent is UnityEvent unityEvent)
                 {
-                    unityEvent.Invoke();
+                    unityEvent.Invoke(); // 이벤트 호출
                 }
             }
         }
@@ -115,10 +100,9 @@ namespace EventLibrary
         {
             lock (lockObj)
             {
-                // eventDictionary에서 해당 이벤트를 찾아 트리거
                 if (eventDictionary.TryGetValue(eventName, out var thisEvent) && thisEvent is GenericEvent<T> genericEvent)
                 {
-                    genericEvent.Invoke(parameter);
+                    genericEvent.Invoke(parameter); // 이벤트 호출
                 }
             }
         }
