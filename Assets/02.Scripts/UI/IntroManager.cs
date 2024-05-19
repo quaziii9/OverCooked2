@@ -32,7 +32,7 @@ public class IntroManager : MonoBehaviour
         UIManager.Instance.settingUI.SetActive(false);
 
         UIManager.Instance.underBarStop.SetActive(false);
-        UIManager.Instance.underBarCancle.SetActive(false);
+        UIManager.Instance.underBarCancle.SetActive(false); 
 
 //        UIManager.Instance.loadingUI.SetActive(true);
 
