@@ -470,11 +470,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 192702265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 215435a10659e2e4fa14f6b22bc23390, type: 3}
+  m_Script: {fileID: 11500000, guid: cd428fc37579c6e4bac9ea4ac39c794a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fillImage: {fileID: 192702267}
-  fillSpeed: 1
+  fillSpeed: 0.1
 --- !u!1 &215484469
 GameObject:
   m_ObjectHideFlags: 0

@@ -67,6 +67,11 @@ public class UIManager : Singleton<UIManager>
     public GameObject stageMapEscBlackUI;
 
 
+    [Header("RecipeUI")]
+    public GameObject recipeUI;
+    public GameObject recipeBlackUI;
+    public GameObject [] recipeArr;
+
     [Header("Resolution")]  
     public TextMeshProUGUI resolutionText;
     public GameObject fullScreenButton;
@@ -553,6 +558,20 @@ public class UIManager : Singleton<UIManager>
         loadingFoodArr[0].SetActive(false);
         loadingFoodArr[1].SetActive(false);
         loadingFoodArr[2].SetActive(false);
+    }
+
+    public void RecipeUIOn(int arr)
+    {
+        recipeBlackUI.SetActive(true);
+        recipeUI.SetActive(true);
+        recipeArr[arr].SetActive(true);   
+    }
+
+    public void RecipeUIOff(int arr)
+    {
+        recipeBlackUI.SetActive(false);
+        recipeUI.SetActive(false);
+        recipeArr[arr].SetActive(false);
     }
 
     public void ExitGame()

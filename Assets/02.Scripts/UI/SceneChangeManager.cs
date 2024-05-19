@@ -97,6 +97,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 }
                 break;
             case "TestStage":
+                UIManager.Instance.RecipeUIOn(0);
                 VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.EnterTestStageMaskIn();
                 break;
