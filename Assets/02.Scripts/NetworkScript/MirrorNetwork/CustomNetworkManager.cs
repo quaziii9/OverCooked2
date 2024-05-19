@@ -116,6 +116,9 @@ public class CustomNetworkManager : NetworkRoomManager
         index = 0;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public int index = 0;
     public override void OnRoomServerConnect(NetworkConnectionToClient conn)
     {
