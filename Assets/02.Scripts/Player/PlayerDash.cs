@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Pool;
 
 public class PlayerDash : MonoBehaviour
 {
@@ -25,8 +24,6 @@ public class PlayerDash : MonoBehaviour
 
     [Header("Dash Curve")]
     public AnimationCurve dashCurve; // AnimationCurve를 대시의 세기 변화에 사용
-
-
 
     private void Start()
     {
@@ -57,6 +54,7 @@ public class PlayerDash : MonoBehaviour
 
         StartCoroutine(ExecuteDash());
     }
+
     private IEnumerator ExecuteDash()
     {
         float elapsedTime = 0f;
@@ -75,6 +73,4 @@ public class PlayerDash : MonoBehaviour
         isDashing = false;
         if (disableGravity) rb.useGravity = true;
     }
-
-
 }
