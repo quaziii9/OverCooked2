@@ -48,6 +48,11 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip no;
     public AudioClip cut;
 
+    [Header("Bus Map Sound Effect")]
+    public AudioClip boing;
+    public AudioClip bus;
+    public AudioClip busBooster;
+
     [Header("Mixer Groups")]
     public AudioMixerGroup musicGroup;  // The music mixer group
     public AudioMixerGroup effectGroup; // The effect mixer group
@@ -311,6 +316,12 @@ public class SoundManager : Singleton<SoundManager>
             case "cut":
                 effectAudioSource.clip = cut;
                 break;
+            case "boing":
+                effectAudioSource.clip = boing;
+                effectAudioSource.volume = volumeEffect;
+                effectAudioSource.PlayOneShot(boing);
+                break;
+
         }
         effectAudioSource.volume = volumeEffect;
         effectAudioSource.PlayOneShot(effectAudioSource.clip);
