@@ -3293,6 +3293,7 @@ MonoBehaviour:
   introBGM: {fileID: 8300000, guid: 01b1aaca2935834478c244b44a7ce6ee, type: 3}
   battleBGM: {fileID: 8300000, guid: 744a78525d45b0142bd2c0abb9a59aec, type: 3}
   busMapBGM: {fileID: 0}
+  stageBGM: {fileID: 0}
   UISelect: {fileID: 8300000, guid: 7a2bb122907680a458abe20e7304ed4e, type: 3}
   UIPop: {fileID: 8300000, guid: 6eef09767a920754b86996449b28c999, type: 3}
   UITick: {fileID: 8300000, guid: d14262497474d834d98b6d9b1dacca12, type: 3}
@@ -6286,7 +6287,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1056373857}
   - component: {fileID: 1056373859}
-  - component: {fileID: 1056373858}
   - component: {fileID: 1056373860}
   m_Layer: 0
   m_Name: AutoChecking
@@ -6310,18 +6310,6 @@ Transform:
   m_Father: {fileID: 1622733280}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1056373858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056373856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8f639ccb384a474086227e2957fe143, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &1056373859
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8981,8 +8969,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puffWalkPrefab: {fileID: 8630471815474965687, guid: 9777b88e9b814d1409ce1857e1950193,
     type: 3}
-  puffBustPrefab: {fileID: 6532701776231347478, guid: 796713e586c611940890b1b7acc65d64,
-    type: 3}
+  puffBurstPrefab: {fileID: 0}
 --- !u!4 &1588508135
 Transform:
   m_ObjectHideFlags: 0

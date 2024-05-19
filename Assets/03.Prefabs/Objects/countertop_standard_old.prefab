@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3794770049365818337}
   - component: {fileID: 387764304322764186}
+  - component: {fileID: 7753633219380499204}
   m_Layer: 0
   m_Name: AutoCheck
   m_TagString: Untagged
@@ -46,6 +47,18 @@ CapsuleCollider:
   m_Height: 0.003
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7753633219380499204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2707006952237237771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1da1d426fe581478c48a9292e67dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3546520476689397018
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,6 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1238039538171368646}
   - component: {fileID: 1906328725426337729}
+  - component: {fileID: 8286620258140799917}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -188,5 +202,21 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0118, y: 0.005, z: 0.015}
-  m_Center: {x: 0.072, y: 0.0025, z: 0.02235}
+  m_Size: {x: 0.0118, y: 0.005, z: 0.018}
+  m_Center: {x: 0.072, y: 0.0025, z: 0.024}
+--- !u!114 &8286620258140799917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6559162303106930537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19435dd8b8dc43e438677d6b368032b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeObject: 0
+  onSomething: 0
+  hightlightMaterials: []
+  objectType: 0

@@ -5024,7 +5024,6 @@ GameObject:
   - component: {fileID: 975771590}
   - component: {fileID: 975771589}
   - component: {fileID: 975771588}
-  - component: {fileID: 975771587}
   m_Layer: 0
   m_Name: Cube
   m_TagString: CounterTop
@@ -5047,18 +5046,6 @@ Transform:
   m_Father: {fileID: 958067610}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &975771587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 975771585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &975771588
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6313,7 +6300,6 @@ GameObject:
   - component: {fileID: 1262915346}
   - component: {fileID: 1262915345}
   - component: {fileID: 1262915344}
-  - component: {fileID: 1262915343}
   m_Layer: 0
   m_Name: Cube
   m_TagString: CounterTop
@@ -6337,18 +6323,6 @@ Transform:
   m_Father: {fileID: 468248950}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1262915343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1262915341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1262915344
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7030,7 +7004,6 @@ GameObject:
   - component: {fileID: 1430471955}
   - component: {fileID: 1430471954}
   - component: {fileID: 1430471953}
-  - component: {fileID: 1430471952}
   m_Layer: 0
   m_Name: Cube
   m_TagString: CounterTop
@@ -7053,18 +7026,6 @@ Transform:
   m_Father: {fileID: 11852334}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1430471952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1430471950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1430471953
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7497,7 +7458,6 @@ GameObject:
   - component: {fileID: 1536931637}
   - component: {fileID: 1536931636}
   - component: {fileID: 1536931635}
-  - component: {fileID: 1536931634}
   m_Layer: 0
   m_Name: Cube
   m_TagString: CounterTop
@@ -7520,18 +7480,6 @@ Transform:
   m_Father: {fileID: 263050570}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1536931634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1536931632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1536931635
 BoxCollider:
   m_ObjectHideFlags: 0
