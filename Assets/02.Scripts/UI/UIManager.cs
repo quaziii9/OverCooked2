@@ -147,6 +147,10 @@ public class UIManager : Singleton<UIManager>
             busMapEscBlackUI.SetActive(false);
             busMapEscUI.SetActive(false);
         }
+
+        stageMapEscBlackUI.SetActive(false);
+        stageMapEscUI.SetActive(false);
+        
     }
     #endregion
 
@@ -511,13 +515,14 @@ public class UIManager : Singleton<UIManager>
 
     public void EnterIntro()
     {
-        //broccoliMaskRect.sizeDelta = new Vector2(4300, 4300);
+        broccoliMaskRect.sizeDelta = new Vector2(4300, 4300);
         MaskInUI(broccoliMask, broccoliMaskRect, broccoliDuration, "LoadingKeyUIToIntro");
     }
 
     public void LoadingKeyUIToIntro()
     {
         loadingKeyUI.SetActive(true);
+        pineappleMaskRect.sizeDelta = Vector2.zero;
         MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "GoToIntroMap");
     }
 

@@ -24404,12 +24404,22 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 154817030}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 637988502}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 637988502}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
@@ -24421,6 +24431,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: EscUIStop
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: StageEscUICancle
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -26877,6 +26892,11 @@ PrefabInstance:
       objectReference: {fileID: 154817030}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 637988497}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: StopUIOff
       objectReference: {fileID: 0}
@@ -26887,6 +26907,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -26894,6 +26919,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: SoundManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: SoundManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2922589969209275285, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -42152,6 +42187,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 637988502}
@@ -42167,6 +42212,16 @@ PrefabInstance:
       objectReference: {fileID: 637988502}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 637988497}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SeetingOff
       objectReference: {fileID: 0}
@@ -42174,6 +42229,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: ExitGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2922589969209275285, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}

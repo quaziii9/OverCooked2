@@ -81,7 +81,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         {
             case "Map":
                 VanSingleton.Instance.van.SetActive(false);
-                UIManager.Instance.first = false;
+                //UIManager.Instance.first = false;
                 UIManager.Instance.EnterBusMapMaskIn();                                  
                 break;
             case "Intro":
