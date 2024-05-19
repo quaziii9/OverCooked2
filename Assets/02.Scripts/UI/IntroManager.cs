@@ -42,6 +42,8 @@ public class IntroManager : MonoBehaviour
 
     public void StartSpace()
     {
+        UIManager.Instance.first = false;
+
         SoundManager.Instance.Load();
        
         isSpace = true;

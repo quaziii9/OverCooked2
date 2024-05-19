@@ -53,13 +53,24 @@ public class UIManager : Singleton<UIManager>
     [Header("Loading")]
     public GameObject loadingKeyUI;
     public GameObject[] loadingFoodArr;
-    public Image loadingKeyBar; 
+    public Image loadingKeyBar;
+    public GameObject loadingMapUI;
+    public Image loadingMapBar;
 
     [Header("BusMap")]
     public GameObject busTopUI;
     public GameObject busMapEscUI;
     public GameObject busMapEscBlackUI;
 
+    [Header("StageMap")]
+    public GameObject stageMapEscUI;
+    public GameObject stageMapEscBlackUI;
+
+
+    [Header("RecipeUI")]
+    public GameObject recipeUI;
+    public GameObject recipeBlackUI;
+    public GameObject [] recipeArr;
 
     [Header("Resolution")]  
     public TextMeshProUGUI resolutionText;
@@ -103,6 +114,7 @@ public class UIManager : Singleton<UIManager>
     private void Update()
     {
         EscUI();
+        StageEscUI();
         //if(!isSetting && !isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOn();
         //if (!isSetting && isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOff();
     }
@@ -140,6 +152,10 @@ public class UIManager : Singleton<UIManager>
             busMapEscBlackUI.SetActive(false);
             busMapEscUI.SetActive(false);
         }
+
+        stageMapEscBlackUI.SetActive(false);
+        stageMapEscUI.SetActive(false);
+        
     }
     #endregion
 
@@ -281,10 +297,15 @@ public class UIManager : Singleton<UIManager>
                     busTopUI.SetActive(false);
                     Invoke("LoadingKeyUIToIntro", 1f);
                     break;
+                case "LoadingMapUIOn":                   
+                    Invoke("LoadingMapUIOn", 1f);
+                    break;
                 case "EnterIntroMapMaskOut":
                     Invoke("EnterIntroMapMaskOut", 1f);
                     break;
-
+                case "EnterTestStageMaskIn":
+                    Invoke("EnterTestStageMaskOut", 1f);
+                    break;
 
             }        
         }));
@@ -315,6 +336,10 @@ public class UIManager : Singleton<UIManager>
                     break;
                 case "busTopUI":
                     busTopUI.SetActive(true);
+                    break;
+                case "GoToTestStage":
+                    SceneChangeManager.Instance.ChangeToTestStage();
+                    loadingKeyBar.fillAmount = 0;
                     break;
                 default:
                     break;
@@ -400,6 +425,20 @@ public class UIManager : Singleton<UIManager>
         MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "GoToBusMap");
     }
 
+
+    public void EnterLoadingMapUI()
+    {
+        MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "LoadingMapUIOn");
+    }
+
+    public void LoadingMapUIOn()
+    {
+        loadingMapUI.SetActive(true);
+        battleUI.SetActive(false);
+        MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "GoToTestStage");
+    }
+
+
     public void EnterBusMapMaskIn()
     {
         MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "EnterBusMapMaskOut");
@@ -409,6 +448,18 @@ public class UIManager : Singleton<UIManager>
     {
         MaskInUI(pineappleMask, pineappleMaskRect, pineappleDuration, "EnterIntroMapMaskOut");
     }
+
+    public void EnterTestStageMaskIn()
+    {
+        MaskInUI(broccoliMask, broccoliMaskRect, broccoliDuration, "EnterTestStageMaskIn");
+    }
+
+    public void EnterTestStageMaskOut()
+    {
+        loadingMapUI.SetActive(false);
+        MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "");
+    }
+
 
     public void EnterBusMapMaskOut()
     {
@@ -422,7 +473,7 @@ public class UIManager : Singleton<UIManager>
         MaskOutUI(pineappleMask, broccoliMask, broccoliMaskRect, broccoliOutMaskRect, broccoliDuration, "");
     }
 
-
+  
     public void EscUI()
     {
         if(SceneManager.GetActiveScene().name == "Map")
@@ -432,10 +483,28 @@ public class UIManager : Singleton<UIManager>
                 busMapEscBlackUI.SetActive(true);
                 busMapEscUI.SetActive(true);
                 SoundManager.Instance.ButtonTick();
-
             }
         }
     }
+
+    public void StageEscUI()
+    {
+        if (SceneManager.GetActiveScene().name == "TestStage")
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                stageMapEscBlackUI.SetActive(true);
+                stageMapEscUI.SetActive(true);
+                SoundManager.Instance.ButtonTick();
+            }
+        }
+    }
+    public void StageEscUICancle()
+    {
+        stageMapEscBlackUI.SetActive(false);
+        stageMapEscUI.SetActive(false);
+    }
+
 
     public void EscUICancle()
     {
@@ -451,12 +520,14 @@ public class UIManager : Singleton<UIManager>
 
     public void EnterIntro()
     {
+        broccoliMaskRect.sizeDelta = new Vector2(4300, 4300);
         MaskInUI(broccoliMask, broccoliMaskRect, broccoliDuration, "LoadingKeyUIToIntro");
     }
 
     public void LoadingKeyUIToIntro()
     {
         loadingKeyUI.SetActive(true);
+        pineappleMaskRect.sizeDelta = Vector2.zero;
         MaskOutUI(broccoliMask, pineappleMask, pineappleMaskRect, pineappleOutMaskRect, pineappleDuration, "GoToIntroMap");
     }
 
@@ -489,6 +560,20 @@ public class UIManager : Singleton<UIManager>
         loadingFoodArr[2].SetActive(false);
     }
 
+    public void RecipeUIOn(int arr)
+    {
+        recipeBlackUI.SetActive(true);
+        recipeUI.SetActive(true);
+        recipeArr[arr].SetActive(true);   
+    }
+
+    public void RecipeUIOff(int arr)
+    {
+        recipeBlackUI.SetActive(false);
+        recipeUI.SetActive(false);
+        recipeArr[arr].SetActive(false);
+    }
+
     public void ExitGame()
     {
         if (SceneManager.GetActiveScene().name == "Map")
@@ -499,6 +584,15 @@ public class UIManager : Singleton<UIManager>
             busMapEscUI.SetActive(false);
             EnterIntro();
         }
+        else if (SceneManager.GetActiveScene().name == "TestStage")
+        {
+            optionBlackUI.SetActive(false);
+            stopUI.SetActive(false);
+            stageMapEscBlackUI.SetActive(false);
+            stageMapEscUI.SetActive(false);
+            EnterIntro();
+        }
+
         else
         {
             #if UNITY_EDITOR

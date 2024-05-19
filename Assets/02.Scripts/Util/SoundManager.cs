@@ -17,6 +17,7 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip introBGM;
     public AudioClip battleBGM;
     public AudioClip busMapBGM;
+    public AudioClip stageBGM;
 
     [Header("Sound Effect")]
     public AudioClip UISelect;
@@ -211,6 +212,9 @@ public class SoundManager : Singleton<SoundManager>
             case "BusMap":
                 BusMapBGM();
                 break;
+            case "StageMap":
+                StageMapBGM();
+                break;
         }
     }
 
@@ -234,6 +238,14 @@ public class SoundManager : Singleton<SoundManager>
         bgmChangeAudioSource.loop = true;
         bgmChangeAudioSource.Play();
     }
+
+    void StageMapBGM()
+    {
+        bgmAudioSource.clip = stageBGM;
+        bgmAudioSource.loop = true;
+        bgmAudioSource.Play();
+    }
+    
 
     public void ButtonPop()
     {
