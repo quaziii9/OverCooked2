@@ -21,6 +21,7 @@ public class PressSkip : MonoBehaviour
             if(fillImage.fillAmount >= 1f)
             {
                 UIManager.Instance.RecipeUIOff(0);
+                fillImage.fillAmount = 0;
                 // UI 비활성화 및 게임 시작
             }
         }
