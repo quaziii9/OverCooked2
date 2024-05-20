@@ -8,8 +8,9 @@ public class PlayerPuff : Singleton<PlayerPuff>
     private IObjectPool<Puff> walkPool; // 걷는 퍼프 풀
     private IObjectPool<Puff> burstPool; // 버스트 퍼프 풀
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         walkPool = new ObjectPool<Puff>(CreateWalk, OnGetPuff, OnReleasePuff, OnDestroyPuff, maxSize: 1000);
         burstPool = new ObjectPool<Puff>(CreateBurst, OnGetPuff, OnReleasePuff, OnDestroyPuff, maxSize: 1000);
     }
