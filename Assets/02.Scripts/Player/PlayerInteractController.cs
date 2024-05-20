@@ -465,6 +465,11 @@ public class PlayerInteractController : MonoBehaviour
             {
                 obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             }
+            else if (obj.CompareTag("Pan") || obj.CompareTag("Pot"))
+            {
+                obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                obj.transform.GetComponent<Ingredient>().HandleIngredient(transform, obj.transform.GetComponent<Ingredient>().type, true);
+            }
             else
             {
                 obj.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -496,6 +501,18 @@ public class PlayerInteractController : MonoBehaviour
                     interactObject.transform.parent,
                     interactObject.transform.parent.GetChild(1).localPosition, 
                     handleThing.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type);
+            }
+            else if(handleThing.CompareTag("Pan") || handleThing.CompareTag("Pot"))
+            {
+                if (objectHighlight.objectType != ObjectHighlight.ObjectType.Board)
+                {
+                    objectHighlight.onSomething = true;
+                    isHolding = false;
+                    handleThing.GetComponent<Ingredient>().isOnDesk = true;
+                    handleThing.GetComponent<Ingredient>().
+                        PlayerHandleOff(interactObject.transform.parent,
+                        interactObject.transform.parent.GetChild(1).localPosition);
+                }
             }
             else //접시
             {
