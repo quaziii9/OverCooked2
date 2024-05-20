@@ -31,15 +31,13 @@ namespace EnumTypes
         PlayerDamaged,
     }
 
-    public enum FirstIntroEvents
-    {
-        FirstSetIntroUI,
-        FrirstIntrSpace,
-    }
-
     public enum UIEvents
     {
         WorldMapOpen,
+        IntroMapOpen,
+        TestStageMapOpen,
+
+
     }
 
     public class EnumTypes : MonoBehaviour { }

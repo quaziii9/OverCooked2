@@ -15,6 +15,8 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         // 씬 로드 완료 이벤트에 OnSceneLoaded 메서드를 등록
         SceneManager.sceneLoaded += OnSceneLoaded;
         EventManager<UIEvents>.StartListening(UIEvents.WorldMapOpen, ChangeToBusMap);
+        EventManager<UIEvents>.StartListening(UIEvents.IntroMapOpen, ChangeToIntroMap);
+        EventManager<UIEvents>.StartListening(UIEvents.TestStageMapOpen, ChangeToTestStage);
     }
 
     private void OnDisable()
@@ -44,8 +46,18 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     // 씬 전환을 위한 공통 메서드
     private void ChangeScene(string bgmName, string sceneName, Image loadingBar)
     {
-        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
-        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, bgmName);
+        if(SoundManager.Instance.bgmChangeAudioSource.isPlaying)
+        {
+            SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
+            SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, bgmName);
+        }
+        else if(SoundManager.Instance.bgmAudioSource.isPlaying)
+        {
+            SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
+            SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, bgmName);
+        }
+       
+
         StartCoroutine(LoadSceneAsyncCoroutine(sceneName, loadingBar));
     }
 

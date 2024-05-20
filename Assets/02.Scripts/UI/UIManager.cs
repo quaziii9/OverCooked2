@@ -359,10 +359,13 @@ public class UIManager : Singleton<UIManager>
                     EventManager<UIEvents>.TriggerEvent(UIEvents.WorldMapOpen);
                     break;
                 case "GoToIntroMap":
-                    SceneChangeManager.Instance.ChangeToIntroMap();
+                    EventManager<UIEvents>.TriggerEvent(UIEvents.IntroMapOpen);
+                    //SceneChangeManager.Instance.ChangeToIntroMap();
                     break;
                 case "GoToTestStage":
-                    SceneChangeManager.Instance.ChangeToTestStage();
+                    EventManager<UIEvents>.TriggerEvent(UIEvents.TestStageMapOpen);
+
+                    //SceneChangeManager.Instance.ChangeToTestStage();
                     break;
                 case "busTopUIOn":
                     busTopUI.SetActive(true);
@@ -614,11 +617,12 @@ public class UIManager : Singleton<UIManager>
         recipeArr[arr].SetActive(true);   
     }
 
-    public void RecipeUIOff(int arr)
+    public void RecipeUIOff()
     {
         recipeBlackUI.SetActive(false);
         recipeUI.SetActive(false);
-        recipeArr[arr].SetActive(false);
+        for (int i=0; i<recipeArr.Length; i++)
+            recipeArr[i].SetActive(false);
         
     }
     #endregion 
@@ -636,6 +640,7 @@ public class UIManager : Singleton<UIManager>
             EscUIStopOff();
             StageEscUICancle();
             EnterIntroLoadingMaskIn();
+            RecipeUIOff();
         }
         else
         {
