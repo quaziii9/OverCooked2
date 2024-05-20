@@ -7,6 +7,7 @@ public class PlayerPuff : Singleton<PlayerPuff>
     public GameObject puffBurstPrefab;   // 버스트 퍼프 프리팹
     private IObjectPool<Puff> walkPool; // 걷는 퍼프 풀
     private IObjectPool<Puff> burstPool; // 버스트 퍼프 풀
+    public Vector3 puffSize = new  Vector3(0.1f,0.1f,0.1f);
     //public Transform puffPostion;
 
     private void Awake()
@@ -20,6 +21,7 @@ public class PlayerPuff : Singleton<PlayerPuff>
     {
         var bust = burstPool.Get();
         bust.transform.position = puffPostion.transform.position;
+        bust.transform.localScale = puffSize;
         //bust.transform.rotation = puffPostion.transform.rotation;
     }
 
@@ -27,6 +29,7 @@ public class PlayerPuff : Singleton<PlayerPuff>
     {
         var walk = walkPool.Get();
         walk.transform.position = puffPostion.transform.position;
+        walk.transform.localScale = puffSize;
         //walk.transform.rotation=puffPostion.transform.rotation;
     }
 
