@@ -368,6 +368,11 @@ public class PlayerInteractController : MonoBehaviour
             //Debug.Log("접시 내려");
             handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         }
+        else if (handlingThing.CompareTag("Pot") || handlingThing.CompareTag("Pan"))
+        {
+            handlingThing.transform.GetComponent<BoxCollider>().isTrigger = false;
+            handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        }
         else
         {
             handlingThing.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
