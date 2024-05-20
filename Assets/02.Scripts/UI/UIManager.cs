@@ -42,6 +42,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject pineappleMask; // 크기를 변경할 RectTransform
 
     [Header("Battle")]
+    public GameObject battleRoomUI;
     public GameObject battleUI;
     public GameObject battleResultUI;
 
@@ -252,6 +253,7 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
+
     // 그만두기창 On
     public void StopUIOn()
     {
@@ -311,6 +313,9 @@ public class UIManager : Singleton<UIManager>
                 case "LoadingKeyUIOn":
                     Invoke(goTo, 1f);
                     break;
+                case "LoadingKeyUIONBattle":
+                    Invoke(goTo, 1f);
+                    break;
                 case "EnterBusMapMaskOut":
                     Invoke(goTo, 1f);
                     break;
@@ -327,6 +332,7 @@ public class UIManager : Singleton<UIManager>
                 case "EnterTestStageMaskOut":
                     Invoke(goTo, 1f);
                     break;
+               
             }        
         }));
     }
@@ -375,9 +381,13 @@ public class UIManager : Singleton<UIManager>
                 case "GoToTestStage":
                     EventManager<UIEvents>.TriggerEvent(UIEvents.TestStageMapOpen);
                     break;
+                case "GoToBattleRoom":
+                    EventManager<UIEvents>.TriggerEvent(UIEvents.BattleRoomOpen);
+                    break;
                 case "busTopUIOn":
                     busTopUI.SetActive(true);
                     break;
+                
                 default:
                     break;
             }
@@ -403,17 +413,32 @@ public class UIManager : Singleton<UIManager>
     #endregion
 
     #region BattileUIOn
+
+    public void BattleRoomUION()
+    {
+        battleRoomUI.SetActive(true);
+    }
+
+    public void BattleRoomUIOFF()
+    {
+        battleRoomUI.SetActive(false);
+    }
+
     public void BattleUIOn()
     {
         MaskInUI(broccoliMask, "BattleUISet");
     }
 
+
+
     private void BattleUISet()
     {
-        battleUI.SetActive(true);
-        buttonUI.SetActive(false);
-        SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, "Battle");
-        SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
+        loadingKeyBar.fillAmount = 0;
+        loadingKeyUI.SetActive(false);
+        //battleUI.SetActive(true);
+        //buttonUI.SetActive(false);
+        //SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, "Battle");
+        //SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
         MaskOutUI(broccoliMask, pineappleMask, "");
     }
     #endregion
@@ -432,8 +457,7 @@ public class UIManager : Singleton<UIManager>
 
     public void AgreeExitLobby()
     {
-        CancleExitLobby();
-        MaskInUI(pineappleMask, "BattleUIOff");
+        EnterIntroLoadingMaskIn();
     }
 
     public void BattleUIOff()
@@ -453,11 +477,25 @@ public class UIManager : Singleton<UIManager>
         MaskInUI(broccoliMask, "LoadingKeyUIOn");
     }
 
+
     public void LoadingKeyUIOn()
     {
         loadingKeyUI.SetActive(true);
         MaskOutUI(broccoliMask, pineappleMask, "GoToBusMap");
     }
+
+    public void EnterLoadingKeyUIBattle()
+    {
+        MaskInUI(broccoliMask, "LoadingKeyUIONBattle");
+    }
+
+    public void LoadingKeyUIONBattle()
+    {
+        loadingKeyUI.SetActive(true);
+        MaskOutUI(broccoliMask, pineappleMask, "GoToBattleRoom");
+    }
+
+
     #endregion
 
     #region LoadingMapUI

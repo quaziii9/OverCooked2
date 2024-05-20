@@ -36,7 +36,7 @@ namespace EnumTypes
         WorldMapOpen,
         IntroMapOpen,
         TestStageMapOpen,
-
+        BattleRoomOpen,
     }
 
     public enum SoundEvents

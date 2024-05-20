@@ -17,6 +17,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         EventManager<UIEvents>.StartListening(UIEvents.WorldMapOpen, ChangeToBusMap);
         EventManager<UIEvents>.StartListening(UIEvents.IntroMapOpen, ChangeToIntroMap);
         EventManager<UIEvents>.StartListening(UIEvents.TestStageMapOpen, ChangeToTestStage);
+        EventManager<UIEvents>.StartListening(UIEvents.BattleRoomOpen, ChangeToBattleLobby);
     }
 
     private void OnDisable()
@@ -41,6 +42,11 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     public void ChangeToTestStage()
     {
         ChangeScene("StageMap", "TestStage", UIManager.Instance.loadingMapBar);
+    }
+
+    public void ChangeToBattleLobby()
+    {
+        ChangeScene("Battle", "BattleLobby", UIManager.Instance.loadingKeyBar);
     }
 
     // 씬 전환을 위한 공통 메서드
@@ -114,6 +120,8 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                     VanSingleton.Instance.van.SetActive(true);
                     UIManager.Instance.busTopUI.SetActive(false);
                     UIManager.Instance.buttonUI.SetActive(true);
+                    UIManager.Instance.exitLobbyUI.SetActive(false);
+                    UIManager.Instance.battleUI.SetActive(false);
                     UIManager.Instance.shutterCamera.Priority = 9;
                     UIManager.Instance.EnterIntroMaskIn();
                 }
@@ -122,6 +130,12 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.RecipeUIOn(0);
                 UIManager.Instance.EnterTestStageMaskIn();
+                break;
+            case "BattleLobby":
+                VanSingleton.Instance.van.SetActive(false);
+                UIManager.Instance.buttonUI.SetActive(false);
+                UIManager.Instance.battleUI.SetActive(true);
+                UIManager.Instance.BattleUIOn();
                 break;
         }
     }
