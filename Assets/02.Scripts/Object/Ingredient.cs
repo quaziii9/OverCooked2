@@ -8,7 +8,7 @@ public class Ingredient : GameItem
     public bool isCooked = false;
     public bool isOnDesk = true;
 
-    public enum IngredientType { Fish, Shrimp, Plate, Lettuce, Tomato, Cucumber, Chicken, Potato };
+    public enum IngredientType { Fish, Shrimp, Plate, Lettuce, Tomato, Cucumber, Chicken, Potato, Pot, Pan };
     public IngredientType type; // 재료 유형: 채소, 고기 등
     
     public enum IngredientState { Raw, Cooking, Cooked }
@@ -38,9 +38,16 @@ public class Ingredient : GameItem
     // Ingredient 핸들링과 관련된 로직
     public void HandleIngredient(Transform something, IngredientType handle, bool isActive)
     {
-
-        MeshCollider collider = transform.parent.GetComponent<MeshCollider>();
-        collider.isTrigger = isActive;
+        if (handle == IngredientType.Pot || handle == IngredientType.Pan)
+        {
+            BoxCollider collider = transform.GetComponent<BoxCollider>();
+            collider.isTrigger = isActive;
+        }
+        else
+        {
+            MeshCollider collider = transform.parent.GetComponent<MeshCollider>();
+            collider.isTrigger = isActive;
+        }
 
         Vector3 localPosition;
         Quaternion localRotation;
@@ -59,6 +66,8 @@ public class Ingredient : GameItem
                 localPosition = lettuceLocalPos;
                 localRotation = Quaternion.identity;
                 break;
+            case IngredientType.Pot:
+            case IngredientType.Pan:
             case IngredientType.Tomato:
             case IngredientType.Cucumber:
             case IngredientType.Chicken:
@@ -70,11 +79,33 @@ public class Ingredient : GameItem
                 throw new ArgumentOutOfRangeException(nameof(handle), $"Unsupported handle type: {handle}");
         }
 
-        Transform parentTransform = transform.parent;
-        parentTransform.localPosition = localPosition;
-        parentTransform.localRotation = localRotation;
+        Transform parentTransform;
+        if (handle == IngredientType.Pot || handle == IngredientType.Pan)
+        {
+            parentTransform = transform;
+            parentTransform.localPosition = localPosition;
+            parentTransform.localRotation = localRotation;
+        }
+        else 
+        {
+            parentTransform = transform.parent;
+            parentTransform.localPosition = localPosition;
+            parentTransform.localRotation = localRotation;
+        }
 
-        if (isActive)
+        if (isActive && handle == IngredientType.Pot)
+        {
+            parentTransform.SetParent(something);
+            parentTransform.localRotation = Quaternion.identity;
+            parentTransform.localPosition = new Vector3(-0.409999996f, 0, 3.610047f);
+        }
+        else if (isActive && handle == IngredientType.Pan)
+        {
+            parentTransform.SetParent(something);
+            parentTransform.localRotation = Quaternion.identity;
+            parentTransform.localPosition = new Vector3(-0.409999996f, 0.39f, 3.84000003f);
+        }
+        else if (isActive)
         {
             parentTransform.parent.SetParent(something);
             parentTransform.parent.localRotation = Quaternion.identity;

@@ -287,7 +287,12 @@ public class PlayerInteractController : MonoBehaviour
         }
         else if (canActive && interactObject.GetComponent<ObjectHighlight>().onSomething)
         {
-            GameObject handleThing = interactObject.transform.parent.GetChild(2).gameObject;
+            GameObject handleThing = interactObject.transform.parent.GetChild(2).gameObject; ;
+
+            if (interactObject.transform.parent.GetChild(2).name.Equals("PFX_PanFire"))
+            {
+                handleThing = interactObject.transform.parent.GetChild(3).gameObject;
+            }
 
             if (handleThing.CompareTag("Ingredient") && objectHighlight.objectType == ObjectHighlight.ObjectType.Board &&
                 interactObject.transform.GetChild(0).GetComponent<CuttingBoard>().cookingBar.IsActive())
@@ -345,6 +350,10 @@ public class PlayerInteractController : MonoBehaviour
         {
             PickupPlate();
         }
+        else if (!isHolding && (interactObject.CompareTag("Pot") || interactObject.CompareTag("Pan")))
+        {
+            PickupPot();
+        }
         //else if (isHolding)
         //{
         //
@@ -362,6 +371,11 @@ public class PlayerInteractController : MonoBehaviour
         {
             // 떨구는 객체가 접시면.
             //Debug.Log("접시 내려");
+            handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        }
+        else if (handlingThing.CompareTag("Pot") || handlingThing.CompareTag("Pan"))
+        {
+            handlingThing.transform.GetComponent<BoxCollider>().isTrigger = false;
             handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         }
         else
@@ -456,6 +470,11 @@ public class PlayerInteractController : MonoBehaviour
             {
                 obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             }
+            else if (obj.CompareTag("Pan") || obj.CompareTag("Pot"))
+            {
+                obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                obj.transform.GetComponent<Ingredient>().HandleIngredient(transform, obj.transform.GetComponent<Ingredient>().type, true);
+            }
             else
             {
                 obj.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -487,6 +506,18 @@ public class PlayerInteractController : MonoBehaviour
                     interactObject.transform.parent,
                     interactObject.transform.parent.GetChild(1).localPosition, 
                     handleThing.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type);
+            }
+            else if(handleThing.CompareTag("Pan") || handleThing.CompareTag("Pot"))
+            {
+                if (objectHighlight.objectType != ObjectHighlight.ObjectType.Board)
+                {
+                    objectHighlight.onSomething = true;
+                    isHolding = false;
+                    handleThing.GetComponent<Ingredient>().isOnDesk = true;
+                    handleThing.GetComponent<Ingredient>().
+                        PlayerHandleOff(interactObject.transform.parent,
+                        interactObject.transform.parent.GetChild(1).localPosition);
+                }
             }
             else //접시
             {
@@ -547,6 +578,16 @@ public class PlayerInteractController : MonoBehaviour
         TryPickupObject(plateObject);
         //plateObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         //SetPositionbetweenPlayerandObject(plateObject);
+    }
+
+    private void PickupPot()
+    {
+        SoundManager.Instance.PlayEffect("take");
+        isHolding = true;
+        anim.SetBool("isHolding", isHolding);
+        GameObject ingredientObj = interactObject.transform.parent.gameObject;
+        ingredientObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        ingredientObj.transform.GetComponent<Ingredient>().HandleIngredient(transform, ingredientObj.transform.GetComponent<Ingredient>().type, true);
     }
 
     #endregion
@@ -661,7 +702,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private bool ShouldReturnEarly(Collider other)
     {
-        return (other.CompareTag("Ingredient") || other.CompareTag("Plate")) && isHolding;
+        return (other.CompareTag("Ingredient") || other.CompareTag("Plate") || other.CompareTag("Pan") || other.CompareTag("Pot")) && isHolding;
     }
 
     private bool HandleActiveIngredientSwitch(Collider other)
@@ -756,6 +797,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void DeactivateObjects()
     {
+        //Debug.Log($"DeactivateObjects : {canActive}");
         canActive = false;
         OffHighlightCurrentObject();
         interactObject = null;
@@ -788,7 +830,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void OnHighlightCurrentObject()
     {
-        if (interactObject != null && interactObject.GetComponent<Object>() != null)
+        if (interactObject != null && interactObject.GetComponent<ObjectHighlight>() != null)
         {
             bool highlightState = interactObject.CompareTag("Ingredient") ? interactObject.GetComponent<Ingredient>().isCooked : true;
             interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(highlightState);
