@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using EnumTypes;
 using EventLibrary;
+using System.Collections.Generic;
+using System.Linq;
+
+
 
 public class UIManager : Singleton<UIManager>
 {
@@ -25,7 +29,8 @@ public class UIManager : Singleton<UIManager>
 
     [Header("OptionUI")]
     public GameObject optionSettingUI;
-    public GameObject optionBlackUI;
+
+    [Header("StopUI")]
     public GameObject stopUI;
 
     [Header("UnderBarUI")]
@@ -42,7 +47,6 @@ public class UIManager : Singleton<UIManager>
 
     [Header("ExitLobbyUI")]
     public GameObject exitLobbyUI;
-    public GameObject exitLobbyBlackUI;
 
     [Header("Loading")]
     public GameObject[] loadingFoodArr;
@@ -53,16 +57,13 @@ public class UIManager : Singleton<UIManager>
 
     [Header("BusMap")]
     public GameObject busMapEscUI;
-    public GameObject busMapEscBlackUI;
     public GameObject busTopUI;
 
     [Header("StageMap")]
     public GameObject stageMapEscUI;
-    public GameObject stageMapEscBlackUI;
 
     [Header("RecipeUI")]
     public GameObject recipeUI;
-    public GameObject recipeBlackUI;
     public GameObject [] recipeArr;
 
     [Header("Resolution")]  
@@ -79,6 +80,9 @@ public class UIManager : Singleton<UIManager>
 
     public bool first = true;
 
+    private Dictionary<UIType, List<GameObject>> uiGroups;
+
+
     public void JsonUILoad()
     {
         settingWindowScreen = LoadData.Instance.optionData.saveWindowMode;
@@ -91,11 +95,25 @@ public class UIManager : Singleton<UIManager>
         fullScreenCheck.SetActive(windowScreen);
     }
 
-    public void Start()
+    private void Start()
     {
+        //uiGroups = new Dictionary<UIType, List<GameObject>>()
+        //{
+        //    { UIType.OptionUI, new List<GameObject> { optionSettingUI } },
+        //    { UIType.StopUI, new List<GameObject> { stopUI } },
+        //    { UIType.BattleUI, new List<GameObject> { battleUI, battleResultUI } },
+        //    { UIType.ExitLobbyUI, new List<GameObject> { exitLobbyUI } },
+        //    { UIType.LoadingKeyUI, new List<GameObject> { loadingKeyUI } },
+        //    { UIType.LoadingMapUI, new List<GameObject> { loadingMapUI } },
+        //    { UIType.LoadingFoodUI, new List<GameObject> (loadingFoodArr) },
+        //    { UIType.BusMap, new List<GameObject> { busMapEscUI, busTopUI } },
+        //    { UIType.StageMapEscUI, new List<GameObject> { stageMapEscUI } },
+        //    { UIType.RecipeUI, new List<GameObject> { recipeUI }.Concat(recipeArr).ToList() },
+        //};
         resolutionText.text = resolutionTextArr[resolutionArrNum];
         fullScreenCheck.SetActive(windowScreen);
     }
+
 
     private void Update()
     {
@@ -110,14 +128,12 @@ public class UIManager : Singleton<UIManager>
     // 옵션창 On
     public void SettingOn()
     {
-        optionBlackUI.SetActive(true);
         optionSettingUI.SetActive(true);
     }
 
     // 옵션창 Off
     public void SeetingOff()
     {
-        optionBlackUI.SetActive(false);
         optionSettingUI.SetActive(false);
     }
 
@@ -239,25 +255,21 @@ public class UIManager : Singleton<UIManager>
     // 그만두기창 On
     public void StopUIOn()
     {
-        optionBlackUI.SetActive(true);
         stopUI.SetActive(true);      
     }
 
     // 그만두기창 Off
     public void StopUIOff()
     {
-        optionBlackUI.SetActive(false);
         stopUI.SetActive(false);
 
         // BusMapEscUI도 같이 종료
         if(SceneManager.GetActiveScene().name == "Map")
         {
-            busMapEscBlackUI.SetActive(false);
             busMapEscUI.SetActive(false);
         }
 
         // stageMapEscUI도 같이 종료
-        stageMapEscBlackUI.SetActive(false);
         stageMapEscUI.SetActive(false);
         
     }
@@ -355,17 +367,13 @@ public class UIManager : Singleton<UIManager>
             switch (goTo)
             {
                 case "GoToBusMap":
-                    // SceneChangeManager.Instance.ChangeToBusMap();
                     EventManager<UIEvents>.TriggerEvent(UIEvents.WorldMapOpen);
                     break;
                 case "GoToIntroMap":
                     EventManager<UIEvents>.TriggerEvent(UIEvents.IntroMapOpen);
-                    //SceneChangeManager.Instance.ChangeToIntroMap();
                     break;
                 case "GoToTestStage":
                     EventManager<UIEvents>.TriggerEvent(UIEvents.TestStageMapOpen);
-
-                    //SceneChangeManager.Instance.ChangeToTestStage();
                     break;
                 case "busTopUIOn":
                     busTopUI.SetActive(true);
@@ -414,13 +422,11 @@ public class UIManager : Singleton<UIManager>
 
     public void ExitLobbyUIOn()
     {
-        exitLobbyBlackUI.SetActive(true);
         exitLobbyUI.SetActive(true);
     }
 
     public void CancleExitLobby()
     {
-        exitLobbyBlackUI.SetActive(false);
         exitLobbyUI.SetActive(false);
     }
 
@@ -534,7 +540,6 @@ public class UIManager : Singleton<UIManager>
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                busMapEscBlackUI.SetActive(true);
                 busMapEscUI.SetActive(true);
                 SoundManager.Instance.ButtonTick();
             }
@@ -543,7 +548,6 @@ public class UIManager : Singleton<UIManager>
 
     public void BusMapEscUICancle()
     {
-        busMapEscBlackUI.SetActive(false);
         busMapEscUI.SetActive(false);
     }
 
@@ -553,7 +557,6 @@ public class UIManager : Singleton<UIManager>
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                stageMapEscBlackUI.SetActive(true);
                 stageMapEscUI.SetActive(true);
                 SoundManager.Instance.ButtonTick();
             }
@@ -561,19 +564,16 @@ public class UIManager : Singleton<UIManager>
     }
     public void StageEscUICancle()
     {
-        stageMapEscBlackUI.SetActive(false);
         stageMapEscUI.SetActive(false);
     }
 
     public void EscUIStopOn()
     {
-        optionBlackUI.SetActive(true);
         stopUI.SetActive(true);
     }
 
     public void EscUIStopOff()
     {
-        optionBlackUI.SetActive(false);
         stopUI.SetActive(false);
     }
     #endregion
@@ -612,14 +612,12 @@ public class UIManager : Singleton<UIManager>
     #region RecipeUI
     public void RecipeUIOn(int arr)
     {
-        recipeBlackUI.SetActive(true);
         recipeUI.SetActive(true);
         recipeArr[arr].SetActive(true);   
     }
 
     public void RecipeUIOff()
     {
-        recipeBlackUI.SetActive(false);
         recipeUI.SetActive(false);
         for (int i=0; i<recipeArr.Length; i++)
             recipeArr[i].SetActive(false);

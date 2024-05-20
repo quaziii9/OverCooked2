@@ -45,5 +45,19 @@ namespace EnumTypes
         FadeOut
     }
 
+    public enum UIType
+    {
+        OptionUI,
+        StopUI,
+        BattleUI,
+        ExitLobbyUI,
+        LoadingKeyUI,
+        LoadingMapUI,
+        LoadingFoodUI,
+        BusMap,
+        StageMapEscUI,
+        RecipeUI,
+    }
+
     public class EnumTypes : MonoBehaviour { }
 }
