@@ -20,24 +20,33 @@ public class ScrollMT : MonoBehaviour
     public float startXOffset = 0.0f; // 시작 X 오프셋
     public float endXOffset = -0.0f; // 도달해야 할 X 오프셋
 
+    private Vector2 currentOffset;
+    private Material originalMaterial;
+
     private void Start()
     {
         // MeshRenderer를 컴포넌트에서 가져오기
         meshRenderer = GetComponent<MeshRenderer>();
-        meshRenderer.sharedMaterials[materialIndex].mainTextureOffset = new Vector2(0f, 0);
+
+        // 매테리얼의 인덱스가 유효한지 확인
+        if (meshRenderer.sharedMaterials.Length > materialIndex)
+        {
+            originalMaterial = meshRenderer.sharedMaterials[materialIndex];
+            originalMaterial.mainTextureOffset = new Vector2(0f, 0);
+        }
     }
 
     void Update()
     {
         // 매쉬 랜더러와 마테리얼이 제대로 설정되었는지 확인
-        if (meshRenderer == null || meshRenderer.sharedMaterials.Length <= materialIndex)
+        if (meshRenderer == null || originalMaterial == null)
         {
             Debug.LogWarning("Mesh Renderer or Material not assigned properly.");
             return;
         }
 
         // 현재 오프셋
-        Vector2 currentOffset = meshRenderer.sharedMaterials[materialIndex].mainTextureOffset;
+        currentOffset = originalMaterial.mainTextureOffset;
 
         // Y 축 이동 업데이트
         if (y)
@@ -52,7 +61,17 @@ public class ScrollMT : MonoBehaviour
         }
 
         // 변경된 오프셋을 마테리얼에 적용
-        meshRenderer.sharedMaterials[materialIndex].mainTextureOffset = currentOffset;
+        originalMaterial.mainTextureOffset = currentOffset;
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("OnDisable");
+        // 스크립트가 비활성화될 때 오프셋 초기화
+        if (originalMaterial != null)
+        {
+            originalMaterial.mainTextureOffset = new Vector2(0f, 0f);
+        }
     }
 
     // 오프셋을 업데이트하는 메서드
