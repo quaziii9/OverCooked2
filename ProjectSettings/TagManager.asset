@@ -17,6 +17,7 @@ TagManager:
   - Bus
   - StageUi
   - Ingredient
+  - Pot
   layers:
   - Default
   - TransparentFX

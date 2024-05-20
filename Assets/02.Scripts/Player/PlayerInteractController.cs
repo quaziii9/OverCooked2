@@ -345,6 +345,10 @@ public class PlayerInteractController : MonoBehaviour
         {
             PickupPlate();
         }
+        else if (!isHolding && interactObject.CompareTag("Pot"))
+        {
+            PickupPot();
+        }
         //else if (isHolding)
         //{
         //
@@ -547,6 +551,16 @@ public class PlayerInteractController : MonoBehaviour
         TryPickupObject(plateObject);
         //plateObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         //SetPositionbetweenPlayerandObject(plateObject);
+    }
+
+    private void PickupPot()
+    {
+        SoundManager.Instance.PlayEffect("take");
+        isHolding = true;
+        anim.SetBool("isHolding", isHolding);
+        GameObject ingredientObj = interactObject.transform.parent.gameObject;
+        ingredientObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        ingredientObj.transform.GetComponent<Ingredient>().HandleIngredient(transform, ingredientObj.transform.GetComponent<Ingredient>().type, true);
     }
 
     #endregion

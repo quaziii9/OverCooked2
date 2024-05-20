@@ -12,7 +12,7 @@ public class ObjectHighlight : MonoBehaviour
     [SerializeField] private Material[] hightlightMaterials;
 
     // 오브젝트 타입에 따른 변경
-    [HideInInspector] public enum ObjectType { CounterTop, Craft, Return, Station, Sink, Ingredient, Board, Bin, Plate };
+    [HideInInspector] public enum ObjectType { CounterTop, Craft, Return, Station, Sink, Ingredient, Board, Bin, Plate, Pot };
     // 현재 오브젝트 타입
     [SerializeField] public ObjectType objectType;
 
@@ -28,6 +28,7 @@ public class ObjectHighlight : MonoBehaviour
             case ObjectType.Board:
             case ObjectType.Bin:
             case ObjectType.Plate:
+            case ObjectType.Pot:
                 rd = transform.parent.GetComponent<MeshRenderer>();
                 rd.material = hightlightMaterials[1];
                 break;
@@ -73,6 +74,7 @@ public class ObjectHighlight : MonoBehaviour
             case ObjectType.Board:
             case ObjectType.Bin:
             case ObjectType.Plate:
+            case ObjectType.Pot:
                 rd = transform.parent.GetComponent<MeshRenderer>();
                 rd.material = hightlightMaterials[0];
                 break;
