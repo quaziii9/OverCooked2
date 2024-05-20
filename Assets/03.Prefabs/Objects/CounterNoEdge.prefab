@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6646645254819518298}
   - component: {fileID: 8898841578193004787}
-  - component: {fileID: 3351430629417785174}
+  - component: {fileID: 7119318669210777969}
   m_Layer: 0
   m_Name: AutoChecking
   m_TagString: CounterTop
@@ -47,7 +47,7 @@ CapsuleCollider:
   m_Height: 0.0075014443
   m_Direction: 1
   m_Center: {x: 0, y: 0.0037507222, z: 0}
---- !u!114 &3351430629417785174
+--- !u!114 &7119318669210777969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,6 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8986890382625418870}
   - component: {fileID: 235382547464999595}
+  - component: {fileID: 3854357189825411470}
   m_Layer: 0
   m_Name: Collider
   m_TagString: CounterTop
@@ -203,6 +204,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.193, y: 1, z: 1.57}
   m_Center: {x: 0.0025, y: 0, z: -0.18}
+--- !u!114 &3854357189825411470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7816515593208429023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19435dd8b8dc43e438677d6b368032b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeObject: 0
+  onSomething: 0
+  hightlightMaterials:
+  - {fileID: 2100000, guid: 0fc02c852f526304194aa98874f433d6, type: 2}
+  - {fileID: 2100000, guid: 88f05aece074d6a478483d8cc525fa91, type: 2}
+  objectType: 0
 --- !u!1 &7870186716771150858
 GameObject:
   m_ObjectHideFlags: 0
