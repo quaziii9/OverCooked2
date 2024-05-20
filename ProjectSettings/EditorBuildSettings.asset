@@ -5,9 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/01.Scenes/Inseok/NetworkScenes/Intro_Net.unity
-    guid: 5a6c0a440955d8a43bc64a7cccf763d7
+    guid: a09ae03938d589b408722f8dbfccd792
   - enabled: 1
     path: Assets/01.Scenes/Eunjoo/Intro.unity
     guid: 5e6208ebd628aad4194e0ad15c25e9e5
