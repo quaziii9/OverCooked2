@@ -28,7 +28,6 @@ public class PlayerDash : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-       
     }
 
     private void Update()

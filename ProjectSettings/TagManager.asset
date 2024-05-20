@@ -16,6 +16,7 @@ TagManager:
   - Craft
   - Bus
   - StageUi
+  - Ingredient
   layers:
   - Default
   - TransparentFX
@@ -25,9 +26,9 @@ TagManager:
   - UI
   - UI Mask
   - 
-  - 
-  - 
-  - 
+  - Player
+  - Floor
+  - Travelator
   - 
   - 
   - 
