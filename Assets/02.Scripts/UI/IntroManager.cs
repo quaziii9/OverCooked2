@@ -29,8 +29,8 @@ public class IntroManager : MonoBehaviour
 
             // VAN 
             UIManager.Instance.ingamePlayerUI.SetActive(false);
-            UIManager.Instance.buttonUI.SetActive(false);
-            UIManager.Instance.shutter.SetActive(true);
+            //UIManager.Instance.buttonUI.SetActive(false);
+            //UIManager.Instance.shutter.SetActive(true);
 
             // UnderBar UI
             //UIManager.Instance.underBarStop.SetActive(false);
