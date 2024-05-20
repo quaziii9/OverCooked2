@@ -8,7 +8,7 @@ public class PlayerPuff : Singleton<PlayerPuff>
     private IObjectPool<Puff> walkPool; // 걷는 퍼프 풀
     private IObjectPool<Puff> burstPool; // 버스트 퍼프 풀
     public Vector3 puffSize = new  Vector3(0.1f,0.1f,0.1f);
-    //public Transform puffPostion;
+    // public Transform puffPostion;
 
     private new void Awake()
     {

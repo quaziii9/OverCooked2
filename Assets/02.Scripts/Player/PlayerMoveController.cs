@@ -15,7 +15,6 @@ public class PlayerMoveController : MonoBehaviour
 
     public int puffCount;
 
-
     void Start()
     {
         if (rb == null)
