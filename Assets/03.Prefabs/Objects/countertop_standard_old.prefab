@@ -218,5 +218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeObject: 0
   onSomething: 0
-  hightlightMaterials: []
+  hightlightMaterials:
+  - {fileID: 2100000, guid: a88ca68fbc164a942bdddbd0d49d6d9a, type: 2}
+  - {fileID: 2100000, guid: 923e391c138532f44b157d2876cf8843, type: 2}
   objectType: 0

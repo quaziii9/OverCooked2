@@ -325,6 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4593426028458476937}
+  - component: {fileID: 4987910159085455635}
   m_Layer: 0
   m_Name: AutoCheck
   m_TagString: Untagged
@@ -347,6 +348,18 @@ Transform:
   m_Father: {fileID: 334688639476594185}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4987910159085455635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7334064760442058003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1da1d426fe581478c48a9292e67dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8675541062893410258
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,6 +370,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1106686994366184217}
   - component: {fileID: 9087190547342751486}
+  - component: {fileID: 2992728112269987711}
+  - component: {fileID: 1991854945585959960}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Craft
@@ -392,6 +407,40 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.013, y: 0.0043, z: 0.0103}
   m_Center: {x: -0.005893215, y: -0.002839265, z: -0.00018952011}
+--- !u!114 &2992728112269987711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8675541062893410258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 574a2e47e9f67084a9b60bcbb1e0f468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CraftAnim: {fileID: 0}
+  food: 5
+  foodPrefabs: {fileID: 2925025516699368723, guid: 0f12a187553f9004b86f184a07d893bf,
+    type: 3}
+--- !u!114 &1991854945585959960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8675541062893410258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19435dd8b8dc43e438677d6b368032b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeObject: 0
+  onSomething: 0
+  hightlightMaterials:
+  - {fileID: 2100000, guid: b7e4b689532c5994f9b32bd50d13a8e5, type: 2}
+  - {fileID: 2100000, guid: b10fe13e9e2b35c4383e1c18a3c2a280, type: 2}
+  objectType: 1
 --- !u!1 &9208653553479960905
 GameObject:
   m_ObjectHideFlags: 0

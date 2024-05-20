@@ -3,7 +3,7 @@ using UnityEngine;
 public class Craft : MonoBehaviour
 {
     [SerializeField] private Animator CraftAnim;
-    public enum FoodType { Fish, Shrimp, Lettuce, Cucumber, Tomato, Chicken, Potato }
+    public enum FoodType { Fish, Shrimp, Lettuce, Cucumber, Tomato, Chicken, Potato, Meat, Tortilla, Rice }
     public FoodType food;
     public GameObject foodPrefabs;
 
