@@ -345,7 +345,7 @@ public class PlayerInteractController : MonoBehaviour
         {
             PickupPlate();
         }
-        else if (!isHolding && interactObject.CompareTag("Pot"))
+        else if (!isHolding && (interactObject.CompareTag("Pot") || interactObject.CompareTag("Pan")))
         {
             PickupPot();
         }
@@ -675,7 +675,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private bool ShouldReturnEarly(Collider other)
     {
-        return (other.CompareTag("Ingredient") || other.CompareTag("Plate")) && isHolding;
+        return (other.CompareTag("Ingredient") || other.CompareTag("Plate") || other.CompareTag("Pan") || other.CompareTag("Pot")) && isHolding;
     }
 
     private bool HandleActiveIngredientSwitch(Collider other)
@@ -770,6 +770,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void DeactivateObjects()
     {
+        //Debug.Log($"DeactivateObjects : {canActive}");
         canActive = false;
         OffHighlightCurrentObject();
         interactObject = null;
@@ -802,7 +803,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void OnHighlightCurrentObject()
     {
-        if (interactObject != null && interactObject.GetComponent<Object>() != null)
+        if (interactObject != null && interactObject.GetComponent<ObjectHighlight>() != null)
         {
             bool highlightState = interactObject.CompareTag("Ingredient") ? interactObject.GetComponent<Ingredient>().isCooked : true;
             interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(highlightState);

@@ -18,6 +18,7 @@ TagManager:
   - StageUi
   - Ingredient
   - Pot
+  - Pan
   layers:
   - Default
   - TransparentFX
