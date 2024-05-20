@@ -37,7 +37,12 @@ namespace EnumTypes
         IntroMapOpen,
         TestStageMapOpen,
 
+    }
 
+    public enum SoundEvents
+    {
+        FadeIn,
+        FadeOut
     }
 
     public class EnumTypes : MonoBehaviour { }

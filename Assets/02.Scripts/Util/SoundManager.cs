@@ -1,6 +1,9 @@
+using EnumTypes;
+using EventLibrary;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : Singleton<SoundManager>
 {
@@ -75,6 +78,11 @@ public class SoundManager : Singleton<SoundManager>
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
+
+    private void OnEnable()
+    {
+    }
+
 
     void Start()
     {      
