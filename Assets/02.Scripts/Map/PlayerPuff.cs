@@ -7,6 +7,8 @@ public class PlayerPuff : Singleton<PlayerPuff>
     public GameObject puffBurstPrefab;  // 버스트 퍼프 프리팹
     private IObjectPool<Puff> walkPool; // 걷는 퍼프 풀
     private IObjectPool<Puff> burstPool; // 버스트 퍼프 풀
+    public Vector3 puffSize = new  Vector3(0.1f,0.1f,0.1f);
+    //public Transform puffPostion;
 
     private new void Awake()
     {
@@ -18,17 +20,19 @@ public class PlayerPuff : Singleton<PlayerPuff>
     // 부스트 퍼프 실행
     public void BoostPuff(Transform puffPosition)
     {
-        var burst = burstPool.Get();
-        burst.transform.position = puffPosition.position;
-        // burst.transform.rotation = puffPosition.rotation;
+        var bust = burstPool.Get();
+        bust.transform.position = puffPostion.transform.position;
+        bust.transform.localScale = puffSize;
+        //bust.transform.rotation = puffPostion.transform.rotation;
     }
 
     // 무브 퍼프 실행
     public void MovePuff(Transform puffPosition)
     {
         var walk = walkPool.Get();
-        walk.transform.position = puffPosition.position;
-        // walk.transform.rotation = puffPosition.rotation;
+        walk.transform.position = puffPostion.transform.position;
+        walk.transform.localScale = puffSize;
+        //walk.transform.rotation=puffPostion.transform.rotation;
     }
 
     // 워크 퍼프 생성 후 풀에 담음

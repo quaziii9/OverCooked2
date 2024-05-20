@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/02.Scripts/Map/DeathZone.cs.meta
 guid: 387bf6416eda82b4ea4920c52a5ab078
+========
+guid: c03b19dd94446684e975e487b432117e
+>>>>>>>> Minseok:Assets/02.Scripts/Map/Pot.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
