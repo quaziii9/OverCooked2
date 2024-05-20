@@ -7,7 +7,7 @@ public class PlayerMoveController : MonoBehaviour
     public Rigidbody rb;
 
     [Header("Speed")]
-    [SerializeField] private float moveSpeed = 15f;
+    [SerializeField] public float moveSpeed = 15f;
     [SerializeField] private float turnSpeed = 10f;
 
     [Header("Dash")]
