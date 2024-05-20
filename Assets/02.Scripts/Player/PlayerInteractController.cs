@@ -287,7 +287,12 @@ public class PlayerInteractController : MonoBehaviour
         }
         else if (canActive && interactObject.GetComponent<ObjectHighlight>().onSomething)
         {
-            GameObject handleThing = interactObject.transform.parent.GetChild(2).gameObject;
+            GameObject handleThing = interactObject.transform.parent.GetChild(2).gameObject; ;
+
+            if (interactObject.transform.parent.GetChild(2).name.Equals("PFX_PanFire"))
+            {
+                handleThing = interactObject.transform.parent.GetChild(3).gameObject;
+            }
 
             if (handleThing.CompareTag("Ingredient") && objectHighlight.objectType == ObjectHighlight.ObjectType.Board &&
                 interactObject.transform.GetChild(0).GetComponent<CuttingBoard>().cookingBar.IsActive())
