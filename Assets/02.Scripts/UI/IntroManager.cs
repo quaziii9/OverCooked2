@@ -19,6 +19,7 @@ public class IntroManager : MonoBehaviour
         }
     }
 
+    // 처음 인트로 들어갈때 세팅
     public void InitUI()
     {
         if (UIManager.Instance.first == true)
@@ -29,8 +30,8 @@ public class IntroManager : MonoBehaviour
 
             // VAN 
             UIManager.Instance.ingamePlayerUI.SetActive(false);
-            //UIManager.Instance.buttonUI.SetActive(false);
-            //UIManager.Instance.shutter.SetActive(true);
+            UIManager.Instance.buttonUI.SetActive(false);
+            UIManager.Instance.shutter.SetActive(true);
 
             // UnderBar UI
             //UIManager.Instance.underBarStop.SetActive(false);
@@ -41,6 +42,7 @@ public class IntroManager : MonoBehaviour
     }
 
 
+    // 게임을 시작하려면 스페이스바
     public void StartSpace()
     {
         UIManager.Instance.first = false;
@@ -64,6 +66,7 @@ public class IntroManager : MonoBehaviour
         // UIManager.Instance.UnderBarStop.SetActive(true);
     }
 
+    // 셔터 비활성화
     IEnumerator ShutterOut()
     {
         yield return new WaitForSeconds(2f);
@@ -71,6 +74,7 @@ public class IntroManager : MonoBehaviour
         UIManager.Instance.shutter.SetActive(false);
     }
 
+    // 처음 인트로 로딩 영상
     IEnumerator IntroSetting()
     {
         yield return new WaitForSeconds(18f);

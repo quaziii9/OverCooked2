@@ -31,11 +31,32 @@ namespace EnumTypes
         PlayerDamaged,
     }
 
-    public enum FirstIntroEvents
+    public enum UIEvents
     {
-        FirstSetIntroUI,
-        FrirstIntrSpace,
+        WorldMapOpen,
+        IntroMapOpen,
+        TestStageMapOpen,
+        BattleRoomOpen,
+    }
 
+    public enum SoundEvents
+    {
+        FadeIn,
+        FadeOut
+    }
+
+    public enum UIType
+    {
+        OptionUI,
+        StopUI,
+        BattleUI,
+        ExitLobbyUI,
+        LoadingKeyUI,
+        LoadingMapUI,
+        LoadingFoodUI,
+        BusMap,
+        StageMapEscUI,
+        RecipeUI,
     }
 
     public class EnumTypes : MonoBehaviour { }

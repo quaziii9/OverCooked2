@@ -61,19 +61,25 @@ public class SoundManager : Singleton<SoundManager>
     AudioSource musicSource;            // Reference to the generated music Audio Source
     AudioSource effectSource;           // Reference to the generated effect Audio Source
 
-
     public void Load()
     {
         bgmAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
         bgmChangeAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
         volumeBGM = LoadData.Instance.optionData.saveBgmVolume;
         settingBGM = LoadData.Instance.optionData.saveBgmVolume;
+
         effectAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
         volumeEffect = LoadData.Instance.optionData.saveEffectVolume;
         settingEffect = LoadData.Instance.optionData.saveEffectVolume;
+
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
+
+    private void OnEnable()
+    {
+    }
+
 
     void Start()
     {      
@@ -182,7 +188,7 @@ public class SoundManager : Singleton<SoundManager>
     IEnumerator FadeInVolume(AudioSource audioSource, float waitTime, string bgmName)
     {
         yield return new WaitForSeconds(waitTime);
-        playBgm(bgmName);
+        playBgm(audioSource,bgmName);
         while (audioSource.volume < volumeBGM)
         {
             audioSource.volume += Time.deltaTime * 0.2f;
@@ -204,51 +210,51 @@ public class SoundManager : Singleton<SoundManager>
     }
     #endregion
 
-    void playBgm(string bgmName)
+    void playBgm(AudioSource audioSource , string bgmName)
     {
         switch (bgmName)
         {
             case "Intro":
-                IntroBGM();
+                IntroBGM(audioSource);
                 break;
             case "Battle":
-                BattleBGM();
+                BattleBGM(audioSource);
                     break;
             case "BusMap":
-                BusMapBGM();
+                BusMapBGM(audioSource);
                 break;
             case "StageMap":
-                StageMapBGM();
+                StageMapBGM(audioSource);
                 break;
         }
     }
 
-    void IntroBGM()
+    void IntroBGM(AudioSource audioSource)
     {
-        bgmAudioSource.clip = introBGM;
-        bgmAudioSource.loop = true;
-        bgmAudioSource.Play();
+        audioSource.clip = introBGM;
+        audioSource.loop = true;
+        audioSource.Play();
     }
 
-    void BattleBGM()
+    void BattleBGM(AudioSource audioSource)
     {
-        bgmChangeAudioSource.clip = battleBGM;
-        bgmChangeAudioSource.loop = true;
-        bgmChangeAudioSource.Play();
+        audioSource.clip = battleBGM;
+        audioSource.loop = true;
+        audioSource.Play();
     }
 
-    void BusMapBGM()
+    void BusMapBGM(AudioSource audioSource)
     {
-        bgmChangeAudioSource.clip = busMapBGM;
-        bgmChangeAudioSource.loop = true;
-        bgmChangeAudioSource.Play();
+        audioSource.clip = busMapBGM;
+        audioSource.loop = true;
+        audioSource.Play();
     }
 
-    void StageMapBGM()
+    void StageMapBGM(AudioSource audioSource)
     {
-        bgmAudioSource.clip = stageBGM;
-        bgmAudioSource.loop = true;
-        bgmAudioSource.Play();
+        audioSource.clip = stageBGM;
+        audioSource.loop = true;
+        audioSource.Play();
     }
     
 

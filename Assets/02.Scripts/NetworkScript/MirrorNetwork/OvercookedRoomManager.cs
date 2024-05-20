@@ -62,7 +62,7 @@ public class OvercookedRoomManager : NetworkRoomManager
         // 게임룸 나갔을때 실행되는 로직
         ExitGameRoom();
         // Alret창에서 나가기 클릭했을때 실행되는 로직
-        UIManager.Instance.ExitLobby();
+        UIManager.Instance.AgreeExitLobby();
         //}
         //}
     }
