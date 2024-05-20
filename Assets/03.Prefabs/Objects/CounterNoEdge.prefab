@@ -168,7 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8986890382625418870}
   - component: {fileID: 235382547464999595}
-  - component: {fileID: 2520732290398872678}
+  - component: {fileID: 19117311603165443}
   m_Layer: 0
   m_Name: Collider
   m_TagString: CounterTop
@@ -204,7 +204,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.193, y: 1, z: 1.57}
   m_Center: {x: 0.0025, y: 0, z: -0.18}
---- !u!114 &2520732290398872678
+--- !u!114 &19117311603165443
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,7 +218,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeObject: 0
   onSomething: 0
-  hightlightMaterials: []
+  hightlightMaterials:
+  - {fileID: 2100000, guid: 637616dbee639874b8a1219b8e399142, type: 2}
+  - {fileID: 2100000, guid: 88f05aece074d6a478483d8cc525fa91, type: 2}
   objectType: 0
 --- !u!1 &7870186716771150858
 GameObject:
