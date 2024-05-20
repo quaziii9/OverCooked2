@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectHighlight : MonoBehaviour
@@ -15,7 +13,6 @@ public class ObjectHighlight : MonoBehaviour
     [HideInInspector] public enum ObjectType { CounterTop, Craft, Return, Station, Sink, Ingredient, Board, Bin, Plate };
     // 현재 오브젝트 타입
     [SerializeField] public ObjectType objectType;
-
 
     public void ActivateHighlight(bool isCooked)
     {

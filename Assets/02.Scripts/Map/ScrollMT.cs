@@ -66,7 +66,6 @@ public class ScrollMT : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("OnDisable");
         // 스크립트가 비활성화될 때 오프셋 초기화
         if (originalMaterial != null)
         {
