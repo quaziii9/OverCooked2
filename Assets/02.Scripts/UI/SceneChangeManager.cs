@@ -28,7 +28,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     // 버스 맵으로 전환
     public void ChangeToBusMap()
     {
-        ChangeScene("BusMap", "Map", UIManager.Instance.loadingKeyBar);
+        ChangeScene("BusMap", "WorldMap", UIManager.Instance.loadingKeyBar);
     }
 
     // 인트로 맵으로 전환
@@ -140,7 +140,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         Debug.Log($"씬 로드 완료: {scene.name}");
         switch (scene.name)
         {
-            case "Map":
+            case "WorldMap":
                 //VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.EnterBusMapMaskIn();
                 UIManager.Instance.sceneType = SceneType.BusMap;

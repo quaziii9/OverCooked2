@@ -256,7 +256,7 @@ public class UIManager : Singleton<UIManager>
         stopUI.SetActive(false);
 
         // BusMapEscUI도 같이 종료
-        if(SceneManager.GetActiveScene().name == "Map")
+        if(SceneManager.GetActiveScene().name == "WorldMap")
         {
             busMapEscUI.SetActive(false);
         }
