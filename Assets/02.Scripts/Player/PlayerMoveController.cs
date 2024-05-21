@@ -73,7 +73,7 @@ public class PlayerMoveController : MonoBehaviour
         {
             rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
         }
-        if (isOnStairs&& moveInput.magnitude != 0)//언덕위에서 이동중일때
+        if (isOnStairs&& moveInput.magnitude != 0)//언덕위에서 이동중일 때
         {
             rb.AddForce(Vector3.down * 5f , ForceMode.Acceleration);
         }
@@ -88,12 +88,13 @@ public class PlayerMoveController : MonoBehaviour
     {
         moveInput = inputValue.Get<Vector2>();
     }
+
     private void OnDrawGizmos()
     {
-
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * downforce);
     }
+
      void OnCollisionEnter(Collision other)
     {
         // Print how many points are colliding with this transform
