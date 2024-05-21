@@ -288,7 +288,6 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             // 선택된 패널의 이름을 가져옵니다.
             string selectedPanelName = Panels[SelectedPanel].name;
-
             return selectedPanelName;
         }
         private void Update()

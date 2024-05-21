@@ -37,16 +37,48 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         ChangeScene("Intro", "Intro", UIManager.Instance.loadingKeyBar);
     }
 
+    public void ChangeToBattleLobby()
+    {
+        ChangeScene("Battle", "BattleLobby", UIManager.Instance.loadingKeyBar);
+    }
     // 테스트 스테이지로 전환
     public void ChangeToTestStage()
     {
         ChangeScene("StageMap", "TestStage", UIManager.Instance.loadingMapBar);
     }
-
-    public void ChangeToBattleLobby()
+    public void ChangeToStageTutorial()
     {
-        ChangeScene("Battle", "BattleLobby", UIManager.Instance.loadingKeyBar);
+        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
     }
+
+    public void ChangeToStage1_4()
+    {
+        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+    }
+
+
+    public void ChangeToStage2_5()
+    {
+        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+    }
+
+
+    public void ChangeToStage3_3()
+    {
+        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+    }
+
+
+    public void ChangeToStageWizard()
+    {
+        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+    }
+
+    public void ChangeToStageMine()
+    {
+        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+    }
+
 
     // 씬 전환을 위한 공통 메서드
     private void ChangeScene(string bgmName, string sceneName, Image loadingBar)
@@ -104,15 +136,17 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     // 씬 로드 완료 후 호출되는 메서드
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        VanSingleton.Instance.van.SetActive(false);
         Debug.Log($"씬 로드 완료: {scene.name}");
         switch (scene.name)
         {
             case "Map":
-                VanSingleton.Instance.van.SetActive(false);
+                //VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.EnterBusMapMaskIn();
                 UIManager.Instance.sceneType = SceneType.BusMap;
                 break;
             case "Intro":
+                VanSingleton.Instance.van.SetActive(true);
                 UIManager.Instance.vanCamera = GameObject.Find("VanCam").GetComponent<CinemachineVirtualCamera>();
                 UIManager.Instance.shutterCamera = GameObject.Find("ShutterCam").GetComponent<CinemachineVirtualCamera>();
                 UIManager.Instance.sceneType = SceneType.Intro;
@@ -127,19 +161,57 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                     UIManager.Instance.EnterIntroMaskIn();
                 }
                 break;
-            case "TestStage":
-                UIManager.Instance.sceneType = SceneType.BattleMap;
-                VanSingleton.Instance.van.SetActive(false);
-                UIManager.Instance.RecipeUIOn(0);
-                UIManager.Instance.EnterTestStageMaskIn();
-                break;
             case "BattleLobby":
                 UIManager.Instance.sceneType = SceneType.BattleLobby;
-                VanSingleton.Instance.van.SetActive(false);
+                //VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.buttonUI.SetActive(false);
                 UIManager.Instance.battleUI.SetActive(true);
                 UIManager.Instance.BattleUIOn();
                 break;
+            case "TestStage":
+                //UIManager.Instance.sceneType = SceneType.StageMap;
+                //VanSingleton.Instance.van.SetActive(false);
+                UIManager.Instance.RecipeUIOn(0);
+                UIManager.Instance.EnterStageMaskIn();
+                break;
+            case "tutorial scene_name":
+                UIManager.Instance.sceneType = SceneType.StageMap;
+                //VanSingleton.Instance.van.SetActive(false);
+                UIManager.Instance.RecipeUIOn(0);
+                UIManager.Instance.EnterStageMaskIn();
+                break;
+            case "stage1_4 scene_name":
+                UIManager.Instance.sceneType = SceneType.StageMap;
+                //VanSingleton.Instance.van.SetActive(false);
+                UIManager.Instance.RecipeUIOn(0);
+                UIManager.Instance.EnterStageMaskIn();
+                break;
+            case "stage2_5 scene_name":
+                UIManager.Instance.sceneType = SceneType.StageMap;
+                //VanSingleton.Instance.van.SetActive(false);
+                UIManager.Instance.RecipeUIOn(0);
+                UIManager.Instance.EnterStageMaskIn();
+                break;
+            case "stage3_3 scene_name":
+                UIManager.Instance.sceneType = SceneType.StageMap;
+                //VanSingleton.Instance.van.SetActive(false);
+                UIManager.Instance.RecipeUIOn(0);
+                UIManager.Instance.EnterStageMaskIn();
+                break;
+            case "stage wizard scene_name":
+                UIManager.Instance.sceneType = SceneType.BattleMap;
+                //VanSingleton.Instance.van.SetActive(false);
+                UIManager.Instance.RecipeUIOn(0);
+                UIManager.Instance.EnterStageMaskIn();
+                break;
+            case "stage mine scene_name":
+                UIManager.Instance.sceneType = SceneType.BattleMap;
+                //VanSingleton.Instance.van.SetActive(false);
+                UIManager.Instance.RecipeUIOn(0);
+                UIManager.Instance.EnterStageMaskIn();
+                break;
+
+
         }
     }
 }

@@ -37,6 +37,17 @@ public class ScrollSnapButton : MonoBehaviour
         name = clickObject.name;
         if (snap.OnPanelSelectedGetName() == name)
         {
+            if (name == "Wizard")
+            {
+                UIManager.Instance.sceneType = EnumTypes.SceneType.BattleMap;
+                UIManager.Instance.mapType = EnumTypes.MapType.stageWizard;
+            }
+            if (name == "Mine")
+            {
+                UIManager.Instance.sceneType = EnumTypes.SceneType.BattleMap;
+
+                UIManager.Instance.mapType = EnumTypes.MapType.stageMine;
+            }
             UIManager.Instance.EnterLoadingMapUI();
         }
     }

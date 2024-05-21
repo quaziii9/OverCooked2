@@ -73,7 +73,6 @@ public class StageUnlocked : MonoBehaviour
                 {
                     childObject.SetActive(active);
 
-                    Debug.Log("?");
                     CheckSpace();
                     // space 누를때 씬 넘어가는걸로 
                     //Debug.Log(MapManager.Instance.stages[StageNum].)
@@ -98,7 +97,9 @@ public class StageUnlocked : MonoBehaviour
         
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("!");
+            UIManager.Instance.mapType = EnumTypes.MapType.Tuto;
+            UIManager.Instance.sceneType = EnumTypes.SceneType.StageMap;
+            UIManager.Instance.EnterLoadingMapUI();
         }
 
     }

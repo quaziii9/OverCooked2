@@ -55,6 +55,7 @@ public class UIManager : Singleton<UIManager>
     public Image loadingKeyBar;
     public GameObject loadingMapUI;
     public Image loadingMapBar;
+    public GameObject[] mapImage;
 
     [Header("BusMap")]
     public GameObject busMapEscUI;
@@ -81,9 +82,8 @@ public class UIManager : Singleton<UIManager>
 
     public bool first = true;
 
-    private Dictionary<UIType, List<GameObject>> uiGroups;
-
     public SceneType sceneType;
+    public MapType mapType = MapType.None;
 
     public void JsonUILoad()
     {
@@ -99,19 +99,6 @@ public class UIManager : Singleton<UIManager>
 
     private void Start()
     {
-        //uiGroups = new Dictionary<UIType, List<GameObject>>()
-        //{
-        //    { UIType.OptionUI, new List<GameObject> { optionSettingUI } },
-        //    { UIType.StopUI, new List<GameObject> { stopUI } },
-        //    { UIType.BattleUI, new List<GameObject> { battleUI, battleResultUI } },
-        //    { UIType.ExitLobbyUI, new List<GameObject> { exitLobbyUI } },
-        //    { UIType.LoadingKeyUI, new List<GameObject> { loadingKeyUI } },
-        //    { UIType.LoadingMapUI, new List<GameObject> { loadingMapUI } },
-        //    { UIType.LoadingFoodUI, new List<GameObject> (loadingFoodArr) },
-        //    { UIType.BusMap, new List<GameObject> { busMapEscUI, busTopUI } },
-        //    { UIType.StageMapEscUI, new List<GameObject> { stageMapEscUI } },
-        //    { UIType.RecipeUI, new List<GameObject> { recipeUI }.Concat(recipeArr).ToList() },
-        //};
         resolutionText.text = resolutionTextArr[resolutionArrNum];
         fullScreenCheck.SetActive(windowScreen);
     }
@@ -119,6 +106,8 @@ public class UIManager : Singleton<UIManager>
 
     private void Update()
     {
+        Debug.Log(sceneType);
+        Debug.Log(mapType);
         BusMapEscUI();
         StageEscUI();
         //if(!isSetting && !isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOn();
@@ -330,10 +319,9 @@ public class UIManager : Singleton<UIManager>
                 case "EnterIntroMaskOut":
                     Invoke(goTo, 1f);
                     break;
-                case "EnterTestStageMaskOut":
+                case "EnterStageMaskOut":
                     Invoke(goTo, 1f);
-                    break;
-               
+                    break;           
             }        
         }));
     }
@@ -379,12 +367,14 @@ public class UIManager : Singleton<UIManager>
                 case "GoToIntroMap":
                     EventManager<UIEvents>.TriggerEvent(UIEvents.IntroMapOpen);
                     break;
-                case "GoToTestStage":
-                    EventManager<UIEvents>.TriggerEvent(UIEvents.TestStageMapOpen);
-                    break;
                 case "GoToBattleRoom":
                     EventManager<UIEvents>.TriggerEvent(UIEvents.BattleRoomOpen);
                     break;
+                case "GoToTestStage":
+                    //mapType = MapType.Tuto;
+                    EventManager<UIEvents>.TriggerEvent(UIEvents.TestStageMapOpen);
+                    break;
+
                 case "busTopUIOn":
                     busTopUI.SetActive(true);
                     break;
@@ -509,7 +499,33 @@ public class UIManager : Singleton<UIManager>
     {
         loadingMapUI.SetActive(true);
         battleUI.SetActive(false);
-        MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
+        switch(mapType)
+        {
+            case MapType.Tuto:
+                mapImage[0].SetActive(true);
+                MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
+                break;
+            case MapType.stage1_4:
+                mapImage[0].SetActive(true);
+                MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
+                break;
+            case MapType.stage2_5:
+                mapImage[0].SetActive(true);
+                MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
+                break;
+            case MapType.stage3_3:
+                mapImage[0].SetActive(true);
+                MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
+                break;
+            case MapType.stageWizard:
+                mapImage[4].SetActive(true);
+                MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
+                break;
+            case MapType.stageMine:
+                mapImage[5].SetActive(true);
+                MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
+                break;
+        }
     }
     #endregion
 
@@ -558,24 +574,26 @@ public class UIManager : Singleton<UIManager>
     }
     #endregion
 
-    #region EnterTestStage
-    public void EnterTestStageMaskIn()
+    #region EnterStage
+    public void EnterStageMaskIn()
     {
-        MaskInUI(broccoliMask, "EnterTestStageMaskOut");
+        MaskInUI(broccoliMask, "EnterStageMaskOut");
     }
 
-    public void EnterTestStageMaskOut()
+    public void EnterStageMaskOut()
     {
         loadingMapBar.fillAmount = 0f;
         loadingMapUI.SetActive(false);
         MaskOutUI(broccoliMask, pineappleMask, "");
     }
+
+
     #endregion
 
     #region EscUI
     public void BusMapEscUI()
     {
-        if(SceneManager.GetActiveScene().name == "Map")
+        if (sceneType == SceneType.BusMap)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -592,7 +610,7 @@ public class UIManager : Singleton<UIManager>
 
     public void StageEscUI()
     {
-        if (SceneManager.GetActiveScene().name == "TestStage")
+        if(sceneType == SceneType.BattleMap || sceneType == SceneType.StageMap)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -666,6 +684,12 @@ public class UIManager : Singleton<UIManager>
 
     public void ExitGame()
     {
+        mapType = MapType.None;
+        for (int i=0; i<mapImage.Length; i++)
+        {
+            mapImage[i].SetActive(false);   
+        }
+
         //if (SceneManager.GetActiveScene().name == "Map")
         if (sceneType == SceneType.BusMap)
         {
@@ -679,6 +703,13 @@ public class UIManager : Singleton<UIManager>
             EscUIStopOff();
             StageEscUICancle();
             EnterLoadingKeyUIBattle();
+            RecipeUIOff();
+        }
+        else if (sceneType == SceneType.StageMap)
+        {
+            EscUIStopOff();
+            StageEscUICancle();
+            EnterLoadingKeyUI();
             RecipeUIOff();
         }
         else if (sceneType == SceneType.Intro)
