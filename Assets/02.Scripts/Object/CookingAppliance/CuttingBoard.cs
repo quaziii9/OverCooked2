@@ -145,6 +145,10 @@ public class CuttingBoard : MonoBehaviour
     {
         Ingredient Ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
         Ingredient.isCooked = true;
+
+        if (Ingredient.type == IngredientType.Meat || Ingredient.type == IngredientType.Chicken)
+            Ingredient.isCooked = false;
+        
         Ingredient.ChangeMesh(Ingredient.type);
     }
 
@@ -165,23 +169,83 @@ public class CuttingBoard : MonoBehaviour
 
     private Sprite GetIcon(Ingredient.IngredientType ingredientType)
     {
+        //switch (ingredientType)
+        //{
+        //    case Ingredient.IngredientType.Fish:
+        //        return Icons[0];
+        //    case Ingredient.IngredientType.Shrimp:
+        //        return Icons[1];
+        //    case Ingredient.IngredientType.Tomato:
+        //        return Icons[2];
+        //    case Ingredient.IngredientType.Lettuce:
+        //        return Icons[3];
+        //    case Ingredient.IngredientType.Cucumber:
+        //        return Icons[4];
+        //    case Ingredient.IngredientType.Potato:
+        //        return Icons[5];
+        //    case Ingredient.IngredientType.Chicken:
+        //        return Icons[6];
+        //    default:
+        //        throw new ArgumentOutOfRangeException();
+        //}
         switch (ingredientType)
         {
             case Ingredient.IngredientType.Fish:
                 return Icons[0];
+                
             case Ingredient.IngredientType.Shrimp:
                 return Icons[1];
+                
             case Ingredient.IngredientType.Tomato:
                 return Icons[2];
+                
             case Ingredient.IngredientType.Lettuce:
                 return Icons[3];
+                
             case Ingredient.IngredientType.Cucumber:
                 return Icons[4];
+                
             case Ingredient.IngredientType.Potato:
                 return Icons[5];
+                
             case Ingredient.IngredientType.Chicken:
                 return Icons[6];
+                
+            case Ingredient.IngredientType.SeaWeed:
+                return Icons[7];
+                
+            case Ingredient.IngredientType.Tortilla:
+                return Icons[8];
+                
+            case Ingredient.IngredientType.Rice:
+                return Icons[9];
+                
+            case Ingredient.IngredientType.Pepperoni:
+                return Icons[10];
+                
+            case Ingredient.IngredientType.Meat:
+                return Icons[11];
+                
+            case Ingredient.IngredientType.Dough:
+                return Icons[12];
+                
+            case Ingredient.IngredientType.Cheese:
+                return Icons[13];
+                
+            case Ingredient.IngredientType.SushiRice:
+                return Icons[9];
+                
+            case Ingredient.IngredientType.SushiFish:
+                return Icons[0];
+                
+            case Ingredient.IngredientType.SushiCucumber:
+                return Icons[4];
+                
+            case Ingredient.IngredientType.PizzaTomato:
+                return Icons[2];
+                
             default:
+                // 기본적으로 아무것도 하지 않음
                 throw new ArgumentOutOfRangeException();
         }
     }
