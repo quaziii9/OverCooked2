@@ -48,14 +48,24 @@ public class PlayerMoveController : MonoBehaviour
             }
 
         }
-
-       
     }
 
     void FixedUpdate()
     {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, downforce);
-        isOnStairs = Physics.Raycast(transform.position, Vector3.down, downforce);
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, downforce))
+        {
+            if (hit.collider.CompareTag("Stair"))
+            {
+                isOnStairs = true;
+            }
+        }
+        else
+        {
+            isOnStairs = false;
+        }
 
         if (!isDashing && moveInput.magnitude != 0)
         {
@@ -72,14 +82,25 @@ public class PlayerMoveController : MonoBehaviour
         if (!isGrounded)
         {
             rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+            //animator.SetBool("isGround", false);
+
         }
-        if (isOnStairs&& moveInput.magnitude != 0)//언덕위에서 이동중일 때
+        if(isGrounded)
+        {
+            //animator.SetBool("isGround", true);
+        }
+        if (isOnStairs&& moveInput.magnitude != 0)//언덕위에서 이동중일때
         {
             rb.AddForce(Vector3.down * 5f , ForceMode.Acceleration);
         }
-        else if(isOnStairs&& moveInput.magnitude == 0)
+        
+        if(isOnStairs&& moveInput.magnitude == 0)
         {
-            rb.velocity = Vector3.zero;
+            rb.useGravity = false;
+        }
+        else
+        {
+            rb.useGravity = true;
         }
     }
 
