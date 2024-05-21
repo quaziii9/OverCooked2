@@ -359,10 +359,6 @@ public class PlayerInteractController : MonoBehaviour
         {
             PickupPot();
         }
-        //else if (isHolding)
-        //{
-        //
-        //}
     }
 
     void HoldingItemDropObject()
@@ -419,6 +415,28 @@ public class PlayerInteractController : MonoBehaviour
             {
                 SoundManager.Instance.PlayEffect("no");
             }
+
+            var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient>().type;
+
+            // 테이블에 있는게, Pan / Pot이고 내가 든게 쌀, 미트, 닭고기면 실행
+            if (objectHighlight.objectType == ObjectHighlight.ObjectType.Pan && (ingredient == Ingredient.IngredientType.Meat || ingredient == Ingredient.IngredientType.Meat))
+            {
+
+            }
+            else
+            {
+                SoundManager.Instance.PlayEffect("no");
+            }
+
+            // 테이블에 있는게, Pan / Pot이고 내가 든게 쌀, 미트, 닭고기면 실행
+            if (objectHighlight.objectType == ObjectHighlight.ObjectType.Pot && ingredient == Ingredient.IngredientType.Rice)
+            {
+
+            }
+            else
+            {
+                SoundManager.Instance.PlayEffect("no");
+            }
         }
         else
         {
@@ -428,6 +446,8 @@ public class PlayerInteractController : MonoBehaviour
             HandleObject(handlingThing, false);
         }
     }
+
+
 
     private bool CanPlaceIngredient()
     {
