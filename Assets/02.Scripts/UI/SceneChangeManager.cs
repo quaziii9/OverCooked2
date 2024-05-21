@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class SceneChangeManager : Singleton<SceneChangeManager>
 {
     AsyncOperation operation;
-
     private void OnEnable()
     {
         // 씬 로드 완료 이벤트에 OnSceneLoaded 메서드를 등록
@@ -111,10 +110,12 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
             case "Map":
                 VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.EnterBusMapMaskIn();
+                UIManager.Instance.sceneType = SceneType.BusMap;
                 break;
             case "Intro":
                 UIManager.Instance.vanCamera = GameObject.Find("VanCam").GetComponent<CinemachineVirtualCamera>();
                 UIManager.Instance.shutterCamera = GameObject.Find("ShutterCam").GetComponent<CinemachineVirtualCamera>();
+                UIManager.Instance.sceneType = SceneType.Intro;
                 if (!UIManager.Instance.first)
                 {
                     VanSingleton.Instance.van.SetActive(true);
@@ -127,11 +128,13 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 }
                 break;
             case "TestStage":
+                UIManager.Instance.sceneType = SceneType.BattleMap;
                 VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.RecipeUIOn(0);
                 UIManager.Instance.EnterTestStageMaskIn();
                 break;
             case "BattleLobby":
+                UIManager.Instance.sceneType = SceneType.BattleLobby;
                 VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.buttonUI.SetActive(false);
                 UIManager.Instance.battleUI.SetActive(true);

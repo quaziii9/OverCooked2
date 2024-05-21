@@ -83,6 +83,7 @@ public class UIManager : Singleton<UIManager>
 
     private Dictionary<UIType, List<GameObject>> uiGroups;
 
+    public SceneType sceneType;
 
     public void JsonUILoad()
     {
@@ -665,20 +666,22 @@ public class UIManager : Singleton<UIManager>
 
     public void ExitGame()
     {
-        if (SceneManager.GetActiveScene().name == "Map")
+        //if (SceneManager.GetActiveScene().name == "Map")
+        if (sceneType == SceneType.BusMap)
         {
             EscUIStopOff();
             BusMapEscUICancle();
             EnterIntroLoadingMaskIn();
         }
-        else if (SceneManager.GetActiveScene().name == "TestStage")
+        //else if (SceneManager.GetActiveScene().name == "TestStage")
+        else if (sceneType == SceneType.BattleMap)
         {
             EscUIStopOff();
             StageEscUICancle();
-            EnterIntroLoadingMaskIn();
+            EnterLoadingKeyUIBattle();
             RecipeUIOff();
         }
-        else
+        else if (sceneType == SceneType.Intro)
         {
             #if UNITY_EDITOR
                         UnityEditor.EditorApplication.isPlaying = false;

@@ -59,5 +59,16 @@ namespace EnumTypes
         RecipeUI,
     }
 
+
+    public enum SceneType
+    {
+        Intro,
+        BattleLobby,
+        BusMap,
+        BattleMap,
+        StageMap,
+        
+    }
+
     public class EnumTypes : MonoBehaviour { }
 }
