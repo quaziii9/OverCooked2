@@ -6477,7 +6477,7 @@ Transform:
   - {fileID: 762794200}
   - {fileID: 7458581053982683369}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &501643860
 GameObject:
@@ -12420,6 +12420,7 @@ MonoBehaviour:
   currentPlayer: {fileID: 0}
   inputActionAsset: {fileID: -944628639613478452, guid: 095f4c2992ee42543b3b45e2271eff1e,
     type: 3}
+  particl: {fileID: 0}
 --- !u!1 &920911704
 GameObject:
   m_ObjectHideFlags: 0
@@ -14401,7 +14402,7 @@ PrefabInstance:
     - target: {fileID: 5265518529961989397, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5265518529961989397, guid: bee828e41ca4d4e4ba0dbd9e4c47fc27,
         type: 3}
@@ -18830,7 +18831,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1461298603
 GameObject:
@@ -20629,6 +20630,7 @@ MonoBehaviour:
     type: 3}
   puffBurstPrefab: {fileID: 6532701776231347478, guid: 796713e586c611940890b1b7acc65d64,
     type: 3}
+  switchEfPrefab: {fileID: 0}
 --- !u!4 &1588508135
 Transform:
   m_ObjectHideFlags: 0
@@ -58524,7 +58526,7 @@ Transform:
   - {fileID: 5116028658439128275}
   - {fileID: 3562810630832572764}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2846921242184246902
 GameObject:
@@ -87275,7 +87277,7 @@ Transform:
   - {fileID: 7798236330574726960}
   - {fileID: 4384038614171887651}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &5238319115829454301
 Transform:
