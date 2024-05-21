@@ -40,11 +40,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1968929723761603819}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.012, y: 0.005, z: 0.015}
-  m_Center: {x: 0.003, y: 0.0025, z: -0.0085}
+  m_Size: {x: 0.012, y: 0.005, z: 0.018}
+  m_Center: {x: 0.003, y: 0.0025, z: -0.0068}
 --- !u!1 &8069432706813571882
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 8069432706846650994}
   - component: {fileID: 4683399356907462432}
   m_Layer: 0
-  m_Name: Countertop_01_chopping_board_old
+  m_Name: countertop_01_chopping_board_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
