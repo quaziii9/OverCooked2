@@ -8,7 +8,7 @@ public class Ingredient : GameItem
     public bool isCooked = false;
     public bool isOnDesk = true;
 
-    public enum IngredientType { Fish, Shrimp, Plate, Lettuce, Tomato, Cucumber, Chicken, Potato, Pot, Pan };
+    public enum IngredientType { Fish, Shrimp, Plate, Lettuce, Tomato, Cucumber, Chicken, Potato, Pot, Pan, Tortilla, SeaWeed, Rice, Pepperoni, Cheese, Dough, Meat, PizzaTomato, SushiRice, SushiFish, SushiCucumber };
     public IngredientType type; // 재료 유형: 채소, 고기 등
     
     public enum IngredientState { Raw, Cooking, Cooked }
@@ -66,9 +66,18 @@ public class Ingredient : GameItem
                 localPosition = lettuceLocalPos;
                 localRotation = Quaternion.identity;
                 break;
+            case IngredientType.Tortilla:
+                localPosition = Vector3.zero;
+                localRotation = Quaternion.Euler(new Vector3(0, 90f, 0));
+                break;
+            case IngredientType.SeaWeed:
+                localPosition = Vector3.zero;
+                localRotation = Quaternion.Euler(new Vector3(90f, 0, 0));
+                break;
             case IngredientType.Pot:
             case IngredientType.Pan:
             case IngredientType.Tomato:
+            case IngredientType.PizzaTomato:
             case IngredientType.Cucumber:
             case IngredientType.Chicken:
             case IngredientType.Potato:
@@ -136,6 +145,8 @@ public class Ingredient : GameItem
             case IngredientType.Tomato:
             case IngredientType.Shrimp:
             case IngredientType.Lettuce:
+            case IngredientType.Potato:
+            case IngredientType.PizzaTomato:
                 ApplyMaterialAndAdjustPosition(handType);
                 break;
             default:

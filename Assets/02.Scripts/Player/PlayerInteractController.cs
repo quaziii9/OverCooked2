@@ -85,6 +85,8 @@ public class PlayerInteractController : MonoBehaviour
         {
             if(ShouldStartCutting())
                 StartCuttingProcess();
+            else
+                SoundManager.Instance.PlayEffect("no");
         }
         else
         {
@@ -112,7 +114,10 @@ public class PlayerInteractController : MonoBehaviour
         return objectHighlight.objectType == ObjectHighlight.ObjectType.Board &&
                interactObject.transform.parent.childCount > 2 &&
                !interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked &&
-               !isHolding;
+               !isHolding &&
+                interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().type != Ingredient.IngredientType.Rice &&
+                interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().type != Ingredient.IngredientType.SeaWeed &&
+                interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().type != Ingredient.IngredientType.Tortilla;
     }
 
     void StartCuttingProcess()
@@ -422,6 +427,13 @@ public class PlayerInteractController : MonoBehaviour
 
     private bool CanPlaceIngredient()
     {
+        Debug.Log($"canActive : {canActive}");
+        Debug.Log($"objectHighlight.onSomething : {objectHighlight.onSomething}");
+        Debug.Log($"interactObject.transform.parent.childCount > 2 : {interactObject.transform.parent.childCount > 2}");
+        Debug.Log($"IsPlate(interactObject.transform.parent.GetChild(2)) : {IsPlate(interactObject.transform.parent.GetChild(2))}");
+        Debug.Log($"isHolding: {isHolding}");
+        Debug.Log($"IsHoldingCookedIngredient() : {IsHoldingCookedIngredient()}");
+
         return canActive && objectHighlight.onSomething
                && interactObject.transform.parent.childCount > 2
                && IsPlate(interactObject.transform.parent.GetChild(2))
@@ -441,13 +453,21 @@ public class PlayerInteractController : MonoBehaviour
         if (holdingObj.childCount > 0)
         {
             var handle = holdingObj.GetChild(0).GetComponent<Ingredient>();
-            return handle != null && handle.isCooked;
+            bool checkisCooked = handle.isCooked;
+            // 김은 조리 안되어도 접시 올라감
+            if(handle.type == Ingredient.IngredientType.SeaWeed)
+            {
+                checkisCooked = true;
+            }
+
+            return handle != null && checkisCooked;
         }
         return false;
     }
 
     private void PlaceIngredient()
     {
+        Debug.Log("이거왜안댐");
         var plate = interactObject.transform.parent.GetChild(2).GetComponent<Plates>();
         var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient>().type;
         if (plate.AddIngredient(ingredient))
