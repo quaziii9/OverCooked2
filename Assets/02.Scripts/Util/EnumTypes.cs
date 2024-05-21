@@ -35,8 +35,14 @@ namespace EnumTypes
     {
         WorldMapOpen,
         IntroMapOpen,
-        TestStageMapOpen,
         BattleRoomOpen,
+        TutoMapOpen,
+        stage1_4MapOpen,
+        stage2_5MapOpen,
+        stage3_3MapOpen,
+        stageWizardMapOpen,
+        stageMineMapOpen,
+        TestStageMapOpen,
     }
 
     public enum SoundEvents
@@ -57,6 +63,27 @@ namespace EnumTypes
         BusMap,
         StageMapEscUI,
         RecipeUI,
+    }
+
+
+    public enum SceneType
+    {
+        Intro,
+        BattleLobby,
+        BusMap,
+        BattleMap,
+        StageMap,
+    }
+
+    public enum MapType
+    {
+        None,
+        Tuto,
+        stage1_4,
+        stage2_5,
+        stage3_3,
+        stageWizard,
+        stageMine,
     }
 
     public class EnumTypes : MonoBehaviour { }

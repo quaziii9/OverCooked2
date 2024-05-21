@@ -14,6 +14,9 @@ public class PlayerMasterController : MonoBehaviour
     [Header("Player Input")]
     public InputActionAsset inputActionAsset;
 
+    [Header("particl")]
+    public GameObject particl;
+
     private void Awake()
     {
         currentPlayer = playerList[1];
@@ -23,7 +26,6 @@ public class PlayerMasterController : MonoBehaviour
     public void SwitchPlayerComponent()
     {
         currentPlayer.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-
         PlayerInput oldPlayerInput = null;
         if (currentPlayer.GetComponent<PlayerInput>() != null)
             oldPlayerInput = currentPlayer.GetComponent<PlayerInput>();
@@ -39,8 +41,17 @@ public class PlayerMasterController : MonoBehaviour
         // 다음 플레이어의 인덱스를 계산한다.
         int nextIndex = (currentIndex + 1) % playerList.Count;
 
-        // 다음 플레이어를 currentPlayer로 설정한다.
-        currentPlayer = playerList[nextIndex];
+
+
+        if (particl != null)
+        {
+            GameObject particleInstance = Instantiate(particl, currentPlayer.transform.position, Quaternion.identity);
+            particleInstance.transform.parent = gameObject.transform; // parentTransform은 넣고 싶은 부모 GameObject의 Transform입니다.
+            SwitchParticle switchParticle = particleInstance.GetComponent<SwitchParticle>();
+            switchParticle.SwitchPlayer(currentPlayer.transform, playerList[nextIndex].transform);
+        }
+            // 다음 플레이어를 currentPlayer로 설정한다.
+            currentPlayer = playerList[nextIndex];
 
         PlayerInput playerInput = currentPlayer.AddComponent<PlayerInput>();
 

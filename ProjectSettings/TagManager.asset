@@ -19,6 +19,7 @@ TagManager:
   - Ingredient
   - Pot
   - Pan
+  - Stair
   layers:
   - Default
   - TransparentFX

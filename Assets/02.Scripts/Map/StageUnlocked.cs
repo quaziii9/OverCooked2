@@ -42,7 +42,7 @@ public class StageUnlocked : MonoBehaviour
 
     //}
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         // 해당 GameObject에 "Bus" 태그가 onenter되면
         if (other.CompareTag("Bus"))
@@ -72,6 +72,11 @@ public class StageUnlocked : MonoBehaviour
                 if (childObject.name == "unlock")
                 {
                     childObject.SetActive(active);
+
+                    CheckSpace();
+                    // space 누를때 씬 넘어가는걸로 
+                    //Debug.Log(MapManager.Instance.stages[StageNum].)
+
                 }
             }
         }
@@ -85,6 +90,18 @@ public class StageUnlocked : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void CheckSpace()
+    {
+        
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            UIManager.Instance.mapType = EnumTypes.MapType.Tuto;
+            UIManager.Instance.sceneType = EnumTypes.SceneType.StageMap;
+            UIManager.Instance.EnterLoadingMapUI();
+        }
+
     }
 
     void SetStar()
