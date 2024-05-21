@@ -16,7 +16,7 @@ public class Plates : MonoBehaviour
 
     public bool AddIngredient(Ingredient.IngredientType handleType)
     {
-        // Dough가 활성화되어야 하는 재료들
+        //Dough가 활성화되어야 하는 재료들
         var requiresDough = new[] {
             Ingredient.IngredientType.Pepperoni,
             Ingredient.IngredientType.Cheese,

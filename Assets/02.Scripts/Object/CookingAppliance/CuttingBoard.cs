@@ -145,6 +145,10 @@ public class CuttingBoard : MonoBehaviour
     {
         Ingredient Ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
         Ingredient.isCooked = true;
+
+        if (Ingredient.type == IngredientType.Meat || Ingredient.type == IngredientType.Chicken)
+            Ingredient.isCooked = false;
+        
         Ingredient.ChangeMesh(Ingredient.type);
     }
 

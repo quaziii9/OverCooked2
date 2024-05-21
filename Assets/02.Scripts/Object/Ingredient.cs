@@ -81,6 +81,14 @@ public class Ingredient : GameItem
             case IngredientType.Cucumber:
             case IngredientType.Chicken:
             case IngredientType.Potato:
+            case IngredientType.Rice:
+            case IngredientType.Pepperoni:
+            case IngredientType.Meat:
+            case IngredientType.Dough:
+            case IngredientType.Cheese:
+            case IngredientType.SushiRice:
+            case IngredientType.SushiFish:
+            case IngredientType.SushiCucumber:
                 localPosition = Vector3.zero;
                 localRotation = Quaternion.identity;
                 break;
@@ -147,6 +155,11 @@ public class Ingredient : GameItem
             case IngredientType.Lettuce:
             case IngredientType.Potato:
             case IngredientType.PizzaTomato:
+            case IngredientType.Dough:
+            case IngredientType.Pepperoni:
+            case IngredientType.Cheese:
+            case IngredientType.Meat:
+            case IngredientType.Chicken:
                 ApplyMaterialAndAdjustPosition(handType);
                 break;
             default:

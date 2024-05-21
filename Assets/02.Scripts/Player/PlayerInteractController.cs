@@ -415,6 +415,10 @@ public class PlayerInteractController : MonoBehaviour
             {
                 PlaceIngredient();
             }
+            else
+            {
+                SoundManager.Instance.PlayEffect("no");
+            }
         }
         else
         {
@@ -455,10 +459,18 @@ public class PlayerInteractController : MonoBehaviour
             var handle = holdingObj.GetChild(0).GetComponent<Ingredient>();
             bool checkisCooked = handle.isCooked;
             // 김은 조리 안되어도 접시 올라감
-            if(handle.type == Ingredient.IngredientType.SeaWeed)
+            if( handle.type == Ingredient.IngredientType.SeaWeed ||
+                handle.type == Ingredient.IngredientType.Tortilla )
             {
                 checkisCooked = true;
             }
+
+            // 미트 치킨은 조리안하면 못올라감
+            //if (handle.type == Ingredient.IngredientType.Meat ||
+            //    handle.type == Ingredient.IngredientType.Chicken)
+            //{
+            //    checkisCooked = false;
+            //}
 
             return handle != null && checkisCooked;
         }
@@ -467,7 +479,6 @@ public class PlayerInteractController : MonoBehaviour
 
     private void PlaceIngredient()
     {
-        Debug.Log("이거왜안댐");
         var plate = interactObject.transform.parent.GetChild(2).GetComponent<Plates>();
         var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient>().type;
         if (plate.AddIngredient(ingredient))
