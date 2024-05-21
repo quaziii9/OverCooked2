@@ -269,7 +269,7 @@ public class Plates : MonoBehaviour
         transform.GetChild(13).GetChild(5).gameObject.SetActive(false); // SeaWeed + SushiRice + SushiCucumber
         transform.GetChild(13).GetChild(6).gameObject.SetActive(false); // SeaWeed + SushiRice + SushiFish + SushiCucumber
 
-        // 적절한 조합 활성화
+        // 적절한 조합 활성화 2
         if (hasSeaWeed)
         {
             if (hasSushiFish && hasSushiCucumber && hasSushiRice)
