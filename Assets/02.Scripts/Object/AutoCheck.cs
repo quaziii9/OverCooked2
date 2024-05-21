@@ -62,7 +62,7 @@ public class AutoCheck : MonoBehaviour
     // 표면 위에 오브젝트 배치
     private void PlaceObjectOnSurface(Transform surface, GameObject obj)
     {
-        surface.GetComponent<ObjectHighlight>().onSomething = true;
+        //dsurface.GetComponent<ObjectHighlight>().onSomething = true;
         SetObjectOnDesk(obj);
         HandleIngredientAuto(surface, obj); // 자동 처리 로직
     }
@@ -72,7 +72,7 @@ public class AutoCheck : MonoBehaviour
     {
         if (obj.CompareTag("Ingredient"))
         {
-            craft.GetComponent<ObjectHighlight>().onSomething = true;
+            //craft.GetComponent<ObjectHighlight>().onSomething = true;
             SetObjectOnDesk(obj);
             HandleIngredientAuto(craft.parent.parent, obj);  // 크래프트 상위 객체에서 처리
         }

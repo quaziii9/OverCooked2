@@ -416,27 +416,45 @@ public class PlayerInteractController : MonoBehaviour
                 SoundManager.Instance.PlayEffect("no");
             }
 
-            var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient>().type;
-
-            // 테이블에 있는게, Pan / Pot이고 내가 든게 쌀, 미트, 닭고기면 실행
-            if (objectHighlight.objectType == ObjectHighlight.ObjectType.Pan && (ingredient == Ingredient.IngredientType.Meat || ingredient == Ingredient.IngredientType.Meat))
+            if (objectHighlight.transform.parent.GetChild(2) != null)
             {
+                GameObject ingredientObj = transform.GetChild(1).gameObject;
+                var ingredient = ingredientObj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type;
 
-            }
-            else
-            {
-                SoundManager.Instance.PlayEffect("no");
+                GameObject potAndPan = objectHighlight.transform.parent.GetChild(2).gameObject;
+                if (objectHighlight.transform.parent.GetChild(2).name.Equals("PFX_PanFire"))
+                    potAndPan = objectHighlight.transform.parent.GetChild(3).gameObject;
+
+                // 테이블에 있는게, Pan이고 내가 든게 미트, 닭고기면 실행
+                if (potAndPan.CompareTag("Pan") && (ingredient == Ingredient.IngredientType.Meat || ingredient == Ingredient.IngredientType.Meat))
+                {
+
+                }
+                else
+                {
+                    SoundManager.Instance.PlayEffect("no");
+                }
+
+                // 테이블에 있는게, Pot이고 내가 든게 쌀이고 화덕이면 실행
+                if (potAndPan.CompareTag("Pot") && ingredient == Ingredient.IngredientType.Rice)
+                {
+                    ingredientObj.transform.SetParent(potAndPan.transform);
+                    // 위치 설정
+                    ingredientObj.transform.localPosition = new Vector3(2e-05f, -0.00017f, 0.00013f);
+                    // 회전 설정
+                    ingredientObj.transform.localRotation = Quaternion.Euler(0f, -168.905f, 0f);
+
+                    potAndPan.GetComponent<PotOnStove>().inSomething = true;
+
+                    anim.SetBool("isHolding", false);
+                    isHolding = false;
+                }
+                else
+                {
+                    SoundManager.Instance.PlayEffect("no");
+                }
             }
 
-            // 테이블에 있는게, Pan / Pot이고 내가 든게 쌀, 미트, 닭고기면 실행
-            if (objectHighlight.objectType == ObjectHighlight.ObjectType.Pot && ingredient == Ingredient.IngredientType.Rice)
-            {
-
-            }
-            else
-            {
-                SoundManager.Instance.PlayEffect("no");
-            }
         }
         else
         {
@@ -451,12 +469,12 @@ public class PlayerInteractController : MonoBehaviour
 
     private bool CanPlaceIngredient()
     {
-        Debug.Log($"canActive : {canActive}");
-        Debug.Log($"objectHighlight.onSomething : {objectHighlight.onSomething}");
-        Debug.Log($"interactObject.transform.parent.childCount > 2 : {interactObject.transform.parent.childCount > 2}");
-        Debug.Log($"IsPlate(interactObject.transform.parent.GetChild(2)) : {IsPlate(interactObject.transform.parent.GetChild(2))}");
-        Debug.Log($"isHolding: {isHolding}");
-        Debug.Log($"IsHoldingCookedIngredient() : {IsHoldingCookedIngredient()}");
+        //Debug.Log($"canActive : {canActive}");
+        //Debug.Log($"objectHighlight.onSomething : {objectHighlight.onSomething}");
+        //Debug.Log($"interactObject.transform.parent.childCount > 2 : {interactObject.transform.parent.childCount > 2}");
+        //Debug.Log($"IsPlate(interactObject.transform.parent.GetChild(2)) : {IsPlate(interactObject.transform.parent.GetChild(2))}");
+        //Debug.Log($"isHolding: {isHolding}");
+        //Debug.Log($"IsHoldingCookedIngredient() : {IsHoldingCookedIngredient()}");
 
         return canActive && objectHighlight.onSomething
                && interactObject.transform.parent.childCount > 2
@@ -525,6 +543,7 @@ public class PlayerInteractController : MonoBehaviour
             {
                 obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 obj.transform.GetComponent<Ingredient>().HandleIngredient(transform, obj.transform.GetComponent<Ingredient>().type, true);
+                objectHighlight.onSomething = false;
             }
             else
             {

@@ -7,14 +7,14 @@ public class PotOnStove : MonoBehaviour
 {
     public Slider cookingBar;
     public bool isOnStove = false;
-    public bool onSomething = false;
+    public bool inSomething = false;
     public float cookingTime;
     private Coroutine _coTimer;
     private bool pause = false;
 
     private void Update()
     {
-        if (isOnStove && onSomething)
+        if (isOnStove && inSomething)
         {
             UpdateCookingBarPosition();
             UpdateCookingBarValue();
