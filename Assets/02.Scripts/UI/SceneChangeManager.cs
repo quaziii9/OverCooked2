@@ -46,24 +46,23 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
 
     public void ChangeToBattleLobby()
     {
-        Debug.Log("은주 바보");
         ChangeScene("Battle", "BattleLobby", UIManager.Instance.loadingKeyBar);
     }
 
     // 씬 전환을 위한 공통 메서드
     private void ChangeScene(string bgmName, string sceneName, Image loadingBar)
     {
-        if (SoundManager.Instance.bgmChangeAudioSource.isPlaying)
+        if(SoundManager.Instance.bgmChangeAudioSource.isPlaying)
         {
             SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
             SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, bgmName);
         }
-        else if (SoundManager.Instance.bgmAudioSource.isPlaying)
+        else if(SoundManager.Instance.bgmAudioSource.isPlaying)
         {
             SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
             SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, bgmName);
         }
-
+       
 
         StartCoroutine(LoadSceneAsyncCoroutine(sceneName, loadingBar));
     }
