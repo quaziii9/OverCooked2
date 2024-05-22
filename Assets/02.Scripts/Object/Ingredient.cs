@@ -7,6 +7,8 @@ public class Ingredient : GameItem
 {
     public bool isCooked = false;
     public bool isOnDesk = true;
+    // 오직 피자만을 위한 bool 값 / 피자 완성을 위한 값
+    public bool pizzazIsCooked = false;
 
     public enum IngredientType { Fish, Shrimp, Plate, Lettuce, Tomato, Cucumber, Chicken, Potato, Pot, Pan, Tortilla, SeaWeed, Rice, Pepperoni, Cheese, Dough, Meat, PizzaTomato, SushiRice, SushiFish, SushiCucumber };
     public IngredientType type; // 재료 유형: 채소, 고기 등
@@ -160,6 +162,7 @@ public class Ingredient : GameItem
             case IngredientType.Cheese:
             case IngredientType.Meat:
             case IngredientType.Chicken:
+            case IngredientType.Rice:
                 ApplyMaterialAndAdjustPosition(handType);
                 break;
             default:

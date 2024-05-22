@@ -66,7 +66,7 @@ MonoBehaviour:
   currentState: 0
   cookedIngredient: {fileID: -4223817722983136067, guid: 309b929f2369af74eac0c1ef60fc1ff4,
     type: 3}
-  cookedFish: {fileID: 2100000, guid: faf32d44d348e6d46bd7acf0c9325897, type: 2}
+  cookedFish: {fileID: 2100000, guid: 86a5f2ae5835d084c93eecfcff46a138, type: 2}
   fishLocalPos: {x: 0, y: 0.138, z: 0.08}
   shrimpLocalPos: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
   lettuceLocalPos: {x: 0, y: 0.418, z: 0}
@@ -87,8 +87,8 @@ MonoBehaviour:
   hightlightMaterials:
   - {fileID: 2100000, guid: 663abb534aa6e6c4aa8743448f668104, type: 2}
   - {fileID: 2100000, guid: cb8ceae9e8afc6644ad1799806269c87, type: 2}
-  - {fileID: 2100000, guid: faf32d44d348e6d46bd7acf0c9325897, type: 2}
-  - {fileID: 2100000, guid: 7d4452b458fabb248bf1489b1b43f6bd, type: 2}
+  - {fileID: 2100000, guid: 86a5f2ae5835d084c93eecfcff46a138, type: 2}
+  - {fileID: 2100000, guid: 890ef1d3469de1441b5a5a9ddfccf505, type: 2}
   objectType: 5
 --- !u!1 &3051806393758464859
 GameObject:
@@ -114,7 +114,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3051806393758464859}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 49.567566, y: 0, z: 1.446065}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
