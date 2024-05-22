@@ -32,24 +32,29 @@ public class PlayerDash : MonoBehaviour
 
     private void Update()
     {
-        if (dashCdTimer > 0) dashCdTimer -= Time.deltaTime;
+        if (dashCdTimer > 0)
+            dashCdTimer -= Time.deltaTime;
     }
 
     public void OnDash(InputValue inputButton)
     {
-        if (inputButton.isPressed && !isDashing) Dash();
+        if (inputButton.isPressed && !isDashing)
+            Dash();
     }
 
     private void Dash()
     {
-        if (dashCdTimer > 0) return;
-        else dashCdTimer = dashCd;
+        if (dashCdTimer > 0 || isDashing)
+            return;
 
+        dashCdTimer = dashCd;
         isDashing = true;
 
-        if (disableGravity) rb.useGravity = false;
+        if (disableGravity)
+            rb.useGravity = false;
 
-        if (resetVel) rb.velocity = Vector3.zero;
+        if (resetVel)
+            rb.velocity = Vector3.zero;
 
         StartCoroutine(ExecuteDash());
     }
@@ -58,18 +63,21 @@ public class PlayerDash : MonoBehaviour
     {
         float elapsedTime = 0f;
         PlayerPuff.Instance.BoostPuff(transform);
+
         while (elapsedTime < dashDuration)
         {
             float dashProgress = elapsedTime / dashDuration;
             float curveValue = dashCurve.Evaluate(dashProgress); // AnimationCurve에서 값을 평가
             Vector3 forceToApply = transform.forward * dashForce * curveValue;
-            rb.AddForce(forceToApply, ForceMode.Impulse); // Impulse 대신 Force를 사용
+            rb.AddForce(forceToApply, ForceMode.Impulse);
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-   
+
         isDashing = false;
-        if (disableGravity) rb.useGravity = true;
+
+        if (disableGravity)
+            rb.useGravity = true;
     }
 }

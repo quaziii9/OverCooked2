@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4212193895107993558}
   m_Layer: 0
   m_Name: Dough_Sliced
-  m_TagString: Untagged
+  m_TagString: Ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
