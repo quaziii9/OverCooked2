@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int maxMenuLimit; // 이번 스테이지에서 최대로 쌓일 수 있는 메뉴 개수들
     [SerializeField] private GameObject[] Single_Double_PoolUIs; // 오브젝트 풀링으로 쓸 단일 메뉴 UI들
     [SerializeField] private GameObject[] Triple_PoolUIs; // 오브젝트 풀링으로 쓸 3개짜리 메뉴 UI들
+    [SerializeField] private GameObject[] Quadruple_PoolUIs; // 오브젝트 풀링으로 쓸 3개짜리 메뉴 UI들
     public List<Menu> CurrentOrder; // 현재 주문 목록
     public List<GameObject> CurrentOrderUI; // 현재 주문 UI 목록
     public Vector3 poolPos; // 풀 위치
@@ -390,7 +391,7 @@ public class GameManager : MonoBehaviour
         newPlate.transform.localPosition = spawnPos;
         newPlate.GetComponent<Plates>().Canvas = Canvas;
     }
-
+    /*
     public void MakeOrder()
     {
         // 새로운 주문 생성
@@ -470,12 +471,106 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    */
+    public void MakeOrder()
+    {
+        // 새로운 주문 생성
+        if (CurrentOrder.Count >= maxMenuLimit)
+        {
+            return; // 현재 주문이 최대 주문 수를 초과하면 함수를 종료
+        }
+
+        i = -1;
+        j = -1;
+        i = Random.Range(0, Menus.Length); // 랜덤으로 메뉴 선택
+
+        if (Menus[i].Ingredient.Count == 1) // 재료가 한 개일 때
+        {
+            for (j = 0; j < Single_Double_PoolUIs.Length; j++)
+            {
+                if (!Single_Double_PoolUIs[j].activeSelf) // 비활성화된 UI를 찾기
+                {
+                    Single_Double_PoolUIs[j].SetActive(true); // UI 활성화
+                    Single_Double_PoolUIs[j].transform.GetChild(1).gameObject.SetActive(false); // 두번째 재료 부분 비활성화
+                    Single_Double_PoolUIs[j].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[0]; // 첫번째 재료 아이콘 설정
+                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = Menus[i].MenuIcon; // 메뉴 아이콘 설정
+                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().maxValue = Menus[i].LimitTime; // 슬라이더 최대 시간 설정
+                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().value = Menus[i].LimitTime; // 슬라이더 현재 시간 설정 (풀로 시작)
+                    CurrentOrder.Add(Menus[i]); // 현재 주문에 추가
+                    CurrentOrderUI.Add(Single_Double_PoolUIs[j]); // UI 목록에 추가
+                    return;
+                }
+            }
+        }
+        else if (Menus[i].Ingredient.Count == 2) // 재료가 두 개일 때
+        {
+            for (j = 0; j < Single_Double_PoolUIs.Length; j++)
+            {
+                if (!Single_Double_PoolUIs[j].activeSelf) // 비활성화된 UI를 찾기
+                {
+                    Single_Double_PoolUIs[j].SetActive(true); // UI 활성화
+                    Single_Double_PoolUIs[j].transform.GetChild(1).gameObject.SetActive(true); // 두번째 재료 부분 활성화
+                    Single_Double_PoolUIs[j].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[0]; // 첫번째 재료 아이콘 설정
+                    Single_Double_PoolUIs[j].transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[1]; // 두번째 재료 아이콘 설정
+                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = Menus[i].MenuIcon; // 메뉴 아이콘 설정
+                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().maxValue = Menus[i].LimitTime; // 슬라이더 최대 시간 설정
+                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().value = Menus[i].LimitTime; // 슬라이더 현재 시간 설정 (풀로 시작)
+                    CurrentOrder.Add(Menus[i]); // 현재 주문에 추가
+                    CurrentOrderUI.Add(Single_Double_PoolUIs[j]); // UI 목록에 추가
+                    return;
+                }
+            }
+        }
+        else if (Menus[i].Ingredient.Count == 3) // 재료가 세 개일 때
+        {
+            for (j = 0; j < Triple_PoolUIs.Length; j++)
+            {
+                if (!Triple_PoolUIs[j].activeSelf) // 비활성화된 UI를 찾기
+                {
+                    Triple_PoolUIs[j].SetActive(true); // UI 활성화
+                    Triple_PoolUIs[j].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[0]; // 첫번째 재료 아이콘 설정
+                    Triple_PoolUIs[j].transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = Menus[i].IngredientIcon[1]; // 두번째 재료 아이콘 설정
+                    Triple_PoolUIs[j].transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = Menus[i].IngredientIcon[2]; // 세번째 재료 아이콘 설정
+                    Triple_PoolUIs[j].transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = Menus[i].MenuIcon; // 메뉴 아이콘 설정
+                    Triple_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().maxValue = Menus[i].LimitTime; // 슬라이더 최대 시간 설정
+                    Triple_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().value = Menus[i].LimitTime; // 슬라이더 현재 시간 설정 (풀로 시작)
+                    CurrentOrder.Add(Menus[i]); // 현재 주문에 추가
+                    CurrentOrderUI.Add(Triple_PoolUIs[j]); // UI 목록에 추가
+                    return;
+                }
+            }
+        }
+        else if (Menus[i].Ingredient.Count == 4) // 재료가 네 개일 때
+        {
+            for (j = 0; j < Quadruple_PoolUIs.Length; j++) // Quadruple_PoolUIs 배열을 사용하여 비활성화된 UI를 찾기
+            {
+                if (!Quadruple_PoolUIs[j].activeSelf) // 비활성화된 UI를 찾기
+                {
+                    Quadruple_PoolUIs[j].SetActive(true); // UI 활성화
+                    Quadruple_PoolUIs[j].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[0]; // 첫번째 재료 아이콘 설정
+                    Quadruple_PoolUIs[j].transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = Menus[i].IngredientIcon[1]; // 두번째 재료 아이콘 설정
+                    Quadruple_PoolUIs[j].transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = Menus[i].IngredientIcon[2]; // 세번째 재료 아이콘 설정
+                    Quadruple_PoolUIs[j].transform.GetChild(0).GetChild(3).GetComponent<Image>().sprite = Menus[i].IngredientIcon[3]; // 네번째 재료 아이콘 설정
+                    Quadruple_PoolUIs[j].transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = Menus[i].MenuIcon; // 메뉴 아이콘 설정
+                    Quadruple_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().maxValue = Menus[i].LimitTime; // 슬라이더 최대 시간 설정
+                    Quadruple_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().value = Menus[i].LimitTime; // 슬라이더 현재 시간 설정 (풀로 시작)
+                    CurrentOrder.Add(Menus[i]); // 현재 주문에 추가
+                    CurrentOrderUI.Add(Quadruple_PoolUIs[j]); // UI 목록에 추가
+                    return;
+                } 
+            }
+        }
+    }
+
+
 
     private void SuccessEffect()
     {
         // 성공 효과
     }
 
+    //주문 4개 추가 리펙토링
+    /*
     public bool CheckMenu(List<Ingredient.IngredientType> containIngredients) // plate의 재료 list들 통으로 받아서 비교
     {
         // 메뉴 확인 및 처리
@@ -621,6 +716,117 @@ public class GameManager : MonoBehaviour
         }
         // StartCoroutine(TurnAlpha(wrong));
         return false;
+    }
+    */
+    public bool CheckMenu(List<Ingredient.IngredientType> containIngredients) // plate의 재료 list들 통으로 받아서 비교
+    {
+        // 메뉴 확인 및 처리
+        OriginalMoney = Coin; // 원래 돈을 저장
+        if (containIngredients == null) // 빈 접시만 내면 무조건 실패
+        {
+            // 빨간색 띵 소리 및 애니메이션 (주석 처리됨)
+            // StartCoroutine(TurnAlpha(wrong));
+            return false; // 실패 반환
+        }
+        else
+        {
+            for (int i = 0; i < CurrentOrder.Count; i++) // 현재 쌓인 주문들과 비교
+            {
+                if (containIngredients.Count != CurrentOrder[i].Ingredient.Count) // 재료 개수가 다르면 실패
+                {
+                    // StartCoroutine(TurnAlpha(wrong)); // 실패 애니메이션 (주석 처리됨)
+                    continue; // 다음 주문으로 넘어감
+                }
+                else // 재료 개수가 같다면
+                {
+                    if (containIngredients.Count == 1) // 재료가 하나일 때
+                    {
+                        if (containIngredients[0] == CurrentOrder[i].Ingredient[0]) // 재료가 일치하면
+                        {
+                            ProcessOrder(i); // 주문 처리
+                            return true; // 성공 반환
+                        }
+                    }
+                    else if (containIngredients.Count == 2) // 재료가 두 개일 때
+                    {
+                        if ((containIngredients[0] == CurrentOrder[i].Ingredient[0] && containIngredients[1] == CurrentOrder[i].Ingredient[1]) ||
+                            (containIngredients[1] == CurrentOrder[i].Ingredient[0] && containIngredients[0] == CurrentOrder[i].Ingredient[1])) // 재료 두 개가 모두 일치하는지 확인
+                        {
+                            ProcessOrder(i); // 주문 처리
+                            return true; // 성공 반환
+                        }
+                    }
+                    else if (containIngredients.Count == 3) // 재료가 세 개일 때
+                    {
+                        if (CheckIngredients(containIngredients, CurrentOrder[i].Ingredient)) // 재료들이 모두 일치하는지 확인
+                        {
+                            ProcessOrder(i); // 주문 처리
+                            return true; // 성공 반환
+                        }
+                    }
+                    else if (containIngredients.Count == 4) // 재료가 네 개일 때
+                    {
+                        if (CheckIngredients(containIngredients, CurrentOrder[i].Ingredient)) // 재료들이 모두 일치하는지 확인
+                        {
+                            ProcessOrder(i); // 주문 처리
+                            return true; // 성공 반환
+                        }
+                    }
+                }
+            }
+        }
+        // StartCoroutine(TurnAlpha(wrong)); // 실패 애니메이션 (주석 처리됨)
+        return false; // 실패 반환
+    }
+
+    // 재료들이 모두 일치하는지 확인하는 함수
+    private bool CheckIngredients(List<Ingredient.IngredientType> containIngredients, List<Ingredient.IngredientType> orderIngredients)
+    {
+        int count = 0; // 일치하는 재료 개수
+        for (int j = 0; j < containIngredients.Count; j++) // containIngredients의 각 재료에 대해
+        {
+            for (int k = 0; k < orderIngredients.Count; k++) // orderIngredients의 각 재료에 대해
+            {
+                if (containIngredients[j].Equals(orderIngredients[k])) // 재료가 일치하면
+                {
+                    count++; // 일치하는 재료 개수 증가
+                    break; // 다음 재료로 넘어감
+                }
+            }
+        }
+        return count == containIngredients.Count; // 일치하는 재료 개수가 모든 재료 개수와 같은지 반환
+    }
+
+    // 주문을 처리하는 함수
+    private void ProcessOrder(int i)
+    {
+        if (i == 0) // 순서대로 메뉴를 냈다면 콤보 증가
+        {
+            tipCombo += 1; // 콤보 증가
+            if (tipCombo >= 4) // 콤보가 4 이상이면
+            {
+                if (!flame.activeSelf) // 불꽃 효과가 비활성화 상태라면
+                {
+                    flame.SetActive(true); // 불꽃 효과 활성화
+                }
+                tipCombo = 4; // 최대 4콤보까지 제한
+            }
+        }
+        else // 순서대로 내지 않았다면
+        {
+            flame.SetActive(false); // 불꽃 효과 비활성화
+            tipCombo = 0; // 콤보 초기화
+        }
+        CurrentOrderUI[i].transform.position = poolPos; // 주문 UI 위치 초기화
+        CurrentOrderUI[i].SetActive(false); // 주문 UI 비활성화
+        if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price; // 성공한 주문의 금액 추가
+        Coin += CurrentOrder[i].Price; // 동전 증가
+        CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin"); // 애니메이션 트리거
+        AddTip(i); // 팁 추가
+        SetPosition(i); // 위치 설정
+        CurrentOrder.RemoveAt(i); // 완료된 주문 제거
+        CurrentOrderUI.RemoveAt(i); // 완료된 주문 UI 제거
+        if (StageManager.instance != null) StageManager.instance.success += 1; // 성공한 주문 수 증가
     }
 
     private void AddTip(int i)
