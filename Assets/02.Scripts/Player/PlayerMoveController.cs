@@ -81,7 +81,7 @@ public class PlayerMoveController : MonoBehaviour
         // 땅에 닿아있지 않다면 추가적인 중력 적용
         if (!isGrounded)
         {
-            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+            rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplier * Time.fixedDeltaTime;
             //animator.SetBool("isGround", false);
 
         }

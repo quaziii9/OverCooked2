@@ -52807,6 +52807,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlatedFish
       objectReference: {fileID: 0}
+    - target: {fileID: 6032479411306814011, guid: b55b237aca574044298c7f6523d7bf05,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b55b237aca574044298c7f6523d7bf05, type: 3}
 --- !u!1 &3600328036948066154
