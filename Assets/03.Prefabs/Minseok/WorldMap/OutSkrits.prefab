@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 513035978581756673}
   - component: {fileID: 6911805502372043456}
   m_Layer: 0
-  m_Name: Mesh 59
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,6 +62,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ff83164edf928d34d8d3a5b254b76f60, type: 2}
+  - {fileID: 2100000, guid: ff83164edf928d34d8d3a5b254b76f60, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5531303408896346248}
   m_Layer: 0
-  m_Name: FlagBase 59
+  m_Name: FlagBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2426557927310322683}
   m_Layer: 0
-  m_Name: Tile 59
+  m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,7 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4474547883784193396}
   m_Layer: 0
-  m_Name: Collision 59
+  m_Name: Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

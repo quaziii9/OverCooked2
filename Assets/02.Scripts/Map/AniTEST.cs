@@ -28,7 +28,8 @@ public class AniTEST : MonoBehaviour
         // 특정 조건을 만족하면 모든 자식 객체의 애니메이션을 실행시킴
         if (Input.GetKeyDown(KeyCode.Space)) // 예시로 스페이스바를 누를 때 실행하도록 설정
         {
-            PlayChildAnimations();
+            //PlayChildAnimations();
+            StartCoroutine(start());
         }
     }
 
@@ -38,6 +39,16 @@ public class AniTEST : MonoBehaviour
         {
             animator.SetTrigger("flip");
         }
+        
+    }
+    IEnumerator start()
+    {
+        foreach (Animator animator in childAnimators)
+        {
+            animator.SetTrigger("flip");
+            yield return null;
+        }
+        yield return null;
     }
 
     //private void OnCollisionEnter(Collision collision)
