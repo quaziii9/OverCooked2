@@ -3,7 +3,7 @@ using UnityEngine;
 public class Craft : MonoBehaviour
 {
     [SerializeField] private Animator CraftAnim;
-    public enum FoodType { Fish, Shrimp, Lettuce, Cucumber, Tomato, Chicken, Potato, Meat, Tortilla, Rice }
+    public enum FoodType { Fish, Shrimp, Lettuce, Cucumber, Tomato, Chicken, Potato, Meat, Tortilla, Rice, SeaWeed, Pepperoni, Cheese, Dough, PizzaTomato, SushiRice, SushiFish, SushiCucumber }
     public FoodType food;
     public GameObject foodPrefabs;
 
@@ -51,6 +51,28 @@ public class Craft : MonoBehaviour
                 return Ingredient.IngredientType.Chicken;
             case FoodType.Potato:
                 return Ingredient.IngredientType.Potato;
+            case FoodType.Tortilla:
+                return Ingredient.IngredientType.Tortilla;
+            case FoodType.SeaWeed:
+                return Ingredient.IngredientType.SeaWeed;
+            case FoodType.Rice:
+                return Ingredient.IngredientType.Rice;
+            case FoodType.Pepperoni:
+                return Ingredient.IngredientType.Pepperoni;
+            case FoodType.Cheese:
+                return Ingredient.IngredientType.Cheese;
+            case FoodType.Dough:
+                return Ingredient.IngredientType.Dough;
+            case FoodType.Meat:
+                return Ingredient.IngredientType.Meat;
+            case FoodType.PizzaTomato:
+                return Ingredient.IngredientType.PizzaTomato;
+            case FoodType.SushiRice:
+                return Ingredient.IngredientType.SushiRice;
+            case FoodType.SushiFish:
+                return Ingredient.IngredientType.SushiFish;
+            case FoodType.SushiCucumber:
+                return Ingredient.IngredientType.SushiCucumber;
             default:
                 throw new System.ArgumentOutOfRangeException(nameof(food), "Invalid food type");
         }
