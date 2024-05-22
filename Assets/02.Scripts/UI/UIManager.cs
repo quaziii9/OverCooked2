@@ -65,6 +65,7 @@ public class UIManager : Singleton<UIManager>
 
     [Header("StageMap")]
     public GameObject stageMapEscUI;
+    public GameObject[] stageEscMapName;
 
     [Header("RecipeUI")]
     public GameObject recipeUI;
@@ -505,36 +506,38 @@ public class UIManager : Singleton<UIManager>
         switch(mapType)
         {
             case MapType.Tuto:
-                mapImage[0].SetActive(true);
-                mapText[0].SetActive(true);
+                SetStageImageText(0);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stage1_4:
-                mapImage[1].SetActive(true);
-                mapText[1].SetActive(true);
+                SetStageImageText(1);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stage2_5:
-                mapImage[2].SetActive(true);
-                mapText[2].SetActive(true);
+                SetStageImageText(2);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stage3_3:
-                mapImage[3].SetActive(true);
-                mapText[3].SetActive(true);
+                SetStageImageText(3);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stageWizard:
-                mapImage[4].SetActive(true);
-                mapText[4].SetActive(true);
+                SetStageImageText(4);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stageMine:
-                mapImage[5].SetActive(true);
-                mapText[5].SetActive(true);
+                SetStageImageText(5);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
         }
+    }
+
+
+    public void SetStageImageText(int arrNum)
+    {
+        mapImage[arrNum].SetActive(true);
+        mapText[arrNum].SetActive(true);
+        stageEscMapName[arrNum].SetActive(true);
     }
     #endregion
 
@@ -718,6 +721,7 @@ public class UIManager : Singleton<UIManager>
         {
             mapImage[i].SetActive(false);
             mapText[i].SetActive(false);
+            stageEscMapName[i].SetActive(false);
         }
 
         //if (SceneManager.GetActiveScene().name == "Map")
