@@ -14,6 +14,13 @@ public class StoveTrigger : MonoBehaviour
             pot.isOnStove = true;
             pot.StartCooking();
         }
+
+        PanOnStove pan = other.GetComponent<PanOnStove>();
+        if (pan != null && pan.inSomething && ObjectHighlight.onSomething)
+        {
+            pan.isOnStove = true;
+            pan.StartCooking();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -23,6 +30,13 @@ public class StoveTrigger : MonoBehaviour
         {
             pot.isOnStove = false;
             pot.OffSlider();
+        }
+
+        PanOnStove pan = other.GetComponent<PanOnStove>();
+        if (pan != null)
+        {
+            pan.isOnStove = false;
+            pan.OffSlider();
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
 
-public class PotOnStove : MonoBehaviour
+public class PanOnStove : MonoBehaviour
 {
     public Slider cookingBar;
     public bool isOnStove = false;
@@ -13,7 +13,7 @@ public class PotOnStove : MonoBehaviour
     private Coroutine _coTimer;
     private bool pause = false;
     private bool stateIsCooked = false;
-    public Animator potAnim;
+    //public Animator potAnim;
 
     [SerializeField] private GameObject Canvas;
     [SerializeField] private GameObject IngredientUI;
@@ -33,7 +33,7 @@ public class PotOnStove : MonoBehaviour
             UpdateisIngredientState();
         }
 
-        if(stateIsCooked)
+        if (stateIsCooked)
             cookingBar.gameObject.SetActive(false);
     }
 

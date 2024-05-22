@@ -97,6 +97,6 @@ public class AutoCheck : MonoBehaviour
     private void HandleIngredientAuto(Transform targetTransform, GameObject obj)
     {
         var handle = obj.transform.GetChild(0).GetComponent<Ingredient>();
-        handle.IngredientAuto(targetTransform, targetTransform.GetChild(1).localPosition, handle.type); // 자동 처리 로직 실행
+        //handle.IngredientAuto(targetTransform, targetTransform.GetChild(1).localPosition, handle.type); // 자동 처리 로직 실행
     }
 }

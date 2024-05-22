@@ -160,6 +160,7 @@ public class Ingredient : GameItem
             case IngredientType.Cheese:
             case IngredientType.Meat:
             case IngredientType.Chicken:
+            case IngredientType.Rice:
                 ApplyMaterialAndAdjustPosition(handType);
                 break;
             default:
