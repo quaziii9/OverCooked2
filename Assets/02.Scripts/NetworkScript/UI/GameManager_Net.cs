@@ -31,6 +31,13 @@ public class GameManager_Net : MonoBehaviour
     private float lastSec = 0f; // 마지막 시간
     private float countSec = 0f; // 초 카운트
 
+
+    // 1-4STAGE : 3분30초, 
+    // 2-5STAGE : 3분 30초
+    // 3-3STAGE : 4분
+    // BATTLE MINE : 4분
+    // BATTLE WIZARD : 3분 30초
+
     // 시간 UI 관련 변수들
     [SerializeField] public float GameTime = 160f; // 게임 시간
     [SerializeField] private Slider TimeSlider; // 시간 슬라이더 UI
