@@ -10,13 +10,13 @@ public class PlayerMoveController : MonoBehaviour
     [SerializeField] public float moveSpeed = 15f;
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private float fallMultiplier = 2.5f; // 떨어질 때 속도 증가
+    public float downforce = 1f;
+
     private Vector2 moveInput;
     private bool isDashing = false;
     public int puffCount;
     public bool isGrounded;
     public bool isOnStairs;
-    public float downforce=1f;
-
 
     void Start()
     {
@@ -73,7 +73,7 @@ public class PlayerMoveController : MonoBehaviour
             Vector3 moveDir = new Vector3(moveInput.x, 0f, moveInput.y);
             Vector3 movement = moveDir * moveSpeed;
             rb.velocity = movement;
-            
+
             // 플레이어가 이동하는 방향을 바라보도록 회전
             Quaternion targetRotation = Quaternion.LookRotation(moveDir);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
@@ -85,16 +85,16 @@ public class PlayerMoveController : MonoBehaviour
             //animator.SetBool("isGround", false);
 
         }
-        if(isGrounded)
+        if (isGrounded)
         {
             //animator.SetBool("isGround", true);
         }
-        if (isOnStairs&& moveInput.magnitude != 0)//언덕위에서 이동중일때
+        if (isOnStairs && moveInput.magnitude != 0)//언덕위에서 이동중일때
         {
-            rb.AddForce(Vector3.down * 5f , ForceMode.Acceleration);
+            rb.AddForce(Vector3.down * 5f, ForceMode.Acceleration);
         }
-        
-        if(isOnStairs&& moveInput.magnitude == 0)
+
+        if (isOnStairs && moveInput.magnitude == 0)
         {
             rb.useGravity = false;
         }
@@ -116,7 +116,7 @@ public class PlayerMoveController : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * downforce);
     }
 
-     void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision other)
     {
         // Print how many points are colliding with this transform
         Debug.Log("Points colliding: " + other.contacts.Length);
