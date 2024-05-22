@@ -14,8 +14,11 @@ public class PlayerMasterController : MonoBehaviour
     [Header("Player Input")]
     public InputActionAsset inputActionAsset;
 
-    [Header("particl")]
-    public GameObject particl;
+    [Header("particle")]
+    public GameObject particle;
+
+    [Header("Platform")]
+    [SerializeField] private bool isMobile = false;
 
     private void Awake()
     {
@@ -43,9 +46,9 @@ public class PlayerMasterController : MonoBehaviour
 
 
 
-        if (particl != null)
+        if (particle != null)
         {
-            GameObject particleInstance = Instantiate(particl, currentPlayer.transform.position, Quaternion.identity);
+            GameObject particleInstance = Instantiate(particle, currentPlayer.transform.position, Quaternion.identity);
             particleInstance.transform.parent = gameObject.transform; // parentTransform은 넣고 싶은 부모 GameObject의 Transform입니다.
             SwitchParticle switchParticle = particleInstance.GetComponent<SwitchParticle>();
             switchParticle.SwitchPlayer(currentPlayer.transform, playerList[nextIndex].transform);
@@ -58,13 +61,11 @@ public class PlayerMasterController : MonoBehaviour
         // InputActionAsset 할당
         playerInput.actions = inputActionAsset;
 
-        // 기본 맵 설정
-        playerInput.defaultActionMap = "Player";
-
-        // 모바일 맵 설정
-        playerInput.defaultActionMap = "Mobile";
+        if(!isMobile) playerInput.defaultActionMap = "Player";            // 기본 맵 설정
+        else playerInput.defaultActionMap = "Mobile";            // 모바일 맵 설정
 
         // Behavior 설정 (예: Send Messages)
+        // 수정해야할 수도 있음...
         playerInput.notificationBehavior = PlayerNotifications.SendMessages;
 
         // PlayerInput 활성화

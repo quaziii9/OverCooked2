@@ -133,19 +133,19 @@ public class PlayerMoveController : MonoBehaviour
         }
     }
 
-    private void OnPickup()
+    public void OnPickup()
     {
         // 요리 재료 줍기 또는 놓기 로직
         Debug.Log("Pickup or Place Item");
     }
 
-    private void OnCook()
+    public void OnCook()
     {
         // 요리하기 또는 재료 던지기 로직
         Debug.Log("Cook or Throw Item");
     }
 
-    private void OnDash()
+    public void OnDash()
     {
         // 대쉬 로직
         if (!isDashing)
