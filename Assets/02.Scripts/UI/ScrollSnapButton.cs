@@ -45,7 +45,6 @@ public class ScrollSnapButton : MonoBehaviour
             if (name == "Mine")
             {
                 UIManager.Instance.sceneType = EnumTypes.SceneType.BattleMap;
-
                 UIManager.Instance.mapType = EnumTypes.MapType.stageMine;
             }
             UIManager.Instance.EnterLoadingMapUI();

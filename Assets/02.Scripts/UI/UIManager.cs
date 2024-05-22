@@ -56,6 +56,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject loadingMapUI;
     public Image loadingMapBar;
     public GameObject[] mapImage;
+    public GameObject[] mapText;
 
     [Header("BusMap")]
     public GameObject busMapEscUI;
@@ -108,8 +109,8 @@ public class UIManager : Singleton<UIManager>
     {
         Debug.Log(sceneType);
         Debug.Log(mapType);
-        BusMapEscUI();
-        StageEscUI();
+        //BusMapEscUI();
+        EscUI();
         //if(!isSetting && !isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOn();
         //if (!isSetting && isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOff();
     }
@@ -503,26 +504,32 @@ public class UIManager : Singleton<UIManager>
         {
             case MapType.Tuto:
                 mapImage[0].SetActive(true);
+                mapText[0].SetActive(true);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stage1_4:
-                mapImage[0].SetActive(true);
+                mapImage[1].SetActive(true);
+                mapText[1].SetActive(true);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stage2_5:
-                mapImage[0].SetActive(true);
+                mapImage[2].SetActive(true);
+                mapText[2].SetActive(true);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stage3_3:
-                mapImage[0].SetActive(true);
+                mapImage[3].SetActive(true);
+                mapText[3].SetActive(true);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stageWizard:
                 mapImage[4].SetActive(true);
+                mapText[4].SetActive(true);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stageMine:
                 mapImage[5].SetActive(true);
+                mapText[5].SetActive(true);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
         }
@@ -593,6 +600,16 @@ public class UIManager : Singleton<UIManager>
     #region EscUI
     public void BusMapEscUI()
     {
+
+    }
+
+    public void BusMapEscUICancle()
+    {
+        busMapEscUI.SetActive(false);
+    }
+
+    public void EscUI()
+    {
         if (sceneType == SceneType.BusMap)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -601,16 +618,8 @@ public class UIManager : Singleton<UIManager>
                 SoundManager.Instance.ButtonTick();
             }
         }
-    }
 
-    public void BusMapEscUICancle()
-    {
-        busMapEscUI.SetActive(false);
-    }
-
-    public void StageEscUI()
-    {
-        if(sceneType == SceneType.BattleMap || sceneType == SceneType.StageMap)
+        if (sceneType == SceneType.BattleMap || sceneType == SceneType.StageMap)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -687,7 +696,8 @@ public class UIManager : Singleton<UIManager>
         mapType = MapType.None;
         for (int i=0; i<mapImage.Length; i++)
         {
-            mapImage[i].SetActive(false);   
+            mapImage[i].SetActive(false);
+            mapText[i].SetActive(false);
         }
 
         //if (SceneManager.GetActiveScene().name == "Map")
