@@ -29,6 +29,7 @@ public class UIManager : Singleton<UIManager>
 
     [Header("OptionUI")]
     public GameObject optionSettingUI;
+    public GameObject escButton;
 
     [Header("StopUI")]
     public GameObject stopUI;
@@ -314,7 +315,8 @@ public class UIManager : Singleton<UIManager>
                     busTopUI.SetActive(false);
                     Invoke(goTo, 1f);
                     break;
-                case "LoadingMapUIOn":                   
+                case "LoadingMapUIOn":
+                    busTopUI.SetActive(false);
                     Invoke(goTo, 1f);
                     break;
                 case "EnterIntroMaskOut":
@@ -427,7 +429,7 @@ public class UIManager : Singleton<UIManager>
     {
         loadingKeyBar.fillAmount = 0;
         loadingKeyUI.SetActive(false);
-        //battleUI.SetActive(true);
+        battleUI.SetActive(true);
         //buttonUI.SetActive(false);
         //SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, "Battle");
         //SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
@@ -609,7 +611,7 @@ public class UIManager : Singleton<UIManager>
     }
 
     public void EscUI()
-    {
+    { 
         if (sceneType == SceneType.BusMap)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -628,6 +630,24 @@ public class UIManager : Singleton<UIManager>
             }
         }
     }
+
+    public void EscUIButton()
+    {
+        if (sceneType == SceneType.BusMap)
+        {
+            busMapEscUI.SetActive(true);
+            SoundManager.Instance.ButtonTick();
+        }
+
+        if (sceneType == SceneType.BattleMap || sceneType == SceneType.StageMap)
+        {
+            stageMapEscUI.SetActive(true);
+            SoundManager.Instance.ButtonTick();
+        }
+    }
+
+
+
     public void StageEscUICancle()
     {
         stageMapEscUI.SetActive(false);

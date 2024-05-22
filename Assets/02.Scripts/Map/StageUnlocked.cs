@@ -17,6 +17,7 @@ public class StageUnlocked : MonoBehaviour
     public int StageNum;
     public int StarNum;
     public Sprite YellowStar;
+    public bool isLoading;
 
     void Start()
     {
@@ -94,9 +95,10 @@ public class StageUnlocked : MonoBehaviour
 
     public void CheckSpace()
     {
-        
-        if(Input.GetKeyDown(KeyCode.Space))
+
+        if (Input.GetKeyDown(KeyCode.Space) && isLoading ==false)
         {
+            isLoading = true;
             UIManager.Instance.mapType = EnumTypes.MapType.Tuto;
             UIManager.Instance.sceneType = EnumTypes.SceneType.StageMap;
             UIManager.Instance.EnterLoadingMapUI();
