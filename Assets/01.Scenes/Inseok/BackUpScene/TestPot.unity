@@ -742,7 +742,7 @@ MonoBehaviour:
   onSomething: 0
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 0
 --- !u!1 &149487573 stripped
 GameObject:
@@ -864,7 +864,7 @@ MonoBehaviour:
   onSomething: 0
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 0
 --- !u!1001 &192647762
 PrefabInstance:
@@ -1572,7 +1572,7 @@ MonoBehaviour:
   onSomething: 1
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 0
 --- !u!1 &349665282
 GameObject:
@@ -2188,7 +2188,7 @@ MonoBehaviour:
   onSomething: 1
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 0
 --- !u!1 &468248949
 GameObject:
@@ -2409,7 +2409,7 @@ MonoBehaviour:
   onSomething: 0
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 0
 --- !u!1 &497008450
 GameObject:
@@ -2545,6 +2545,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  bgmAudioSource: {fileID: 581992208}
+  bgmChangeAudioSource: {fileID: 559385701}
+  stageBackGroundAudioSource: {fileID: 0}
+  stageEffectAudioSource: {fileID: 0}
+  effectAudioSource: {fileID: 1304106240}
   volumeBGM: 0.2
   volumeEffect: 0.2
   settingBGM: 0.2
@@ -2553,19 +2558,30 @@ MonoBehaviour:
   battleBGM: {fileID: 8300000, guid: 744a78525d45b0142bd2c0abb9a59aec, type: 3}
   busMapBGM: {fileID: 0}
   stageBGM: {fileID: 0}
+  sushiBGM: {fileID: 0}
+  mineBGM: {fileID: 0}
+  wizardBGM: {fileID: 0}
+  stageBackGroundHole: {fileID: 0}
+  stageBackInNPC: {fileID: 0}
+  stageBackSushi: {fileID: 0}
+  mineCameraShake: {fileID: 0}
+  wizardCounterUp: {fileID: 0}
+  wizardCounterDown: {fileID: 0}
   UISelect: {fileID: 8300000, guid: 7a2bb122907680a458abe20e7304ed4e, type: 3}
   UIPop: {fileID: 8300000, guid: 6eef09767a920754b86996449b28c999, type: 3}
   UITick: {fileID: 8300000, guid: d14262497474d834d98b6d9b1dacca12, type: 3}
   UIStart: {fileID: 8300000, guid: 0b086d21fe987cb46b1a568f39271434, type: 3}
   screenInUI: {fileID: 8300000, guid: c0a59799b6003bd448c54045833f8616, type: 3}
   screenOutUI: {fileID: 8300000, guid: 90035643d5caa5e4d8182ebd36270897, type: 3}
-  bgmAudioSource: {fileID: 581992208}
-  bgmChangeAudioSource: {fileID: 559385701}
-  effectAudioSource: {fileID: 1304106240}
+  flagOn: {fileID: 0}
+  flagOff: {fileID: 0}
+  RecipeUIPopIn: {fileID: 0}
+  RecipeUIPopOut: {fileID: 0}
   isSingle: 1
   alreadyPlayed: 0
-  itemTake: {fileID: 8300000, guid: a99aedf994bd5d74bbd1c2d722f27aea, type: 3}
-  put: {fileID: 8300000, guid: fab690e93b1f66049bb8b02dcd500a3a, type: 3}
+  itemPickUp: {fileID: 0}
+  itemputDown: {fileID: 0}
+  knifeChop: {fileID: 0}
   fall: {fileID: 8300000, guid: 8faacae8a1a3f21489a2140fb1c0cf85, type: 3}
   throwItem: {fileID: 8300000, guid: b3b2882fdfa0c6f488e88e9da13c1e21, type: 3}
   ready: {fileID: 8300000, guid: 08a7d4372b2cd73468eecc3907f0b45d, type: 3}
@@ -2633,7 +2649,7 @@ Transform:
   - {fileID: 2123036160170957691}
   - {fileID: 4679549185703982765}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &512058496
 GameObject:
@@ -3918,7 +3934,7 @@ MonoBehaviour:
   onSomething: 0
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 6
 --- !u!1 &887093606
 GameObject:
@@ -4066,7 +4082,7 @@ MonoBehaviour:
   onSomething: 0
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 0
 --- !u!1 &914589796 stripped
 GameObject:
@@ -4421,7 +4437,7 @@ MonoBehaviour:
   onSomething: 1
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 0
 --- !u!1 &974230371
 GameObject:
@@ -4538,7 +4554,7 @@ MonoBehaviour:
   onSomething: 0
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 6
 --- !u!1 &975771585
 GameObject:
@@ -4654,7 +4670,7 @@ MonoBehaviour:
   onSomething: 0
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 0
 --- !u!1 &981495088
 GameObject:
@@ -5831,7 +5847,7 @@ MonoBehaviour:
   onSomething: 0
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 6
 --- !u!1 &1289165225
 GameObject:
@@ -6510,7 +6526,7 @@ MonoBehaviour:
   onSomething: 0
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 0
 --- !u!1 &1431894058
 GameObject:
@@ -6611,7 +6627,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1474203423
 GameObject:
@@ -7023,7 +7039,7 @@ MonoBehaviour:
   onSomething: 0
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 0
 --- !u!1 &1571372529
 GameObject:
@@ -31477,6 +31493,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1969142808153331393, guid: e71c54b3e7bec1d44b4f7a381d7a735a,
+        type: 3}
+      propertyPath: hightlightMaterials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e71c54b3e7bec1d44b4f7a381d7a735a, type: 3}
 --- !u!1 &1970238944424410563
@@ -41258,7 +41279,7 @@ Transform:
   - {fileID: 5116028658439128275}
   - {fileID: 3562810630832572764}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2846921242184246902
 GameObject:
@@ -55719,6 +55740,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4005273710330848757, guid: becb34a5c7906a84c8b784808898256e,
+        type: 3}
+      propertyPath: hightlightMaterials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
     - target: {fileID: 7604325760678189260, guid: becb34a5c7906a84c8b784808898256e,
         type: 3}
       propertyPath: Canvas
@@ -56637,6 +56663,11 @@ PrefabInstance:
     - target: {fileID: 2732680047292650393, guid: 754d01a436657f74e9ce3b76dab7fe1b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4078823263926188289, guid: 754d01a436657f74e9ce3b76dab7fe1b,
+        type: 3}
+      propertyPath: xSpeed
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -70379,7 +70410,7 @@ Transform:
   - {fileID: 7798236330574726960}
   - {fileID: 4384038614171887651}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &5238319115829454301
 Transform:
@@ -88460,6 +88491,11 @@ PrefabInstance:
       propertyPath: cookingBar
       value: 
       objectReference: {fileID: 1602058956082155714}
+    - target: {fileID: 6826902834257659864, guid: 33c6f238ba565e649a1a389cc952a835,
+        type: 3}
+      propertyPath: hightlightMaterials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
     - target: {fileID: 6826902834841081597, guid: 33c6f238ba565e649a1a389cc952a835,
         type: 3}
       propertyPath: m_RootOrder

@@ -62,7 +62,7 @@ public class PlayerMasterController : MonoBehaviour
         playerInput.defaultActionMap = "Player";
 
         // 모바일 맵 설정
-        playerInput.defaultActionMap = "Mobile";
+        //playerInput.defaultActionMap = "Mobile";
 
         // Behavior 설정 (예: Send Messages)
         playerInput.notificationBehavior = PlayerNotifications.SendMessages;
