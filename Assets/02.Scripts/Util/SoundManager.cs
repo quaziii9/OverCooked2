@@ -10,6 +10,13 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private GameObject[] BGMSquares; // 음량 네모네모
     [SerializeField] private GameObject[] effectSquares;
 
+    [Header("Audio Source")]
+    public AudioSource bgmAudioSource;
+    public AudioSource bgmChangeAudioSource;
+    public AudioSource stageBackGroundAudioSource;
+    public AudioSource stageEffectAudioSource;
+    public AudioSource effectAudioSource;
+
     [Header("Volume")]
     public float volumeBGM = 0.2f;
     public float volumeEffect = 0.2f;
@@ -21,27 +28,39 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip battleBGM;
     public AudioClip busMapBGM;
     public AudioClip stageBGM;
+    public AudioClip sushiBGM;
+    public AudioClip mineBGM;
+    public AudioClip wizardBGM;
 
-    [Header("Sound Effect")]
+
+    [Header("Stage Sound Bgm & Effect")]
+    public AudioClip stageBackGroundHole;
+    public AudioClip stageBackInNPC;
+    public AudioClip stageBackSushi;
+    public AudioClip mineCameraShake;
+    public AudioClip wizardCounterUp;
+    public AudioClip wizardCounterDown;
+
+    [Header("UI Effect")]
     public AudioClip UISelect;
     public AudioClip UIPop;
     public AudioClip UITick;
     public AudioClip UIStart;
     public AudioClip screenInUI;
     public AudioClip screenOutUI;
-
-    [Header("Audio Source")]
-    public AudioSource bgmAudioSource;
-    public AudioSource bgmChangeAudioSource;
-    public AudioSource effectAudioSource;
+    public AudioClip flagOn;
+    public AudioClip flagOff;
+    public AudioClip RecipeUIPopIn;
+    public AudioClip RecipeUIPopOut;
 
     [Header("MultiPlay")]
     public bool isSingle = true; //싱글 멀티 구분
     public bool alreadyPlayed = false;
 
     [Header("Game Play Sound Effect")]
-    public AudioClip itemTake;
-    public AudioClip put;
+    public AudioClip itemPickUp;
+    public AudioClip itemputDown;
+    public AudioClip knifeChop;
     public AudioClip fall;
     public AudioClip throwItem;
     public AudioClip ready;
@@ -295,11 +314,14 @@ public class SoundManager : Singleton<SoundManager>
     {
         switch (effect)
         {
-            case "take":
-                effectAudioSource.clip = itemTake;
+            case "itemPickUp":
+                effectAudioSource.clip = itemPickUp;
                 break;
-            case "put":
-                effectAudioSource.clip = put;
+            case "itemputDown":
+                effectAudioSource.clip = itemputDown;
+                break;
+            case "knifeChop":
+                effectAudioSource.clip = knifeChop;
                 break;
             case "fall":
                 effectAudioSource.clip = fall;
@@ -330,7 +352,6 @@ public class SoundManager : Singleton<SoundManager>
                 effectAudioSource.volume = volumeEffect;
                 effectAudioSource.PlayOneShot(boing);
                 break;
-
         }
         effectAudioSource.volume = volumeEffect;
         effectAudioSource.PlayOneShot(effectAudioSource.clip);
