@@ -29,6 +29,7 @@ public class UIManager : Singleton<UIManager>
 
     [Header("OptionUI")]
     public GameObject optionSettingUI;
+    public GameObject escButton;
 
     [Header("StopUI")]
     public GameObject stopUI;
@@ -64,6 +65,7 @@ public class UIManager : Singleton<UIManager>
 
     [Header("StageMap")]
     public GameObject stageMapEscUI;
+    public GameObject[] stageEscMapName;
 
     [Header("RecipeUI")]
     public GameObject recipeUI;
@@ -314,7 +316,8 @@ public class UIManager : Singleton<UIManager>
                     busTopUI.SetActive(false);
                     Invoke(goTo, 1f);
                     break;
-                case "LoadingMapUIOn":                   
+                case "LoadingMapUIOn":
+                    busTopUI.SetActive(false);
                     Invoke(goTo, 1f);
                     break;
                 case "EnterIntroMaskOut":
@@ -427,7 +430,7 @@ public class UIManager : Singleton<UIManager>
     {
         loadingKeyBar.fillAmount = 0;
         loadingKeyUI.SetActive(false);
-        //battleUI.SetActive(true);
+        battleUI.SetActive(true);
         //buttonUI.SetActive(false);
         //SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, "Battle");
         //SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
@@ -503,36 +506,38 @@ public class UIManager : Singleton<UIManager>
         switch(mapType)
         {
             case MapType.Tuto:
-                mapImage[0].SetActive(true);
-                mapText[0].SetActive(true);
+                SetStageImageText(0);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stage1_4:
-                mapImage[1].SetActive(true);
-                mapText[1].SetActive(true);
+                SetStageImageText(1);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stage2_5:
-                mapImage[2].SetActive(true);
-                mapText[2].SetActive(true);
+                SetStageImageText(2);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stage3_3:
-                mapImage[3].SetActive(true);
-                mapText[3].SetActive(true);
+                SetStageImageText(3);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stageWizard:
-                mapImage[4].SetActive(true);
-                mapText[4].SetActive(true);
+                SetStageImageText(4);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
             case MapType.stageMine:
-                mapImage[5].SetActive(true);
-                mapText[5].SetActive(true);
+                SetStageImageText(5);
                 MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
                 break;
         }
+    }
+
+
+    public void SetStageImageText(int arrNum)
+    {
+        mapImage[arrNum].SetActive(true);
+        mapText[arrNum].SetActive(true);
+        stageEscMapName[arrNum].SetActive(true);
     }
     #endregion
 
@@ -609,7 +614,7 @@ public class UIManager : Singleton<UIManager>
     }
 
     public void EscUI()
-    {
+    { 
         if (sceneType == SceneType.BusMap)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -628,6 +633,24 @@ public class UIManager : Singleton<UIManager>
             }
         }
     }
+
+    public void EscUIButton()
+    {
+        if (sceneType == SceneType.BusMap)
+        {
+            busMapEscUI.SetActive(true);
+            SoundManager.Instance.ButtonTick();
+        }
+
+        if (sceneType == SceneType.BattleMap || sceneType == SceneType.StageMap)
+        {
+            stageMapEscUI.SetActive(true);
+            SoundManager.Instance.ButtonTick();
+        }
+    }
+
+
+
     public void StageEscUICancle()
     {
         stageMapEscUI.SetActive(false);
@@ -698,6 +721,7 @@ public class UIManager : Singleton<UIManager>
         {
             mapImage[i].SetActive(false);
             mapText[i].SetActive(false);
+            stageEscMapName[i].SetActive(false);
         }
 
         //if (SceneManager.GetActiveScene().name == "Map")
