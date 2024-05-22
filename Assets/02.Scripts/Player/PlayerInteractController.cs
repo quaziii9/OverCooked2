@@ -239,9 +239,64 @@ public class PlayerInteractController : MonoBehaviour
             case ObjectHighlight.ObjectType.Station:
                 HandleStationInteraction();
                 break;
+            case ObjectHighlight.ObjectType.Oven:
+                HandleOvenInteraction();
+                break;
             default:
                 HandleGeneralObjectInteraction();
                 break;
+        }
+    }
+
+    private void HandleOvenInteraction()
+    {
+        // Ingredient 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
+        if (isHolding && transform.GetChild(1).gameObject.GetComponent<Ingredient>() != null
+            && transform.GetChild(1).gameObject.GetComponent<Ingredient>().type == Ingredient.IngredientType.Plate)
+        {
+            GameObject plateComponent = transform.GetChild(1).gameObject;  // Plates Object
+            GameObject Oven = objectHighlight.transform.parent.gameObject;
+            bool isDough = plateComponent.transform.GetChild(9).gameObject.activeSelf;
+            if (Oven.transform.childCount == 2 && !plateComponent.transform.GetComponent<Ingredient>().pizzazIsCooked && isDough)
+            {
+                plateComponent.transform.SetParent(Oven.transform);
+
+                // 위치 설정
+                plateComponent.transform.localPosition = new Vector3(0f, 0.01f, 0f);
+
+                // 회전 설정
+                plateComponent.transform.localRotation = Quaternion.Euler(0f, 2.281f, 0f);
+
+                // 크기 조정
+                plateComponent.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+
+                Oven.GetComponent<Oven>().StartCooking();
+
+                isHolding = false;
+                anim.SetBool("isHolding", isHolding);
+            }
+            else
+                SoundManager.Instance.PlayEffect("no");
+        }
+        else if(!isHolding)
+        {
+            // 다시 꺼냄. 근데 요리중일땐 못꺼냄.
+            GameObject Oven = objectHighlight.transform.parent.gameObject;
+            GameObject plateComponent = Oven.transform.GetChild(2).gameObject;
+
+            plateComponent.transform.SetParent(transform);
+
+            // 위치 설정
+            plateComponent.transform.localPosition = new Vector3(-0.4100023f, 0.4699999f, 1.840027f);
+
+            // 회전 설정
+            plateComponent.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+
+            // 크기 조정
+            plateComponent.transform.localScale = new Vector3(312.5f, 312.5f, 312.5f);
+
+            isHolding = true;
+            anim.SetBool("isHolding", isHolding);
         }
     }
 
@@ -251,7 +306,7 @@ public class PlayerInteractController : MonoBehaviour
         if (isHolding && transform.GetChild(1).gameObject.GetComponent<Ingredient>() != null 
             && transform.GetChild(1).gameObject.GetComponent<Ingredient>().type == Ingredient.IngredientType.Plate)
         {
-            // Handle 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
+            // Ingredient 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
             Plates plateComponent = transform.GetChild(1).gameObject.GetComponent<Plates>();  // Plates 컴포넌트를 가져옴
 
             if (GameManager.instance.CheckMenu(plateComponent.containIngredients))
