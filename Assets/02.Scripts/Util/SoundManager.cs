@@ -16,6 +16,7 @@ public class SoundManager : Singleton<SoundManager>
     public AudioSource stageBackGroundAudioSource;
     public AudioSource stageEffectAudioSource;
     public AudioSource effectAudioSource;
+    public AudioSource vanAudioSource;
 
     [Header("Volume")]
     public float volumeBGM = 0.2f;
@@ -123,6 +124,9 @@ public class SoundManager : Singleton<SoundManager>
         bgmAudioSource.volume = 0.1f;
         bgmChangeAudioSource.volume = 0.1f;
         effectAudioSource.volume = volumeEffect;
+        stageBackGroundAudioSource.volume = volumeEffect;
+        stageEffectAudioSource.volume = volumeEffect;
+        vanAudioSource.volume = volumeEffect;
     }
 
     public void BGMVolumeUp()
@@ -160,6 +164,9 @@ public class SoundManager : Singleton<SoundManager>
             volumeEffect = 1f;
         }
         effectAudioSource.volume = volumeEffect;
+        stageBackGroundAudioSource.volume = volumeEffect;
+        stageEffectAudioSource.volume = volumeEffect;
+        vanAudioSource.volume = volumeEffect;
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
 
@@ -171,6 +178,9 @@ public class SoundManager : Singleton<SoundManager>
             volumeEffect = 0;
         }
         effectAudioSource.volume = volumeEffect;
+        stageBackGroundAudioSource.volume = volumeEffect;
+        stageEffectAudioSource.volume = volumeEffect;
+        vanAudioSource.volume = volumeEffect;
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
 
@@ -181,6 +191,9 @@ public class SoundManager : Singleton<SoundManager>
         bgmAudioSource.volume = volumeBGM;
         bgmChangeAudioSource.volume = volumeBGM;
         effectAudioSource.volume = volumeEffect;
+        stageBackGroundAudioSource.volume = volumeEffect;
+        stageEffectAudioSource.volume = volumeEffect;
+        vanAudioSource.volume = volumeEffect;
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
@@ -334,7 +347,7 @@ public class SoundManager : Singleton<SoundManager>
 
     public void VanShutter()
     {
-        effectAudioSource.PlayOneShot(vanShutter);
+        vanAudioSource.PlayOneShot(vanShutter);
     }
 
 

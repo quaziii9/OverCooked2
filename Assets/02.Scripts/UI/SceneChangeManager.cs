@@ -148,9 +148,9 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 UIManager.Instance.EnterBusMapMaskIn();
                 UIManager.Instance.sceneType = SceneType.BusMap;
 
-                //#if UNITY_ANDROID
-                    //UIManager.Instance.escButton.SetActive(true);
-                //#endif
+                #if UNITY_ANDROID
+                     UIManager.Instance.escButton.SetActive(true);
+                #endif
                 break;
             case "Intro":
                 VanSingleton.Instance.van.SetActive(true);
@@ -171,66 +171,67 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 break;
             case "BattleLobby":
                 UIManager.Instance.sceneType = SceneType.BattleLobby;
-                UIManager.Instance.buttonUI.SetActive(false);
+                //UIManager.Instance.buttonUI.SetActive(false);
                 UIManager.Instance.BattleUIOn();
-                UIManager.Instance.escButton.SetActive(false);
+                //UIManager.Instance.escButton.SetActive(false);
 
                 break;
             case "TestStage":
                 //UIManager.Instance.sceneType = SceneType.StageMap;
                 UIManager.Instance.RecipeUIOn(0);
                 UIManager.Instance.EnterStageMaskIn();
-                //#if UNITY_ANDROID
-                //UIManager.Instance.escButton.SetActive(true);
-                //#endif
+
+                #if UNITY_ANDROID
+                    UIManager.Instance.escButton.SetActive(true);
+                #endif
                 break;
             case "tutorial scene_name":
                 UIManager.Instance.sceneType = SceneType.StageMap;
                 UIManager.Instance.RecipeUIOn(0);
                 UIManager.Instance.EnterStageMaskIn();
-                //#if UNITY_ANDROID
-                //UIManager.Instance.escButton.SetActive(true);
-                //#endif
+                #if UNITY_ANDROID
+                UIManager.Instance.escButton.SetActive(true);
+                #endif
                 break;
             case "stage1_4 scene_name":
                 UIManager.Instance.sceneType = SceneType.StageMap;
                 UIManager.Instance.RecipeUIOn(0);
                 UIManager.Instance.EnterStageMaskIn();
-                //#if UNITY_ANDROID
-                //UIManager.Instance.escButton.SetActive(true);
-                //#endif
+                #if UNITY_ANDROID
+                UIManager.Instance.escButton.SetActive(true);
+                #endif
                 break;
             case "stage2_5 scene_name":
                 UIManager.Instance.sceneType = SceneType.StageMap;
                 UIManager.Instance.RecipeUIOn(1);
                 UIManager.Instance.EnterStageMaskIn();
-                //#if UNITY_ANDROID
-                //UIManager.Instance.escButton.SetActive(true);
-                //#endif
+                #if UNITY_ANDROID
+                UIManager.Instance.escButton.SetActive(true);
+                #endif
                 break;
             case "stage3_3 scene_name":
                 UIManager.Instance.sceneType = SceneType.StageMap;
                 UIManager.Instance.RecipeUIOn(2);
                 UIManager.Instance.EnterStageMaskIn();
-                //#if UNITY_ANDROID
-                //UIManager.Instance.escButton.SetActive(true);
-                //#endif
+                #if UNITY_ANDROID
+                UIManager.Instance.escButton.SetActive(true);
+                #endif
                 break;
             case "stage wizard scene_name":
                 //UIManager.Instance.sceneType = SceneType.BattleMap;
                 UIManager.Instance.RecipeUIOn(0);
                 UIManager.Instance.EnterStageMaskIn();
-                //#if UNITY_ANDROID
-                //UIManager.Instance.escButton.SetActive(true);
-                //#endif
+                #if UNITY_ANDROID
+                UIManager.Instance.escButton.SetActive(true);
+                #endif
                 break;
             case "Mine":
                 //UIManager.Instance.sceneType = SceneType.BattleMap;
                 UIManager.Instance.RecipeUIOn(1);
                 UIManager.Instance.EnterStageMaskIn();
-                //#if UNITY_ANDROID
-                //UIManager.Instance.escButton.SetActive(true);
-                //#endif
+                #if UNITY_ANDROID
+                UIManager.Instance.escButton.SetActive(true);
+                #endif
                 break;
         }
     }

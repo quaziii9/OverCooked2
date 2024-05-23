@@ -488,7 +488,13 @@ public class UIManager : Singleton<UIManager>
 
     public void LoadingKeyUIONBattle()
     {
+        buttonUI.SetActive(false);
+        battleRoomUI.SetActive(false);
+        stopUI.SetActive(false);
+        stageMapEscUI.SetActive(false);
+        escButton.SetActive(false);
         loadingKeyUI.SetActive(true);
+        RecipeUIOff();
         MaskOutUI(broccoliMask, pineappleMask, "GoToBattleRoom");
     }
 
@@ -742,10 +748,7 @@ public class UIManager : Singleton<UIManager>
         //else if (SceneManager.GetActiveScene().name == "TestStage")
         else if (sceneType == SceneType.BattleMap)
         {
-            EscUIStopOff();
-            StageEscUICancle();
-            EnterLoadingKeyUIBattle();
-            RecipeUIOff();
+            EnterLoadingKeyUIBattle();   
         }
         else if (sceneType == SceneType.StageMap)
         {
@@ -762,5 +765,22 @@ public class UIManager : Singleton<UIManager>
                                                     Application.Quit();
             #endif
         }
+    }
+
+
+
+
+
+
+
+
+    public void BattleLobbySet()
+    {
+        buttonUI.SetActive(false);
+        battleRoomUI.SetActive(false);
+        stopUI.SetActive(false);
+        stageMapEscUI.SetActive(false);
+        escButton.SetActive(false);
+        RecipeUIOff();
     }
 }
