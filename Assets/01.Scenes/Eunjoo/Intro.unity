@@ -12848,6 +12848,7 @@ GameObject:
   - component: {fileID: 637988499}
   - component: {fileID: 637988498}
   - component: {fileID: 637988502}
+  - component: {fileID: 637988503}
   m_Layer: 5
   m_Name: IntroSceneCanvas
   m_TagString: Untagged
@@ -13037,6 +13038,19 @@ MonoBehaviour:
   first: 1
   sceneType: 0
   mapType: 0
+--- !u!114 &637988503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637988497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee806193dc6fd947b2eceb502560959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasScaler: {fileID: 637988499}
 --- !u!1 &644941479
 GameObject:
   m_ObjectHideFlags: 0
@@ -16217,6 +16231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 801894128}
+  - component: {fileID: 801894129}
   m_Layer: 5
   m_Name: Recipe UI
   m_TagString: Untagged
@@ -16246,6 +16261,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &801894129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801894127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5629a0096fc7c004b90566ed93a2874b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recipeText: {fileID: 1768543971}
+  recipeButtonUI: {fileID: 250171930}
 --- !u!1 &804941931
 GameObject:
   m_ObjectHideFlags: 0
@@ -37298,7 +37327,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -27.623566, w: 0}
+  m_margin: {x: 0, y: 0, z: -27.623566, w: 29.193794}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
