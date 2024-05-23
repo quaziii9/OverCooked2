@@ -26,6 +26,9 @@ public class PlayerDash : MonoBehaviour
     [Header("Dash Curve")]
     public AnimationCurve dashCurve; // AnimationCurve를 대시의 세기 변화에 사용
 
+    [Header("Player Master Controller")]
+    public PlayerMasterController2 masterController;
+
     [Header("UI")]
     public Button dashButton; // UI 버튼 참조
 
@@ -46,7 +49,7 @@ public class PlayerDash : MonoBehaviour
 
     public void OnDash(InputValue inputButton)
     {
-        if (inputButton.isPressed && !isDashing)
+        if (inputButton.isPressed && !isDashing && masterController.currentPlayer == this.gameObject)
             Dash();
     }
 
@@ -54,7 +57,7 @@ public class PlayerDash : MonoBehaviour
     private void OnUIDash()
     {
         // 현재 활성화 상태인지 확인해야할듯
-        if (!isDashing && dashCdTimer <= 0)
+        if (!isDashing && dashCdTimer <= 0 && masterController.currentPlayer == this.gameObject)
             Dash();
     }
 
