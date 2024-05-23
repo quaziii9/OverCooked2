@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -120,20 +119,5 @@ public class PlayerMoveController : MonoBehaviour
             Debug.Log("joystick 움직이지만 값 없음");
         }
         moveInput = inputValue.Get<Vector2>();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * downforce);
-    }
-
-    void OnCollisionEnter(Collision other)
-    {
-        // Draw a different colored ray for every normal in the collision
-        foreach (var item in other.contacts)
-        {
-            Debug.DrawRay(item.point, item.normal * 100, Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f), 10f);
-        }
     }
 }

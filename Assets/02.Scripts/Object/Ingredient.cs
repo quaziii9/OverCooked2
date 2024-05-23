@@ -398,4 +398,11 @@ public class Ingredient : GameItem
         transform.rotation = Quaternion.identity;
         transform.localPosition = target;
     }
+
+    public void PlayerHandleOff(Transform parent, Vector3 target, Quaternion rotation)
+    {
+        transform.SetParent(parent);
+        transform.rotation = rotation;
+        transform.localPosition = target;
+    }
 }
