@@ -378,7 +378,9 @@ public class UIManager : Singleton<UIManager>
                     //mapType = MapType.Tuto;
                     EventManager<UIEvents>.TriggerEvent(UIEvents.TestStageMapOpen);
                     break;
-
+                case "GoToMine":
+                    EventManager<UIEvents>.TriggerEvent(UIEvents.stageMineMapOpen);
+                    break;
                 case "busTopUIOn":
                     busTopUI.SetActive(true);
                     break;
@@ -527,7 +529,7 @@ public class UIManager : Singleton<UIManager>
                 break;
             case MapType.stageMine:
                 SetStageImageText(5);
-                MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
+                MaskOutUI(pineappleMask, broccoliMask, "GoToMine");
                 break;
         }
     }
@@ -702,7 +704,14 @@ public class UIManager : Singleton<UIManager>
     public void RecipeUIOn(int arr)
     {
         recipeUI.SetActive(true);
-        recipeArr[arr].SetActive(true);   
+        recipeArr[arr].SetActive(true);
+        StartCoroutine("IRecipeUIPopIn");
+    }
+
+    IEnumerator IRecipeUIPopIn()
+    {
+        yield return new WaitForSeconds(1f);
+        SoundManager.Instance.RecipeUIPopIn();
     }
 
     public void RecipeUIOff()
@@ -710,7 +719,6 @@ public class UIManager : Singleton<UIManager>
         recipeUI.SetActive(false);
         for (int i=0; i<recipeArr.Length; i++)
             recipeArr[i].SetActive(false);
-        
     }
     #endregion 
 

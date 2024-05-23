@@ -50,8 +50,8 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip screenOutUI;
     public AudioClip flagOn;
     public AudioClip flagOff;
-    public AudioClip RecipeUIPopIn;
-    public AudioClip RecipeUIPopOut;
+    public AudioClip recipeUIPopIn;
+    public AudioClip recipeUIPopOut;
 
     [Header("MultiPlay")]
     public bool isSingle = true; //싱글 멀티 구분
@@ -70,10 +70,11 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip no;
     public AudioClip cut;
 
-    [Header("Bus Map Sound Effect")]
+    [Header("Van")]
     public AudioClip boing;
-    public AudioClip bus;
-    public AudioClip busBooster;
+    public AudioClip van;
+    public AudioClip vanBooster;
+    public AudioClip vanShutter;
 
     [Header("Mixer Groups")]
     public AudioMixerGroup musicGroup;  // The music mixer group
@@ -248,6 +249,9 @@ public class SoundManager : Singleton<SoundManager>
             case "StageMap":
                 StageMapBGM(audioSource);
                 break;
+            case "Mine":
+                MineBGM(audioSource);
+                break;
         }
     }
 
@@ -278,7 +282,15 @@ public class SoundManager : Singleton<SoundManager>
         audioSource.loop = true;
         audioSource.Play();
     }
-    
+
+    void MineBGM(AudioSource audioSource)
+    {
+        audioSource.clip = stageBGM;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+
+
 
     public void ButtonPop()
     {
@@ -309,6 +321,22 @@ public class SoundManager : Singleton<SoundManager>
     {
         effectAudioSource.PlayOneShot(screenOutUI);
     }
+
+    public void RecipeUIPopIn()
+    {
+        effectAudioSource.PlayOneShot(recipeUIPopIn);
+    }
+
+    public void RecipeUIPopOut()
+    {
+        effectAudioSource.PlayOneShot(recipeUIPopOut);
+    }
+
+    public void VanShutter()
+    {
+        effectAudioSource.PlayOneShot(vanShutter);
+    }
+
 
     public void PlayEffect(string effect)
     {

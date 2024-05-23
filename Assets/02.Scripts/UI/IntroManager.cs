@@ -17,6 +17,13 @@ public class IntroManager : MonoBehaviour
         {           
             StartSpace();
         }
+
+        #if UNITY_ANDROID
+            if (isSpace == false && isLoading == false && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                StartSpace();
+            }
+        #endif
     }
 
     // 처음 인트로 들어갈때 세팅
@@ -55,6 +62,7 @@ public class IntroManager : MonoBehaviour
         UIManager.Instance.ingamePlayerUI.SetActive(true);
         UIManager.Instance.buttonUI.SetActive(true);
         UIManager.Instance.shutterAnim.SetTrigger("ShutterOn");
+        SoundManager.Instance.VanShutter();
         UIManager.Instance.shutterCamera.Priority = 9;
         StartCoroutine("ShutterOut");
 

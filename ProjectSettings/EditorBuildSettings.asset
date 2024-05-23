@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/Eunjoo/BattleLobby.unity
     guid: 729d3387385eb414ab0d7ed1346291e8
+  - enabled: 1
+    path: Assets/01.Scenes/Eunjoo/Mine.unity
+    guid: fe5f3b5959e54354484b73a776d3ce17
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c6c6f27b5f47b074396d1e2d4b77956a,
       type: 2}

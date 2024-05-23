@@ -274,7 +274,6 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         #region Methods
         private void Start()
         {
-            //OnPanelSelected.AddListener(OnPanelSelectedHandler);
             if (ValidConfig)
             {
                 Setup();
@@ -300,11 +299,12 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             HandleTransitionEffects();
             HandleSwipeGestures();
 
+            // 오른쪽 키 입력시 
             if (Input.GetKeyDown(KeyCode.RightArrow) || (Input.GetKeyDown(KeyCode.D)))
             {
                 GoToNextPanel();
             }
-
+            // 왼쪽 키 입력시 
             if(Input.GetKeyDown(KeyCode.LeftArrow) || (Input.GetKeyDown(KeyCode.A)))
             {
                 GoToPreviousPanel();
