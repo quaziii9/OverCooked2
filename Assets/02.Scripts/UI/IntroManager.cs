@@ -13,6 +13,8 @@ public class IntroManager : MonoBehaviour
 
     void FixedUpdate()
     {
+    
+
         if (isSpace==false && isLoading==false && Input.GetKeyDown(KeyCode.Space))
         {           
             StartSpace();

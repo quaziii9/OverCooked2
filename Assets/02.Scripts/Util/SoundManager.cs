@@ -3,6 +3,7 @@ using EventLibrary;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class SoundManager : Singleton<SoundManager>
@@ -13,9 +14,9 @@ public class SoundManager : Singleton<SoundManager>
     [Header("Audio Source")]
     public AudioSource bgmAudioSource;
     public AudioSource bgmChangeAudioSource;
+    public AudioSource effectAudioSource;
     public AudioSource stageBackGroundAudioSource;
     public AudioSource stageEffectAudioSource;
-    public AudioSource effectAudioSource;
     public AudioSource vanAudioSource;
 
     [Header("Volume")]
@@ -93,6 +94,10 @@ public class SoundManager : Singleton<SoundManager>
         settingBGM = LoadData.Instance.optionData.saveBgmVolume;
 
         effectAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
+        stageBackGroundAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
+        stageEffectAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
+        vanAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume * 0.2f;
+
         volumeEffect = LoadData.Instance.optionData.saveEffectVolume;
         settingEffect = LoadData.Instance.optionData.saveEffectVolume;
 
@@ -103,7 +108,6 @@ public class SoundManager : Singleton<SoundManager>
     private void OnEnable()
     {
     }
-
 
     void Start()
     {      
@@ -123,10 +127,7 @@ public class SoundManager : Singleton<SoundManager>
     {
         bgmAudioSource.volume = 0.1f;
         bgmChangeAudioSource.volume = 0.1f;
-        effectAudioSource.volume = volumeEffect;
-        stageBackGroundAudioSource.volume = volumeEffect;
-        stageEffectAudioSource.volume = volumeEffect;
-        vanAudioSource.volume = volumeEffect;
+        SetAllEffectVolume();
     }
 
     public void BGMVolumeUp()
@@ -163,10 +164,7 @@ public class SoundManager : Singleton<SoundManager>
         {
             volumeEffect = 1f;
         }
-        effectAudioSource.volume = volumeEffect;
-        stageBackGroundAudioSource.volume = volumeEffect;
-        stageEffectAudioSource.volume = volumeEffect;
-        vanAudioSource.volume = volumeEffect;
+        SetAllEffectVolume();
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
 
@@ -177,23 +175,17 @@ public class SoundManager : Singleton<SoundManager>
         {
             volumeEffect = 0;
         }
-        effectAudioSource.volume = volumeEffect;
-        stageBackGroundAudioSource.volume = volumeEffect;
-        stageEffectAudioSource.volume = volumeEffect;
-        vanAudioSource.volume = volumeEffect;
+        SetAllEffectVolume();
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
-
+    
     public void SettingSave()
     {
         settingBGM = volumeBGM;
         settingEffect = volumeEffect;
         bgmAudioSource.volume = volumeBGM;
         bgmChangeAudioSource.volume = volumeBGM;
-        effectAudioSource.volume = volumeEffect;
-        stageBackGroundAudioSource.volume = volumeEffect;
-        stageEffectAudioSource.volume = volumeEffect;
-        vanAudioSource.volume = volumeEffect;
+        SetAllEffectVolume();
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
@@ -204,10 +196,20 @@ public class SoundManager : Singleton<SoundManager>
         volumeEffect = settingEffect;
         bgmAudioSource.volume = volumeBGM;
         bgmChangeAudioSource.volume = volumeBGM;
-        effectAudioSource.volume = volumeEffect;
+        SetAllEffectVolume();
+
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
     }
+
+    private void SetAllEffectVolume()
+    {
+        effectAudioSource.volume = volumeEffect;
+        stageBackGroundAudioSource.volume = volumeEffect;
+        stageEffectAudioSource.volume = volumeEffect;
+        vanAudioSource.volume = volumeEffect * 0.2f;
+    }
+
     #endregion
 
     #region FadeInOut
@@ -347,6 +349,7 @@ public class SoundManager : Singleton<SoundManager>
 
     public void VanShutter()
     {
+        Debug.Log("?");
         vanAudioSource.PlayOneShot(vanShutter);
     }
 

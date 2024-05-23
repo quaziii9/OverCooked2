@@ -3800,9 +3800,9 @@ MonoBehaviour:
   - {fileID: 2010389472}
   bgmAudioSource: {fileID: 4103381849058424483}
   bgmChangeAudioSource: {fileID: 1159704214}
+  effectAudioSource: {fileID: 4103381848875900730}
   stageBackGroundAudioSource: {fileID: 414474819}
   stageEffectAudioSource: {fileID: 1962227903}
-  effectAudioSource: {fileID: 4103381848875900730}
   vanAudioSource: {fileID: 881165870}
   volumeBGM: 0.2
   volumeEffect: 0.2
@@ -30192,7 +30192,7 @@ PrefabInstance:
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -44944,7 +44944,7 @@ PrefabInstance:
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
