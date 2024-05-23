@@ -767,13 +767,6 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-
-
-
-
-
-
-
     public void BattleLobbySet()
     {
         buttonUI.SetActive(false);

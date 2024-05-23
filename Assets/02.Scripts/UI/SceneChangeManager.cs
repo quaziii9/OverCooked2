@@ -13,20 +13,17 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     {
         // 씬 로드 완료 이벤트에 OnSceneLoaded 메서드를 등록
         SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.sceneUnloaded += OnSceneUnloaded;
         EventManager<UIEvents>.StartListening(UIEvents.WorldMapOpen, ChangeToBusMap);
         EventManager<UIEvents>.StartListening(UIEvents.IntroMapOpen, ChangeToIntroMap);
         EventManager<UIEvents>.StartListening(UIEvents.BattleRoomOpen, ChangeToBattleLobby);
         EventManager<UIEvents>.StartListening(UIEvents.TestStageMapOpen, ChangeToTestStage);
         EventManager<UIEvents>.StartListening(UIEvents.stageMineMapOpen, ChangeToStageMine);
-
     }
 
     private void OnDisable()
     {
         // 씬 로드 완료 이벤트에서 OnSceneLoaded 메서드를 제거
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
     // 버스 맵으로 전환
@@ -238,12 +235,5 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 #endif
                 break;
         }
-    }
-
-
-    void OnSceneUnloaded(Scene current)
-    {
-        Debug.Log("Scene unloaded: " + current.name);
-        // 필요한 작업 수행
     }
 }
