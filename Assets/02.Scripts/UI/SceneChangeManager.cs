@@ -13,7 +13,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     {
         // 씬 로드 완료 이벤트에 OnSceneLoaded 메서드를 등록
         SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.activeSceneChanged += OnActiveSceneChanged;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
         EventManager<UIEvents>.StartListening(UIEvents.WorldMapOpen, ChangeToBusMap);
         EventManager<UIEvents>.StartListening(UIEvents.IntroMapOpen, ChangeToIntroMap);
         EventManager<UIEvents>.StartListening(UIEvents.BattleRoomOpen, ChangeToBattleLobby);
@@ -26,21 +26,62 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     {
         // 씬 로드 완료 이벤트에서 OnSceneLoaded 메서드를 제거
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.activeSceneChanged -= OnActiveSceneChanged;
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
     // 버스 맵으로 전환
-    public void ChangeToBusMap() => ChangeScene("BusMap", "WorldMap", UIManager.Instance.loadingKeyBar);
+    public void ChangeToBusMap()
+    {
+        ChangeScene("BusMap", "WorldMap", UIManager.Instance.loadingKeyBar);
+    }
+
     // 인트로 맵으로 전환
-    public void ChangeToIntroMap() => ChangeScene("Intro", "Intro", UIManager.Instance.loadingKeyBar);
-    public void ChangeToBattleLobby() => ChangeScene("Battle", "BattleLobby", UIManager.Instance.loadingKeyBar);
-    public void ChangeToTestStage() => ChangeScene("StageMap", "TestStage", UIManager.Instance.loadingMapBar);
-    public void ChangeToStageTutorial() => ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
-    public void ChangeToStage1_4() => ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
-    public void ChangeToStage2_5() => ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
-    public void ChangeToStage3_3() => ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
-    public void ChangeToStageWizard() => ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
-    public void ChangeToStageMine() => ChangeScene("Mine", "Mine", UIManager.Instance.loadingMapBar);
+    public void ChangeToIntroMap()
+    {
+        ChangeScene("Intro", "Intro", UIManager.Instance.loadingKeyBar);
+    }
+
+    public void ChangeToBattleLobby()
+    {
+        ChangeScene("Battle", "BattleLobby", UIManager.Instance.loadingKeyBar);
+    }
+    // 테스트 스테이지로 전환
+    public void ChangeToTestStage()
+    {
+        ChangeScene("StageMap", "TestStage", UIManager.Instance.loadingMapBar);
+    }
+    public void ChangeToStageTutorial()
+    {
+        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+    }
+
+    public void ChangeToStage1_4()
+    {
+        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+    }
+
+
+    public void ChangeToStage2_5()
+    {
+        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+    }
+
+
+    public void ChangeToStage3_3()
+    {
+        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+    }
+
+
+    public void ChangeToStageWizard()
+    {
+        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+    }
+
+    public void ChangeToStageMine()
+    {
+        ChangeScene("Mine", "Mine", UIManager.Instance.loadingMapBar);
+    }
 
 
     // 씬 전환을 위한 공통 메서드
@@ -56,16 +97,16 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
             SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
             SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, bgmName);
         }
+       
+
         StartCoroutine(LoadSceneAsyncCoroutine(sceneName, loadingBar));
     }
 
     // 씬을 비동기로 로드하는 코루틴
     IEnumerator LoadSceneAsyncCoroutine(string sceneName, Image loadingBar)
     {
-        Debug.Log("!");
         yield return null;
         operation = SceneManager.LoadSceneAsync(sceneName);
-        Debug.Log("!!");
         UIManager.Instance.LoadingFood();
 
         operation.allowSceneActivation = false;
@@ -75,7 +116,6 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         {
             yield return null;
             timer += Time.deltaTime;
-
             if (operation.progress < 0.9f)
             {
                 loadingBar.fillAmount = Mathf.Lerp(loadingBar.fillAmount, operation.progress, timer);
@@ -201,13 +241,9 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     }
 
 
-    void OnActiveSceneChanged(Scene previous, Scene current)
-    {      
-        switch (current.name)
-        {
-            case "BattleLobby":
-                    UIManager.Instance.EnterLoadingKeyUIBattle();
-                break;
-        }
+    void OnSceneUnloaded(Scene current)
+    {
+        Debug.Log("Scene unloaded: " + current.name);
+        // 필요한 작업 수행
     }
 }
