@@ -5,11 +5,6 @@ using Transform = UnityEngine.Transform;
 
 public class PlayerInteractController : MonoBehaviour
 {
-    // 상태 변화 패턴
-    private IPlayerState currentState;
-    private FreeState freeState;
-    private HoldState holdState;
-
     // 애니메이션
     public Animator anim;
 
@@ -45,10 +40,6 @@ public class PlayerInteractController : MonoBehaviour
 
     private void Awake()
     {
-        freeState = new FreeState(this);
-        holdState = new HoldState(this);
-        currentState = freeState;  // 초기 상태 설정
-
         masterController = PlayerInputSystem.GetComponent<PlayerMasterController2>();
 
         if (pickupButton != null && masterController.currentPlayer == this.gameObject)
@@ -71,21 +62,6 @@ public class PlayerInteractController : MonoBehaviour
     public void OnSwitch(InputValue inputValue)
     {
         PlayerInputSystem.GetComponent<PlayerMasterController2>().SwitchPlayerComponent();
-    }
-    #endregion
-
-    #region CatchOrKnockback,CookOrThrow, PickupOrPlace
-    public void CatchOrKnockback()
-    {
-    }
-
-    public void CookOrThrow()
-    {
-    }
-    
-    public void PickupOrPlace()
-    {
-        
     }
     #endregion
 
