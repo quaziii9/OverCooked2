@@ -21,6 +21,7 @@ TagManager:
   - Pan
   - Stair
   - Oven
+  - Post_Processing
   layers:
   - Default
   - TransparentFX
