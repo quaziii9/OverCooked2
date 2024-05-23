@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Ingredient;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 [CreateAssetMenu(fileName = "Menu Data", menuName = "Scriptable Object/Menu data", order = int.MaxValue)]
 

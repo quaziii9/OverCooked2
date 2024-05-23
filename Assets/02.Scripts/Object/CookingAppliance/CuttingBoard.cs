@@ -1,10 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 using static Ingredient;
 
 public class CuttingBoard : MonoBehaviour
