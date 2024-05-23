@@ -494,8 +494,10 @@ public class UIManager : Singleton<UIManager>
         stageMapEscUI.SetActive(false);
         escButton.SetActive(false);
         loadingKeyUI.SetActive(true);
+        Debug.Log("loadingKeyUI");
         RecipeUIOff();
-        MaskOutUI(broccoliMask, pineappleMask, "GoToBattleRoom");
+        MaskOutUI(broccoliMask, pineappleMask, "");
+        //MaskOutUI(broccoliMask, pineappleMask, "GoToBattleRoom");
     }
 
 
@@ -748,13 +750,13 @@ public class UIManager : Singleton<UIManager>
         //else if (SceneManager.GetActiveScene().name == "TestStage")
         else if (sceneType == SceneType.BattleMap)
         {
-            EnterLoadingKeyUIBattle();   
+            EventManager<UIEvents>.TriggerEvent(UIEvents.BattleRoomOpen);
         }
         else if (sceneType == SceneType.StageMap)
         {
             EscUIStopOff();
             StageEscUICancle();
-            EnterLoadingKeyUI();
+            //EnterLoadingKeyUI();
             RecipeUIOff();
         }
         else if (sceneType == SceneType.Intro)
@@ -770,7 +772,10 @@ public class UIManager : Singleton<UIManager>
 
 
 
-
+    public void BattleRoomOpen ()
+    {
+         EventManager<UIEvents>.TriggerEvent(UIEvents.BattleRoomOpen);
+    }
 
 
 
