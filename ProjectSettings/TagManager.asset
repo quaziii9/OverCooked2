@@ -21,6 +21,7 @@ TagManager:
   - Pan
   - Stair
   - Oven
+  - MineCounter
   layers:
   - Default
   - TransparentFX

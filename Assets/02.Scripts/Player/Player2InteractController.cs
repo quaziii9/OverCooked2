@@ -41,6 +41,8 @@ public class Player2InteractController : MonoBehaviour
     public Button pickupButton; // 모바일 줍기/놓기 버튼
     public Button cookButton;   // 모바일 요리/던지기 버튼
 
+    Vector3 placeTransform = Vector3.zero;
+
     private void Awake()
     {
         //freeState = new FreeState(this);
@@ -68,7 +70,7 @@ public class Player2InteractController : MonoBehaviour
     #region OnSwitch
     public void OnSwitch(InputValue inputValue)
     {
-        PlayerInputSystem.GetComponent<PlayerMasterController>().SwitchPlayerComponent();
+        PlayerInputSystem.GetComponent<PlayerMasterController2>().SwitchPlayerComponent();
     }
     #endregion
 
@@ -701,6 +703,16 @@ public class Player2InteractController : MonoBehaviour
             //isHolding = false;
             SoundManager.Instance.PlayEffect("put");
             GameObject handleThing = transform.GetChild(1).gameObject;
+
+            if (interactObject.transform.parent.CompareTag("MineCounter"))
+            {
+                placeTransform = interactObject.transform.parent.GetChild(1).localPosition + new Vector3(0.072f, 0.006f, 0.024f);
+            }
+            else
+            {
+                placeTransform = interactObject.transform.parent.GetChild(1).localPosition;
+            }
+
             if (handleThing.CompareTag("Ingredient"))
             {
                 objectHighlight.onSomething = true;
@@ -709,7 +721,7 @@ public class Player2InteractController : MonoBehaviour
                 handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient>().
                     IngredientHandleOff(
                     interactObject.transform.parent,
-                    interactObject.transform.parent.GetChild(1).localPosition,
+                    placeTransform,
                     handleThing.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type);
             }
             else if (handleThing.CompareTag("Pan") || handleThing.CompareTag("Pot"))
@@ -721,7 +733,7 @@ public class Player2InteractController : MonoBehaviour
                     handleThing.GetComponent<Ingredient>().isOnDesk = true;
                     handleThing.GetComponent<Ingredient>().
                         PlayerHandleOff(interactObject.transform.parent,
-                        interactObject.transform.parent.GetChild(1).localPosition);
+                        placeTransform);
                 }
             }
             else //접시
@@ -733,7 +745,7 @@ public class Player2InteractController : MonoBehaviour
                     handleThing.GetComponent<Ingredient>().isOnDesk = true;
                     handleThing.GetComponent<Ingredient>().
                         PlayerHandleOff(interactObject.transform.parent,
-                        interactObject.transform.parent.GetChild(1).localPosition);
+                        placeTransform);
                 }
 
             }

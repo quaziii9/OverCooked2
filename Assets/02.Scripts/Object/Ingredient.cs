@@ -116,7 +116,7 @@ public class Ingredient : GameItem
         {
             parentTransform.SetParent(something);
             parentTransform.localRotation = Quaternion.identity;
-            parentTransform.localPosition = new Vector3(-0.409999996f, 0, 3.610047f);
+            parentTransform.localPosition = new Vector3(-0.409999996f, 0, 2.8f);
         }
         else if (isActive && handle == IngredientType.Pan)
         {
