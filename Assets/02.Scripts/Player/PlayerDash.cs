@@ -29,7 +29,7 @@ public class PlayerDash : MonoBehaviour
     [Header("Player Master Controller")]
     public PlayerMasterController2 masterController;
 
-    [Header("UI")]
+    [Header("Mobile Button")]
     public Button dashButton; // UI 버튼 참조
 
     private void Start()
@@ -37,7 +37,7 @@ public class PlayerDash : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         if (dashButton != null)
         {
-            dashButton.onClick.AddListener(OnUIDash); // 버튼 클릭 이벤트에 OnUIDash 메서드 연결
+            dashButton.onClick.AddListener(MobileDash); // 버튼 클릭 이벤트에 MobileDash 메서드 연결
         }
     }
 
@@ -54,7 +54,7 @@ public class PlayerDash : MonoBehaviour
     }
 
     // UI 버튼을 클릭할 때 호출될 메서드
-    private void OnUIDash()
+    private void MobileDash()
     {
         // 현재 활성화 상태인지 확인해야할듯
         if (!isDashing && dashCdTimer <= 0 && masterController.currentPlayer == this.gameObject)

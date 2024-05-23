@@ -136,44 +136,4 @@ public class PlayerMoveController : MonoBehaviour
             Debug.DrawRay(item.point, item.normal * 100, Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f), 10f);
         }
     }
-
-    public void OnPickup()
-    {
-        // 요리 재료 줍기 또는 놓기 로직
-        Debug.Log("Pickup or Place Item");
-    }
-
-    public void OnCook()
-    {
-        // 요리하기 또는 재료 던지기 로직
-        Debug.Log("Cook or Throw Item");
-    }
-
-    
-    public void OnDash()
-    {
-        // 대쉬 로직
-        if (!isDashing)
-        {
-            StartCoroutine(Dash());
-        }
-    }
-    
-
-    private IEnumerator Dash()
-    {
-        isDashing = true;
-        float dashTime = 0.5f;
-        float dashSpeed = 25f;
-
-        float startTime = Time.time;
-
-        while (Time.time < startTime + dashTime)
-        {
-            rb.velocity = new Vector3(moveInput.x, 0f, moveInput.y) * dashSpeed;
-            yield return null;
-        }
-
-        isDashing = false;
-    }
 }

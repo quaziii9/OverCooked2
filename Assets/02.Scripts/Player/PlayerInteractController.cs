@@ -35,13 +35,29 @@ public class PlayerInteractController : MonoBehaviour
 
     [Header("PlayerInputSystem")]
     [SerializeField] private GameObject PlayerInputSystem;
+    private PlayerMasterController2 masterController;
 
+    [Header("Mobile Button")]
+    public Button pickupButton; // 모바일 줍기/놓기 버튼
+    public Button cookButton;   // 모바일 요리/던지기 버튼
 
     private void Awake()
     {
         freeState = new FreeState(this);
         holdState = new HoldState(this);
         currentState = freeState;  // 초기 상태 설정
+
+        masterController = PlayerInputSystem.GetComponent<PlayerMasterController2>();
+
+        if (pickupButton != null && masterController.currentPlayer == this.gameObject)
+        {
+            pickupButton.onClick.AddListener(MobilePickupOrPlace); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
+        }
+
+        if (cookButton != null && masterController.currentPlayer == this.gameObject)
+        {
+            cookButton.onClick.AddListener(MobileCookOrThrow); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
+        }
     }
 
     private void Update()
@@ -78,6 +94,25 @@ public class PlayerInteractController : MonoBehaviour
         if (checkInteractObject())
         {
             if(ShouldStartCutting())
+                StartCuttingProcess();
+            else
+                SoundManager.Instance.PlayEffect("no");
+        }
+        else
+        {
+            if (isHolding && CanThrowIngredient())
+            {
+                ThrowIngredient();
+            }
+        }
+    }
+
+    public void MobileCookOrThrow()
+    {
+        Debug.Log("MobileCookOrThrow");
+        if (checkInteractObject())
+        {
+            if (ShouldStartCutting())
                 StartCuttingProcess();
             else
                 SoundManager.Instance.PlayEffect("no");
@@ -200,6 +235,12 @@ public class PlayerInteractController : MonoBehaviour
 
     #region OnPickupOrPlace
     public void OnPickupOrPlace(InputValue inputValue)
+    {
+        ProcessInteraction();
+        //SetHand();
+    }
+
+    public void MobilePickupOrPlace()
     {
         ProcessInteraction();
         //SetHand();

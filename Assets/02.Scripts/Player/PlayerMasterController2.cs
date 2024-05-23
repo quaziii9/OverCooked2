@@ -20,6 +20,7 @@ public class PlayerMasterController2 : MonoBehaviour
     [Header("Platform")]
     [SerializeField] private bool isMobile = false;
 
+    [Header("Mobile Button")]
     public Button switchButton; // UI 버튼 참조
 
     private void Awake()
@@ -29,7 +30,7 @@ public class PlayerMasterController2 : MonoBehaviour
 
         if (switchButton != null)
         {
-            switchButton.onClick.AddListener(OnUISwitch); // 버튼 클릭 이벤트에 OnUIDash 메서드 연결
+            switchButton.onClick.AddListener(MobileSwitch); // 버튼 클릭 이벤트에 MobileSwitch 메서드 연결
         }
     }
 
@@ -39,7 +40,7 @@ public class PlayerMasterController2 : MonoBehaviour
         SwitchPlayerComponent();
     }
 
-    public void OnUISwitch()
+    public void MobileSwitch()
     {
         SwitchPlayerComponent();
     }
