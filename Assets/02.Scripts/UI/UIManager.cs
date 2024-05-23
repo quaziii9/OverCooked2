@@ -107,8 +107,8 @@ public class UIManager : Singleton<UIManager>
 
     private void Update()
     {
-        Debug.Log(sceneType);
-        Debug.Log(mapType);
+        //Debug.Log(sceneType);
+        //Debug.Log(mapType);
         //BusMapEscUI();
         EscUI();
         //if(!isSetting && !isExit && Input.GetKeyDown(KeyCode.Escape)) StopUIOn();
