@@ -7,6 +7,7 @@ public class AniTEST : MonoBehaviour
 {
     // 자식 객체의 애니메이터 컴포넌트를 저장할 배열
     private Animator[] childAnimators;
+    public GameObject bus;
     void Awake()
     {
         // 모든 자식 객체의 애니메이터 컴포넌트를 가져옴
@@ -29,26 +30,38 @@ public class AniTEST : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)) // 예시로 스페이스바를 누를 때 실행하도록 설정
         {
             //PlayChildAnimations();
-            StartCoroutine(start());
+            StartCoroutine(Startflip());
         }
     }
 
     public void PlayChildAnimations()
     {
-        foreach (Animator animator in childAnimators)
-        {
-            animator.SetTrigger("flip");
-        }
-        
+        StartCoroutine(Startflip());
+        //foreach (Animator animator in childAnimators)
+        //{
+        //    animator.SetTrigger("flip");
+        //}
     }
-    IEnumerator start()
+
+    IEnumerator Startflip()
     {
+        int count = 0;
+        Bus busSc = bus.GetComponent<Bus>();
+        busSc.enabled = false;
+        Rigidbody rb= bus.GetComponent<Rigidbody>();
+        rb.isKinematic = true;
         foreach (Animator animator in childAnimators)
         {
+            count++;
             animator.SetTrigger("flip");
-            
+            if (count >= 3)
+            {
+                yield return null;
+            }
         }
         yield return null;
+        busSc.enabled = true;
+        rb.isKinematic = false;
     }
 
     //private void OnCollisionEnter(Collision collision)
@@ -61,25 +74,5 @@ public class AniTEST : MonoBehaviour
     //        }
     //    }
     //}
-    public void Combine()
-    {
-        MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
-        CombineInstance[] combine = new CombineInstance[meshFilters.Length];
 
-        for (int i = 0; i < meshFilters.Length; i++)
-        {
-            combine[i].mesh = meshFilters[i].sharedMesh;
-            combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
-            meshFilters[i].gameObject.SetActive(false);
-        }
-
-        MeshFilter mf = gameObject.AddComponent<MeshFilter>();
-        mf.mesh = new Mesh();
-        mf.mesh.CombineMeshes(combine);
-
-        MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
-        mr.sharedMaterial = meshFilters[0].GetComponent<MeshRenderer>().sharedMaterial;
-
-        gameObject.SetActive(true);
-    }
 }
