@@ -1,12 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Principal;
-using Unity.IO.LowLevel.Unsafe;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
-using static UnityEngine.RuleTile.TilingRuleOutput;
+using UnityEngine.UI;
 using Transform = UnityEngine.Transform;
 
 public class Player2InteractController : MonoBehaviour
@@ -41,7 +35,6 @@ public class Player2InteractController : MonoBehaviour
 
     [Header("PlayerInputSystem")]
     [SerializeField] private GameObject PlayerInputSystem;
-
 
     private void Awake()
     {

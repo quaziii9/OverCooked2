@@ -115,6 +115,10 @@ public class PlayerMoveController : MonoBehaviour
 
     public void OnMove(InputValue inputValue)
     {
+        if(inputValue == null)
+        {
+            Debug.Log("joystick 움직이지만 값 없음");
+        }
         moveInput = inputValue.Get<Vector2>();
     }
 
@@ -145,6 +149,7 @@ public class PlayerMoveController : MonoBehaviour
         Debug.Log("Cook or Throw Item");
     }
 
+    
     public void OnDash()
     {
         // 대쉬 로직
@@ -153,6 +158,7 @@ public class PlayerMoveController : MonoBehaviour
             StartCoroutine(Dash());
         }
     }
+    
 
     private IEnumerator Dash()
     {
