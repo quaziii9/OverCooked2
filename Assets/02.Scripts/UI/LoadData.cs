@@ -27,16 +27,18 @@ public class LoadData : Singleton<LoadData>
         optionData.saveBgmVolume = SoundManager.Instance.volumeBGM;
         optionData.saveEffectVolume = SoundManager.Instance.volumeEffect;
         string jsonData = JsonUtility.ToJson(optionData, true);
-        string path = Path.Combine(Application.dataPath, "optionData.json");
+        //string path = Path.Combine(Application.dataPath, "optionData.json");    -> 유니티 
+        string path = GetFilePath();
         File.WriteAllText(path, jsonData);
         Debug.Log("저장");
     }
 
     [ContextMenu("From Json Data")]
     public void LoadOptionDataFromJson()
-    {       
-        string path = Path.Combine(Application.dataPath, "optionData.json");
-        if(File.Exists(path))
+    {
+        //string path = Path.Combine(Application.dataPath, "optionData.json");      -> 유니티 
+        string path = GetFilePath();
+        if (File.Exists(path))
         {           
             Debug.Log("불러오기 성공");
             string jsonData = File.ReadAllText(path);
@@ -54,7 +56,18 @@ public class LoadData : Singleton<LoadData>
         }      
     }
 
-    
+    private string GetFilePath()
+    {
+        string fileName = "optionData.json";
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            return Path.Combine(Application.persistentDataPath, fileName);
+        }
+        else // PC나 다른 플랫폼의 경우
+        {
+            return Path.Combine(Application.dataPath, fileName);
+        }
+    }
 
     private void OnApplicationQuit()
     {
