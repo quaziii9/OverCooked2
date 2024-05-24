@@ -14,6 +14,7 @@ public class ScrollSnapButton : MonoBehaviour
     public Sprite notselectImg;
     public Image backImage;
     public GameObject MapObject;
+    public GameObject ReadyBtn;
     
     string name;
 
@@ -54,8 +55,12 @@ public class ScrollSnapButton : MonoBehaviour
         RandomSelectMap.transform.GetChild(_index).transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
         RandomSelectMap.transform.GetChild(_index).transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
 
+        // 선택하면 오브젝트를 키고
         snap.gameObject.SetActive(true);
+        // 랜덤맵을 끄고
         RandomSelectMap.gameObject.SetActive(false);
+        // 버튼을 비활성화 시키고
+        ReadyBtn.gameObject.SetActive(false);
     }
 
     public void SnapMapClick()
@@ -70,6 +75,9 @@ public class ScrollSnapButton : MonoBehaviour
                 UIManager.Instance.mapType = EnumTypes.MapType.stageWizard;
                 // 선택하면 오브젝트를 끄고
                 snap.gameObject.SetActive(false);
+                // 버튼을 활성화 시키고
+                ReadyBtn.gameObject.SetActive(true);
+                // 랜덤맵을 염
                 RandomSelectMap.gameObject.SetActive(true);
                 FindOverNetworkRoomPlayerAndCheckMap(name);
             }
@@ -79,6 +87,9 @@ public class ScrollSnapButton : MonoBehaviour
                 UIManager.Instance.mapType = EnumTypes.MapType.stageMine;
                 // 선택하면 오브젝트를 끄고
                 snap.gameObject.SetActive(false);
+                // 버튼을 활성화 시키고
+                ReadyBtn.gameObject.SetActive(true);
+                // 랜덤맵을 염
                 RandomSelectMap.gameObject.SetActive(true);
                 FindOverNetworkRoomPlayerAndCheckMap(name);
             }
@@ -123,7 +134,7 @@ public class ScrollSnapButton : MonoBehaviour
             default :
                 break;
         }
-
+        
     }
 
 }
