@@ -2,37 +2,30 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RespawnManager : Singleton<RespawnManager>
+public class RespawnManager : MonoBehaviour
 {
-    [System.Serializable]
-    public struct RespawnUI
-    {
-        public GameObject playerUI; // Player UI 오브젝트 (Background와 Text를 포함)
-        public Text countdownText;  // Text UI 오브젝트
-    }
-
-    [SerializeField] private RespawnUI[] respawnUIs; // 리스폰 UI 정보 배열
+    [SerializeField] private GameObject[] countdown;
     [SerializeField] private Transform[] playerSpawnPositions; // 리스폰 위치들
     [SerializeField] private float respawnDelay = 5.0f; // 리스폰 대기 시간
 
     private void Start()
     {
-        if (respawnUIs.Length != playerSpawnPositions.Length)
+        if (countdown.Length != playerSpawnPositions.Length)
         {
-            Debug.LogError("RespawnUIs와 PlayerSpawnPositions 배열의 크기가 일치해야 합니다.");
+            Debug.LogError("CountdownTexts와 PlayerSpawnPositions 배열의 크기가 일치해야 합니다.");
             return;
         }
 
-        // 초기에는 모든 Player UI를 비활성화
-        foreach (var ui in respawnUIs)
+        // 초기에는 모든 UI를 비활성화
+        foreach (var obj in countdown)
         {
-            ui.playerUI.SetActive(false);
+            obj.gameObject.SetActive(false);
         }
     }
 
     public void StartRespawnCountdown(int spawnIndex)
     {
-        if (spawnIndex >= 0 && spawnIndex < respawnUIs.Length)
+        if (spawnIndex >= 0 && spawnIndex < countdown.Length)
         {
             StartCoroutine(RespawnCountdownCoroutine(spawnIndex));
         }
@@ -44,16 +37,18 @@ public class RespawnManager : Singleton<RespawnManager>
 
     private IEnumerator RespawnCountdownCoroutine(int index)
     {
-        RespawnUI respawnUI = respawnUIs[index];
-        respawnUI.playerUI.SetActive(true);
+        GameObject obj = countdown[index];
+        Text countdownText = obj.transform.GetChild(1).GetComponent<Text>();
+
+        obj.SetActive(true);
 
         for (int i = (int)respawnDelay; i > 0; i--)
         {
-            respawnUI.countdownText.text = i.ToString();
+            countdownText.text = i.ToString();
             yield return new WaitForSeconds(1.0f);
         }
 
-        respawnUI.playerUI.SetActive(false);
+        obj.SetActive(false);
         RespawnPlayer(index);
     }
 
