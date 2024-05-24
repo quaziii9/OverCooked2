@@ -10,6 +10,8 @@ public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] private GameObject[] BGMSquares; // 음량 네모네모
     [SerializeField] private GameObject[] effectSquares;
+    [SerializeField] private GameObject[] mobileBGMSquares; // 음량 네모네모
+    [SerializeField] private GameObject[] mobileeffectSquares;
     [SerializeField] private AudioClip[] allAudioClip;
     
     [Header("Audio Source")]
@@ -104,6 +106,8 @@ public class SoundManager : Singleton<SoundManager>
 
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
+        UIManager.Instance.SetBGMSquares(volumeBGM, mobileBGMSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, mobileeffectSquares);
     }
 
     private void OnEnable()
@@ -155,6 +159,7 @@ public class SoundManager : Singleton<SoundManager>
 
 
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
+        UIManager.Instance.SetBGMSquares(volumeBGM, mobileBGMSquares);
     }
 
     public void BGMVolumeDown()
@@ -168,6 +173,7 @@ public class SoundManager : Singleton<SoundManager>
         bgmChangeAudioSource.volume = volumeBGM;
 
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
+        UIManager.Instance.SetBGMSquares(volumeBGM, mobileBGMSquares);
     }
 
     public void EffectSoundVolumeUp()
@@ -179,6 +185,7 @@ public class SoundManager : Singleton<SoundManager>
         }
         SetAllEffectVolume();
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, mobileeffectSquares);
     }
 
     public void EffectSoundVolumeDown()
@@ -190,6 +197,7 @@ public class SoundManager : Singleton<SoundManager>
         }
         SetAllEffectVolume();
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, mobileeffectSquares);
     }
     
     public void SettingSave()
@@ -201,6 +209,8 @@ public class SoundManager : Singleton<SoundManager>
         SetAllEffectVolume();
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
+        UIManager.Instance.SetBGMSquares(volumeBGM, mobileBGMSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, mobileeffectSquares);
     }
 
     public void SettingCancle()
@@ -213,6 +223,8 @@ public class SoundManager : Singleton<SoundManager>
 
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
+        UIManager.Instance.SetBGMSquares(volumeBGM, mobileBGMSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, mobileeffectSquares);
     }
 
     private void SetAllEffectVolume()
