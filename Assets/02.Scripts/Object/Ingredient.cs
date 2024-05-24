@@ -387,7 +387,7 @@ public class Ingredient : GameItem
                 break;
         }
 
-        transform.parent.parent.localPosition += positionOffset;
+        //transform.parent.parent.localPosition += positionOffset;
         transform.parent.parent.localRotation = rotationOffset * transform.parent.parent.localRotation;
     }
     #endregion
@@ -396,7 +396,7 @@ public class Ingredient : GameItem
     {
         transform.SetParent(parent);
         transform.rotation = Quaternion.identity;
-        transform.localPosition = target;
+        //transform.localPosition = target;
     }
 
     public void PlayerHandleOff(Transform parent, Vector3 target, Quaternion rotation)

@@ -95,6 +95,7 @@ public class PlayerMoveController : MonoBehaviour
 
     private void HandleStairMovement()
     {
+
         if (isOnStairs)
         {
             if (moveInput != Vector2.zero)

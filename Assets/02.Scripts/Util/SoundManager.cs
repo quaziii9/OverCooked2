@@ -327,7 +327,7 @@ public class SoundManager : Singleton<SoundManager>
                 effectAudioSource.clip = fall;
                 break;
             case "throwItem":
-                effectAudioSource.clip = throwItem;
+                //effectAudioSource.clip = throwItem;
                 break;
             case "ready":
                 effectAudioSource.clip = ready;
@@ -342,10 +342,10 @@ public class SoundManager : Singleton<SoundManager>
                 effectAudioSource.clip = right;
                 break;
             case "no":
-                effectAudioSource.clip = no;
+                //effectAudioSource.clip = no;
                 break;
             case "cut":
-                effectAudioSource.clip = cut;
+                //effectAudioSource.clip = cut;
                 break;
             case "boing":
                 effectAudioSource.clip = boing;
@@ -353,7 +353,7 @@ public class SoundManager : Singleton<SoundManager>
                 effectAudioSource.PlayOneShot(boing);
                 break;
         }
-        effectAudioSource.volume = volumeEffect;
-        effectAudioSource.PlayOneShot(effectAudioSource.clip);
+        //effectAudioSource.volume = volumeEffect;
+        //effectAudioSource.PlayOneShot(effectAudioSource.clip);
     }
 }
