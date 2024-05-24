@@ -110,16 +110,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5272948979930083146}
-  m_LocalRotation: {x: 0.65908444, y: 0.10909157, z: 0.3387261, w: -0.66254926}
-  m_LocalPosition: {x: -0.09360002, y: -0.0010000002, z: -0.050899994}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 28, y: 28, z: 28}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8583297878401651371}
   - {fileID: 4346712896554411693}
   m_Father: {fileID: 8814600216761685799}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -71.308, y: 430.417, z: -107.854}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4377729856030813517
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -262,6 +262,7 @@ MonoBehaviour:
   itemName: SeaWeed
   isCooked: 0
   isOnDesk: 0
+  pizzazIsCooked: 0
   type: 11
   currentState: 0
   cookedIngredient: {fileID: 8097617054539991953, guid: 12a386c2dfdf6504791895fae95723f0,
@@ -312,15 +313,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8149281799195397533}
-  m_LocalRotation: {x: -0.029476687, y: -0.03182039, z: 0.7329167, w: 0.6789343}
-  m_LocalPosition: {x: 35.30286, y: 11.588018, z: -0.7600002}
-  m_LocalScale: {x: 85, y: 85, z: 85}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1756362908777219302}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.379, y: -4.958, z: 94.363}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8149281799195397534
 MonoBehaviour:
   m_ObjectHideFlags: 0

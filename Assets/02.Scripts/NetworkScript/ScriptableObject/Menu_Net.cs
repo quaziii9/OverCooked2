@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Ingredient;
 
 [CreateAssetMenu(fileName = "Menu Data Net", menuName = "Scriptable Object Net/Menu data Net", order = int.MaxValue)]
 

@@ -116,7 +116,7 @@ public class Ingredient : GameItem
         {
             parentTransform.SetParent(something);
             parentTransform.localRotation = Quaternion.identity;
-            parentTransform.localPosition = new Vector3(-0.409999996f, 0, 3.610047f);
+            parentTransform.localPosition = new Vector3(-0.409999996f, 0, 2.8f);
         }
         else if (isActive && handle == IngredientType.Pan)
         {
@@ -396,6 +396,13 @@ public class Ingredient : GameItem
     {
         transform.SetParent(parent);
         transform.rotation = Quaternion.identity;
+        transform.localPosition = target;
+    }
+
+    public void PlayerHandleOff(Transform parent, Vector3 target, Quaternion rotation)
+    {
+        transform.SetParent(parent);
+        transform.rotation = rotation;
         transform.localPosition = target;
     }
 }

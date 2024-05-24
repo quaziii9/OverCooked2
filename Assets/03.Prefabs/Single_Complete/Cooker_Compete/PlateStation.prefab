@@ -25,8 +25,8 @@ Transform:
   m_GameObject: {fileID: 1102134713775371105}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 1.22, y: -7.97, z: 5.76}
-  m_LocalScale: {x: 250, y: 250, z: 250}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 456615990703131021}
   - {fileID: 4827685178411263847}
@@ -138,7 +138,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4078823262831032612}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
@@ -253,7 +253,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4078823264244483392}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 3424231874407421222}
   - component: {fileID: 2009650831444242220}
   - component: {fileID: 5978478678569937442}
-  - component: {fileID: 4078823263926188289}
+  - component: {fileID: 681250627}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Station
@@ -525,7 +525,7 @@ MeshRenderer:
   - {fileID: 2100000, guid: f4c3f137e5f2c2b4dab6a538026fbf3a, type: 2}
   - {fileID: 2100000, guid: c7374cef71b3b274f97bca20142d3ed1, type: 2}
   - {fileID: 2100000, guid: 0f4d77dee0538af428d90cef8a41ce3d, type: 2}
-  - {fileID: 2100000, guid: 90039174c9e65154bb71b6e8a5b4b86d, type: 2}
+  - {fileID: 2100000, guid: 3b402332d7dcf574fbf26c9dabfbc6a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -560,7 +560,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.02391136, y: 0.013480391, z: 0.01881804}
   m_Center: {x: 0.000048475267, y: -0.0013972725, z: 0.0030215369}
---- !u!114 &4078823263926188289
+--- !u!114 &681250627
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -569,8 +569,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8366358168646320280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c84834eac31645049af8ca58c1148c1e, type: 3}
+  m_Script: {fileID: 11500000, guid: d051ba4eb6798254eabcc0dae96102f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xSpeed: 0
-  ySpeed: 5.5
+  meshRenderer: {fileID: 0}
+  materialIndex: 3
+  speed: 0.5
+  YPlus: 0
+  y: 1
+  yLimit: 0
+  startYOffset: 0
+  endYOffset: -0
+  XPlus: 0
+  x: 0
+  xLimit: 0
+  startXOffset: 0
+  endXOffset: -0

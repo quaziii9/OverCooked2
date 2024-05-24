@@ -44,8 +44,6 @@ public class PlayerMasterController : MonoBehaviour
         // 다음 플레이어의 인덱스를 계산한다.
         int nextIndex = (currentIndex + 1) % playerList.Count;
 
-
-
         if (particle != null)
         {
             GameObject particleInstance = Instantiate(particle, currentPlayer.transform.position, Quaternion.identity);
