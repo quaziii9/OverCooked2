@@ -14,7 +14,7 @@ using Mirror;
 /// </summary>
 public class OverNetworkRoomPlayer : NetworkRoomPlayer
 {
-
+    
 
     /*
     #region Start & Stop 콜백

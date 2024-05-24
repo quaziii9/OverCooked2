@@ -53,6 +53,7 @@ public class DeathZone : MonoBehaviour
 
             ingredient.transform.SetSiblingIndex(2);  // 두 번째 자식으로 설정
             ingredient.gameObject.SetActive(true);  // 재료 활성화
+            ingredient.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;  // 위치 고정
             returnPosition.parent.transform.GetChild(0).GetComponent<ObjectHighlight>().onSomething = true;
             Debug.Log($"{ingredient.gameObject.tag}가 {returnPosition.position} 위치로 반환되었습니다.");
         }
