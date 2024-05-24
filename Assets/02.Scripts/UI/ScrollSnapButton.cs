@@ -1,5 +1,6 @@
 using DanielLochner.Assets.SimpleScrollSnap;
 using Org.BouncyCastle.Bcpg.OpenPgp;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,6 +8,8 @@ using UnityEngine.UI;
 public class ScrollSnapButton : MonoBehaviour
 {
     public SimpleScrollSnap snap;
+    // 킬꺼
+    public GameObject RandomSelectMap;
     public Sprite selectImg;
     public Sprite notselectImg;
     public Image backImage;
@@ -31,6 +34,30 @@ public class ScrollSnapButton : MonoBehaviour
         }
     }
 
+    public void SnapMapCancle()
+    {
+        OverNetworkRoomPlayer[] players = FindObjectsOfType<OverNetworkRoomPlayer>();
+
+        if (players == null)
+            return;
+
+        int _index = 0;
+
+        foreach (var player in players)
+        {
+            if (player.isLocalPlayer == true)
+                _index = player.index;
+        }
+
+        RandomSelectMap.transform.GetChild(_index).transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(false);
+        RandomSelectMap.transform.GetChild(_index).transform.GetChild(2).transform.GetChild(1).gameObject.SetActive(false);
+        RandomSelectMap.transform.GetChild(_index).transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
+        RandomSelectMap.transform.GetChild(_index).transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
+
+        snap.gameObject.SetActive(true);
+        RandomSelectMap.gameObject.SetActive(false);
+    }
+
     public void SnapMapClick()
     {
         GameObject clickObject = EventSystem.current.currentSelectedGameObject;
@@ -41,13 +68,62 @@ public class ScrollSnapButton : MonoBehaviour
             {
                 UIManager.Instance.sceneType = EnumTypes.SceneType.BattleMap;
                 UIManager.Instance.mapType = EnumTypes.MapType.stageWizard;
+                // 선택하면 오브젝트를 끄고
+                snap.gameObject.SetActive(false);
+                RandomSelectMap.gameObject.SetActive(true);
+                FindOverNetworkRoomPlayerAndCheckMap(name);
             }
-            if (name == "Mine")
+            else if (name == "Mine")
             {
                 UIManager.Instance.sceneType = EnumTypes.SceneType.BattleMap;
                 UIManager.Instance.mapType = EnumTypes.MapType.stageMine;
+                // 선택하면 오브젝트를 끄고
+                snap.gameObject.SetActive(false);
+                RandomSelectMap.gameObject.SetActive(true);
+                FindOverNetworkRoomPlayerAndCheckMap(name);
             }
-            UIManager.Instance.EnterLoadingMapUI();
+            else 
+            {
+                return;
+            }
+            //UIManager.Instance.EnterLoadingMapUI();
         }
     }
+
+    public void FindOverNetworkRoomPlayerAndCheckMap(string mapName)
+    {
+        OverNetworkRoomPlayer[] players = FindObjectsOfType<OverNetworkRoomPlayer>();
+
+        if (players == null)
+            return;
+
+        int _index = 0;
+
+        foreach (var player in players)
+        {
+            if(player.isLocalPlayer == true)
+                _index = player.index;
+        }
+
+
+        switch (mapName)
+        {
+            case "Wizard":
+                // Image
+                RandomSelectMap.transform.GetChild(_index).transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(true);
+                // Text
+                RandomSelectMap.transform.GetChild(_index).transform.GetChild(2).transform.GetChild(1).gameObject.SetActive(true);
+                break;
+            case "Mine":
+                // Image
+                RandomSelectMap.transform.GetChild(_index).transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(true);
+                // Text
+                RandomSelectMap.transform.GetChild(_index).transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(true);
+                break;
+            default :
+                break;
+        }
+
+    }
+
 }

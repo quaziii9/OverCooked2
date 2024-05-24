@@ -2863,7 +2863,7 @@ RectTransform:
   - {fileID: 567363675}
   - {fileID: 1216304016}
   m_Father: {fileID: 994253723}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2989,6 +2989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snap: {fileID: 1226484133}
+  RandomSelectMap: {fileID: 1336685422}
   selectImg: {fileID: 21300000, guid: cc8f16ae4c1b0574880fbd4a3c070431, type: 3}
   notselectImg: {fileID: 21300000, guid: bfe4a96bb76a0224cb71ac8f2538db48, type: 3}
   backImage: {fileID: 567363676}
@@ -3050,6 +3051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snap: {fileID: 1226484133}
+  RandomSelectMap: {fileID: 1336685422}
   selectImg: {fileID: 21300000, guid: cc8f16ae4c1b0574880fbd4a3c070431, type: 3}
   notselectImg: {fileID: 21300000, guid: bfe4a96bb76a0224cb71ac8f2538db48, type: 3}
   backImage: {fileID: 1530329095}
@@ -3099,8 +3101,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 125295142}
-        m_TargetAssemblyTypeName: ScrollSnapButton, SimpleScrollSnap
-        m_MethodName: SnapMapClick
+        m_TargetAssemblyTypeName: ScrollSnapButton, Assembly-CSharp
+        m_MethodName: SnapMapCancle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6490,6 +6492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snap: {fileID: 1226484133}
+  RandomSelectMap: {fileID: 1336685422}
   selectImg: {fileID: 21300000, guid: cc8f16ae4c1b0574880fbd4a3c070431, type: 3}
   notselectImg: {fileID: 21300000, guid: bfe4a96bb76a0224cb71ac8f2538db48, type: 3}
   backImage: {fileID: 287102550}
@@ -7959,7 +7962,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403938735}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7968,7 +7971,7 @@ RectTransform:
   - {fileID: 347057424}
   - {fileID: 1668708676}
   m_Father: {fileID: 994253723}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -8094,6 +8097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snap: {fileID: 1226484133}
+  RandomSelectMap: {fileID: 1336685422}
   selectImg: {fileID: 21300000, guid: cc8f16ae4c1b0574880fbd4a3c070431, type: 3}
   notselectImg: {fileID: 21300000, guid: bfe4a96bb76a0224cb71ac8f2538db48, type: 3}
   backImage: {fileID: 347057425}
@@ -15557,7 +15561,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &773857552
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19450,9 +19454,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 403938736}
   - {fileID: 1269180646}
   - {fileID: 112809944}
-  - {fileID: 403938736}
   - {fileID: 345533489}
   - {fileID: 1539580422}
   m_Father: {fileID: 547324244}
@@ -19480,7 +19484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &995756519
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20281,7 +20285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1065238828
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20967,7 +20971,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1091250919
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21866,6 +21870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snap: {fileID: 1226484133}
+  RandomSelectMap: {fileID: 1336685422}
   selectImg: {fileID: 21300000, guid: cc8f16ae4c1b0574880fbd4a3c070431, type: 3}
   notselectImg: {fileID: 21300000, guid: bfe4a96bb76a0224cb71ac8f2538db48, type: 3}
   backImage: {fileID: 1437470164}
@@ -21915,8 +21920,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1151600793}
-        m_TargetAssemblyTypeName: ScrollSnapButton, SimpleScrollSnap
-        m_MethodName: SnapMapClick
+        m_TargetAssemblyTypeName: ScrollSnapButton, Assembly-CSharp
+        m_MethodName: SnapMapCancle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25575,7 +25580,7 @@ RectTransform:
   - {fileID: 533758716}
   - {fileID: 887656357}
   m_Father: {fileID: 994253723}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -25645,6 +25650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snap: {fileID: 1226484133}
+  RandomSelectMap: {fileID: 1336685422}
   selectImg: {fileID: 21300000, guid: cc8f16ae4c1b0574880fbd4a3c070431, type: 3}
   notselectImg: {fileID: 21300000, guid: bfe4a96bb76a0224cb71ac8f2538db48, type: 3}
   backImage: {fileID: 533758717}
@@ -26568,9 +26574,10 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
+  clientSceneOperation: 0
   showRoomGUI: 1
   minPlayers: 1
-  roomPlayerPrefab: {fileID: 2496438365510977985, guid: 6b1f07446813a934f9422c438c23eb16,
+  roomPlayerPrefab: {fileID: 1761570048194521690, guid: 0507aa0f762023443b62da4b14d1d786,
     type: 3}
   RoomScene: Assets/01.Scenes/Inseok/NetworkScenes/BattleLobby_Net.unity
   GameplayScene: Assets/01.Scenes/Eunjoo/TestStage.unity
@@ -26579,6 +26586,11 @@ MonoBehaviour:
   clientIndex: 0
   loadingBar: {fileID: 1463878916}
   LoadingKeyUI: {fileID: 511028191}
+  canvasInPlayers:
+  - {fileID: 816310526}
+  - {fileID: 747923522}
+  - {fileID: 860761506}
+  - {fileID: 413266091}
 --- !u!4 &1338604848
 Transform:
   m_ObjectHideFlags: 0
@@ -31397,6 +31409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snap: {fileID: 1226484133}
+  RandomSelectMap: {fileID: 1336685422}
   selectImg: {fileID: 21300000, guid: cc8f16ae4c1b0574880fbd4a3c070431, type: 3}
   notselectImg: {fileID: 21300000, guid: bfe4a96bb76a0224cb71ac8f2538db48, type: 3}
   backImage: {fileID: 2040073182}
@@ -34595,6 +34608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snap: {fileID: 1226484133}
+  RandomSelectMap: {fileID: 1336685422}
   selectImg: {fileID: 21300000, guid: cc8f16ae4c1b0574880fbd4a3c070431, type: 3}
   notselectImg: {fileID: 21300000, guid: bfe4a96bb76a0224cb71ac8f2538db48, type: 3}
   backImage: {fileID: 357507608}
@@ -34644,8 +34658,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1680337981}
-        m_TargetAssemblyTypeName: ScrollSnapButton, SimpleScrollSnap
-        m_MethodName: SnapMapClick
+        m_TargetAssemblyTypeName: ScrollSnapButton, Assembly-CSharp
+        m_MethodName: SnapMapCancle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -38753,6 +38767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snap: {fileID: 1226484133}
+  RandomSelectMap: {fileID: 1336685422}
   selectImg: {fileID: 21300000, guid: cc8f16ae4c1b0574880fbd4a3c070431, type: 3}
   notselectImg: {fileID: 21300000, guid: bfe4a96bb76a0224cb71ac8f2538db48, type: 3}
   backImage: {fileID: 38513560}
@@ -38802,8 +38817,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1860074470}
-        m_TargetAssemblyTypeName: ScrollSnapButton, SimpleScrollSnap
-        m_MethodName: SnapMapClick
+        m_TargetAssemblyTypeName: ScrollSnapButton, Assembly-CSharp
+        m_MethodName: SnapMapCancle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

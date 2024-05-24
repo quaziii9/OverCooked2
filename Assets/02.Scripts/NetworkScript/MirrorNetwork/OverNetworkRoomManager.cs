@@ -3,6 +3,11 @@ using Mirror;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using System.Runtime.Serialization;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using TMPro;
 
 /*
     문서: https://mirror-networking.gitbook.io/docs/components/network-room-manager
@@ -33,15 +38,153 @@ public class OverNetworkRoomManager : NetworkRoomManager
     public Image loadingBar;
     public GameObject LoadingKeyUI;
 
-    void Update()
+    public GameObject[] canvasInPlayers; // Player positions in the canvas
+    private OverNetworkRoomPlayer[] players; // Array to store the found players
+
+    private void Update()
+    {
+        // Find all OverNetworkRoomPlayer objects in the scene
+        players = FindObjectsOfType<OverNetworkRoomPlayer>();
+
+        // Iterate through each player
+        foreach (OverNetworkRoomPlayer player in players)
+        {
+            // Ensure the player's index is within the bounds of the canvasInPlayers array
+            if (player.index >= 0 && player.index < canvasInPlayers.Length)
+            {
+                GameObject playerPosition = canvasInPlayers[player.index];
+
+                // Check if the player position has exactly 2 child objects
+                if (playerPosition.transform.childCount == 2)
+                {
+                    // Set the player's parent to the current player position
+                    player.transform.SetParent(playerPosition.transform);
+                    player.transform.localPosition = new Vector3(0f, 20f, 0f);
+
+                    // Update the text to show the player's index + 1
+                    playerPosition.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"Player {player.index + 1}";
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Player index {player.index} is out of bounds of the canvasInPlayers array.");
+            }
+        }
+    }
+
+
+
+    //public override void OnRoomServerConnect(NetworkConnectionToClient conn)
+    //{
+    //    base.OnRoomServerConnect(conn);
+    //    var player = Instantiate(spawnPrefabs[0]);
+    //    NetworkServer.Spawn(player, conn);
+    //    foreach (GameObject playerPosition in canvasInPlayers)
+    //    {
+    //        if (playerPosition.transform.childCount == 2)
+    //            player.transform.SetParent(playerPosition.transform);
+    //        player.transform.localPosition = new Vector3(0f, 20f, 0f);
+    //    }
+    //}
+
+    /*
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+    {
+        // increment the index before adding the player, so first player starts at 1
+        clientIndex++;
+
+        if (Utils.IsSceneActive(RoomScene))
+        {
+            allPlayersReady = false;
+
+            Debug.Log($"NetworkRoomManager.OnServerAddPlayer playerPrefab: {roomPlayerPrefab.name}");
+
+            GameObject newRoomGameObject = OnRoomServerCreateRoomPlayer(conn);
+            if (newRoomGameObject == null)
+            {
+                Debug.Log("Null 일때");
+                newRoomGameObject = Instantiate(roomPlayerPrefab.gameObject, Vector3.zero, Quaternion.identity);
+                foreach (GameObject playerPosition in canvasInPlayers)
+                {
+                    if (playerPosition.transform.childCount == 2)
+                        newRoomGameObject.transform.SetParent(playerPosition.transform);
+                }
+            }
+            else
+            {
+                Debug.Log("Null 아닐때");
+                foreach (GameObject playerPosition in canvasInPlayers)
+                {
+                    if (playerPosition.transform.childCount == 2)
+                    {
+                        newRoomGameObject.transform.SetParent(playerPosition.transform);
+                        break;
+                    }
+                }
+            }
+
+            NetworkServer.AddPlayerForConnection(conn, newRoomGameObject);
+        }
+        else
+        {
+            // Late joiners not supported...should've been kicked by OnServerDisconnect
+            Debug.Log($"Not in Room scene...disconnecting {conn}");
+            conn.Disconnect();
+        }
+    }
+    */
+    //void FixedUpdate()
+    //{
+    //    if (isLoading && loadingSceneAsync != null)
+    //    {
+    //        timer += Time.deltaTime;
+    //
+    //        if (loadingSceneAsync.progress < 0.9f)
+    //        {
+    //            loadingBar.fillAmount = Mathf.Lerp(loadingBar.fillAmount, loadingSceneAsync.progress, timer);
+    //            if (loadingBar.fillAmount >= loadingSceneAsync.progress)
+    //            {
+    //                timer = 0f;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            loadingBar.fillAmount = Mathf.Lerp(loadingBar.fillAmount, 1f, timer);
+    //            if (loadingBar.fillAmount == 1.0f)
+    //            {
+    //                loadingSceneAsync.allowSceneActivation = true;
+    //                UIManager.Instance.LoadingFoodOff();
+    //                isLoading = false;
+    //            }
+    //        }
+    //    }
+    //}
+
+
+    public void MakeRoom()
+    {
+        StartHost();
+    }
+
+    public void JoinRoom()
+    {
+        StartClient();
+    }
+
+    #region Loding Scene
+    void FixedUpdate()
     {
         if (isLoading && loadingSceneAsync != null)
         {
             timer += Time.deltaTime;
 
+            // 로딩 속도를 증가시키기 위한 속도 배율
+            float fakeLoadingSpeed = 2f; // 원하는 만큼 속도를 증가시킬 수 있습니다.
+
             if (loadingSceneAsync.progress < 0.9f)
             {
-                loadingBar.fillAmount = Mathf.Lerp(loadingBar.fillAmount, loadingSceneAsync.progress, timer);
+                // Lerp 속도 조정
+                loadingBar.fillAmount = Mathf.Lerp(loadingBar.fillAmount, loadingSceneAsync.progress, timer * fakeLoadingSpeed);
                 if (loadingBar.fillAmount >= loadingSceneAsync.progress)
                 {
                     timer = 0f;
@@ -49,7 +192,8 @@ public class OverNetworkRoomManager : NetworkRoomManager
             }
             else
             {
-                loadingBar.fillAmount = Mathf.Lerp(loadingBar.fillAmount, 1f, timer);
+                // 마지막 10%도 빠르게 채우기 위해 속도 조정
+                loadingBar.fillAmount = Mathf.Lerp(loadingBar.fillAmount, 1f, timer * fakeLoadingSpeed);
                 if (loadingBar.fillAmount == 1.0f)
                 {
                     loadingSceneAsync.allowSceneActivation = true;
@@ -60,14 +204,91 @@ public class OverNetworkRoomManager : NetworkRoomManager
         }
     }
 
-    public void MakeRoom()
+    protected override void ClientChangeScene(string newSceneName, SceneOperation sceneOperation = SceneOperation.Normal, bool customHandling = false)
     {
-        StartHost();
-    }
+        // LodingBar Start
+        //Debug.Log("안타냐?");
+        LoadingKeyUI.SetActive(true);
 
-    public void JoinRoom()
-    {
-        StartClient();
+        if (string.IsNullOrWhiteSpace(newSceneName))
+        {
+            Debug.LogError("ClientChangeScene empty scene name");
+            return;
+        }
+
+        //Debug.Log($"ClientChangeScene newSceneName: {newSceneName} networkSceneName{networkSceneName}");
+
+        // Let client prepare for scene change
+        OnClientChangeScene(newSceneName, sceneOperation, customHandling);
+
+        // After calling OnClientChangeScene, exit if server since server is already doing
+        // the actual scene change, and we don't need to do it for the host client
+        if (NetworkServer.active)
+            return;
+
+        // set client flag to stop processing messages while loading scenes.
+        // otherwise we would process messages and then lose all the state
+        // as soon as the load is finishing, causing all kinds of bugs
+        // because of missing state.
+        // (client may be null after StopClient etc.)
+        // Debug.Log("ClientChangeScene: pausing handlers while scene is loading to avoid data loss after scene was loaded.");
+        NetworkClient.isLoadingScene = true;
+
+        // Cache sceneOperation so we know what was requested by the
+        // Scene message in OnClientChangeScene and OnClientSceneChanged
+        clientSceneOperation = sceneOperation;
+
+        // scene handling will happen in overrides of OnClientChangeScene and/or OnClientSceneChanged
+        // Do not call FinishLoadScene here. Custom handler will assign loadingSceneAsync and we need
+        // to wait for that to finish. UpdateScene already checks for that to be not null and isDone.
+        if (customHandling)
+            return;
+
+        // LodingBar Setting
+        isLoading = true;
+        timer = 0f;
+        UIManager.Instance.LoadingFood();
+
+        switch (sceneOperation)
+        {
+            case SceneOperation.Normal:
+                loadingSceneAsync = SceneManager.LoadSceneAsync(newSceneName);
+                break;
+            case SceneOperation.LoadAdditive:
+                // Ensure additive scene is not already loaded on client by name or path
+                // since we don't know which was passed in the Scene message
+                if (!SceneManager.GetSceneByName(newSceneName).IsValid() && !SceneManager.GetSceneByPath(newSceneName).IsValid())
+                    loadingSceneAsync = SceneManager.LoadSceneAsync(newSceneName, LoadSceneMode.Additive);
+                else
+                {
+                    Debug.LogWarning($"Scene {newSceneName} is already loaded");
+
+                    // Reset the flag that we disabled before entering this switch
+                    NetworkClient.isLoadingScene = false;
+                }
+                break;
+            case SceneOperation.UnloadAdditive:
+                // Ensure additive scene is actually loaded on client by name or path
+                // since we don't know which was passed in the Scene message
+                if (SceneManager.GetSceneByName(newSceneName).IsValid() || SceneManager.GetSceneByPath(newSceneName).IsValid())
+                    loadingSceneAsync = SceneManager.UnloadSceneAsync(newSceneName, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
+                else
+                {
+                    Debug.LogWarning($"Cannot unload {newSceneName} with UnloadAdditive operation");
+
+                    // Reset the flag that we disabled before entering this switch
+                    NetworkClient.isLoadingScene = false;
+                }
+                break;
+        }
+
+        // don't change the client's current networkSceneName when loading additive scene content
+        if (sceneOperation == SceneOperation.Normal)
+            networkSceneName = newSceneName;
+
+        // LodingBar Start
+        //LoadingKeyUI.SetActive(false);
+        loadingBar.fillAmount = 0f;
     }
 
     
@@ -143,7 +364,7 @@ public class OverNetworkRoomManager : NetworkRoomManager
         startPositionIndex = 0;
         startPositions.Clear();
     }
-
+    #endregion
 
     /*
     #region 서버 콜백
@@ -309,23 +530,23 @@ public class OverNetworkRoomManager : NetworkRoomManager
 }
 
 
-public class SceneLoader : MonoBehaviour
-{
-    public Image loadingBar;
-    private AsyncOperation operation;
-    private float timer;
-    private bool isLoading;
-
-    public void StartLoading(string sceneName)
-    {
-        if (isLoading) return; // 이미 로딩 중이면 중복 호출 방지
-
-        isLoading = true;
-        timer = 0f;
-        UIManager.Instance.LoadingFood();
-        operation = SceneManager.LoadSceneAsync(sceneName);
-        operation.allowSceneActivation = false;
-    }
-
-    
-}
+//public class SceneLoader : MonoBehaviour
+//{
+//    public Image loadingBar;
+//    private AsyncOperation operation;
+//    private float timer;
+//    private bool isLoading;
+//
+//    public void StartLoading(string sceneName)
+//    {
+//        if (isLoading) return; // 이미 로딩 중이면 중복 호출 방지
+//
+//        isLoading = true;
+//        timer = 0f;
+//        UIManager.Instance.LoadingFood();
+//        operation = SceneManager.LoadSceneAsync(sceneName);
+//        operation.allowSceneActivation = false;
+//    }
+//
+//    
+//}
