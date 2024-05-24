@@ -701,6 +701,8 @@ public class PlayerInteractController : MonoBehaviour
                     objectHighlight.onSomething = true;
                     isHolding = false;
                     handleThing.GetComponent<Ingredient>().isOnDesk = true;
+                    handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
+                    
                     handleThing.GetComponent<Ingredient>().
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform, Quaternion.LookRotation(playerDirection).normalized);
