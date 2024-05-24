@@ -31,7 +31,7 @@ namespace EnumTypes
         PlayerDamaged,
     }
 
-    public enum UIEvents
+    public enum SceneChangeEvent
     {
         WorldMapOpen,
         IntroMapOpen,
@@ -51,6 +51,11 @@ namespace EnumTypes
         FadeOut
     }
 
+    public enum UIEvents
+    {
+        EscUI,
+    }
+
     public enum UIType
     {
         OptionUI,
@@ -63,6 +68,7 @@ namespace EnumTypes
         BusMap,
         StageMapEscUI,
         RecipeUI,
+        EscUI,
     }
 
 
@@ -70,7 +76,7 @@ namespace EnumTypes
     {
         Intro,
         BattleLobby,
-        BusMap,
+        WorldMap,
         BattleMap,
         StageMap,
     }

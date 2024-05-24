@@ -13,17 +13,10 @@ public class PressSkip : MonoBehaviour
 
     private void Update()
     {
+        if(Application.platform == RuntimePlatform.Android)
+            MobileSkip();
+        else
         Skip();
-
-        #if UNITY_ANDROID
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            UIManager.Instance.RecipeUIOff();
-            SoundManager.Instance.RecipeUIPopOut();
-            fillImage.fillAmount = 0;
-            // UI 비활성화 및 게임 시작
-        }
-        #endif
     }
 
     private void Skip()
@@ -53,13 +46,32 @@ public class PressSkip : MonoBehaviour
 
     public void MobileSkip()
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Input.touchCount > 0)
         {
-            UIManager.Instance.RecipeUIOff();
-            SoundManager.Instance.RecipeUIPopOut();
-            fillImage.fillAmount = 0;
-            // UI 비활성화 및 게임 시작
+            Touch touch = Input.GetTouch(0);
+
+            // 터치를 누르고 있거나 움직일때
+            if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
+            {
+                // 터치를 누르고 있을 때 fillAmount 증가
+                fillImage.fillAmount += fillSpeed * Time.deltaTime;
+
+                if (fillImage.fillAmount >= 1f)
+                {
+                    UIManager.Instance.RecipeUIOff();
+                    SoundManager.Instance.RecipeUIPopOut();
+                    fillImage.fillAmount = 0;
+                    // UI 비활성화 및 게임 시작
+                }
+            }
         }
+        else
+        {
+            // 터치를 누르고 있지 않을 때 fillAmount 감소
+            fillImage.fillAmount -= fillSpeed * Time.deltaTime;
+        }
+        // fillAmount 값 제한 (0과 1 사이로 클램핑)
+        fillImage.fillAmount = Mathf.Clamp(fillImage.fillAmount, 0f, 1f);
     }
 
 }

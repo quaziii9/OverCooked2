@@ -13,11 +13,11 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     {
         // 씬 로드 완료 이벤트에 OnSceneLoaded 메서드를 등록
         SceneManager.sceneLoaded += OnSceneLoaded;
-        EventManager<UIEvents>.StartListening(UIEvents.WorldMapOpen, ChangeToBusMap);
-        EventManager<UIEvents>.StartListening(UIEvents.IntroMapOpen, ChangeToIntroMap);
-        EventManager<UIEvents>.StartListening(UIEvents.BattleRoomOpen, ChangeToBattleLobby);
-        EventManager<UIEvents>.StartListening(UIEvents.TestStageMapOpen, ChangeToTestStage);
-        EventManager<UIEvents>.StartListening(UIEvents.stageMineMapOpen, ChangeToStageMine);
+        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.WorldMapOpen, ChangeToBusMap);
+        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.IntroMapOpen, ChangeToIntroMap);
+        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.BattleRoomOpen, ChangeToBattleLobby);
+        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.TestStageMapOpen, ChangeToTestStage);
+        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.stageMineMapOpen, ChangeToStageMine);
     }
 
     private void OnDisable()
@@ -147,7 +147,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
             case "WorldMap":
                 //VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.EnterBusMapMaskIn();
-                UIManager.Instance.sceneType = SceneType.BusMap;
+                UIManager.Instance.sceneType = SceneType.WorldMap;
 
                 #if UNITY_ANDROID
                      UIManager.Instance.escButton.SetActive(true);

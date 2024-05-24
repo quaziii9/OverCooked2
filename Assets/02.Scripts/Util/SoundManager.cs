@@ -12,7 +12,6 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private GameObject[] effectSquares;
     [SerializeField] private GameObject[] mobileBGMSquares; // 음량 네모네모
     [SerializeField] private GameObject[] mobileeffectSquares;
-    [SerializeField] private AudioClip[] allAudioClip;
     
     [Header("Audio Source")]
     public AudioSource bgmAudioSource;
@@ -110,24 +109,8 @@ public class SoundManager : Singleton<SoundManager>
         UIManager.Instance.SetEffectSquares(volumeEffect, mobileeffectSquares);
     }
 
-    private void OnEnable()
-    {
-    }
-
-
-    public void Set()
-    {
-        foreach (var clip in allAudioClip)
-        {
-            effectAudioSource.clip = clip;
-            effectAudioSource.Play();
-            effectAudioSource.Stop();
-        }
-    }
-
     void Start()
     {
-        Set();
         SettingAudioVolume();
         StartCoroutine(FadeInVolume(bgmAudioSource, 8f, "Intro"));
 
@@ -374,7 +357,6 @@ public class SoundManager : Singleton<SoundManager>
 
     public void VanShutter()
     {
-        Debug.Log("?");
         vanAudioSource.PlayOneShot(vanShutter);
     }
 
