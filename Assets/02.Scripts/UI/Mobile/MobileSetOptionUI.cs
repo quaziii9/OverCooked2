@@ -18,7 +18,7 @@ public class MobileSetOptionUI : MonoBehaviour
     void AdjustForMobile()
     {
         // 필요한 슬라이더만 활성화
-        for (int i = 2; i < sliders.Length; i++)
+        for (int i = 0; i < sliders.Length; i++)
         {
             sliders[i].SetActive(false);
         }

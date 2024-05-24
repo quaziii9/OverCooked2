@@ -10,7 +10,8 @@ public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] private GameObject[] BGMSquares; // 음량 네모네모
     [SerializeField] private GameObject[] effectSquares;
-
+    [SerializeField] private AudioClip[] allAudioClip;
+    
     [Header("Audio Source")]
     public AudioSource bgmAudioSource;
     public AudioSource bgmChangeAudioSource;
@@ -109,8 +110,20 @@ public class SoundManager : Singleton<SoundManager>
     {
     }
 
+
+    public void Set()
+    {
+        foreach (var clip in allAudioClip)
+        {
+            effectAudioSource.clip = clip;
+            effectAudioSource.Play();
+            effectAudioSource.Stop();
+        }
+    }
+
     void Start()
-    {      
+    {
+        Set();
         SettingAudioVolume();
         StartCoroutine(FadeInVolume(bgmAudioSource, 8f, "Intro"));
 
