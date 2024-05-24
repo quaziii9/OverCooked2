@@ -1,7 +1,5 @@
-using DG.Tweening.Core.Easing;
 using System;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class Ingredient : GameItem
 {
@@ -16,6 +14,9 @@ public class Ingredient : GameItem
     public enum IngredientState { Raw, Cooking, Cooked }
     public IngredientState currentState = IngredientState.Raw;
 
+    public enum Team { Red, Blue }
+    public Team team;
+
     [SerializeField] private Mesh cookedIngredient;
     [SerializeField] private Material cookedFish;
 
@@ -26,7 +27,7 @@ public class Ingredient : GameItem
     public override void Interact(PlayerInteractController player)
     {
         // 기본 상호작용: 재료를 주움
-        //Pickup(player);
+        // Pickup(player);
     }
 
     // 상태 변경 메소드

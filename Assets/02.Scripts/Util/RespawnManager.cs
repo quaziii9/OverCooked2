@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RespawnManager : MonoBehaviour
+public class RespawnManager : Singleton<RespawnManager>
 {
     [SerializeField] private GameObject[] countdown;
     [SerializeField] private Transform[] playerSpawnPositions; // 리스폰 위치들
@@ -23,11 +23,11 @@ public class RespawnManager : MonoBehaviour
         }
     }
 
-    public void StartRespawnCountdown(int spawnIndex)
+    public void StartRespawnCountdown(GameObject player, int spawnIndex)
     {
         if (spawnIndex >= 0 && spawnIndex < countdown.Length)
         {
-            StartCoroutine(RespawnCountdownCoroutine(spawnIndex));
+            StartCoroutine(RespawnCountdownCoroutine(player, spawnIndex));
         }
         else
         {
@@ -35,7 +35,7 @@ public class RespawnManager : MonoBehaviour
         }
     }
 
-    private IEnumerator RespawnCountdownCoroutine(int index)
+    private IEnumerator RespawnCountdownCoroutine(GameObject player, int index)
     {
         GameObject obj = countdown[index];
         Text countdownText = obj.transform.GetChild(1).GetComponent<Text>();
@@ -49,14 +49,19 @@ public class RespawnManager : MonoBehaviour
         }
 
         obj.SetActive(false);
-        RespawnPlayer(index);
+        RespawnPlayer(player, index);
     }
 
-    private void RespawnPlayer(int index)
+    private void RespawnPlayer(GameObject player, int index)
     {
-        // 실제로 플레이어를 리스폰시키는 로직을 여기에 추가
         Transform spawnPosition = playerSpawnPositions[index];
         Debug.Log($"플레이어가 {spawnPosition.position}에서 리스폰되었습니다.");
-        // 여기서 PlayerPuff.Instance.SpawnPuff 등을 호출할 수 있습니다.
+
+        // 연기 발생 및 플레이어 스폰
+        PlayerPuff.Instance.SpawnPuff(spawnPosition);
+        player.transform.position = spawnPosition.position;
+
+        // 연기가 모두 나오고 스폰해야 하기에 1초 딜레이
+        player.transform.GetChild(0).gameObject.SetActive(true);
     }
 }
