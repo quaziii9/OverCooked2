@@ -46,6 +46,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject battleRoomUI;
     public GameObject battleUI;
     public GameObject battleResultUI;
+    public CustomReadyButtonScript battleUIReadyBtn;
 
     [Header("ExitLobbyUI")]
     public GameObject exitLobbyUI;

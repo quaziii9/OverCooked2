@@ -55,7 +55,7 @@ public class ScrollSnapButton : MonoBehaviour
         RandomSelectMap.transform.GetChild(_index).transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
         RandomSelectMap.transform.GetChild(_index).transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
 
-        // 선택하면 오브젝트를 키고
+        // 선택화면 오브젝트를 키고
         snap.gameObject.SetActive(true);
         // 랜덤맵을 끄고
         RandomSelectMap.gameObject.SetActive(false);

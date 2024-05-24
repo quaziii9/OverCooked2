@@ -12549,6 +12549,7 @@ MonoBehaviour:
   battleRoomUI: {fileID: 1585386042}
   battleUI: {fileID: 1282710794}
   battleResultUI: {fileID: 1565352213}
+  battleUIReadyBtn: {fileID: 1399087142}
   exitLobbyUI: {fileID: 921309099}
   loadingFoodArr:
   - {fileID: 906362292}
@@ -26696,6 +26697,7 @@ MonoBehaviour:
   clientIndex: 0
   loadingBar: {fileID: 1463878916}
   LoadingKeyUI: {fileID: 511028191}
+  BattleUI: {fileID: 1282710794}
   canvasInPlayers:
   - {fileID: 816310526}
   - {fileID: 747923522}
@@ -28250,6 +28252,10 @@ MonoBehaviour:
   player2Btn: {fileID: 1151600794}
   player3Btn: {fileID: 1860074471}
   player4Btn: {fileID: 1680337982}
+  scrollSnapBtn1: {fileID: 125295142}
+  scrollSnapBtn2: {fileID: 1151600793}
+  scrollSnapBtn3: {fileID: 1860074470}
+  scrollSnapBtn4: {fileID: 1680337981}
 --- !u!1 &1423405671
 GameObject:
   m_ObjectHideFlags: 0
@@ -35043,6 +35049,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ScrollSnapButton, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

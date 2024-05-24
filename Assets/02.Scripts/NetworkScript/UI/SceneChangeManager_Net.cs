@@ -168,6 +168,9 @@ public class SceneChangeManager_Net : Singleton<SceneChangeManager_Net>
                 UIManager.Instance.buttonUI.SetActive(false);
                 UIManager.Instance.battleUI.SetActive(true);
                 UIManager.Instance.BattleUIOn();
+                // Battle UI 초기세팅 다시하기
+                
+                UIManager.Instance.battleUIReadyBtn.InitializingBattleRoom();
                 break;
             case "TestStage":
                 //UIManager.Instance.sceneType = SceneType.StageMap;
@@ -211,7 +214,14 @@ public class SceneChangeManager_Net : Singleton<SceneChangeManager_Net>
                 UIManager.Instance.RecipeUIOn(0);
                 UIManager.Instance.EnterStageMaskIn();
                 break;
-
+            case "Mine_Net":
+                UIManager.Instance.sceneType = SceneType.BattleMap;
+                UIManager.Instance.loadingKeyUI.SetActive(false);
+                UIManager.Instance.battleUI.SetActive(false);
+                //VanSingleton.Instance.van.SetActive(false);
+                // Battle UI 초기세팅 다시하기
+                //UIManager.Instance.battleUIReadyBtn.InitializingBattleRoom();
+                break;
 
         }
     }
