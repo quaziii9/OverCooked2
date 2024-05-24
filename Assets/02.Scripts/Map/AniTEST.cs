@@ -17,6 +17,10 @@ public class AniTEST : MonoBehaviour
     {
         // 모든 자식 객체의 애니메이터 컴포넌트를 가져옴
         childAnimators = GetComponentsInChildren<Animator>();
+        if(gameObject.name=="Level1")
+        {
+            StartCoroutine(Startflip());
+        }
     }
     void OnEnable()
     {
