@@ -165,8 +165,8 @@ MonoBehaviour:
   activeObject: 0
   onSomething: 0
   hightlightMaterials:
-  - {fileID: 2100000, guid: e85434d27394186448f4d867a40600cd, type: 2}
-  - {fileID: 2100000, guid: 96b684af4a6a4614880b1b3ad9dee9e8, type: 2}
+  - {fileID: 2100000, guid: f7308dff4483d0744be0fd8361621ded, type: 2}
+  - {fileID: 2100000, guid: 08b82b87a6129af4cbd705b945bcd794, type: 2}
   objectType: 1
 --- !u!1 &5084797972620199803
 GameObject:
@@ -386,7 +386,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b26857c6e7872c040ae5d308dd5db05f, type: 2}
+  - {fileID: 2100000, guid: 524b302599b0b5242847588b6ff8d58e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

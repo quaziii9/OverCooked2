@@ -114,7 +114,7 @@ MonoBehaviour:
   onSomething: 0
   hightlightMaterials:
   - {fileID: 2100000, guid: 7fb5321f86ce21b4196e958ee44bae71, type: 2}
-  - {fileID: 2100000, guid: c89871c79ede2d546bf8f6302739fba1, type: 2}
+  - {fileID: 2100000, guid: a80dc60c902adee4c96d3f5a70c48c33, type: 2}
   objectType: 0
 --- !u!1 &4223104585744128579
 GameObject:

@@ -1264,9 +1264,9 @@ GameObject:
   - component: {fileID: 7189928501657184978}
   - component: {fileID: 7189928501657184976}
   - component: {fileID: 7189928501657184982}
-  - component: {fileID: 1741212497}
   - component: {fileID: 2043153386415452618}
   - component: {fileID: 2114920574}
+  - component: {fileID: 1741212497}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -1319,25 +1319,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.494843, y: 1.6721357, z: 2.035496}
   m_Center: {x: -0.2810943, y: -0.7687109, z: 0.51774734}
---- !u!114 &1741212497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7189928501657185005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2637e3e3b9d80924a908f9a752ec29d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orientation: {fileID: 0}
-  dashForce: 6
-  dashDuration: 1
-  allowAllDirections: 1
-  disableGravity: 0
-  resetVel: 1
-  dashCd: 1
 --- !u!114 &2043153386415452618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1363,6 +1344,7 @@ MonoBehaviour:
   grabL: {fileID: 69352868087162624}
   knife: {fileID: 3684226207369003582}
   PlayerInputSystem: {fileID: 0}
+  switchButton: {fileID: 0}
 --- !u!114 &2114920574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1376,13 +1358,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 624932970745655888}
-  rb: {fileID: 0}
   moveSpeed: 15
   turnSpeed: 10
-  dashSpeed: 0
-  dashForce: 500
-  dashDuration: 0.5
-  dashCooldown: 0.5
+  fallMultiplier: 2.5
+  downforce: 1
+  isGrounded: 0
+  isOnStairs: 0
+--- !u!114 &1741212497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7189928501657185005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2637e3e3b9d80924a908f9a752ec29d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 0}
+  dashForce: 6
+  dashDuration: 1
+  allowAllDirections: 1
+  disableGravity: 0
+  resetVel: 1
+  dashCd: 1
+  dashCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  dashButton: {fileID: 0}
 --- !u!1 &7189928501780144078
 GameObject:
   m_ObjectHideFlags: 0

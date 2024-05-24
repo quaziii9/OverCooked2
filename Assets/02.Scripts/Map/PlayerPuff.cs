@@ -6,14 +6,18 @@ public class PlayerPuff : Singleton<PlayerPuff>
     public GameObject puffWalkPrefab;   // 걷는 퍼프 프리팹
     public GameObject puffBurstPrefab;  // 버스트 퍼프 프리팹
     public GameObject switchEfPrefab;
+    public GameObject spawnPrefab;
+
     private IObjectPool<Puff> walkPool; // 걷는 퍼프 풀
     private IObjectPool<Puff> burstPool; // 버스트 퍼프 풀
     private IObjectPool<Puff> switchEfPool;
+    private IObjectPool<Puff> spawnPool;
     private new void Awake()
     {
         base.Awake();
         walkPool = new ObjectPool<Puff>(CreateWalk, OnGetPuff, OnReleasePuff, OnDestroyPuff, maxSize: 1000);
         burstPool = new ObjectPool<Puff>(CreateBurst, OnGetPuff, OnReleasePuff, OnDestroyPuff, maxSize: 1000);
+        spawnPool = new ObjectPool<Puff>(CreateBurst, OnGetPuff, OnReleasePuff, OnDestroyPuff, maxSize: 1000);
         //switchEfPool = new ObjectPool<Puff>(CreateSwitch, OnGetPuff, OnReleasePuff, OnDestroyPuff, maxSize: 1000);
     }
 
@@ -33,6 +37,14 @@ public class PlayerPuff : Singleton<PlayerPuff>
         walk.transform.position = puffPosition.position;
         // walk.transform.rotation = puffPosition.rotation;
     }
+
+    // 스폰 퍼프 실행
+    public void SpawnPuff(Transform puffPosition)
+    {
+        var spawn = spawnPool.Get();
+        spawn.transform.position = puffPosition.position;
+    }
+
     public void Switching(Transform Start, Transform End)
     {
         var switcing = switchEfPool.Get();
@@ -56,9 +68,15 @@ public class PlayerPuff : Singleton<PlayerPuff>
     {
         return CreatePuff(puffBurstPrefab, burstPool);
     }
+
     private Puff CreateSwitch()
     {
         return CreatePuff(switchEfPrefab, switchEfPool);
+    }
+
+    private Puff CrateSpawn()
+    {
+        return CreatePuff(spawnPrefab, spawnPool);
     }
 
     // 퍼프를 생성하고 풀에 담음

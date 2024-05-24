@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1189261272939405505}
   m_LocalRotation: {x: 0.28792766, y: 0.087588884, z: -0.27754316, w: 0.91235715}
   m_LocalPosition: {x: -2.64, y: -0.089000136, z: -5.26}
-  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6923098994703793163}
@@ -142,7 +142,7 @@ Transform:
   m_GameObject: {fileID: 1189261273864472893}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 40.74, y: 1.92, z: -1.6}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1189261272939405510}
@@ -223,6 +223,7 @@ MonoBehaviour:
   itemName: Shrimp
   isCooked: 0
   isOnDesk: 0
+  pizzazIsCooked: 0
   type: 1
   currentState: 0
   cookedIngredient: {fileID: -4099940822298934987, guid: 27f76654db989d248b71c253e968a911,

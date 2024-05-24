@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerDash : MonoBehaviour
 {
@@ -25,9 +26,19 @@ public class PlayerDash : MonoBehaviour
     [Header("Dash Curve")]
     public AnimationCurve dashCurve; // AnimationCurve를 대시의 세기 변화에 사용
 
+    [Header("Player Master Controller")]
+    public PlayerMasterController2 masterController;
+
+    [Header("Mobile Button")]
+    public Button dashButton; // UI 버튼 참조
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        if (dashButton != null)
+        {
+            dashButton.onClick.AddListener(MobileDash); // 버튼 클릭 이벤트에 MobileDash 메서드 연결
+        }
     }
 
     private void Update()
@@ -38,7 +49,15 @@ public class PlayerDash : MonoBehaviour
 
     public void OnDash(InputValue inputButton)
     {
-        if (inputButton.isPressed && !isDashing)
+        if (inputButton.isPressed && !isDashing && masterController.currentPlayer == this.gameObject)
+            Dash();
+    }
+
+    // UI 버튼을 클릭할 때 호출될 메서드
+    private void MobileDash()
+    {
+        // 현재 활성화 상태인지 확인해야할듯
+        if (!isDashing && dashCdTimer <= 0 && masterController.currentPlayer == this.gameObject)
             Dash();
     }
 

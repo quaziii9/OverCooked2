@@ -22,6 +22,7 @@ TagManager:
   - Stair
   - Oven
   - Post_Processing
+  - MineCounter
   layers:
   - Default
   - TransparentFX

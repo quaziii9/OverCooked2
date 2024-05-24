@@ -9,16 +9,13 @@ public class FreeState : IPlayerState
 
     public void CatchOrKnockback()
     {
-        playerController.CatchOrKnockback();
     }
 
     public void CookOrThrow()
     {
-        playerController.CookOrThrow();
     }
 
     public void PickupOrPlace()
     {
-        playerController.PickupOrPlace();
     }
 }

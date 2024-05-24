@@ -9,16 +9,16 @@ public class HoldState : IPlayerState
 
     public void CatchOrKnockback()
     {
-        playerController.CatchOrKnockback();
+
     }
 
     public void CookOrThrow()
     {
-        playerController.CookOrThrow();
+
     }
 
     public void PickupOrPlace()
     {
-        playerController.PickupOrPlace();
+
     }
 }
