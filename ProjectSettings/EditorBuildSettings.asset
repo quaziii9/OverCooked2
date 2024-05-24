@@ -22,7 +22,7 @@ EditorBuildSettings:
     guid: 729d3387385eb414ab0d7ed1346291e8
   - enabled: 1
     path: Assets/01.Scenes/Eunjoo/Mine.unity
-    guid: fe5f3b5959e54354484b73a776d3ce17
+    guid: 944bba4660fedcf4f8ebef8747486ce6
   - enabled: 1
     path: Assets/01.Scenes/Seongwook/Mine_Single.unity
     guid: 9d621934467e1d9449ee59cf669a7f11

@@ -1,16 +1,13 @@
-using EnumTypes;
-using EventLibrary;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
 
 public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] private GameObject[] BGMSquares; // 음량 네모네모
     [SerializeField] private GameObject[] effectSquares;
-    [SerializeField] private AudioClip[] allAudioClip;
+    [SerializeField] private GameObject[] mobileBGMSquares; // 음량 네모네모
+    [SerializeField] private GameObject[] mobileEffectSquares;
     
     [Header("Audio Source")]
     public AudioSource bgmAudioSource;
@@ -104,26 +101,12 @@ public class SoundManager : Singleton<SoundManager>
 
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
-    }
-
-    private void OnEnable()
-    {
-    }
-
-
-    public void Set()
-    {
-        foreach (var clip in allAudioClip)
-        {
-            effectAudioSource.clip = clip;
-            effectAudioSource.Play();
-            effectAudioSource.Stop();
-        }
+        UIManager.Instance.SetBGMSquares(volumeBGM, mobileBGMSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, mobileEffectSquares);
     }
 
     void Start()
     {
-        Set();
         SettingAudioVolume();
         StartCoroutine(FadeInVolume(bgmAudioSource, 8f, "Intro"));
 
@@ -155,6 +138,7 @@ public class SoundManager : Singleton<SoundManager>
 
 
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
+        UIManager.Instance.SetBGMSquares(volumeBGM, mobileBGMSquares);
     }
 
     public void BGMVolumeDown()
@@ -168,6 +152,7 @@ public class SoundManager : Singleton<SoundManager>
         bgmChangeAudioSource.volume = volumeBGM;
 
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
+        UIManager.Instance.SetBGMSquares(volumeBGM, mobileBGMSquares);
     }
 
     public void EffectSoundVolumeUp()
@@ -179,6 +164,7 @@ public class SoundManager : Singleton<SoundManager>
         }
         SetAllEffectVolume();
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, mobileEffectSquares);
     }
 
     public void EffectSoundVolumeDown()
@@ -190,6 +176,7 @@ public class SoundManager : Singleton<SoundManager>
         }
         SetAllEffectVolume();
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, mobileEffectSquares);
     }
     
     public void SettingSave()
@@ -201,6 +188,8 @@ public class SoundManager : Singleton<SoundManager>
         SetAllEffectVolume();
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
+        UIManager.Instance.SetBGMSquares(volumeBGM, mobileBGMSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, mobileEffectSquares);
     }
 
     public void SettingCancle()
@@ -213,6 +202,8 @@ public class SoundManager : Singleton<SoundManager>
 
         UIManager.Instance.SetBGMSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetEffectSquares(volumeEffect, effectSquares);
+        UIManager.Instance.SetBGMSquares(volumeBGM, mobileBGMSquares);
+        UIManager.Instance.SetEffectSquares(volumeEffect, mobileEffectSquares);
     }
 
     private void SetAllEffectVolume()
@@ -362,7 +353,6 @@ public class SoundManager : Singleton<SoundManager>
 
     public void VanShutter()
     {
-        Debug.Log("?");
         vanAudioSource.PlayOneShot(vanShutter);
     }
 

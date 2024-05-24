@@ -5,9 +5,6 @@ public class MobileRecipeSet : MonoBehaviour
 {
     public TextMeshProUGUI recipeText;
     public GameObject recipeButtonUI;
-
-
-   
     void Awake()
     {
         if(Application.platform == RuntimePlatform.Android)

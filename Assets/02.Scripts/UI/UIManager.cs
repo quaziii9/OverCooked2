@@ -84,7 +84,7 @@ public class UIManager : Singleton<UIManager>
 
 
     public bool first = true;
-
+    //private bool escUiOn = false;
     public SceneType sceneType;
     public MapType mapType = MapType.None;
 
@@ -250,12 +250,14 @@ public class UIManager : Singleton<UIManager>
     // 그만두기창 On
     public void StopUIOn()
     {
+        //escUiOn = true;
         stopUI.SetActive(true);      
     }
 
     // 그만두기창 Off
     public void StopUIOff()
     {
+        //escUiOn = false;
         stopUI.SetActive(false);
 
         // BusMapEscUI도 같이 종료
@@ -366,20 +368,20 @@ public class UIManager : Singleton<UIManager>
             switch (goTo)
             {
                 case "GoToBusMap":
-                    EventManager<UIEvents>.TriggerEvent(UIEvents.WorldMapOpen);
+                    EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.WorldMapOpen);
                     break;
                 case "GoToIntroMap":
-                    EventManager<UIEvents>.TriggerEvent(UIEvents.IntroMapOpen);
+                    EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.IntroMapOpen);
                     break;
                 case "GoToBattleRoom":
-                    EventManager<UIEvents>.TriggerEvent(UIEvents.BattleRoomOpen);
+                    EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.BattleRoomOpen);
                     break;
                 case "GoToTestStage":
                     //mapType = MapType.Tuto;
-                    EventManager<UIEvents>.TriggerEvent(UIEvents.TestStageMapOpen);
+                    EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.TestStageMapOpen);
                     break;
                 case "GoToMine":
-                    EventManager<UIEvents>.TriggerEvent(UIEvents.stageMineMapOpen);
+                    EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.stageMineMapOpen);
                     break;
                 case "busTopUIOn":
                     busTopUI.SetActive(true);
@@ -444,11 +446,13 @@ public class UIManager : Singleton<UIManager>
 
     public void ExitLobbyUIOn()
     {
+        //escUiOn = true;
         exitLobbyUI.SetActive(true);
     }
 
     public void CancleExitLobby()
     {
+        //escUiOn = false;
         exitLobbyUI.SetActive(false);
     }
 
@@ -611,40 +615,73 @@ public class UIManager : Singleton<UIManager>
     #endregion
 
     #region EscUI
-    public void BusMapEscUI()
-    {
-
-    }
 
     public void BusMapEscUICancle()
     {
         busMapEscUI.SetActive(false);
+        //escUiOn = false;
     }
 
     public void EscUI()
-    { 
-        if (sceneType == SceneType.BusMap)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                busMapEscUI.SetActive(true);
-                SoundManager.Instance.ButtonTick();
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {         
+            //if (escUiOn == false)
+            //{
+                //escUiOn = true;
+                switch (sceneType)
+                {
+                    case SceneType.WorldMap:
+                        busMapEscUI.SetActive(true);
+                        SoundManager.Instance.ButtonTick();
+                        break;
+                    case SceneType.BattleMap:
+                    case SceneType.StageMap:
+                        stageMapEscUI.SetActive(true);
+                        SoundManager.Instance.ButtonTick();
+                        break;
+                    case SceneType.Intro:
+                        StopUIOn();
+                        SoundManager.Instance.ButtonTick();
+                        break;
+                    case SceneType.BattleLobby:
+                        ExitLobbyUIOn();
+                        SoundManager.Instance.ButtonTick();
+                        break;
+                }
             }
-        }
 
-        if (sceneType == SceneType.BattleMap || sceneType == SceneType.StageMap)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                stageMapEscUI.SetActive(true);
-                SoundManager.Instance.ButtonTick();
-            }
-        }
+            //else if (escUiOn == true)
+            //{
+            //    escUiOn = false;
+            //    switch (sceneType)
+            //    {
+            //        case SceneType.WorldMap:
+            //            busMapEscUI.SetActive(false);
+            //            SoundManager.Instance.ButtonTick();
+            //            break;
+            //        case SceneType.BattleMap:
+            //        case SceneType.StageMap:
+            //            stageMapEscUI.SetActive(false);
+            //            SoundManager.Instance.ButtonTick();
+            //            break;
+            //        case SceneType.Intro:
+            //            StopUIOff();
+            //            SoundManager.Instance.ButtonTick();
+            //            break;
+            //        case SceneType.BattleLobby:
+            //            CancleExitLobby();
+            //            SoundManager.Instance.ButtonTick();
+            //            break;
+            //    }
+            //}
+        //}
+
     }
 
     public void EscUIButton()
     {
-        if (sceneType == SceneType.BusMap)
+        if (sceneType == SceneType.WorldMap)
         {
             busMapEscUI.SetActive(true);
             SoundManager.Instance.ButtonTick();
@@ -739,7 +776,7 @@ public class UIManager : Singleton<UIManager>
         }
 
         //if (SceneManager.GetActiveScene().name == "Map")
-        if (sceneType == SceneType.BusMap)
+        if (sceneType == SceneType.WorldMap)
         {
             EscUIStopOff();
             BusMapEscUICancle();
