@@ -701,6 +701,9 @@ public class PlayerInteractController : MonoBehaviour
                     objectHighlight.onSomething = true;
                     isHolding = false;
                     handleThing.GetComponent<Ingredient>().isOnDesk = true;
+
+                    // Pot 콜라이더 감소
+                    handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
                     handleThing.GetComponent<Ingredient>().
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform, Quaternion.LookRotation(playerDirection).normalized);
@@ -713,9 +716,9 @@ public class PlayerInteractController : MonoBehaviour
                     objectHighlight.onSomething = true;
                     isHolding = false;
                     handleThing.GetComponent<Ingredient>().isOnDesk = true;
-                    // 팬 콜라이더 수정
-                    handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
 
+                    // Pan 콜라이더 감소
+                    handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
                     handleThing.GetComponent<Ingredient>().
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform, Quaternion.LookRotation(playerDirection).normalized);

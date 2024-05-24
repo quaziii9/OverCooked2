@@ -115,10 +115,6 @@ public class PlayerMoveController : MonoBehaviour
 
     public void OnMove(InputValue inputValue)
     {
-        if(inputValue == null)
-        {
-            Debug.Log("joystick 움직이지만 값 없음");
-        }
-        moveInput = inputValue.Get<Vector2>();
+        if(inputValue != null) moveInput = inputValue.Get<Vector2>();
     }
 }
