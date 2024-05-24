@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 4683399356907462432}
   m_Layer: 0
   m_Name: Countertop Chopping Board
-  m_TagString: Untagged
+  m_TagString: MineCounter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

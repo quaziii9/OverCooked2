@@ -36,10 +36,21 @@ public class DeathZone : MonoBehaviour
         if (returnPosition != null)
         {
             ingredient.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            ingredient.transform.rotation = Quaternion.identity;
-            ingredient.transform.GetChild(0).GetComponent<BoxCollider>().size *= 1.02f;
-            ingredient.transform.position = returnPosition.position;
+            ingredient.transform.rotation = Quaternion.Euler(0, 0 ,0);
+            // ingredient.transform.GetChild(0).GetComponent<BoxCollider>().size *= 1.02f;
             ingredient.transform.SetParent(returnPosition.parent);
+            // ingredient.transform.localPosition = returnPosition.localPosition + new Vector3(0.072f, 0.006f, 0.024f);
+            
+            // pan, pot는 위치 다름
+            if(ingredient.CompareTag("Plate"))
+            {
+                ingredient.transform.localPosition = new Vector3(0.072f, 0.006f, 0.024f);
+            }
+            else
+            {
+                ingredient.transform.localPosition = new Vector3(0.0f, 0.006f, 0.0f);
+            }
+
             ingredient.transform.SetSiblingIndex(2);  // 두 번째 자식으로 설정
             ingredient.gameObject.SetActive(true);  // 재료 활성화
             returnPosition.parent.transform.GetChild(0).GetComponent<ObjectHighlight>().onSomething = true;
@@ -73,7 +84,11 @@ public class DeathZone : MonoBehaviour
         {
             foreach (Transform position in positions)
             {
-                if (position.parent.childCount == 3 && (position.parent.gameObject.name.Contains("Plate") || position.parent.gameObject.name.Contains("Cooker")))
+                if (position.parent.childCount == 2 && position.parent.gameObject.name.Contains("Plate"))
+                {
+                    return position;
+                } 
+                else if(position.parent.childCount == 3 && (position.parent.gameObject.name.Contains("Pot") || position.parent.gameObject.name.Contains("Pan")))
                 {
                     return position;
                 }

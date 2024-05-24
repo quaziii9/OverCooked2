@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 9137167605407497343}
   m_Layer: 0
   m_Name: Countertop Standard with Plate
-  m_TagString: Untagged
+  m_TagString: MineCounter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,7 +93,6 @@ Transform:
   - {fileID: 1238039538171368646}
   - {fileID: 7479721094079583392}
   - {fileID: 74877016219676323}
-  - {fileID: 954071980193656825}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -160,37 +159,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.012042075, y: 0.0050327512, z: 0.012}
   m_Center: {x: 0.07202147, y: 0.0025163756, z: 0.024}
---- !u!1 &6283067326781089298
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 954071980193656825}
-  m_Layer: 0
-  m_Name: Return Position
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &954071980193656825
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6283067326781089298}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.072, y: 0.006, z: 0.024}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3546520476689397019}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6559162303106930537
 GameObject:
   m_ObjectHideFlags: 0

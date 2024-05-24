@@ -670,6 +670,11 @@ public class PlayerInteractController : MonoBehaviour
             if (interactObject.transform.parent.CompareTag("MineCounter"))
             {
                 placeTransform = interactObject.transform.parent.GetChild(1).localPosition + new Vector3(0.072f, 0.006f, 0.024f);
+            }
+            else if (interactObject.transform.parent.CompareTag("WizardCounter"))
+            {
+                placeTransform = interactObject.transform.parent.GetChild(1).localPosition + new Vector3(0.10746f, 0.00500000005f, 0.0235699993f);
+                Debug.Log(interactObject.transform.parent.GetChild(1).name);
             } 
             else
             {

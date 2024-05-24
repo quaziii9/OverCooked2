@@ -8,6 +8,8 @@ public class portal : MonoBehaviour
 
     public Transform targetPortal;
     public bool isTeleport;
+    public float currentMoveSpeed;
+    public float currentdashForce;
 
     private void Start()
     {
@@ -24,13 +26,17 @@ public class portal : MonoBehaviour
 
     private IEnumerator TeleportPlayer(Transform player)
     {
-        // 플레이어 스케일 줄이기
+        // 플레이어 스케일 줄이기]
+        
         float scaleDuration = 0.5f;
         Vector3 originalScale = player.localScale;
         Vector3 targetScale = Vector3.zero;
         PlayerDash dash = player.GetComponent<PlayerDash>();
+        currentdashForce = dash.dashForce;
         dash.dashForce = 0;
+
         PlayerMoveController moveController = player.GetComponent<PlayerMoveController>();
+        currentMoveSpeed = moveController.moveSpeed;
         moveController.moveSpeed= 0;
         yield return ScaleOverTime(player, originalScale, targetScale, scaleDuration);
 
@@ -40,8 +46,8 @@ public class portal : MonoBehaviour
         // 플레이어 스케일 다시 키우기
         yield return ScaleOverTime(player, targetScale, originalScale, scaleDuration);
         isTeleport = false;
-        dash.dashForce = 100;
-        moveController.moveSpeed = 2;
+        dash.dashForce = currentdashForce;
+        moveController.moveSpeed = currentMoveSpeed;
     }
 
     private IEnumerator ScaleOverTime(Transform obj, Vector3 startScale, Vector3 endScale, float duration)

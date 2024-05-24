@@ -6,7 +6,6 @@ TagManager:
   tags:
   - focus
   - stage1
-  - stage2
   - stage3
   - Station
   - CounterTop
@@ -23,6 +22,9 @@ TagManager:
   - Oven
   - Post_Processing
   - MineCounter
+  - WizardCounter
+  - satge2
+  - Cooker
   layers:
   - Default
   - TransparentFX
