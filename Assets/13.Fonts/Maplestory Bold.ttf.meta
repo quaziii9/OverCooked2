@@ -3,14 +3,15 @@ guid: 8b506d010de62b546831fdac8048e088
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
-  fontSize: 16
+  fontSize: 32
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
   fontNames:
   - Maplestory
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e53936c0e5ac8604fa14f31a968e2e51, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
