@@ -1,5 +1,8 @@
 using UnityEngine;
 using Mirror;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using System.Collections;
 
 /*
     문서: https://mirror-networking.gitbook.io/docs/components/network-room-manager
@@ -18,6 +21,131 @@ using Mirror;
 /// </summary>
 public class OverNetworkRoomManager : NetworkRoomManager
 {
+    /// <summary>
+    /// 서버에서 룸 플레이어 객체를 생성하는 방법을 커스터마이징할 수 있습니다.
+    /// <para>기본적으로 roomPlayerPrefab이 사용되지만, 이 함수를 통해 해당 동작을 커스터마이징할 수 있습니다.</para>
+    /// </summary>
+    /// <param name="conn">플레이어 객체의 연결.</param>
+    /// <returns>새로운 룸 플레이어 객체.</returns>
+    //private AsyncOperation operation;
+    private float timer;
+    private bool isLoading;
+    public Image loadingBar;
+    public GameObject LoadingKeyUI;
+
+    void Update()
+    {
+        if (isLoading && loadingSceneAsync != null)
+        {
+            timer += Time.deltaTime;
+
+            if (loadingSceneAsync.progress < 0.9f)
+            {
+                loadingBar.fillAmount = Mathf.Lerp(loadingBar.fillAmount, loadingSceneAsync.progress, timer);
+                if (loadingBar.fillAmount >= loadingSceneAsync.progress)
+                {
+                    timer = 0f;
+                }
+            }
+            else
+            {
+                loadingBar.fillAmount = Mathf.Lerp(loadingBar.fillAmount, 1f, timer);
+                if (loadingBar.fillAmount == 1.0f)
+                {
+                    loadingSceneAsync.allowSceneActivation = true;
+                    UIManager.Instance.LoadingFoodOff();
+                    isLoading = false;
+                }
+            }
+        }
+    }
+
+    public void MakeRoom()
+    {
+        StartHost();
+    }
+
+    public void JoinRoom()
+    {
+        StartClient();
+    }
+
+    
+    public override void ServerChangeScene(string newSceneName)
+    {
+        LoadingKeyUI.SetActive(true);
+
+        base.ServerChangeScene(newSceneName);
+
+        if (string.IsNullOrWhiteSpace(newSceneName))
+        {
+            Debug.LogError("ServerChangeScene 빈 장면 이름");
+            return;
+        }
+
+        if (NetworkServer.isLoadingScene && newSceneName == networkSceneName)
+        {
+            Debug.LogError($"장면 변경이 이미 진행 중입니다. {newSceneName}");
+            return;
+        }
+
+        if (!NetworkServer.active && newSceneName != offlineScene)
+        {
+            Debug.LogError("ServerChangeScene은 활성 서버에서만 호출할 수 있습니다.");
+            return;
+        }
+
+        NetworkServer.SetAllClientsNotReady();
+        networkSceneName = newSceneName;
+
+        // 서버가 장면 변경을 준비하도록 합니다.
+        OnServerChangeScene(newSceneName);
+
+        // 장면을 변경하는 동안 메시지 처리를 중지하도록 서버 플래그를 설정합니다.
+        // FinishLoadScene에서 다시 활성화됩니다.
+        NetworkServer.isLoadingScene = true;
+
+        //Debug.Log($"newSceneName : {newSceneName}");
+        //
+        //// 커스텀 씬 전환 로직
+        //switch (newSceneName)
+        //{
+        //    case "Assets/01.Scenes/Inseok/NetworkScenes/BattleLobby_Net.unity":
+        //        UIManager.Instance.EnterLoadingKeyUIBattle();
+        //        break;
+        //    // 필요한 다른 씬에 대한 케이스 추가
+        //    default:
+        //        Debug.LogWarning($"No custom transition logic defined for scene {newSceneName}");
+        //        break;
+        //}
+
+        if (isLoading) return; // 이미 로딩 중이면 중복 호출 방지
+
+        isLoading = true;
+        timer = 0f;
+        // 여기
+        //UIManager.Instance.EnterLoadingKeyUI();
+        UIManager.Instance.LoadingFood();
+        loadingSceneAsync = SceneManager.LoadSceneAsync(newSceneName);
+        loadingSceneAsync.allowSceneActivation = false;
+
+        // 서버를 중지할 때 ServerChangeScene을 호출할 수 있습니다.
+        // 이런 일이 발생하면 서버는 활성화되지 않으므로 클라이언트에게 변경 사항을 알릴 필요가 없습니다.
+        if (NetworkServer.active)
+        {
+            // notify all clients about the new scene
+            NetworkServer.SendToAll(new SceneMessage
+            {
+                sceneName = newSceneName
+            });
+        }
+
+        startPositionIndex = 0;
+        startPositions.Clear();
+    }
+
+
+    /*
     #region 서버 콜백
 
     /// <summary>
@@ -177,4 +305,27 @@ public class OverNetworkRoomManager : NetworkRoomManager
     }
 
     #endregion
+    */
+}
+
+
+public class SceneLoader : MonoBehaviour
+{
+    public Image loadingBar;
+    private AsyncOperation operation;
+    private float timer;
+    private bool isLoading;
+
+    public void StartLoading(string sceneName)
+    {
+        if (isLoading) return; // 이미 로딩 중이면 중복 호출 방지
+
+        isLoading = true;
+        timer = 0f;
+        UIManager.Instance.LoadingFood();
+        operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.allowSceneActivation = false;
+    }
+
+    
 }

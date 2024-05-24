@@ -474,6 +474,7 @@ public class UIManager : Singleton<UIManager>
     {
         loadingKeyUI.SetActive(true);
         MaskOutUI(broccoliMask, pineappleMask, "GoToBusMap");
+        //MaskOutUI(broccoliMask, pineappleMask, "");
     }
 
     public void EnterLoadingKeyUIBattle()

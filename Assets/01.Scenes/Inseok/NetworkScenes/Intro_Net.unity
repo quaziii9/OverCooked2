@@ -26513,6 +26513,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1338604848}
   - component: {fileID: 1338604847}
+  - component: {fileID: 1338604849}
   m_Layer: 0
   m_Name: OverNetworkRoomManager
   m_TagString: Untagged
@@ -26534,20 +26535,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
   runInBackground: 1
-  headlessStartMode: 1
+  headlessStartMode: 0
   editorAutoStart: 0
   sendRate: 60
   autoStartServerBuild: 0
   autoConnectClientBuild: 0
-  offlineScene: 
-  onlineScene: 
-  transport: {fileID: 0}
+  offlineScene: Assets/01.Scenes/Inseok/NetworkScenes/Intro_Net.unity
+  onlineScene: Assets/01.Scenes/Inseok/NetworkScenes/BattleLobby_Net.unity
+  transport: {fileID: 1338604849}
   networkAddress: localhost
   maxConnections: 100
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 4831087460944987363, guid: 06a3e268f55f1eb4b9a9644b2b0a2148,
+    type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
@@ -26568,12 +26570,15 @@ MonoBehaviour:
   timeInterpolationGui: 0
   showRoomGUI: 1
   minPlayers: 1
-  roomPlayerPrefab: {fileID: 0}
-  RoomScene: 
-  GameplayScene: 
+  roomPlayerPrefab: {fileID: 2496438365510977985, guid: 6b1f07446813a934f9422c438c23eb16,
+    type: 3}
+  RoomScene: Assets/01.Scenes/Inseok/NetworkScenes/BattleLobby_Net.unity
+  GameplayScene: Assets/01.Scenes/Eunjoo/TestStage.unity
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0
+  loadingBar: {fileID: 1463878916}
+  LoadingKeyUI: {fileID: 511028191}
 --- !u!4 &1338604848
 Transform:
   m_ObjectHideFlags: 0
@@ -26589,6 +26594,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1338604849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338604846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  port: 7777
+  DualMode: 1
+  NoDelay: 1
+  Interval: 10
+  Timeout: 10000
+  RecvBufferSize: 7361536
+  SendBufferSize: 7361536
+  FastResend: 2
+  ReceiveWindowSize: 4096
+  SendWindowSize: 4096
+  MaxRetransmit: 40
+  MaximizeSocketBuffers: 1
+  ReliableMaxMessageSize: 297433
+  UnreliableMaxMessageSize: 1194
+  debugLog: 0
+  statisticsGUI: 0
+  statisticsLog: 0
 --- !u!1 &1347512566
 GameObject:
   m_ObjectHideFlags: 0
@@ -29608,17 +29642,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 637988502}
+      objectReference: {fileID: 154817030}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 154817030}
+      objectReference: {fileID: 637988502}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 637988502}
+      objectReference: {fileID: 1338604847}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
@@ -29632,17 +29666,42 @@ PrefabInstance:
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: EnterLoadingKeyUIBattle
+      value: OnClickButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: BattleRoomUIOFF
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: BattleRoomUIOFF
+      value: StartHost
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SoundManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: Mirror.NetworkManager, Mirror
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
       value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2922589969209275285, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -35434,7 +35493,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1719696564
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43902,46 +43961,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 637988502}
+      objectReference: {fileID: 154817030}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 154817030}
+      objectReference: {fileID: 637988502}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 637988502}
+      objectReference: {fileID: 1338604847}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: EnterLoadingKeyUIBattle
-      objectReference: {fileID: 0}
-    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: OnClickButton
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: BattleRoomUIOFF
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIManager, Assembly-CSharp
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: StartClient
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SoundManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: Mirror.NetworkManager, Mirror
       objectReference: {fileID: 0}
     - target: {fileID: 1895927478817491033, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}

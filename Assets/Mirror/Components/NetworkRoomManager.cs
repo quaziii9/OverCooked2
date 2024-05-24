@@ -351,7 +351,7 @@ namespace Mirror
                 allPlayersReady = false;
             }
 
-            base.ServerChangeScene(newSceneName);
+            //base.ServerChangeScene(newSceneName);
         }
 
         /// <summary>

@@ -13,6 +13,7 @@ public class SceneChangeManager_Net : Singleton<SceneChangeManager_Net>
     {
         // 씬 로드 완료 이벤트에 OnSceneLoaded 메서드를 등록
         SceneManager.sceneLoaded += OnSceneLoaded;
+
         EventManager<UIEvents>.StartListening(UIEvents.WorldMapOpen, ChangeToBusMap);
         EventManager<UIEvents>.StartListening(UIEvents.IntroMapOpen, ChangeToIntroMap);
         EventManager<UIEvents>.StartListening(UIEvents.TestStageMapOpen, ChangeToTestStage);

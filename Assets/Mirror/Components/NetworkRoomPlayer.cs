@@ -25,7 +25,7 @@ namespace Mirror
         /// <para>Invoke CmdChangeReadyState method on the client to set this flag.</para>
         /// <para>When all players are ready to begin, the game will start. This should not be set directly, CmdChangeReadyState should be called on the client to set it on the server.</para>
         /// </summary>
-        [ReadOnly, Tooltip("Diagnostic flag indicating whether this player is ready for the game to begin")]
+        [ReadOnly, Tooltip("이 플레이어가 게임을 시작할 준비가 되었는지 여부를 나타내는 진단 플래그")]
         [SyncVar(hook = nameof(ReadyStateChanged))]
         public bool readyToBegin;
 
