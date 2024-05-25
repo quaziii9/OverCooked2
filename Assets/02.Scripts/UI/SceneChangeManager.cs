@@ -17,6 +17,10 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.IntroMapOpen, ChangeToIntroMap);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.BattleRoomOpen, ChangeToBattleLobby);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.TestStageMapOpen, ChangeToTestStage);
+        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.stage1_4MapOpen, ChangeToStage1_4);
+        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.stage2_5MapOpen, ChangeToStage2_5);
+        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.stage3_3MapOpen, ChangeToStage3_3);
+        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.stageWizardMapOpen, ChangeToStageWizard);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.stageMineMapOpen, ChangeToStageMine);
     }
 
@@ -72,7 +76,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
 
     public void ChangeToStageWizard()
     {
-        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+        ChangeScene("Wizard", "Wizard", UIManager.Instance.loadingMapBar);
     }
 
     public void ChangeToStageMine()
@@ -210,7 +214,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 UIManager.Instance.escButton.SetActive(true);
                 #endif
                 break;
-            case "stage wizard scene_name":
+            case "Wizard":
                 //UIManager.Instance.sceneType = SceneType.BattleMap;
                 UIManager.Instance.RecipeUIOn(0);
                 UIManager.Instance.EnterStageMaskIn();

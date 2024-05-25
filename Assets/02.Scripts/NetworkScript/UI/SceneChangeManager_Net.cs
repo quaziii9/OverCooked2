@@ -218,11 +218,14 @@ public class SceneChangeManager_Net : Singleton<SceneChangeManager_Net>
                 UIManager.Instance.sceneType = SceneType.BattleMap;
                 UIManager.Instance.loadingKeyUI.SetActive(false);
                 UIManager.Instance.battleUI.SetActive(false);
+                UIManager.Instance.EnterStageMaskIn();
+                #if UNITY_ANDROID
+                UIManager.Instance.escButton.SetActive(true);
+                #endif
                 //VanSingleton.Instance.van.SetActive(false);
                 // Battle UI 초기세팅 다시하기
                 //UIManager.Instance.battleUIReadyBtn.InitializingBattleRoom();
                 break;
-
         }
     }
 }

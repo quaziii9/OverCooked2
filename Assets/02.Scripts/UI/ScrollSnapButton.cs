@@ -74,30 +74,30 @@ public class ScrollSnapButton : MonoBehaviour
                 UIManager.Instance.sceneType = EnumTypes.SceneType.BattleMap;
                 UIManager.Instance.mapType = EnumTypes.MapType.stageWizard;
                 // 선택하면 오브젝트를 끄고
-                snap.gameObject.SetActive(false);
-                // 버튼을 활성화 시키고
-                ReadyBtn.gameObject.SetActive(true);
-                // 랜덤맵을 염
-                RandomSelectMap.gameObject.SetActive(true);
-                FindOverNetworkRoomPlayerAndCheckMap(name);
+                //snap.gameObject.SetActive(false);
+                //// 버튼을 활성화 시키고
+                //ReadyBtn.gameObject.SetActive(true);
+                //// 랜덤맵을 염
+                //RandomSelectMap.gameObject.SetActive(true);
+                //FindOverNetworkRoomPlayerAndCheckMap(name);
             }
             else if (name == "Mine")
             {
                 UIManager.Instance.sceneType = EnumTypes.SceneType.BattleMap;
                 UIManager.Instance.mapType = EnumTypes.MapType.stageMine;
-                // 선택하면 오브젝트를 끄고
-                snap.gameObject.SetActive(false);
-                // 버튼을 활성화 시키고
-                ReadyBtn.gameObject.SetActive(true);
-                // 랜덤맵을 염
-                RandomSelectMap.gameObject.SetActive(true);
-                FindOverNetworkRoomPlayerAndCheckMap(name);
+                //// 선택하면 오브젝트를 끄고
+                //snap.gameObject.SetActive(false);
+                //// 버튼을 활성화 시키고
+                //ReadyBtn.gameObject.SetActive(true);
+                //// 랜덤맵을 염
+                //RandomSelectMap.gameObject.SetActive(true);
+                //FindOverNetworkRoomPlayerAndCheckMap(name);
             }
             else 
             {
                 return;
             }
-            //UIManager.Instance.EnterLoadingMapUI();
+            UIManager.Instance.EnterLoadingMapUI();
         }
     }
 
