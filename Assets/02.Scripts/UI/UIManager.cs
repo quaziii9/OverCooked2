@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using EnumTypes;
 using EventLibrary;
+using UnityEditor;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -62,6 +63,7 @@ public class UIManager : Singleton<UIManager>
 
     [Header("StageMap")]
     public GameObject stageMapEscUI;
+    public GameObject ingameStageMapEscUI;
     public GameObject[] stageEscMapName;
 
     [Header("RecipeUI")]
@@ -618,8 +620,31 @@ public class UIManager : Singleton<UIManager>
                 case SceneType.BattleLobby:
                     ExitLobbyUIOn();
                     break;
+                case SceneType.NetworkBattleMap:
+                    // GameScene Canvas문제로 분기처리.
+                    //if (GameObject.Find("Ingame Esc Stage UI") != null)
+                    //{
+                    // 현재 오브젝트의 활성화 상태를 체크
+                    ingameStageMapEscUI = FindInactiveObjectByName("Ingame Esc Stage UI");
+                    bool isUIActive = ingameStageMapEscUI.activeSelf;
+                    ingameStageMapEscUI.SetActive(!isUIActive);
+                    //}
+                    break;
             }
         }
+    }
+
+    GameObject FindInactiveObjectByName(string name)
+    {
+        Transform[] transforms = Resources.FindObjectsOfTypeAll<Transform>();
+        foreach (Transform t in transforms)
+        {
+            if (t.hideFlags == HideFlags.None && t.name == name)
+            {
+                return t.gameObject;
+            }
+        }
+        return null;
     }
 
     public void EscUIButton()
