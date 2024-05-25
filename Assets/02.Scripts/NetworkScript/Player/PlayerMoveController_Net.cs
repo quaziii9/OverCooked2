@@ -5,111 +5,136 @@ using UnityEngine.InputSystem;
 public class PlayerMoveController_Net : NetworkBehaviour
 {
     public Animator animator;
-    public Rigidbody rb;
+    private Rigidbody rb;
 
     [Header("Speed")]
-    [SerializeField] private float moveSpeed = 15f;
-    [SerializeField] private float turnSpeed = 10f;
+    [SyncVar] public float moveSpeed = 15f;
+    [SyncVar] public float turnSpeed = 10f;
+    [SyncVar] public float fallMultiplier = 5f; // 떨어질 때 속도 증가
+    [SyncVar] public float rayDistance = 1f;
 
-    [Header("Dash")]
-    [SerializeField] private float dashSpeed;
-    [SerializeField] private float dashForce = 500f;
-    [SerializeField] private float dashDuration = 0.5f; // 대쉬 지속 시간
-    [SerializeField] private float dashCooldown = 0.5f; // 대쉬 쿨다운 시간
-
-    private Vector2 moveInput;
+    [SyncVar] private Vector2 moveInput;
     private bool isDashing = false;
-    private float dashStartTime;
-    private float lastDashTime;
+    private int puffCount = 5;
+
+    [Header("State")]
+    [SerializeField] private bool isGrounded;
+    [SerializeField] private bool isOnStairs;
 
     void Start()
     {
-        if (rb == null)
-        {
-            rb = GetComponent<Rigidbody>();
-        }
-
-        dashSpeed = moveSpeed * 2;
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
+        puffCount++;
+
         // 이동 입력이 없을 때 애니메이터의 이동 파라미터를 false로 설정
-        if (moveInput.magnitude == 0)
+        if (moveInput == Vector2.zero)
         {
             rb.velocity = Vector3.zero;
             animator.SetBool("isWalking", false);
+            puffCount = 5;
         }
         else
         {
             animator.SetBool("isWalking", true);
+            if (puffCount >= 5)
+            {
+                PlayerPuff.Instance.MovePuff(transform);
+                puffCount = 0;
+            }
         }
-
-        /*
-        // 대쉬가 끝난 경우
-        if (isDashing && Time.time - dashStartTime >= dashDuration)
-        {
-            isDashing = false;
-            rb.velocity = Vector3.zero; // 대쉬가 끝나면 플레이어의 속도를 0으로 설정하여 멈춤
-        }
-        */
     }
 
     void FixedUpdate()
     {
-        if (!isDashing && moveInput.magnitude != 0)
-        {
-            Vector3 moveDir = new Vector3(moveInput.x, 0f, moveInput.y);
-            Vector3 movement = moveDir * moveSpeed;
-            rb.velocity = movement;
+        CheckGroundStatus();
+        CheckStairStatus();
 
-            // 플레이어가 이동하는 방향을 바라보도록 회전
+        if (!isDashing && moveInput != Vector2.zero)
+        {
+            MoveCharacter();
+        }
+
+        ApplyAdditionalGravity();
+        HandleStairMovement();
+    }
+
+    private void CheckGroundStatus()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, rayDistance))
+        {
+            if (hit.collider.CompareTag("Floor"))
+            {
+                isGrounded = true;
+            }
+            else
+            {
+                isGrounded = false;
+            }
+        }
+        else
+        {
+            isGrounded = false;
+        }
+        // 레이 디버그용 드로우
+        Debug.DrawRay(transform.position, Vector3.down * rayDistance, Color.red);
+    }
+
+    private void CheckStairStatus()
+    {
+        isOnStairs = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, rayDistance) && hit.collider.CompareTag("Stair");
+        // 레이 디버그용 드로우
+        Debug.DrawRay(transform.position, Vector3.down * rayDistance, Color.blue);
+    }
+
+    private void MoveCharacter()
+    {
+        Vector3 moveDir = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
+        Vector3 movement = moveDir * moveSpeed;
+        rb.velocity = movement;
+
+        // 플레이어가 이동하는 방향을 바라보도록 회전
+        if (moveDir != Vector3.zero)
+        {
             Quaternion targetRotation = Quaternion.LookRotation(moveDir);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
         }
+    }
 
-        if(isDashing)
+    private void ApplyAdditionalGravity()
+    {
+        if (!isGrounded)
         {
-            rb.velocity = Vector3.zero;
+            rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplier * Time.fixedDeltaTime;
+        }
+    }
+
+    private void HandleStairMovement()
+    {
+        if (isOnStairs)
+        {
+            if (moveInput != Vector2.zero)
+            {
+                rb.AddForce(Vector3.down * 5f, ForceMode.Acceleration);
+            }
+            else
+            {
+                rb.useGravity = false;
+            }
+        }
+        else
+        {
+            rb.useGravity = true;
         }
     }
 
     public void OnMove(InputValue inputValue)
     {
-        moveInput = inputValue.Get<Vector2>();
+        if(isLocalPlayer)
+            if (inputValue != null) moveInput = inputValue.Get<Vector2>();
     }
-
-    /*
-    // 현재 요리 중이어도 대쉬 가능, 카운터에서 멀어지면 채널링 해제되서 요리 중단
-    public void OnDash(InputValue inputValue)
-    {
-        if (inputValue.isPressed && Time.time - lastDashTime >= dashCooldown)
-        {
-            isDashing = true;
-            lastDashTime = Time.time;
-            dashStartTime = Time.time;
-            rb.velocity = Vector3.zero;
-            rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
-            StartCoroutine(ControlSpeed());
-            Invoke("OffIsDash", 0.5f);
-        }
-    }
-
-    IEnumerator ControlSpeed()
-    {
-        while (dashSpeed > moveSpeed)
-        {
-            dashSpeed -= Time.deltaTime * 20;
-            yield return new WaitForSeconds(Time.deltaTime);
-        }
-
-        yield return null;
-        dashSpeed = 2 * moveSpeed;
-    }
-
-    private void OffIsDash()
-    {
-        isDashing = false;
-    }
-    */
 }

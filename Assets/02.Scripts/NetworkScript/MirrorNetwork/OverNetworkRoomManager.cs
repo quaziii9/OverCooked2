@@ -26,6 +26,69 @@ using TMPro;
 /// </summary>
 public class OverNetworkRoomManager : NetworkRoomManager
 {
+
+    #region Game Object Controller (GameScene에서만 적용)
+
+
+
+    #endregion
+
+    #region Game Object Controller (처음알려준 이상한 방법)
+    /*
+    // 각 플레이어가 소유할 게임 오브젝트 배열
+    public GameObject[] playerAObjects; // Player A가 소유할 게임 오브젝트들
+    public GameObject[] playerBObjects; // Player B가 소유할 게임 오브젝트들
+
+    // 클라이언트가 서버에 추가될 때 호출되는 메서드를 오버라이드합니다.
+    public override void OnRoomServerAddPlayer(NetworkConnectionToClient conn)
+    {
+        // 기본 NetworkRoomManager의 OnRoomServerAddPlayer 메서드를 호출하여 기본 동작을 수행합니다.
+        base.OnRoomServerAddPlayer(conn);
+
+        // 클라이언트 연결 순서에 따라 오브젝트 소유권을 할당합니다.
+        int playerIndex = conn.connectionId; // 연결된 클라이언트의 ID를 가져옵니다.
+
+        // 첫 번째 플레이어에게 playerAObjects 소유권을 할당합니다.
+        if (playerIndex == 0)
+        {
+            AssignOwnership(conn, playerAObjects);
+        }
+        // 두 번째 플레이어에게 playerBObjects 소유권을 할당합니다.
+        else if (playerIndex == 1)
+        {
+            AssignOwnership(conn, playerBObjects);
+        }
+        // 예상치 못한 플레이어 인덱스일 경우 오류를 출력합니다.
+        else
+        {
+            Debug.LogError("Unexpected player index");
+        }
+    }
+
+    // 특정 클라이언트에게 오브젝트 소유권을 할당하는 메서드입니다.
+    private void AssignOwnership(NetworkConnectionToClient conn, GameObject[] objects)
+    {
+        // 각 오브젝트에 대해 반복합니다.
+        foreach (var obj in objects)
+        {
+            // 오브젝트에서 NetworkIdentity 컴포넌트를 가져옵니다.
+            NetworkIdentity networkIdentity = obj.GetComponent<NetworkIdentity>();
+            if (networkIdentity != null)
+            {
+                // NetworkIdentity가 있으면 해당 클라이언트에게 소유권을 할당합니다.
+                networkIdentity.AssignClientAuthority(conn);
+                Debug.Log("Assigned ownership of " + obj.name + " to client: " + conn.connectionId);
+            }
+            else
+            {
+                // NetworkIdentity가 없으면 오류를 출력합니다.
+                Debug.LogError(obj.name + " does not have a NetworkIdentity component.");
+            }
+        }
+    }
+    */
+    #endregion
+
     #region Update FixedUpdate
     /// <summary>
     /// 서버에서 룸 플레이어 객체를 생성하는 방법을 커스터마이징할 수 있습니다.
@@ -205,7 +268,7 @@ public class OverNetworkRoomManager : NetworkRoomManager
     }
     #endregion
 
-    #region Loding & Change Scene
+    #region Loding & Change Scene // 씬 변환때 적용될 Game Object Controller (GameScene에서만 적용)
 
     public void ReturnToRoomScene()
     {
@@ -230,10 +293,16 @@ public class OverNetworkRoomManager : NetworkRoomManager
         }
     }
 
+    // Player A가 소유할 게임 오브젝트들을 저장할 리스트
+    private List<GameObject> playerAObjects = new List<GameObject>();
+
+    // Player B가 소유할 게임 오브젝트들을 저장할 리스트
+    private List<GameObject> playerBObjects = new List<GameObject>();
+
     protected override void ClientChangeScene(string newSceneName, SceneOperation sceneOperation = SceneOperation.Normal, bool customHandling = false)
     {
         // LodingBar Start
-        //Debug.Log("안타냐?");
+        Debug.Log("ClientChangeScene");
         LoadingKeyUI.SetActive(true);
 
         if (string.IsNullOrWhiteSpace(newSceneName))
@@ -324,11 +393,79 @@ public class OverNetworkRoomManager : NetworkRoomManager
         //        BattleUI.SetActive(false);
         //        break;
         //}
+
+        // GameScene으로 전환될 때 소유권 할당
+        if (newSceneName == GameplayScene)
+        {
+            AssignOwnershipToPlayers();
+        }
     }
 
-    
+    // 플레이어에게 오브젝트 소유권을 할당하는 메서드
+    private void AssignOwnershipToPlayers()
+    {
+        // PlayerAObject 스크립트를 가진 게임 오브젝트들을 찾아 리스트에 추가
+        foreach (var obj in FindObjectsOfType<PlayerAObject>())
+        {
+            playerAObjects.Add(obj.gameObject);
+        }
+
+        // PlayerBObject 스크립트를 가진 게임 오브젝트들을 찾아 리스트에 추가
+        foreach (var obj in FindObjectsOfType<PlayerBObject>())
+        {
+            playerBObjects.Add(obj.gameObject);
+        }
+
+        // 클라이언트 연결 순서에 따라 오브젝트 소유권 할당
+        int playerIndex = 0;
+        foreach (var conn in NetworkServer.connections.Values)
+        {
+            // 첫 번째 플레이어에게 playerAObjects 소유권을 할당
+            if (playerIndex == 0)
+            {
+                AssignOwnership(conn, playerAObjects);
+            }
+            // 두 번째 플레이어에게 playerBObjects 소유권을 할당
+            else if (playerIndex == 1)
+            {
+                AssignOwnership(conn, playerBObjects);
+            }
+            // 예상치 못한 플레이어 인덱스일 경우 오류 메시지 출력
+            else
+            {
+                Debug.LogError("Unexpected player index");
+            }
+            playerIndex++;
+        }
+    }
+
+    // 특정 클라이언트에게 오브젝트 소유권을 할당하는 메서드
+    private void AssignOwnership(NetworkConnectionToClient conn, List<GameObject> objects)
+    {
+        // 리스트에 있는 각 오브젝트에 대해 반복
+        foreach (var obj in objects)
+        {
+            // 각 오브젝트에서 NetworkIdentity 컴포넌트를 가져옴
+            NetworkIdentity networkIdentity = obj.GetComponent<NetworkIdentity>();
+
+            // NetworkIdentity가 존재할 경우 소유권 할당
+            if (networkIdentity != null)
+            {
+                // 해당 클라이언트에게 소유권 할당
+                networkIdentity.AssignClientAuthority(conn);
+                Debug.Log("Assigned ownership of " + obj.name + " to client: " + conn.connectionId);
+            }
+            // NetworkIdentity가 없을 경우 오류 메시지 출력
+            else
+            {
+                Debug.LogError(obj.name + " does not have a NetworkIdentity component.");
+            }
+        }
+    }
+
     public override void ServerChangeScene(string newSceneName)
     {
+        Debug.Log("ServerChangeScene");
         LoadingKeyUI.SetActive(true);
 
         base.ServerChangeScene(newSceneName);
@@ -409,6 +546,11 @@ public class OverNetworkRoomManager : NetworkRoomManager
         //        //BattleUI.SetActive(false);
         //        break;
         //}
+        // GameScene으로 전환될 때 소유권 할당
+        if (newSceneName == GameplayScene)
+        {
+            AssignOwnershipToPlayers();
+        }
     }
 
     // 현재 씬이 게임 씬인지 확인하는 메소드

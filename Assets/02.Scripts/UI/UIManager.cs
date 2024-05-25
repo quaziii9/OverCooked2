@@ -63,6 +63,7 @@ public class UIManager : Singleton<UIManager>
 
     [Header("StageMap")]
     public GameObject stageMapEscUI;
+    public GameObject ingameStageMapEscUI;
     public GameObject[] stageEscMapName;
 
     [Header("RecipeUI")]
