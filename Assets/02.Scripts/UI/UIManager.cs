@@ -2,11 +2,11 @@ using Cinemachine;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using EnumTypes;
 using EventLibrary;
 using System.Collections.Generic;
+using System.Linq;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -81,7 +81,6 @@ public class UIManager : Singleton<UIManager>
         = new string[] { "1280 x 720", "1680 x 1050", "1920 x 1080", "2560 x 1440", "3840 x 2160" };
 
 
-    //private bool escUiOn = false;
     public bool first = true;
     public SceneType sceneType;
     public MapType mapType = MapType.None;
@@ -122,10 +121,6 @@ public class UIManager : Singleton<UIManager>
     }
 
 
-
-
-
-
     public void JsonUILoad()
     {
         settingWindowScreen = LoadData.Instance.optionData.saveWindowMode;
@@ -148,34 +143,26 @@ public class UIManager : Singleton<UIManager>
     {
         //Debug.Log(sceneType);
         //Debug.Log(mapType);
-        //BusMapEscUI();
-
         HandleEscapeInput();
-
-        //EscUI();
     }
 
 
     #region Popup
-
     // 옵션창 On
     public void SettingOn()
     {
         ToggleUI(optionSettingUI, true);
     }
-
     // 옵션창 Off
     public void SeetingOff()
     {
         ToggleUI(optionSettingUI, false);
     }
-
     // 그만두기창 On
     public void StopUIOn()
     {
         ToggleUI(stopUI, true);
     }
-
     // 그만두기창 Off
     public void StopUIOff()
     {
@@ -188,7 +175,6 @@ public class UIManager : Singleton<UIManager>
     {
         ToggleUI(exitLobbyUI, true);
     }
-
     public void ExitLobbyUIOff() //CancleExitLobby
     {
         ToggleUI(exitLobbyUI, false);
@@ -198,7 +184,6 @@ public class UIManager : Singleton<UIManager>
     {
         ToggleUI(stageMapEscUI, true);
     }
-
     public void StageMapEscUIOff() // StageEscUICancle
     {
         ToggleUI(stageMapEscUI, false);
@@ -208,10 +193,18 @@ public class UIManager : Singleton<UIManager>
     {
         ToggleUI(worldMapEscUI, true);
     }
-
     public void worldMapEscUIOff() //BusMapEscUICancle
     {
         ToggleUI(worldMapEscUI, false);
+    }
+
+    public void BattleRoomUION()
+    {
+        ToggleUI(battleRoomUI, true);
+    }
+    public void BattleRoomUIOFF()
+    {
+        ToggleUI(battleRoomUI, false);
     }
 
     #endregion
@@ -310,19 +303,6 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
-    public void BattleRoomUION()
-    {
-        ToggleUI(battleRoomUI, true);
-        //battleRoomUI.SetActive(true);
-    }
-
-    public void BattleRoomUIOFF()
-    {
-        ToggleUI(battleRoomUI, false);
-        //battleRoomUI.SetActive(false);
-    }
-
-
     #region Mask InOut Tool
 
     // 마스크 축소 UI
@@ -354,9 +334,6 @@ public class UIManager : Singleton<UIManager>
                 case "BattleUISet":
                     Invoke(goTo, 1F);
                     break;
-                //case "BattleUIOff":
-                //    Invoke(goTo, 1F);
-                //    break;
                 case "LoadingKeyUIOn":
                     Invoke(goTo, 1f);
                     break;
@@ -475,11 +452,11 @@ public class UIManager : Singleton<UIManager>
     public void LoadingKeyUIONBattle()
     {
         buttonUI.SetActive(false);
-        battleRoomUI.SetActive(false);
-        StopUIOff();
-        StageMapEscUIOff();
         escButton.SetActive(false);
         loadingKeyUI.SetActive(true);
+        BattleRoomUIOFF();
+        StopUIOff();
+        StageMapEscUIOff();
         RecipeUIOff();
         MaskOutUI(broccoliMask, pineappleMask, "GoToBattleRoom");
     }
@@ -538,6 +515,22 @@ public class UIManager : Singleton<UIManager>
     #endregion
 
 
+
+    //public void EnterLoadingKeyUITool()
+    //{
+    //    switch (mapType)
+    //    {
+    //        case MapType.Intro:
+
+
+
+
+    //    }
+    //}
+
+
+
+
     #region WorldMap Mask
     public void EnterLoadingKeyUI()
     {
@@ -562,9 +555,7 @@ public class UIManager : Singleton<UIManager>
         loadingKeyUI.SetActive(false);
         MaskOutUI(pineappleMask, broccoliMask, "busTopUIOn");
     }
-
     #endregion
-
 
     #region EnterStage
 
@@ -633,11 +624,12 @@ public class UIManager : Singleton<UIManager>
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            SoundManager.Instance.ButtonTick();
+            
             if (popupStack.Count > 0)
             {
                 var topPopup = popupStack.Pop();
                 topPopup.SetActive(false);
-                SoundManager.Instance.ButtonTick();
             }
             else
             {
@@ -648,7 +640,6 @@ public class UIManager : Singleton<UIManager>
 
     private void ShowDefaultUIForScene()
     {
-        SoundManager.Instance.ButtonTick();
         switch (sceneType)
         {
             case SceneType.WorldMap:
@@ -666,36 +657,6 @@ public class UIManager : Singleton<UIManager>
                 break;
         }
     }
-
-
-
-
-    //public void EscUI()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Escape))
-    //    {
-    //        //if (escUiOn == false)
-    //        //{
-    //        //escUiOn = true;
-    //        SoundManager.Instance.ButtonTick();
-    //        switch (sceneType)
-    //        {
-    //            case SceneType.WorldMap:
-    //                worldMapEscUI.SetActive(true);                 
-    //                break;
-    //            case SceneType.BattleMap:
-    //            case SceneType.StageMap:
-    //                stageMapEscUI.SetActive(true);
-    //                break;
-    //            case SceneType.Intro:
-    //                StopUIOn();
-    //                break;
-    //            case SceneType.BattleLobby:
-    //                ExitLobbyUIOn();
-    //                break;
-    //        }
-    //    }
-    //}
 
     public void EscUIButton()
     {
@@ -753,7 +714,6 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
-
     #region LoadingFood
     public void LoadingFood()
     {
@@ -806,6 +766,5 @@ public class UIManager : Singleton<UIManager>
             recipe.SetActive(false);
     }
     #endregion 
-
 
 }
