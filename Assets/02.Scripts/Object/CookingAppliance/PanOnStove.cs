@@ -18,6 +18,7 @@ public class PanOnStove : MonoBehaviour
     [SerializeField] private GameObject Canvas;
     [SerializeField] private GameObject IngredientUI;
     [SerializeField] private Sprite[] Icons;
+    [SerializeField] private GameObject pfxFire;
 
     private void Start()
     {
@@ -71,6 +72,7 @@ public class PanOnStove : MonoBehaviour
 
     private IEnumerator CoStartCooking(UnityAction EndCallBack = null)
     {
+        pfxFire.SetActive(true);
         while (cookingTime <= 1)
         {
             while (pause)
@@ -80,6 +82,8 @@ public class PanOnStove : MonoBehaviour
             yield return new WaitForSeconds(0.45f);
             cookingTime += 0.25f;
         }
+        Debug.Log("Cooking End");
+        pfxFire.SetActive(false);
         EndCallBack?.Invoke();
         OffSlider();
         _coTimer = null;

@@ -628,6 +628,16 @@ public class PlayerInteractController : MonoBehaviour
                 {
                     //포트는 놔둠
                     objectHighlight.onSomething = true;
+
+                    if(obj.CompareTag("Pan"))
+                    {
+                        obj.GetComponent<PanOnStove>().inSomething = false;
+                    } 
+                    else if(obj.CompareTag("Pot"))
+                    {
+                        obj.GetComponent<PotOnStove>().inSomething = false;
+                    }
+                    
                     Debug.Log($"obj : {obj.name}");
 
                     GameObject cookedIngredientObj = obj.transform.GetChild(2).gameObject;
