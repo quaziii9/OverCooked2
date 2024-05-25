@@ -677,6 +677,11 @@ public class Player2InteractController : MonoBehaviour
                 placeTransform = interactObject.transform.parent.GetChild(1).localPosition + new Vector3(0.10746f, 0.00500000005f, 0.0235699993f);
                 Debug.Log(interactObject.transform.parent.GetChild(1).name);
             }
+            else if (interactObject.transform.parent.CompareTag("MineBoard"))
+            {
+                Debug.Log("MineBoard");
+                placeTransform = interactObject.transform.parent.GetChild(1).localPosition + new Vector3(0f, 0.0055f, 0f);
+            }
             else
             {
                 placeTransform = interactObject.transform.parent.GetChild(1).localPosition;

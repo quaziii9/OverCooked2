@@ -159,33 +159,15 @@ public class CuttingBoard : MonoBehaviour
     {
         Ingredient Ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
         GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
+
         madeUI.transform.GetChild(0).gameObject.SetActive(true);
         Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
         image.sprite = GetIcon(Ingredient.type);
-        madeUI.GetComponent<IngredientUI>().Target = Ingredient.transform;
+        madeUI.GetComponent<IngredientUI>().target = Ingredient.transform;
     }
 
     private Sprite GetIcon(Ingredient.IngredientType ingredientType)
     {
-        //switch (ingredientType)
-        //{
-        //    case Ingredient.IngredientType.Fish:
-        //        return Icons[0];
-        //    case Ingredient.IngredientType.Shrimp:
-        //        return Icons[1];
-        //    case Ingredient.IngredientType.Tomato:
-        //        return Icons[2];
-        //    case Ingredient.IngredientType.Lettuce:
-        //        return Icons[3];
-        //    case Ingredient.IngredientType.Cucumber:
-        //        return Icons[4];
-        //    case Ingredient.IngredientType.Potato:
-        //        return Icons[5];
-        //    case Ingredient.IngredientType.Chicken:
-        //        return Icons[6];
-        //    default:
-        //        throw new ArgumentOutOfRangeException();
-        //}
         switch (ingredientType)
         {
             case Ingredient.IngredientType.Fish:

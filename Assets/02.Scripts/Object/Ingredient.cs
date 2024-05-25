@@ -403,7 +403,7 @@ public class Ingredient : GameItem
     public void PlayerHandleOff(Transform parent, Vector3 target, Quaternion rotation)
     {
         transform.SetParent(parent);
-        transform.rotation = rotation;
         transform.localPosition = target;
+        transform.rotation = rotation;
     }
 }

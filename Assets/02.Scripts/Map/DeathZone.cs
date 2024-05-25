@@ -1,4 +1,3 @@
-using Mirror;
 using System.Collections;
 using UnityEngine;
 
@@ -7,8 +6,16 @@ public class DeathZone : MonoBehaviour
     [SerializeField] private TeamReturnPositions redTeamPositions;
     [SerializeField] private TeamReturnPositions blueTeamPositions;
 
+    public RespawnManager respawnManager;
+
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player"))
+        {
+            // 플레이어가 DeathZone에 들어오면 리스폰 절차를 시작
+            StartCoroutine(DeactivateAndRespawnPlayer(other.gameObject));
+        }
+
         if (other.CompareTag("Plate") || other.CompareTag("Pan") || other.CompareTag("Pot"))
         {
             Ingredient ingredient = other.GetComponent<Ingredient>();
@@ -28,6 +35,14 @@ public class DeathZone : MonoBehaviour
         }
     }
 
+    private IEnumerator DeactivateAndRespawnPlayer(GameObject player)
+    {
+        yield return new WaitForSeconds(1.5f); // 1.5초 대기
+
+        // RespawnManager를 통해 플레이어 리스폰
+        respawnManager.StartRespawnCountdown(player);
+    }
+
     private IEnumerator DeactivateAndRespawn(Ingredient ingredient)
     {
         if (ingredient.CompareTag("Pan"))
@@ -42,11 +57,11 @@ public class DeathZone : MonoBehaviour
         if (returnPosition != null)
         {
             ingredient.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            ingredient.transform.rotation = Quaternion.Euler(0, 0 ,0);
+            ingredient.transform.rotation = Quaternion.Euler(0, 0, 0);
             ingredient.transform.SetParent(returnPosition.parent);
-            
+
             // pan, pot는 위치 다름
-            if(ingredient.CompareTag("Plate"))
+            if (ingredient.CompareTag("Plate"))
             {
                 ingredient.transform.localPosition = new Vector3(0.072f, 0.006f, 0.024f);
             }
@@ -92,8 +107,8 @@ public class DeathZone : MonoBehaviour
                 if (position.parent.childCount == 2 && position.parent.gameObject.name.Contains("Plate"))
                 {
                     return position;
-                } 
-                else if(position.parent.childCount == 3 && (position.parent.gameObject.name.Contains("Pot") || position.parent.gameObject.name.Contains("Pan")))
+                }
+                else if (position.parent.childCount == 3 && (position.parent.gameObject.name.Contains("Pot") || position.parent.gameObject.name.Contains("Pan")))
                 {
                     return position;
                 }

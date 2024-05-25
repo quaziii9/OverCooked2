@@ -1,11 +1,13 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
-public class RespawnManager : Singleton<RespawnManager>
+public class RespawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] countdown;
     [SerializeField] private Transform[] playerSpawnPositions; // 리스폰 위치들
+    [SerializeField] private GameObject canvas;
     [SerializeField] private float respawnDelay = 5.0f; // 리스폰 대기 시간
 
     private void Start()
@@ -23,8 +25,11 @@ public class RespawnManager : Singleton<RespawnManager>
         }
     }
 
-    public void StartRespawnCountdown(GameObject player, int spawnIndex)
+    public void StartRespawnCountdown(GameObject player)
     {
+        // 객체의 이름에서 숫자를 추출
+        int spawnIndex = GetSpawnIndexFromParentName(player.transform.name);
+
         if (spawnIndex >= 0 && spawnIndex < countdown.Length)
         {
             StartCoroutine(RespawnCountdownCoroutine(player, spawnIndex));
@@ -35,12 +40,36 @@ public class RespawnManager : Singleton<RespawnManager>
         }
     }
 
+    private int GetSpawnIndexFromParentName(string parentName)
+    {
+        if (parentName.Contains("1"))
+        {
+            return 0;
+        }
+        else if (parentName.Contains("2"))
+        {
+            return 1;
+        }
+        else if (parentName.Contains("3"))
+        {
+            return 2;
+        }
+        else if (parentName.Contains("4"))
+        {
+            return 3;
+        }
+        else
+        {
+            return -1; // 숫자가 없으면 -1 반환
+        }
+    }
+
     private IEnumerator RespawnCountdownCoroutine(GameObject player, int index)
     {
-        GameObject obj = countdown[index];
-        Text countdownText = obj.transform.GetChild(1).GetComponent<Text>();
+        Text countdownText = countdown[index].transform.GetChild(1).GetComponent<Text>();
+        countdown[index].transform.position = Camera.main.WorldToScreenPoint(playerSpawnPositions[index].transform.position);
 
-        obj.SetActive(true);
+        countdown[index].SetActive(true);
 
         for (int i = (int)respawnDelay; i > 0; i--)
         {
@@ -48,7 +77,7 @@ public class RespawnManager : Singleton<RespawnManager>
             yield return new WaitForSeconds(1.0f);
         }
 
-        obj.SetActive(false);
+        countdown[index].SetActive(false);
         RespawnPlayer(player, index);
     }
 

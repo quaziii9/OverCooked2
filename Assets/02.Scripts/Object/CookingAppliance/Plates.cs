@@ -143,7 +143,7 @@ public class Plates : MonoBehaviour
             Image[] images = new Image[1];
             images[0] = madeUI.transform.GetChild(0).GetComponent<Image>();
             AddIconMethod(images);
-            madeUI.GetComponent<IngredientUI>().Target = transform;
+            madeUI.GetComponent<IngredientUI>().target = transform;
         }
         else if (containIngredients.Count == 2) //접시에 합쳐진게 2개면
         {

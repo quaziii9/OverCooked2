@@ -69,6 +69,7 @@ public class PlayerInteractController : MonoBehaviour
     public void OnCookOrThrow(InputValue inputValue)
     {
         Debug.Log("OnCookOrThrow");
+        Debug.Log(interactObject.transform.parent.name);
         if (checkInteractObject())
         {
             if(ShouldStartCutting())
@@ -88,6 +89,7 @@ public class PlayerInteractController : MonoBehaviour
     public void MobileCookOrThrow()
     {
         Debug.Log("MobileCookOrThrow");
+        Debug.Log(interactObject);
         if (checkInteractObject())
         {
             if (ShouldStartCutting())
@@ -347,7 +349,6 @@ public class PlayerInteractController : MonoBehaviour
     // CounterTop, Board
     private void HandleCounterTopOrBoardInteraction()
     {
-        
         if (canActive && isHolding && !objectHighlight.onSomething)
         {
             // 내가 뭘 들고있고, 테이블이나 찹핑테이블 위에 없을떄
@@ -676,7 +677,12 @@ public class PlayerInteractController : MonoBehaviour
             {
                 placeTransform = interactObject.transform.parent.GetChild(1).localPosition + new Vector3(0.10746f, 0.00500000005f, 0.0235699993f);
                 Debug.Log(interactObject.transform.parent.GetChild(1).name);
-            } 
+            }
+            else if (interactObject.transform.parent.CompareTag("MineBoard"))
+            {
+                Debug.Log("MineBoard");
+                placeTransform = interactObject.transform.parent.GetChild(1).localPosition + new Vector3(0f, 0.0055f, 0f);
+            }
             else
             {
                 placeTransform =interactObject.transform.parent.GetChild(1).localPosition;

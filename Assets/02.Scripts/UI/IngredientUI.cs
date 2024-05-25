@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class IngredientUI : MonoBehaviour
 {
-    public Transform Target;
+    public Transform target;
     [SerializeField] private new Vector3 pos = Vector3.zero;
     private void Update()
     {
-        if (Target != null)
+        if (target != null)
         {
-            transform.position = Camera.main.WorldToScreenPoint(Target.position + pos);
+            transform.position = Camera.main.WorldToScreenPoint(target.position + pos);
         }
         else
         {
