@@ -10,6 +10,11 @@ public class CustomReadyButtonScript : MonoBehaviour
     public Button player3Btn;
     public Button player4Btn;
 
+    public ScrollSnapButton scrollSnapBtn1;
+    public ScrollSnapButton scrollSnapBtn2;
+    public ScrollSnapButton scrollSnapBtn3;
+    public ScrollSnapButton scrollSnapBtn4;
+
     void Start()
     {
         readyButton = GetComponent<Button>();
@@ -80,5 +85,21 @@ public class CustomReadyButtonScript : MonoBehaviour
         player2Btn.interactable = true;
         player3Btn.interactable = true;
         player4Btn.interactable = true;
+    }
+
+
+    public void InitializingBattleRoom()
+    {
+        // 버튼 체크박스이미지 해제
+        transform.GetChild(0).gameObject.SetActive(false);
+        // 클릭 가능 하게
+        EnableButtons();
+        // 선택화면 오브젝트를 키고
+        // 랜덤맵을 끄고
+        // 버튼을 비활성화 시키고
+        scrollSnapBtn1.SnapMapCancle();
+        scrollSnapBtn2.SnapMapCancle();
+        scrollSnapBtn3.SnapMapCancle();
+        scrollSnapBtn4.SnapMapCancle();
     }
 }

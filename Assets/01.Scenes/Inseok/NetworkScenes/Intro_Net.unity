@@ -3628,6 +3628,7 @@ Transform:
   - {fileID: 1159704213}
   - {fileID: 414474818}
   - {fileID: 1962227902}
+  - {fileID: 1625868488}
   m_Father: {fileID: 665619999}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3665,11 +3666,34 @@ MonoBehaviour:
   - {fileID: 1257751856}
   - {fileID: 294257178}
   - {fileID: 2010389472}
+  mobileBGMSquares:
+  - {fileID: 1243735591}
+  - {fileID: 41944493}
+  - {fileID: 1664627380}
+  - {fileID: 22037825}
+  - {fileID: 2009827583}
+  - {fileID: 1376137552}
+  - {fileID: 1118263694}
+  - {fileID: 1966695046}
+  - {fileID: 1432722948}
+  - {fileID: 12610987}
+  mobileEffectSquares:
+  - {fileID: 1911059307}
+  - {fileID: 299153001}
+  - {fileID: 521753117}
+  - {fileID: 20214422}
+  - {fileID: 308202777}
+  - {fileID: 1507738911}
+  - {fileID: 1763641577}
+  - {fileID: 1257751856}
+  - {fileID: 294257178}
+  - {fileID: 2010389472}
   bgmAudioSource: {fileID: 4103381849058424483}
   bgmChangeAudioSource: {fileID: 1159704214}
+  effectAudioSource: {fileID: 4103381848875900730}
   stageBackGroundAudioSource: {fileID: 414474819}
   stageEffectAudioSource: {fileID: 1962227903}
-  effectAudioSource: {fileID: 4103381848875900730}
+  vanAudioSource: {fileID: 1625868487}
   volumeBGM: 0.2
   volumeEffect: 0.2
   settingBGM: 0.2
@@ -3695,8 +3719,8 @@ MonoBehaviour:
   screenOutUI: {fileID: 8300000, guid: 90035643d5caa5e4d8182ebd36270897, type: 3}
   flagOn: {fileID: 8300000, guid: da51841e03ae39348bd6cc1cb2b578f7, type: 3}
   flagOff: {fileID: 8300000, guid: 526311fa8b3f2ee4fb9f0f02e96175a1, type: 3}
-  RecipeUIPopIn: {fileID: 8300000, guid: 1f4eb0c24560ed148a4447f9c535b441, type: 3}
-  RecipeUIPopOut: {fileID: 8300000, guid: 314a50e279482d5429d64d769c0718bd, type: 3}
+  recipeUIPopIn: {fileID: 0}
+  recipeUIPopOut: {fileID: 0}
   isSingle: 1
   alreadyPlayed: 0
   itemPickUp: {fileID: 8300000, guid: a99aedf994bd5d74bbd1c2d722f27aea, type: 3}
@@ -3711,8 +3735,9 @@ MonoBehaviour:
   no: {fileID: 8300000, guid: 1652df6488568f5469ac3388ac9479ba, type: 3}
   cut: {fileID: 8300000, guid: e135fc838c1829441b428a36e72010ff, type: 3}
   boing: {fileID: 0}
-  bus: {fileID: 8300000, guid: 969af5d190fe1254f9b6ed7a6d999f95, type: 3}
-  busBooster: {fileID: 8300000, guid: ee3c29389fb093e419688da23aefac6d, type: 3}
+  van: {fileID: 8300000, guid: 969af5d190fe1254f9b6ed7a6d999f95, type: 3}
+  vanBooster: {fileID: 8300000, guid: ee3c29389fb093e419688da23aefac6d, type: 3}
+  vanShutter: {fileID: 8300000, guid: 8bb13799f0bc82d46954003d9d98fca6, type: 3}
   musicGroup: {fileID: 0}
   effectGroup: {fileID: 0}
 --- !u!1 &161262390
@@ -12515,6 +12540,7 @@ MonoBehaviour:
   loadingUI: {fileID: 1086745440}
   spaceToStart: {fileID: 1502624230}
   optionSettingUI: {fileID: 91428156}
+  escButton: {fileID: 0}
   stopUI: {fileID: 688461349}
   underBarCancle: {fileID: 7308605951645431938}
   underBarStop: {fileID: 5719555851397800729}
@@ -12523,6 +12549,7 @@ MonoBehaviour:
   battleRoomUI: {fileID: 1585386042}
   battleUI: {fileID: 1282710794}
   battleResultUI: {fileID: 1565352213}
+  battleUIReadyBtn: {fileID: 1399087142}
   exitLobbyUI: {fileID: 921309099}
   loadingFoodArr:
   - {fileID: 906362292}
@@ -12549,6 +12576,7 @@ MonoBehaviour:
   busMapEscUI: {fileID: 1990564518}
   busTopUI: {fileID: 1178815807}
   stageMapEscUI: {fileID: 1719696563}
+  stageEscMapName: []
   recipeUI: {fileID: 801894127}
   recipeArr:
   - {fileID: 2140306841}
@@ -17471,7 +17499,7 @@ PrefabInstance:
     - target: {fileID: 2922589969209275286, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 290
+      value: 230
       objectReference: {fileID: 0}
     - target: {fileID: 2922589969209275286, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -26663,12 +26691,13 @@ MonoBehaviour:
   roomPlayerPrefab: {fileID: 1761570048194521690, guid: 0507aa0f762023443b62da4b14d1d786,
     type: 3}
   RoomScene: Assets/01.Scenes/Inseok/NetworkScenes/BattleLobby_Net.unity
-  GameplayScene: Assets/01.Scenes/Eunjoo/TestStage.unity
+  GameplayScene: Assets/01.Scenes/Inseok/NetworkScenes/Mine_Net.unity
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0
   loadingBar: {fileID: 1463878916}
   LoadingKeyUI: {fileID: 511028191}
+  BattleUI: {fileID: 1282710794}
   canvasInPlayers:
   - {fileID: 816310526}
   - {fileID: 747923522}
@@ -27952,7 +27981,7 @@ PrefabInstance:
     - target: {fileID: 2922589969209275286, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2922589969209275286, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -28223,6 +28252,10 @@ MonoBehaviour:
   player2Btn: {fileID: 1151600794}
   player3Btn: {fileID: 1860074471}
   player4Btn: {fileID: 1680337982}
+  scrollSnapBtn1: {fileID: 125295142}
+  scrollSnapBtn2: {fileID: 1151600793}
+  scrollSnapBtn3: {fileID: 1860074470}
+  scrollSnapBtn4: {fileID: 1680337981}
 --- !u!1 &1423405671
 GameObject:
   m_ObjectHideFlags: 0
@@ -33471,6 +33504,134 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622652125}
   m_CullTransparentMesh: 1
+--- !u!1 &1625868486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1625868488}
+  - component: {fileID: 1625868487}
+  m_Layer: 0
+  m_Name: VanSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1625868487
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625868486}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 0
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1625868488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625868486}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154817029}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1631668720
 GameObject:
   m_ObjectHideFlags: 0
@@ -34888,6 +35049,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ScrollSnapButton, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -42774,6 +42947,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UIButton (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922589969209275285, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2922589969209275286, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
