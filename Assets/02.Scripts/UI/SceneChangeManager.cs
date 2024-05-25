@@ -220,7 +220,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 break;
             case "Mine":
                 //UIManager.Instance.sceneType = SceneType.BattleMap;
-                UIManager.Instance.RecipeUIOn(1);
+                //UIManager.Instance.RecipeUIOn(1);
                 UIManager.Instance.EnterStageMaskIn();
                 #if UNITY_ANDROID
                 UIManager.Instance.escButton.SetActive(true);

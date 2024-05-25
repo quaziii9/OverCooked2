@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using EnumTypes;
 using EventLibrary;
+using System.Collections.Generic;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -85,6 +86,46 @@ public class UIManager : Singleton<UIManager>
     public SceneType sceneType;
     public MapType mapType = MapType.None;
 
+    private Stack<GameObject> popupStack = new Stack<GameObject>();
+
+    private void ToggleUI(GameObject uiElement, bool state)
+    {
+        uiElement.SetActive(state);
+        if (state)
+        {
+            popupStack.Push(uiElement);
+        }
+        else
+        {
+            RemoveFromStack(uiElement);
+        }
+    }
+
+    private void RemoveFromStack(GameObject uiElement)
+    {
+        if (popupStack.Contains(uiElement))
+        {
+            var tempStack = new Stack<GameObject>();
+            while (popupStack.Count > 0)
+            {
+                var popup = popupStack.Pop();
+                if (popup != uiElement)
+                {
+                    tempStack.Push(popup);
+                }
+            }
+            while (tempStack.Count > 0)
+            {
+                popupStack.Push(tempStack.Pop());
+            }
+        }
+    }
+
+
+
+
+
+
     public void JsonUILoad()
     {
         settingWindowScreen = LoadData.Instance.optionData.saveWindowMode;
@@ -109,7 +150,9 @@ public class UIManager : Singleton<UIManager>
         //Debug.Log(mapType);
         //BusMapEscUI();
 
-        EscUI();
+        HandleEscapeInput();
+
+        //EscUI();
     }
 
 
@@ -118,79 +161,57 @@ public class UIManager : Singleton<UIManager>
     // 옵션창 On
     public void SettingOn()
     {
-        optionSettingUI.SetActive(true);
+        ToggleUI(optionSettingUI, true);
     }
 
     // 옵션창 Off
     public void SeetingOff()
     {
-        optionSettingUI.SetActive(false);
+        ToggleUI(optionSettingUI, false);
     }
 
     // 그만두기창 On
     public void StopUIOn()
     {
-        //escUiOn = true;
-        stopUI.SetActive(true);
+        ToggleUI(stopUI, true);
     }
 
     // 그만두기창 Off
     public void StopUIOff()
     {
-        //escUiOn = false;
-        stopUI.SetActive(false);
-
-        // BusMapEscUI도 같이 종료
-        //if (SceneManager.GetActiveScene().name == "WorldMap")
-        //{
-        worldMapEscUI.SetActive(false);
-        //}
-
-        // stageMapEscUI도 같이 종료
-        stageMapEscUI.SetActive(false);
-    }
-
-    public void BattleRoomUION()
-    {
-        battleRoomUI.SetActive(true);
-    }
-
-    public void BattleRoomUIOFF()
-    {
-        battleRoomUI.SetActive(false);
+        ToggleUI(stopUI, false);
+        ToggleUI(worldMapEscUI, false);
+        ToggleUI(stageMapEscUI, false);
     }
 
     public void ExitLobbyUIOn()
     {
-        //escUiOn = true;
-        exitLobbyUI.SetActive(true);
+        ToggleUI(exitLobbyUI, true);
     }
 
     public void ExitLobbyUIOff() //CancleExitLobby
     {
-        //escUiOn = false;
-        exitLobbyUI.SetActive(false);
+        ToggleUI(exitLobbyUI, false);
+    }
+
+    public void StageMapEscUION()
+    {
+        ToggleUI(stageMapEscUI, true);
     }
 
     public void StageMapEscUIOff() // StageEscUICancle
     {
-        stageMapEscUI.SetActive(false);
+        ToggleUI(stageMapEscUI, false);
     }
 
-    public void EscUIStopOn()
+    public void worldMapEscUIOn()
     {
-        stopUI.SetActive(true);
+        ToggleUI(worldMapEscUI, true);
     }
 
-    public void EscUIStopOff()
+    public void worldMapEscUIOff() //BusMapEscUICancle
     {
-        stopUI.SetActive(false);
-    }
-
-    public void worldMapEscUICancle() //BusMapEscUICancle
-    {
-        worldMapEscUI.SetActive(false);
-        //escUiOn = false;
+        ToggleUI(worldMapEscUI, false);
     }
 
     #endregion
@@ -288,6 +309,18 @@ public class UIManager : Singleton<UIManager>
     }
 
     #endregion
+
+    public void BattleRoomUION()
+    {
+        ToggleUI(battleRoomUI, true);
+        //battleRoomUI.SetActive(true);
+    }
+
+    public void BattleRoomUIOFF()
+    {
+        ToggleUI(battleRoomUI, false);
+        //battleRoomUI.SetActive(false);
+    }
 
 
     #region Mask InOut Tool
@@ -443,8 +476,8 @@ public class UIManager : Singleton<UIManager>
     {
         buttonUI.SetActive(false);
         battleRoomUI.SetActive(false);
-        stopUI.SetActive(false);
-        stageMapEscUI.SetActive(false);
+        StopUIOff();
+        StageMapEscUIOff();
         escButton.SetActive(false);
         loadingKeyUI.SetActive(true);
         RecipeUIOff();
@@ -488,9 +521,9 @@ public class UIManager : Singleton<UIManager>
         VanSingleton.Instance.van.SetActive(true);
         busTopUI.SetActive(false);
         buttonUI.SetActive(true);
-        exitLobbyUI.SetActive(false);
         battleUI.SetActive(false);
         shutterCamera.Priority = 9;
+        ExitLobbyUIOff();
         MaskInUI(pineappleMask, "EnterIntroMaskOut");
     }
 
@@ -582,6 +615,7 @@ public class UIManager : Singleton<UIManager>
 
     public void EnterStageMaskIn()
     {
+        RecipeUIOn(1);
         MaskInUI(broccoliMask, "EnterStageMaskOut");
     }
 
@@ -595,44 +629,85 @@ public class UIManager : Singleton<UIManager>
 
     #region EscUI
 
-    public void EscUI()
+    private void HandleEscapeInput()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //if (escUiOn == false)
-            //{
-            //escUiOn = true;
-            SoundManager.Instance.ButtonTick();
-            switch (sceneType)
+            if (popupStack.Count > 0)
             {
-                case SceneType.WorldMap:
-                    worldMapEscUI.SetActive(true);                 
-                    break;
-                case SceneType.BattleMap:
-                case SceneType.StageMap:
-                    stageMapEscUI.SetActive(true);
-                    break;
-                case SceneType.Intro:
-                    StopUIOn();
-                    break;
-                case SceneType.BattleLobby:
-                    ExitLobbyUIOn();
-                    break;
+                var topPopup = popupStack.Pop();
+                topPopup.SetActive(false);
+                SoundManager.Instance.ButtonTick();
+            }
+            else
+            {
+                ShowDefaultUIForScene();
             }
         }
     }
+
+    private void ShowDefaultUIForScene()
+    {
+        SoundManager.Instance.ButtonTick();
+        switch (sceneType)
+        {
+            case SceneType.WorldMap:
+                ToggleUI(worldMapEscUI, true);
+                break;
+            case SceneType.BattleMap:
+            case SceneType.StageMap:
+                ToggleUI(stageMapEscUI, true);
+                break;
+            case SceneType.Intro:
+                ToggleUI(stopUI, true);
+                break;
+            case SceneType.BattleLobby:
+                ToggleUI(exitLobbyUI, true);
+                break;
+        }
+    }
+
+
+
+
+    //public void EscUI()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Escape))
+    //    {
+    //        //if (escUiOn == false)
+    //        //{
+    //        //escUiOn = true;
+    //        SoundManager.Instance.ButtonTick();
+    //        switch (sceneType)
+    //        {
+    //            case SceneType.WorldMap:
+    //                worldMapEscUI.SetActive(true);                 
+    //                break;
+    //            case SceneType.BattleMap:
+    //            case SceneType.StageMap:
+    //                stageMapEscUI.SetActive(true);
+    //                break;
+    //            case SceneType.Intro:
+    //                StopUIOn();
+    //                break;
+    //            case SceneType.BattleLobby:
+    //                ExitLobbyUIOn();
+    //                break;
+    //        }
+    //    }
+    //}
 
     public void EscUIButton()
     {
         SoundManager.Instance.ButtonTick();
         if (sceneType == SceneType.WorldMap)
         {
-            worldMapEscUI.SetActive(true); 
+            worldMapEscUIOn();
         }
 
         if (sceneType == SceneType.BattleMap || sceneType == SceneType.StageMap)
         {
-            stageMapEscUI.SetActive(true);
+            StageMapEscUION();
         }
     }
 
@@ -647,8 +722,8 @@ public class UIManager : Singleton<UIManager>
         }
         if (sceneType == SceneType.WorldMap)
         {
-            EscUIStopOff();
-            worldMapEscUICancle();
+            StopUIOff();
+            worldMapEscUIOff();
             EnterIntroLoadingMaskIn();
         }
         else if(sceneType == SceneType.BattleLobby)
@@ -661,7 +736,7 @@ public class UIManager : Singleton<UIManager>
         }
         else if (sceneType == SceneType.StageMap)
         {
-            EscUIStopOff();
+            StopUIOff();
             StageMapEscUIOff();
             EnterLoadingKeyUI();
             RecipeUIOff();
