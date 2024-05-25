@@ -25,8 +25,10 @@ public class PlayerMasterController2 : MonoBehaviour
 
     private void Awake()
     {
-        currentPlayer = playerList[1];
-        SwitchPlayerComponent();
+        // Input System Asset을 공유하는 오브젝트가 있을 시 나중에 추가된 오브젝트가 입력을 받음
+        // Player2가 Player1보다 나중에 추가되었기에 게임 시작 후 Player1이 움직이지 않는 버그가 존재하여 하단의 과정이 필요
+        currentPlayer = playerList[0];
+        currentPlayer.GetComponent<PlayerInput>().enabled = true;
 
         if (switchButton != null)
         {

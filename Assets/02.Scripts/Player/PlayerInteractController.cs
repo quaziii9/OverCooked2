@@ -647,7 +647,7 @@ public class PlayerInteractController : MonoBehaviour
                     // SetPositionbetweenPlayerandObject(obj);
                     anim.SetBool("isHolding", true);
                     isHolding = true;
-                    obj.transform.GetChild(0).GetComponent<BoxCollider>().size *= 2f;
+                    if (obj.CompareTag("Pan")) obj.transform.GetChild(0).GetComponent<BoxCollider>().size *= 2f;
                 }
             }
             else
@@ -706,8 +706,6 @@ public class PlayerInteractController : MonoBehaviour
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform, Quaternion.LookRotation(playerDirection).normalized);
                 }
-                // 콜라이더 감소
-                handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
             }
             else if(handleThing.CompareTag("Pan"))
             {

@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using UnityEngine;
 
@@ -29,7 +30,10 @@ public class DeathZone : MonoBehaviour
 
     private IEnumerator DeactivateAndRespawn(Ingredient ingredient)
     {
-        ingredient.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
+        if (ingredient.CompareTag("Pan"))
+        {
+            ingredient.transform.GetChild(0).GetComponent<BoxCollider>().size = new Vector3(0.0087f, 0.0029f, 0.015f);
+        }
         ingredient.gameObject.SetActive(false);  // 재료 비활성화
         yield return new WaitForSeconds(3.0f);
 
