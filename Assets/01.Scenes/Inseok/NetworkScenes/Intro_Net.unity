@@ -17499,7 +17499,7 @@ PrefabInstance:
     - target: {fileID: 2922589969209275286, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 290
+      value: 230
       objectReference: {fileID: 0}
     - target: {fileID: 2922589969209275286, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -27981,7 +27981,7 @@ PrefabInstance:
     - target: {fileID: 2922589969209275286, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2922589969209275286, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}
@@ -42947,6 +42947,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UIButton (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922589969209275285, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2922589969209275286, guid: 64b3fee616c164642b17f2676996f1c3,
         type: 3}

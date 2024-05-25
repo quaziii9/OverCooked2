@@ -700,6 +700,7 @@ public class UIManager : Singleton<UIManager>
 
     public void StageEscUICancle()
     {
+        Debug.Log("취소");
         stageMapEscUI.SetActive(false);
     }
 
