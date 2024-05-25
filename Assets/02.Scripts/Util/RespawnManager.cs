@@ -11,8 +11,6 @@ public class RespawnManager : Singleton<RespawnManager>
 
     private void Start()
     {
-        InitializePlayerSpawnPositions();
-
         if (countdown.Length != playerSpawnPositions.Length)
         {
             Debug.LogError("CountdownTexts와 PlayerSpawnPositions 배열의 크기가 일치해야 합니다.");
@@ -23,29 +21,6 @@ public class RespawnManager : Singleton<RespawnManager>
         foreach (var obj in countdown)
         {
             obj.gameObject.SetActive(false);
-        }
-    }
-
-    private void OnEnable()
-    {
-        InitializePlayerSpawnPositions();
-    }
-
-    private void InitializePlayerSpawnPositions()
-    {
-        playerSpawnPositions = new Transform[4];
-
-        for (int i = 0; i < playerSpawnPositions.Length; i++)
-        {
-            GameObject player = GameObject.Find("Player" + (i + 1));
-            if (player != null)
-            {
-                playerSpawnPositions[i] = player.transform;
-            }
-            else
-            {
-                Debug.LogWarning($"Player{i + 1}을(를) 찾을 수 없습니다.");
-            }
         }
     }
 
@@ -115,12 +90,6 @@ public class RespawnManager : Singleton<RespawnManager>
         player.transform.position = spawnPosition.position;
 
         // 연기가 모두 나오고 스폰해야 하기에 1초 딜레이
-        StartCoroutine(ActivatePlayerWithDelay(player));
-    }
-
-    private IEnumerator ActivatePlayerWithDelay(GameObject player)
-    {
-        yield return new WaitForSeconds(1.0f);
         player.transform.GetChild(0).gameObject.SetActive(true);
     }
 }
