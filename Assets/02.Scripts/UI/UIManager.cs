@@ -397,7 +397,7 @@ public class UIManager : Singleton<UIManager>
 
             switch (goTo)
             {
-                case "GoToBusMap":
+                case "GoToWorldMap":
                     EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.WorldMapOpen);
                     break;
                 case "GoToIntroMap":
@@ -527,7 +527,7 @@ public class UIManager : Singleton<UIManager>
     public void LoadingKeyUIOn()
     {
         loadingKeyUI.SetActive(true);
-        MaskOutUI(broccoliMask, pineappleMask, "GoToBusMap");
+        MaskOutUI(broccoliMask, pineappleMask, "GoToWorldMap");
         //MaskOutUI(broccoliMask, pineappleMask, "");
     }
 

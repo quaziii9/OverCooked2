@@ -26,7 +26,7 @@ public class SoundManager : Singleton<SoundManager>
     [Header("BGM")]
     public AudioClip introBGM;
     public AudioClip battleBGM;
-    public AudioClip busMapBGM;
+    public AudioClip worldMapBGM;
     public AudioClip stageBGM;
     public AudioClip sushiBGM;
     public AudioClip mineBGM;
@@ -262,8 +262,8 @@ public class SoundManager : Singleton<SoundManager>
             case "Battle":
                 BattleBGM(audioSource);
                     break;
-            case "BusMap":
-                BusMapBGM(audioSource);
+            case "WorldMap":
+                WorldMap(audioSource);
                 break;
             case "StageMap":
                 StageMapBGM(audioSource);
@@ -291,9 +291,9 @@ public class SoundManager : Singleton<SoundManager>
         audioSource.Play();
     }
 
-    void BusMapBGM(AudioSource audioSource)
+    void WorldMap(AudioSource audioSource)
     {
-        audioSource.clip = busMapBGM;
+        audioSource.clip = worldMapBGM;
         audioSource.loop = true;
         audioSource.Play();
     }

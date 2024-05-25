@@ -13,7 +13,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     {
         // 씬 로드 완료 이벤트에 OnSceneLoaded 메서드를 등록
         SceneManager.sceneLoaded += OnSceneLoaded;
-        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.WorldMapOpen, ChangeToBusMap);
+        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.WorldMapOpen, ChangeToWorldMap);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.IntroMapOpen, ChangeToIntroMap);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.BattleRoomOpen, ChangeToBattleLobby);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.TestStageMapOpen, ChangeToTestStage);
@@ -31,9 +31,9 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     }
 
     // 버스 맵으로 전환
-    public void ChangeToBusMap()
+    public void ChangeToWorldMap()
     {
-        ChangeScene("BusMap", "WorldMap", UIManager.Instance.loadingKeyBar);
+        ChangeScene("WorldMap", "NewWorldMap", UIManager.Instance.loadingKeyBar);
     }
 
     // 인트로 맵으로 전환
@@ -148,7 +148,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         Debug.Log($"씬 로드 완료: {scene.name}");
         switch (scene.name)
         {
-            case "WorldMap":
+            case "NewWorldMap":
                 //VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.EnterBusMapMaskIn();
                 UIManager.Instance.sceneType = SceneType.WorldMap;
