@@ -215,7 +215,7 @@ public class SceneChangeManager_Net : Singleton<SceneChangeManager_Net>
                 UIManager.Instance.EnterStageMaskIn();
                 break;
             case "Mine_Net":
-                UIManager.Instance.sceneType = SceneType.BattleMap;
+                UIManager.Instance.sceneType = SceneType.NetworkBattleMap;
                 UIManager.Instance.loadingKeyUI.SetActive(false);
                 UIManager.Instance.battleUI.SetActive(false);
                 //VanSingleton.Instance.van.SetActive(false);

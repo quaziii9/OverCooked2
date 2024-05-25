@@ -12573,9 +12573,10 @@ MonoBehaviour:
   - {fileID: 93886498}
   - {fileID: 1574952033}
   - {fileID: 602453736}
-  busMapEscUI: {fileID: 1990564518}
+  worldMapEscUI: {fileID: 0}
   busTopUI: {fileID: 1178815807}
   stageMapEscUI: {fileID: 1719696563}
+  ingameStageMapEscUI: {fileID: 0}
   stageEscMapName: []
   recipeUI: {fileID: 801894127}
   recipeArr:

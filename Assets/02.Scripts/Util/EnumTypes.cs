@@ -79,6 +79,8 @@ namespace EnumTypes
         WorldMap,
         BattleMap,
         StageMap,
+        // Canvas분기 처리를 위한 추가
+        NetworkBattleMap,
     }
 
     public enum MapType

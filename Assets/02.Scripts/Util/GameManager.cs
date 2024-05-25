@@ -139,16 +139,16 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         // 싱글플레이가 아닐 때 초기화 작업
-        if (!SoundManager.Instance.isSingle)
-        {
-            SoundManager.Instance.bgmAudioSource.volume = 0;
-            SoundManager.Instance.alreadyPlayed = false;
-            OppositeUI.SetActive(true);
-        }
-        else
-        {
-            if (OppositeUI != null) OppositeUI.SetActive(false);
-        }
+        //if (!SoundManager.Instance.isSingle)
+        //{
+        //    SoundManager.Instance.bgmAudioSource.volume = 0;
+        //    SoundManager.Instance.alreadyPlayed = false;
+        //    OppositeUI.SetActive(true);
+        //}
+        //else
+        //{
+        //    if (OppositeUI != null) OppositeUI.SetActive(false);
+        //}
 
         // 색상 및 시간 관련 변수 초기화
         duration = GameTime / 2;

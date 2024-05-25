@@ -2,6 +2,7 @@ using Mirror;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerDash_Net : NetworkBehaviour
 {
@@ -23,51 +24,80 @@ public class PlayerDash_Net : NetworkBehaviour
     public float dashCd;
     private float dashCdTimer;
 
+    [Header("Dash Curve")]
+    public AnimationCurve dashCurve; // AnimationCurve를 대시의 세기 변화에 사용
+
+    [Header("Player Master Controller")]
+    public PlayerMasterController2_Net masterController;
+
+    [Header("Mobile Button")]
+    public Button dashButton; // UI 버튼 참조
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        if (dashButton != null)
+        {
+            dashButton.onClick.AddListener(MobileDash); // 버튼 클릭 이벤트에 MobileDash 메서드 연결
+        }
     }
 
     private void Update()
     {
-        if (dashCdTimer > 0) dashCdTimer -= Time.deltaTime;
+        if (dashCdTimer > 0)
+            dashCdTimer -= Time.deltaTime;
     }
 
     public void OnDash(InputValue inputButton)
     {
-        if (inputButton.isPressed && !isDashing) Dash();
+        if (inputButton.isPressed && !isDashing && masterController.currentPlayer == this.gameObject)
+            Dash();
+    }
+
+    // UI 버튼을 클릭할 때 호출될 메서드
+    private void MobileDash()
+    {
+        // 현재 활성화 상태인지 확인해야할듯
+        if (!isDashing && dashCdTimer <= 0 && masterController.currentPlayer == this.gameObject)
+            Dash();
     }
 
     private void Dash()
     {
-        if (dashCdTimer > 0) return;
-        else dashCdTimer = dashCd;
+        if (dashCdTimer > 0 || isDashing)
+            return;
 
+        dashCdTimer = dashCd;
         isDashing = true;
 
-        Vector3 forceToApply = transform.forward * dashForce;
+        if (disableGravity)
+            rb.useGravity = false;
 
-        if (disableGravity) rb.useGravity = false;
+        if (resetVel)
+            rb.velocity = Vector3.zero;
 
-        StartCoroutine(ExecuteDash(forceToApply));
+        StartCoroutine(ExecuteDash());
     }
 
-    private IEnumerator ExecuteDash(Vector3 force)
+    private IEnumerator ExecuteDash()
     {
-        if (resetVel) rb.velocity = Vector3.zero;
-
         float elapsedTime = 0f;
+        PlayerPuff.Instance.BoostPuff(transform);
+
         while (elapsedTime < dashDuration)
         {
             float dashProgress = elapsedTime / dashDuration;
-            float currentForce = dashForce * Mathf.Lerp(0.5f, 1f, dashProgress);
-            rb.AddForce(force.normalized * currentForce, ForceMode.Impulse);
+            float curveValue = dashCurve.Evaluate(dashProgress); // AnimationCurve에서 값을 평가
+            Vector3 forceToApply = transform.forward * dashForce * curveValue;
+            rb.AddForce(forceToApply, ForceMode.Impulse);
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         isDashing = false;
 
-        if (disableGravity) rb.useGravity = true;
+        if (disableGravity)
+            rb.useGravity = true;
     }
 }
