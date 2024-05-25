@@ -25,6 +25,8 @@ TagManager:
   - WizardCounter
   - satge2
   - Cooker
+  - stage2
+  - Floor
   layers:
   - Default
   - TransparentFX

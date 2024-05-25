@@ -9,8 +9,8 @@ public class PlayerMoveController : MonoBehaviour
     [Header("Speed")]
     public float moveSpeed = 15f;
     public float turnSpeed = 10f;
-    public float fallMultiplier = 2.5f; // 떨어질 때 속도 증가
-    public float downforce = 1f;
+    public float fallMultiplier = 5f; // 떨어질 때 속도 증가
+    public float rayDistance = 1f;
 
     private Vector2 moveInput;
     private bool isDashing = false;
@@ -63,12 +63,31 @@ public class PlayerMoveController : MonoBehaviour
 
     private void CheckGroundStatus()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, downforce);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, rayDistance))
+        {
+            if (hit.collider.CompareTag("Floor"))
+            {
+                isGrounded = true;
+            }
+            else
+            {
+                isGrounded = false;
+            }
+        }
+        else
+        {
+            isGrounded = false;
+        }
+        // 레이 디버그용 드로우
+        Debug.DrawRay(transform.position, Vector3.down * rayDistance, Color.red);
     }
 
     private void CheckStairStatus()
     {
-        isOnStairs = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, downforce) && hit.collider.CompareTag("Stair");
+        isOnStairs = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, rayDistance) && hit.collider.CompareTag("Stair");
+        // 레이 디버그용 드로우
+        Debug.DrawRay(transform.position, Vector3.down * rayDistance, Color.blue);
     }
 
     private void MoveCharacter()
@@ -95,7 +114,6 @@ public class PlayerMoveController : MonoBehaviour
 
     private void HandleStairMovement()
     {
-
         if (isOnStairs)
         {
             if (moveInput != Vector2.zero)
@@ -115,6 +133,6 @@ public class PlayerMoveController : MonoBehaviour
 
     public void OnMove(InputValue inputValue)
     {
-        if(inputValue != null) moveInput = inputValue.Get<Vector2>();
+        if (inputValue != null) moveInput = inputValue.Get<Vector2>();
     }
 }

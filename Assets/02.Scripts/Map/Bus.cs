@@ -10,6 +10,7 @@ public class Bus : MonoBehaviour
     [Header("Speed")]
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float rotSpeed = 2f;
+    [SerializeField] private float boostPower = 200f;
 
     public bool isBoost = false;
 
@@ -82,10 +83,20 @@ public class Bus : MonoBehaviour
         }
     }
 
+    public void MobileBoost()
+    {
+        if (!isBoost)
+        {
+            BoostPuff();
+            isBoost = true;
+            StartCoroutine("BoostCoroutine");
+        }
+    } 
+
     IEnumerator BoostCoroutine()
     {
         Rigidbody rb= GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * 20,ForceMode.Impulse);
+        rb.AddForce(transform.forward * boostPower, ForceMode.Impulse);
 
         for (int i = 0; i < 4; i++)
         {
