@@ -160,15 +160,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 UIManager.Instance.sceneType = SceneType.Intro;
                 UIManager.Instance.escButton.SetActive(false);
                 if (!UIManager.Instance.first)
-                {
-                    VanSingleton.Instance.van.SetActive(true);
-                    UIManager.Instance.busTopUI.SetActive(false);
-                    UIManager.Instance.buttonUI.SetActive(true);
-                    UIManager.Instance.exitLobbyUI.SetActive(false);
-                    UIManager.Instance.battleUI.SetActive(false);
-                    UIManager.Instance.shutterCamera.Priority = 9;
-                    UIManager.Instance.EnterIntroMaskIn();
-                }
+                    UIManager.Instance.EnterIntroMaskIn();               
                 break;
             case "BattleLobby":
                 UIManager.Instance.sceneType = SceneType.BattleLobby;
