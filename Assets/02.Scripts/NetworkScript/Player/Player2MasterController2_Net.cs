@@ -1,9 +1,10 @@
+using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class Player2MasterController2_Net : MonoBehaviour
+public class Player2MasterController2_Net : NetworkBehaviour
 {
     [SerializeField]
     private List<GameObject> playerList;
@@ -39,7 +40,8 @@ public class Player2MasterController2_Net : MonoBehaviour
     #region OnSwitch
     public void OnSwitch(InputValue inputValue)
     {
-        SwitchPlayerComponent();
+        if(isLocalPlayer)
+            SwitchPlayerComponent();
     }
 
     public void MobileSwitch()
