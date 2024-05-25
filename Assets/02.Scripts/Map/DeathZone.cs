@@ -6,8 +6,6 @@ public class DeathZone : MonoBehaviour
     [SerializeField] private TeamReturnPositions redTeamPositions;
     [SerializeField] private TeamReturnPositions blueTeamPositions;
 
-    public RespawnManager respawnManager;
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -37,10 +35,10 @@ public class DeathZone : MonoBehaviour
 
     private IEnumerator DeactivateAndRespawnPlayer(GameObject player)
     {
-        yield return new WaitForSeconds(1.5f); // 1.5초 대기
+        yield return new WaitForSeconds(1f); // 1초 대기
 
         // RespawnManager를 통해 플레이어 리스폰
-        respawnManager.StartRespawnCountdown(player);
+        RespawnManager.Instance.StartRespawnCountdown(player);
     }
 
     private IEnumerator DeactivateAndRespawn(Ingredient ingredient)
