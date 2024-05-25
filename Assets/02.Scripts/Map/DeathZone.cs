@@ -18,16 +18,18 @@ public class DeathZone : MonoBehaviour
         }
         else if (other.CompareTag("Ingredient"))
         {
+            Debug.Log(other);
             Ingredient ingredient = other.GetComponent<Ingredient>();
             if (ingredient != null)
             {
-                Destroy(ingredient.gameObject);  // 요리 재료 파괴
+                Destroy(ingredient.transform.parent.parent.gameObject);  // 요리 재료 파괴
             }
         }
     }
 
     private IEnumerator DeactivateAndRespawn(Ingredient ingredient)
     {
+        ingredient.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
         ingredient.gameObject.SetActive(false);  // 재료 비활성화
         yield return new WaitForSeconds(3.0f);
 
@@ -37,9 +39,7 @@ public class DeathZone : MonoBehaviour
         {
             ingredient.GetComponent<Rigidbody>().velocity = Vector3.zero;
             ingredient.transform.rotation = Quaternion.Euler(0, 0 ,0);
-            // ingredient.transform.GetChild(0).GetComponent<BoxCollider>().size *= 1.02f;
             ingredient.transform.SetParent(returnPosition.parent);
-            // ingredient.transform.localPosition = returnPosition.localPosition + new Vector3(0.072f, 0.006f, 0.024f);
             
             // pan, pot는 위치 다름
             if(ingredient.CompareTag("Plate"))
@@ -55,7 +55,7 @@ public class DeathZone : MonoBehaviour
             ingredient.gameObject.SetActive(true);  // 재료 활성화
             ingredient.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;  // 위치 고정
             returnPosition.parent.transform.GetChild(0).GetComponent<ObjectHighlight>().onSomething = true;
-            Debug.Log($"{ingredient.gameObject.tag}가 {returnPosition.position} 위치로 반환되었습니다.");
+            Debug.Log($"{ingredient.gameObject.tag}가 반환되었습니다.");
         }
         else
         {

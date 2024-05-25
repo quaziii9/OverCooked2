@@ -202,7 +202,8 @@ public class Player2InteractController : MonoBehaviour
         MeshCollider ingreCollider = ingredient.GetComponent<MeshCollider>();
         ingreCollider.isTrigger = false;
         Rigidbody ingreRigid = ingredient.GetComponent<Rigidbody>();
-        ingreRigid.constraints = RigidbodyConstraints.None;
+        // ingreRigid.constraints = RigidbodyConstraints.None;
+        ingreRigid.constraints = RigidbodyConstraints.FreezeRotationY;
     }
 
     void ReleaseIngredient()
@@ -445,16 +446,16 @@ public class Player2InteractController : MonoBehaviour
         {
             // 떨구는 객체가 접시면.
             // Debug.Log("접시 내려");
-            handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
         }
         else if (handlingThing.CompareTag("Pot") || handlingThing.CompareTag("Pan"))
         {
             handlingThing.transform.GetComponent<BoxCollider>().isTrigger = false;
-            handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
         }
         else
         {
-            handlingThing.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            handlingThing.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
             handlingThing.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
         }
 
@@ -671,6 +672,11 @@ public class Player2InteractController : MonoBehaviour
             {
                 placeTransform = interactObject.transform.parent.GetChild(1).localPosition + new Vector3(0.072f, 0.006f, 0.024f);
             }
+            else if (interactObject.transform.parent.CompareTag("WizardCounter"))
+            {
+                placeTransform = interactObject.transform.parent.GetChild(1).localPosition + new Vector3(0.10746f, 0.00500000005f, 0.0235699993f);
+                Debug.Log(interactObject.transform.parent.GetChild(1).name);
+            }
             else
             {
                 placeTransform = interactObject.transform.parent.GetChild(1).localPosition;
@@ -700,6 +706,8 @@ public class Player2InteractController : MonoBehaviour
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform, Quaternion.LookRotation(playerDirection).normalized);
                 }
+                // 콜라이더 감소
+                handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
             }
             else if (handleThing.CompareTag("Pan"))
             {
@@ -708,13 +716,12 @@ public class Player2InteractController : MonoBehaviour
                     objectHighlight.onSomething = true;
                     isHolding = false;
                     handleThing.GetComponent<Ingredient>().isOnDesk = true;
-                    // 팬 콜라이더 수정
-                    handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
-
                     handleThing.GetComponent<Ingredient>().
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform, Quaternion.LookRotation(playerDirection).normalized);
                 }
+                // 콜라이더 감소
+                handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
             }
             else // 접시
             {
@@ -727,8 +734,10 @@ public class Player2InteractController : MonoBehaviour
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform);
                 }
-
             }
+
+            // 모든 물체의 rotation.y는 고정
+            // handleThing.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
             anim.SetBool("isHolding", isHolding);
         }
     }

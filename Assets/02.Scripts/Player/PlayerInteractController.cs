@@ -202,7 +202,8 @@ public class PlayerInteractController : MonoBehaviour
         MeshCollider ingreCollider = ingredient.GetComponent<MeshCollider>();
         ingreCollider.isTrigger = false;
         Rigidbody ingreRigid = ingredient.GetComponent<Rigidbody>();
-        ingreRigid.constraints = RigidbodyConstraints.None;
+        // ingreRigid.constraints = RigidbodyConstraints.None;
+        ingreRigid.constraints = RigidbodyConstraints.FreezeRotationY;
     }
 
     void ReleaseIngredient()
@@ -445,16 +446,16 @@ public class PlayerInteractController : MonoBehaviour
         {
             // 떨구는 객체가 접시면.
             // Debug.Log("접시 내려");
-            handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
         }
         else if (handlingThing.CompareTag("Pot") || handlingThing.CompareTag("Pan"))
         {
             handlingThing.transform.GetComponent<BoxCollider>().isTrigger = false;
-            handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            handlingThing.transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
         }
         else
         {
-            handlingThing.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            handlingThing.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
             handlingThing.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
         }
 
@@ -646,7 +647,7 @@ public class PlayerInteractController : MonoBehaviour
                     // SetPositionbetweenPlayerandObject(obj);
                     anim.SetBool("isHolding", true);
                     isHolding = true;
-                    obj.transform.GetChild(0).GetComponent<BoxCollider>().size *= 2f; 
+                    obj.transform.GetChild(0).GetComponent<BoxCollider>().size *= 2f;
                 }
             }
             else
@@ -701,13 +702,12 @@ public class PlayerInteractController : MonoBehaviour
                     objectHighlight.onSomething = true;
                     isHolding = false;
                     handleThing.GetComponent<Ingredient>().isOnDesk = true;
-
-                    // Pot 콜라이더 감소
-                    handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
                     handleThing.GetComponent<Ingredient>().
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform, Quaternion.LookRotation(playerDirection).normalized);
                 }
+                // 콜라이더 감소
+                handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
             }
             else if(handleThing.CompareTag("Pan"))
             {
@@ -716,13 +716,12 @@ public class PlayerInteractController : MonoBehaviour
                     objectHighlight.onSomething = true;
                     isHolding = false;
                     handleThing.GetComponent<Ingredient>().isOnDesk = true;
-
-                    // Pan 콜라이더 감소
-                    handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
                     handleThing.GetComponent<Ingredient>().
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform, Quaternion.LookRotation(playerDirection).normalized);
                 }
+                // 콜라이더 감소
+                handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
             }
             else // 접시
             {
@@ -735,8 +734,10 @@ public class PlayerInteractController : MonoBehaviour
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform);
                 }
-
             }
+
+            // 모든 물체의 rotation.y는 고정
+            // handleThing.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
             anim.SetBool("isHolding", isHolding);
         }
     }
