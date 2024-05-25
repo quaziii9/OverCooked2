@@ -26666,10 +26666,10 @@ MonoBehaviour:
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 4831087460944987363, guid: 06a3e268f55f1eb4b9a9644b2b0a2148,
+  playerPrefab: {fileID: 2052236760635965913, guid: ffa34e1673bc41343bf82ee4066c5301,
     type: 3}
   autoCreatePlayer: 1
-  playerSpawnMethod: 0
+  playerSpawnMethod: 1
   spawnPrefabs: []
   exceptionsDisconnect: 1
   snapshotSettings:

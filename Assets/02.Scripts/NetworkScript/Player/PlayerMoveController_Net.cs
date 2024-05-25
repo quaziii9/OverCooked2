@@ -8,10 +8,10 @@ public class PlayerMoveController_Net : NetworkBehaviour
     private Rigidbody rb;
 
     [Header("Speed")]
-    [SyncVar] public float moveSpeed = 15f;
-    [SyncVar] public float turnSpeed = 10f;
-    [SyncVar] public float fallMultiplier = 5f; // 떨어질 때 속도 증가
-    [SyncVar] public float rayDistance = 1f;
+    public float moveSpeed = 15f;
+    public float turnSpeed = 10f;
+    public float fallMultiplier = 5f; // 떨어질 때 속도 증가
+    public float rayDistance = 1f;
 
     [SyncVar] private Vector2 moveInput;
     private bool isDashing = false;
