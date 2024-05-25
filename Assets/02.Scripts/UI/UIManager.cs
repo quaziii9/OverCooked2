@@ -412,6 +412,9 @@ public class UIManager : Singleton<UIManager>
                 case "GoToMine":
                     EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.stageMineMapOpen);
                     break;
+                case "GoToWizard":
+                    EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.stageWizardMapOpen);
+                    break;
                 case "busTopUIOn":
                     busTopUI.SetActive(true);
                     break;
@@ -514,23 +517,6 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
-
-
-    //public void EnterLoadingKeyUITool()
-    //{
-    //    switch (mapType)
-    //    {
-    //        case MapType.Intro:
-
-
-
-
-    //    }
-    //}
-
-
-
-
     #region WorldMap Mask
     public void EnterLoadingKeyUI()
     {
@@ -588,7 +574,7 @@ public class UIManager : Singleton<UIManager>
                 break;
             case MapType.stageWizard:
                 SetStageImageText(4);
-                MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
+                MaskOutUI(pineappleMask, broccoliMask, "GoToWizard");
                 break;
             case MapType.stageMine:
                 SetStageImageText(5);
@@ -606,7 +592,6 @@ public class UIManager : Singleton<UIManager>
 
     public void EnterStageMaskIn()
     {
-        RecipeUIOn(1);
         MaskInUI(broccoliMask, "EnterStageMaskOut");
     }
 

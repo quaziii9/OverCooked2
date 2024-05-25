@@ -268,6 +268,9 @@ public class SoundManager : Singleton<SoundManager>
             case "StageMap":
                 StageMapBGM(audioSource);
                 break;
+            case "Wizard":
+                WizardBGM(audioSource);
+                break;
             case "Mine":
                 MineBGM(audioSource);
                 break;
@@ -302,9 +305,16 @@ public class SoundManager : Singleton<SoundManager>
         audioSource.Play();
     }
 
+    void WizardBGM(AudioSource audioSource)
+    {
+        audioSource.clip = wizardBGM;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+
     void MineBGM(AudioSource audioSource)
     {
-        audioSource.clip = stageBGM;
+        audioSource.clip = mineBGM;
         audioSource.loop = true;
         audioSource.Play();
     }
