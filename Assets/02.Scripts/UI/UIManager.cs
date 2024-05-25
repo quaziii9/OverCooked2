@@ -7,8 +7,6 @@ using UnityEngine.UI;
 using EnumTypes;
 using EventLibrary;
 
-
-
 public class UIManager : Singleton<UIManager>
 {
     [Header("Camera")]
@@ -44,6 +42,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject battleRoomUI;
     public GameObject battleUI;
     public GameObject battleResultUI;
+    public CustomReadyButtonScript battleUIReadyBtn;
 
     [Header("ExitLobbyUI")]
     public GameObject exitLobbyUI;
@@ -58,7 +57,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject[] mapText;
 
     [Header("BusMap")]
-    public GameObject busMapEscUI;
+    public GameObject worldMapEscUI;
     public GameObject busTopUI;
 
     [Header("StageMap")]
@@ -104,7 +103,6 @@ public class UIManager : Singleton<UIManager>
         fullScreenCheck.SetActive(windowScreen);
     }
 
-
     private void Update()
     {
         //Debug.Log(sceneType);
@@ -145,13 +143,12 @@ public class UIManager : Singleton<UIManager>
         // BusMapEscUI도 같이 종료
         //if (SceneManager.GetActiveScene().name == "WorldMap")
         //{
-        busMapEscUI.SetActive(false);
+        worldMapEscUI.SetActive(false);
         //}
 
         // stageMapEscUI도 같이 종료
         stageMapEscUI.SetActive(false);
     }
-
 
     public void BattleRoomUION()
     {
@@ -169,13 +166,13 @@ public class UIManager : Singleton<UIManager>
         exitLobbyUI.SetActive(true);
     }
 
-    public void CancleExitLobby()
+    public void ExitLobbyUIOff() //CancleExitLobby
     {
         //escUiOn = false;
         exitLobbyUI.SetActive(false);
     }
 
-    public void StageEscUICancle()
+    public void StageMapEscUIOff() // StageEscUICancle
     {
         stageMapEscUI.SetActive(false);
     }
@@ -190,9 +187,9 @@ public class UIManager : Singleton<UIManager>
         stopUI.SetActive(false);
     }
 
-    public void BusMapEscUICancle()
+    public void worldMapEscUICancle() //BusMapEscUICancle
     {
-        busMapEscUI.SetActive(false);
+        worldMapEscUI.SetActive(false);
         //escUiOn = false;
     }
 
@@ -435,25 +432,13 @@ public class UIManager : Singleton<UIManager>
 
     #region BattleUI Mask
 
-    public void BattleUIOn()
-    {
-        MaskInUI(broccoliMask, "BattleUISet");
-    }
-
-    public void BattleUISet()
-    {
-        loadingKeyBar.fillAmount = 0;
-        loadingKeyUI.SetActive(false);
-        battleUI.SetActive(true);
-        MaskOutUI(broccoliMask, pineappleMask, "");
-    }
-
     // 배틀로비 들어가기 전 LodingUI MaskIn
     public void EnterLoadingKeyUIBattle()
     {
         MaskInUI(broccoliMask, "LoadingKeyUIONBattle");
     }
 
+    // 배틀로비 들어가기전 LoadingUI MaskOut
     public void LoadingKeyUIONBattle()
     {
         buttonUI.SetActive(false);
@@ -466,9 +451,22 @@ public class UIManager : Singleton<UIManager>
         MaskOutUI(broccoliMask, pineappleMask, "GoToBattleRoom");
     }
 
+
+    // 배틀로비 MaskIn
+    public void BattleUIOn()
+    {
+        MaskInUI(broccoliMask, "BattleUISet");
+    }
+
+    // 배틀로비 MaskOut
+    public void BattleUISet()
+    {
+        loadingKeyBar.fillAmount = 0;
+        loadingKeyUI.SetActive(false);
+        battleUI.SetActive(true);
+        MaskOutUI(broccoliMask, pineappleMask, "");
+    }
     #endregion
-
-
 
     #region Intro Mask
     // 인트로 들어가기 전 LoadingUI MaskIn
@@ -507,7 +505,7 @@ public class UIManager : Singleton<UIManager>
     #endregion
 
 
-    #region LoadingKeyUI Mask
+    #region WorldMap Mask
     public void EnterLoadingKeyUI()
     {
         MaskInUI(broccoliMask, "LoadingKeyUIOn");
@@ -520,12 +518,23 @@ public class UIManager : Singleton<UIManager>
         //MaskOutUI(broccoliMask, pineappleMask, "");
     }
 
+    public void EnterBusMapMaskIn()
+    {
+        MaskInUI(pineappleMask, "EnterBusMapMaskOut");
+    }
 
-
+    public void EnterBusMapMaskOut()
+    {
+        loadingKeyBar.fillAmount = 0f;
+        loadingKeyUI.SetActive(false);
+        MaskOutUI(pineappleMask, broccoliMask, "busTopUIOn");
+    }
 
     #endregion
 
-    #region LoadingMapUI
+
+    #region EnterStage
+
     public void EnterLoadingMapUI()
     {
         MaskInUI(pineappleMask, "LoadingMapUIOn");
@@ -570,24 +579,7 @@ public class UIManager : Singleton<UIManager>
         mapText[arrNum].SetActive(true);
         stageEscMapName[arrNum].SetActive(true);
     }
-    #endregion
 
-    #region EnterBusMap
-    public void EnterBusMapMaskIn()
-    {
-        MaskInUI(pineappleMask, "EnterBusMapMaskOut");
-    }
-
-    public void EnterBusMapMaskOut()
-    {
-        loadingKeyBar.fillAmount = 0f;
-        loadingKeyUI.SetActive(false);
-        MaskOutUI(pineappleMask, broccoliMask, "busTopUIOn");
-    }
-    #endregion
-
-
-    #region EnterStage
     public void EnterStageMaskIn()
     {
         MaskInUI(broccoliMask, "EnterStageMaskOut");
@@ -614,7 +606,7 @@ public class UIManager : Singleton<UIManager>
             switch (sceneType)
             {
                 case SceneType.WorldMap:
-                    busMapEscUI.SetActive(true);                 
+                    worldMapEscUI.SetActive(true);                 
                     break;
                 case SceneType.BattleMap:
                 case SceneType.StageMap:
@@ -635,7 +627,7 @@ public class UIManager : Singleton<UIManager>
         SoundManager.Instance.ButtonTick();
         if (sceneType == SceneType.WorldMap)
         {
-            busMapEscUI.SetActive(true); 
+            worldMapEscUI.SetActive(true); 
         }
 
         if (sceneType == SceneType.BattleMap || sceneType == SceneType.StageMap)
@@ -656,7 +648,7 @@ public class UIManager : Singleton<UIManager>
         if (sceneType == SceneType.WorldMap)
         {
             EscUIStopOff();
-            BusMapEscUICancle();
+            worldMapEscUICancle();
             EnterIntroLoadingMaskIn();
         }
         else if(sceneType == SceneType.BattleLobby)
@@ -670,7 +662,7 @@ public class UIManager : Singleton<UIManager>
         else if (sceneType == SceneType.StageMap)
         {
             EscUIStopOff();
-            StageEscUICancle();
+            StageMapEscUIOff();
             EnterLoadingKeyUI();
             RecipeUIOff();
         }
@@ -683,6 +675,7 @@ public class UIManager : Singleton<UIManager>
             #endif
         }
     }
+
     #endregion
 
 
