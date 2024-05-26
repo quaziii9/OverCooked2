@@ -393,7 +393,7 @@ public class GameManager_Net : MonoBehaviour
         ReturnCounter.transform.GetChild(1).GetComponent<Return>().returnPlates.Add(newPlate);
         Vector3 spawnPos = ReturnCounter.transform.GetChild(1).GetComponent<Return>().SetPosition();
         newPlate.transform.localPosition = spawnPos;
-        newPlate.GetComponent<Plates>().Canvas = Canvas;
+        newPlate.GetComponent<Plates>().canvas = Canvas;
     }
 
     public void MakeOrder()

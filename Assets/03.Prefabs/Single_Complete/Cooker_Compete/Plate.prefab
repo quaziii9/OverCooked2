@@ -1073,12 +1073,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04eb50a5af3a6a04b974341ee419897e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  ingredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
+    type: 3}
+  madeUI: {fileID: 0}
   containIngredients: 
   limit: 4
-  Canvas: {fileID: 0}
-  IngredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
-    type: 3}
-  Icons:
+  icons:
   - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
   - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
   - {fileID: 21300000, guid: 395eaf5650b040947951375ff280d770, type: 3}
@@ -1093,7 +1094,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 403761297b603554f88e2ff404042b34, type: 3}
   - {fileID: 21300000, guid: 3a9a198e7fc58834d8f2935ac9620d34, type: 3}
   - {fileID: 21300000, guid: 2fdb47c4eb8a3cc44b51a24d673c1178, type: 3}
-  madeUI: {fileID: 0}
 --- !u!1 &1711844744824424222
 GameObject:
   m_ObjectHideFlags: 0

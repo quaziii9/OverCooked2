@@ -69,7 +69,6 @@ public class PlayerInteractController : MonoBehaviour
     public void OnCookOrThrow(InputValue inputValue)
     {
         Debug.Log("OnCookOrThrow");
-        Debug.Log(interactObject.transform.parent.name);
         if (checkInteractObject())
         {
             if(ShouldStartCutting())
