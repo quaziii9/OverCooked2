@@ -48,7 +48,8 @@ namespace EnumTypes
     public enum SoundEvents
     {
         FadeIn,
-        FadeOut
+        FadeOut,
+        MineBgmPlay,
     }
 
     public enum UIEvents

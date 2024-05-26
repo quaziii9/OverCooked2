@@ -1,6 +1,9 @@
+using EnumTypes;
+using EventLibrary;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : Singleton<SoundManager>
 {
@@ -14,6 +17,7 @@ public class SoundManager : Singleton<SoundManager>
     public AudioSource bgmChangeAudioSource;
     public AudioSource effectAudioSource;
     public AudioSource stageBackGroundAudioSource;
+    public AudioSource stageAudioSource;
     public AudioSource stageEffectAudioSource;
     public AudioSource vanAudioSource;
 
@@ -88,9 +92,10 @@ public class SoundManager : Singleton<SoundManager>
     {
         bgmAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
         bgmChangeAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
+        stageAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
+        stageBackGroundAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume * 0.1f;
 
         effectAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
-        stageBackGroundAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
         stageEffectAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
         vanAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume * 0.2f;
 
@@ -118,6 +123,11 @@ public class SoundManager : Singleton<SoundManager>
         //IntroBGM();
     }
 
+    private void OnEnable()
+    {
+        EventManager<SoundEvents>.StartListening(SoundEvents.MineBgmPlay, MineBgm);
+    }
+
     #region settingAuido
     public void SettingAudioVolume()
     {
@@ -135,6 +145,7 @@ public class SoundManager : Singleton<SoundManager>
         }
         bgmAudioSource.volume = volumeBGM;
         bgmChangeAudioSource.volume = volumeBGM;
+        stageAudioSource.volume = volumeBGM;
 
         UIManager.Instance.SetSoundSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetSoundSquares(volumeBGM, mobileBGMSquares);
@@ -149,6 +160,7 @@ public class SoundManager : Singleton<SoundManager>
         }
         bgmAudioSource.volume = volumeBGM;
         bgmChangeAudioSource.volume = volumeBGM;
+        stageAudioSource.volume = volumeBGM;
 
         UIManager.Instance.SetSoundSquares(volumeBGM, BGMSquares);
         UIManager.Instance.SetSoundSquares(volumeBGM, mobileBGMSquares);
@@ -184,6 +196,7 @@ public class SoundManager : Singleton<SoundManager>
         settingEffect = volumeEffect;
         bgmAudioSource.volume = volumeBGM;
         bgmChangeAudioSource.volume = volumeBGM;
+        stageAudioSource.volume = volumeBGM;
         SetAllEffectVolume();
 
         UIManager.Instance.SetSoundSquares(volumeBGM, BGMSquares);
@@ -198,6 +211,7 @@ public class SoundManager : Singleton<SoundManager>
         volumeEffect = settingEffect;
         bgmAudioSource.volume = volumeBGM;
         bgmChangeAudioSource.volume = volumeBGM;
+        stageAudioSource.volume = volumeBGM;
         SetAllEffectVolume();
 
         UIManager.Instance.SetSoundSquares(volumeBGM, BGMSquares);
@@ -209,7 +223,7 @@ public class SoundManager : Singleton<SoundManager>
     private void SetAllEffectVolume()
     {
         effectAudioSource.volume = volumeEffect;
-        stageBackGroundAudioSource.volume = volumeEffect;
+        stageBackGroundAudioSource.volume = volumeBGM * 0.1f;
         stageEffectAudioSource.volume = volumeEffect;
         vanAudioSource.volume = volumeEffect * 0.2f;
     }
@@ -243,7 +257,6 @@ public class SoundManager : Singleton<SoundManager>
         yield return new WaitForSeconds(waitTime);
         while (audioSource.volume > 0)
         {
-           // Debug.Log(audioSource.volume);
             audioSource.volume -= Time.deltaTime * 0.2f;
             yield return new WaitForSeconds(Time.deltaTime * 0.5f);
         }
@@ -272,7 +285,9 @@ public class SoundManager : Singleton<SoundManager>
                 WizardBGM(audioSource);
                 break;
             case "Mine":
-                MineBGM(audioSource);
+                MineBackGroundBGM();
+                
+                //MineBGM(audioSource);
                 break;
         }
     }
@@ -312,6 +327,20 @@ public class SoundManager : Singleton<SoundManager>
         audioSource.Play();
     }
 
+    void MineBackGroundBGM()
+    {
+        stageBackGroundAudioSource.clip = stageBackInNPC;
+        stageBackGroundAudioSource.loop = true;
+        stageBackGroundAudioSource.Play();
+    }
+
+    void MineBgm()
+    {
+        stageAudioSource.clip = mineBGM;
+        stageAudioSource.loop = true;
+        stageAudioSource.Play();
+    }
+    
     void MineBGM(AudioSource audioSource)
     {
         audioSource.clip = mineBGM;

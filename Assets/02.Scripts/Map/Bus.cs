@@ -1,4 +1,7 @@
+using EnumTypes;
+using EventLibrary;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Pool;
@@ -28,6 +31,7 @@ public class Bus : MonoBehaviour
     [Header("Mobile Button")]
     public Button dashButton;   // 모바일 대쉬 버튼
     public Button clickButton;   // 모바일 입장 버튼
+    public string enterFlagName;
 
     private void Awake() // 버스가 나올시 퍼프들의 풀을생성
     {
@@ -41,7 +45,7 @@ public class Bus : MonoBehaviour
 
         if (clickButton != null)
         {
-            clickButton.onClick.AddListener(MobileBoost); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
+            clickButton.onClick.AddListener(MobileEnter);
         }
     }
 
@@ -59,7 +63,20 @@ public class Bus : MonoBehaviour
         }
     }
 
-    public void OnMove(InputValue inputValue)
+    void OnTriggerStay(Collider other)
+    {    
+        if (other.CompareTag("Flag"))
+        {
+            enterFlagName = other.name;
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        enterFlagName = "";
+    }
+
+
+        public void OnMove(InputValue inputValue)
     {
         Debug.Log("OnMove");
         if (inputValue != null) moveInput = inputValue.Get<Vector2>();
@@ -108,9 +125,28 @@ public class Bus : MonoBehaviour
         }
     }
 
+
     public void MobileEnter()
     {
-        // UIManager의 Scene 변경 메서드 연결
+        Debug.Log(enterFlagName);
+        switch (enterFlagName)
+        {
+            case "Stage1 UI":
+                UIManager.Instance.sceneType = SceneType.BattleMap;
+                UIManager.Instance.mapType = MapType.stageMine;
+                UIManager.Instance.EnterLoadingMapUI();
+                break;
+            case "Stage2 UI":
+
+                break;
+            case "Stage3 UI":
+
+                break;
+
+            default:
+                Debug.Log(enterFlagName);
+                break;
+        }
     }
 
     IEnumerator BoostCoroutine()

@@ -22,9 +22,16 @@ public class InGameCanvas : MonoBehaviour
 
     public void SetCointUI()
     {
+        if (Application.platform == RuntimePlatform.Android)
+        {
             coinUI_MobileBattle.SetActive(true);
             coinUI_PCBattle.SetActive(false);
-        
+        }
+        else
+        {
+            coinUI_MobileBattle.SetActive(false);
+            coinUI_PCBattle.SetActive(true);
+        }
     }
     
     private void MobilePlayerControllerSet()

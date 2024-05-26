@@ -2,6 +2,7 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using EnumTypes;
 
 namespace EventLibrary
 {
@@ -105,6 +106,11 @@ namespace EventLibrary
                     Debug.LogError($"Error triggering event {eventName} with parameter {parameter}: {e.Message}");
                 }
             }
+        }
+
+        internal static void StartListening(SoundEvents mineBgmPlay, object v)
+        {
+            throw new NotImplementedException();
         }
 
         // 이벤트가 존재하지 않으면 생성하여 반환하는 메서드

@@ -49,7 +49,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     // 테스트 스테이지로 전환
     public void ChangeToTestStage()
     {
-        ChangeScene("StageMap", "TestStage", UIManager.Instance.loadingMapBar);
+        ChangeScene("Mine", "Mine", UIManager.Instance.loadingMapBar);
     }
     public void ChangeToStageTutorial()
     {
@@ -58,7 +58,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
 
     public void ChangeToStage1_4()
     {
-        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+        ChangeScene("StageMap", "TestStage", UIManager.Instance.loadingMapBar);
     }
 
 
@@ -165,7 +165,6 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                     UIManager.Instance.EnterIntroMaskIn();               
                 break;
             case "BattleLobby":
-                UIManager.Instance.sceneType = SceneType.BattleLobby;
                 //UIManager.Instance.buttonUI.SetActive(false);
                 UIManager.Instance.BattleUIOn();
                 //UIManager.Instance.escButton.SetActive(false);

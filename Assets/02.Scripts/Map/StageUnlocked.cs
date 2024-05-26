@@ -38,7 +38,7 @@ public class StageUnlocked : MonoBehaviour
         if (other.CompareTag("Bus"))
         {
             SetChildrenActive(true);
-            clickButton.SetActive(true);
+            
         }
     }
 
@@ -63,7 +63,7 @@ public class StageUnlocked : MonoBehaviour
                 if (childObject.name == "unlock")
                 {
                     childObject.SetActive(active);
-
+                    clickButton.SetActive(true);
                     CheckSpace();
                 }
             }
@@ -82,13 +82,13 @@ public class StageUnlocked : MonoBehaviour
 
     public void CheckSpace()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isLoading ==false)
-        {
-            isLoading = true;
-            UIManager.Instance.mapType = EnumTypes.MapType.Tuto;
-            UIManager.Instance.sceneType = EnumTypes.SceneType.StageMap;
-            UIManager.Instance.EnterLoadingMapUI();
-        }
+      if (Input.GetKeyDown(KeyCode.Space) && isLoading == false)
+      {
+          isLoading = true;
+          UIManager.Instance.mapType = EnumTypes.MapType.Tuto;
+          UIManager.Instance.sceneType = EnumTypes.SceneType.StageMap;
+          UIManager.Instance.EnterLoadingMapUI();
+      }  
     }
 
     void SetStar()

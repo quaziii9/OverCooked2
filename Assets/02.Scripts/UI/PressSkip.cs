@@ -1,3 +1,5 @@
+using EnumTypes;
+using EventLibrary;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +32,7 @@ public class PressSkip : MonoBehaviour
             {
                 UIManager.Instance.RecipeUIOff();
                 SoundManager.Instance.RecipeUIPopOut();
+                EventManager<SoundEvents>.TriggerEvent(SoundEvents.MineBgmPlay);
                 fillImage.fillAmount = 0;
                 // UI 비활성화 및 게임 시작
             }
@@ -60,6 +63,7 @@ public class PressSkip : MonoBehaviour
                 {
                     UIManager.Instance.RecipeUIOff();
                     SoundManager.Instance.RecipeUIPopOut();
+                    EventManager<SoundEvents>.TriggerEvent(SoundEvents.MineBgmPlay);
                     fillImage.fillAmount = 0;
                     // UI 비활성화 및 게임 시작
                 }
