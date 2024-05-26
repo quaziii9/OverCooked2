@@ -61,11 +61,76 @@ public class PlayerInteractController_Net : NetworkBehaviour
     //        cookButton.onClick.AddListener(MobileCookOrThrow); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
     //    }
     //}
-
+    public int coin_;
     private void Update()
     {
         if (isLocalPlayer)
+        {
+            int localCoin = GameManager_Net.instance.Coin;
+            if (localCoin != Player1Money)
+            {
+                CmdUpdatePlayerMoney(localCoin);
+            }
+        }
+
+        if (isLocalPlayer)
             SetHand();
+    }
+
+    [SyncVar(hook = nameof(OnPlayer1MoneyChanged))]
+    public int Player1Money; // 플레이어 1의 돈
+
+    [SyncVar(hook = nameof(OnPlayer2MoneyChanged))]
+    public int Player2Money; // 플레이어 2의 돈
+
+    [Command]
+    private void CmdUpdatePlayerMoney(int amount)
+    {
+        Player1Money = amount;
+
+        // 서버에서 각 클라이언트의 Player2Money를 업데이트합니다.
+        RpcUpdateSelfMoney(amount);
+        RpcUpdateOpponentMoney(amount);
+    }
+
+    [ClientRpc]
+    private void RpcUpdateSelfMoney(int amount)
+    {
+        if (isLocalPlayer)
+        {
+            GameManager_Net.instance.Coin = amount;
+        }
+    }
+
+    [ClientRpc]
+    private void RpcUpdateOpponentMoney(int amount)
+    {
+        if (!isLocalPlayer)
+        {
+            Player2Money = amount;
+            UpdateOpponentMoneyUI(Player2Money);
+        }
+    }
+
+    private void OnPlayer1MoneyChanged(int oldMoney, int newMoney)
+    {
+        if (isLocalPlayer)
+        {
+            GameManager_Net.instance.Coin = newMoney;
+        }
+    }
+
+    private void OnPlayer2MoneyChanged(int oldMoney, int newMoney)
+    {
+        if (!isLocalPlayer)
+        {
+            UpdateOpponentMoneyUI(newMoney);
+        }
+    }
+
+    private void UpdateOpponentMoneyUI(int amount)
+    {
+        GameManager_Net.instance.OppositeUI.transform.GetChild(0).GetComponent<Text>().text = amount.ToString();
     }
 
     #region OnSwitch
@@ -273,7 +338,6 @@ public class PlayerInteractController_Net : NetworkBehaviour
                     HandleBinInteraction();
                 break;
             case ObjectHighlight.ObjectType.Station:
-                if (isLocalPlayer)
                     HandleStationInteraction();
                 break;
             case ObjectHighlight.ObjectType.Oven:
@@ -1265,5 +1329,12 @@ public class PlayerInteractController_Net : NetworkBehaviour
         //}
     }
     #endregion
+
+    #region Coin
+
+
+
+    #endregion
+
 
 }

@@ -27,6 +27,8 @@ using TMPro;
 public class OverNetworkRoomManager : NetworkRoomManager
 {
 
+
+
     #region Game Object Spawn
 
     public GameObject GetCraftIngredient_RoomManager(Ingredient_Net.IngredientType it)
