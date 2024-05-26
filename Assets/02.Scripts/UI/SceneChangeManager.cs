@@ -58,19 +58,19 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
 
     public void ChangeToStage1_4()
     {
-        ChangeScene("StageMap", "TestStage", UIManager.Instance.loadingMapBar);
+        ChangeScene("Sushi", "TestStage", UIManager.Instance.loadingMapBar);
+        //ChangeScene("Sushi", "Stage1_4", UIManager.Instance.loadingMapBar);
     }
-
 
     public void ChangeToStage2_5()
     {
-        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+        ChangeScene("Mine", "Stage2_5", UIManager.Instance.loadingMapBar);
     }
 
 
     public void ChangeToStage3_3()
     {
-        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+        ChangeScene("Wizard", "Stage3_3", UIManager.Instance.loadingMapBar);
     }
 
 
@@ -187,7 +187,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 UIManager.Instance.escButton.SetActive(true);
 #endif
                 break;
-            case "stage1_4 scene_name":
+            case "Stage1_4":
                 UIManager.Instance.sceneType = SceneType.StageMap;
                 UIManager.Instance.RecipeUIOn(0);
                 UIManager.Instance.EnterStageMaskIn();
@@ -195,7 +195,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 UIManager.Instance.escButton.SetActive(true);
 #endif
                 break;
-            case "stage2_5 scene_name":
+            case "Stage2_5":
                 UIManager.Instance.sceneType = SceneType.StageMap;
                 UIManager.Instance.RecipeUIOn(1);
                 UIManager.Instance.EnterStageMaskIn();
@@ -203,7 +203,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 UIManager.Instance.escButton.SetActive(true);
 #endif
                 break;
-            case "stage3_3 scene_name":
+            case "Stage3_3":
                 UIManager.Instance.sceneType = SceneType.StageMap;
                 UIManager.Instance.RecipeUIOn(2);
                 UIManager.Instance.EnterStageMaskIn();

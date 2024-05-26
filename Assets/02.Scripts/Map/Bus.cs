@@ -76,7 +76,7 @@ public class Bus : MonoBehaviour
     }
 
 
-        public void OnMove(InputValue inputValue)
+    public void OnMove(InputValue inputValue)
     {
         Debug.Log("OnMove");
         if (inputValue != null) moveInput = inputValue.Get<Vector2>();
@@ -134,15 +134,20 @@ public class Bus : MonoBehaviour
             case "Stage1 UI":
                 UIManager.Instance.sceneType = SceneType.BattleMap;
                 UIManager.Instance.mapType = MapType.stageMine;
+                //UIManager.Instance.sceneType = SceneType.StageMap;
+                //UIManager.Instance.mapType = MapType.stage1_4;
                 UIManager.Instance.EnterLoadingMapUI();
                 break;
             case "Stage2 UI":
-
+                UIManager.Instance.sceneType = SceneType.StageMap;
+                UIManager.Instance.mapType = MapType.stage2_5;
+                UIManager.Instance.EnterLoadingMapUI();
                 break;
             case "Stage3 UI":
-
+                UIManager.Instance.sceneType = SceneType.StageMap;
+                UIManager.Instance.mapType = MapType.stage3_3;
+                UIManager.Instance.EnterLoadingMapUI();
                 break;
-
             default:
                 Debug.Log(enterFlagName);
                 break;
