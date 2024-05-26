@@ -13,107 +13,180 @@ public class DeathZone : MonoBehaviour
     public GameObject Plate;
     public GameObject Pan;
     public GameObject Pot;
+    public GameObject ingredientUI;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // 플레이어가 DeathZone에 들어오면 리스폰 절차를 시작
             StartCoroutine(DeactivateAndRespawnPlayer(other.gameObject));
         }
-
-        if (other.CompareTag("Plate") || other.CompareTag("Pan") || other.CompareTag("Pot"))
+        else if (other.CompareTag("Plate") || other.CompareTag("Pan") || other.CompareTag("Pot"))
         {
-            Ingredient ingredient = other.GetComponent<Ingredient>();
-            if (ingredient != null)
-            {
-                StartCoroutine(DeactivateAndRespawn(ingredient));
-            }
+            HandleKitchenware(other);
         }
         else if (other.CompareTag("Ingredient"))
         {
-            Ingredient ingredient = other.GetComponent<Ingredient>();
-            if (ingredient != null)
-            {
-                Destroy(ingredient.transform.parent.parent.gameObject);  // 요리 재료 파괴
-            }
+            HandleIngredient(other);
+        }
+    }
+
+    private void HandleKitchenware(Collider other)
+    {
+        Ingredient ingredient = other.GetComponent<Ingredient>();
+        if (ingredient != null)
+        {
+            StartCoroutine(DeactivateAndRespawn(ingredient, other.tag));
+        }
+    }
+
+    private void HandleIngredient(Collider other)
+    {
+        Ingredient ingredient = other.GetComponent<Ingredient>();
+        if (ingredient != null)
+        {
+            Destroy(ingredient.transform.parent.parent.gameObject);
         }
     }
 
     private IEnumerator DeactivateAndRespawnPlayer(GameObject player)
     {
-        yield return new WaitForSeconds(1f); // 1초 대기
-
-        // RespawnManager를 통해 플레이어 리스폰
+        yield return new WaitForSeconds(1f);
         respawnManager.StartRespawnCountdown(player);
     }
 
-    private IEnumerator DeactivateAndRespawn(Ingredient ingredient)
+    private IEnumerator DeactivateAndRespawn(Ingredient ingredient, string tag)
     {
-        if (ingredient.CompareTag("Pan"))
-        {
-            ingredient.transform.GetChild(0).GetComponent<BoxCollider>().size = new Vector3(0.0087f, 0.0029f, 0.015f);
-        }
-        ingredient.gameObject.SetActive(false);  // 재료 비활성화
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(2.0f);
 
-        Transform returnPosition = GetReturnPosition(ingredient.team, ingredient.gameObject.tag);
-
+        Transform returnPosition = GetReturnPosition(ingredient.team, tag);
         if (returnPosition != null)
         {
-            ingredient.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            ingredient.transform.rotation = Quaternion.Euler(0, 0, 0);
-            ingredient.transform.SetParent(returnPosition.parent);
-
-            // pan, pot는 위치 다름
-            if (ingredient.CompareTag("Plate"))
+            GameObject prefabToSpawn = GetPrefabToSpawn(tag);
+            if (prefabToSpawn != null)
             {
-                ingredient.transform.localPosition = new Vector3(0.072f, 0.006f, 0.024f);
+                GameObject newObject = Instantiate(prefabToSpawn, returnPosition.parent);
+                CloneValues(ingredient.gameObject, newObject);
+                Destroy(ingredient.gameObject);
+
+                ResetTransform(newObject, returnPosition, tag);
+                newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                returnPosition.parent.GetChild(0).GetComponent<ObjectHighlight>().onSomething = true;
+
+                Debug.Log($"{tag}가 반환되었습니다.");
             }
             else
             {
-                ingredient.transform.localPosition = new Vector3(0.0f, 0.006f, 0.0f);
+                Debug.LogWarning($"{tag}의 프리팹이 설정되지 않았습니다.");
             }
-
-            ingredient.transform.SetSiblingIndex(2);  // 두 번째 자식으로 설정
-            ingredient.gameObject.SetActive(true);  // 재료 활성화
-            ingredient.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;  // 위치 고정
-            returnPosition.parent.transform.GetChild(0).GetComponent<ObjectHighlight>().onSomething = true;
-            Debug.Log($"{ingredient.gameObject.tag}가 반환되었습니다.");
         }
         else
         {
-            Debug.LogWarning($"{ingredient.gameObject.tag}의 반환 위치를 찾을 수 없습니다.");
+            Debug.LogWarning($"{tag}의 반환 위치를 찾을 수 없습니다.");
+        }
+    }
+
+    private GameObject GetPrefabToSpawn(string tag)
+    {
+        switch (tag)
+        {
+            case "Plate": return Plate;
+            case "Pan": return Pan;
+            case "Pot": return Pot;
+            default: return null;
+        }
+    }
+
+    private void ResetTransform(GameObject obj, Transform returnPosition, string tag)
+    {
+        obj.transform.position = returnPosition.position;
+        obj.transform.rotation = Quaternion.identity;
+        obj.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        obj.transform.SetSiblingIndex(2);
+
+        obj.transform.localPosition = tag == "Plate"
+            ? new Vector3(0.072f, 0.006f, 0.024f)
+            : new Vector3(0.0f, 0.006f, 0.0f);
+
+        obj.SetActive(true);
+    }
+
+    private void CloneValues(GameObject original, GameObject clone)
+    {
+        if (original.CompareTag("Plate"))
+        {
+            CopyPlateValues(original, clone);
+        }
+        else if (original.CompareTag("Pan"))
+        {
+            CopyPanValues(original, clone);
+        }
+        else if (original.CompareTag("Pot"))
+        {
+            CopyPotValues(original, clone);
+        }
+    }
+
+    private void CopyPlateValues(GameObject original, GameObject clone)
+    {
+        Plates originalPlates = original.GetComponent<Plates>();
+        Plates clonePlates = clone.GetComponent<Plates>();
+
+        if (originalPlates != null && clonePlates != null)
+        {
+            clonePlates.canvas = originalPlates.canvas;
+            clonePlates.ingredientUI = originalPlates.ingredientUI;
+            clonePlates.icons = originalPlates.icons;
+        }
+    }
+
+    private void CopyPanValues(GameObject original, GameObject clone)
+    {
+        PanOnStove originalPan = original.GetComponent<PanOnStove>();
+        PanOnStove clonePan = clone.GetComponent<PanOnStove>();
+
+        if (originalPan != null && clonePan != null)
+        {
+            clonePan.canvas = originalPan.canvas;
+            clonePan.cookingBar = originalPan.cookingBar;
+            clonePan.ingredientUI = originalPan.ingredientUI;
+            clonePan.pfxFire = originalPan.pfxFire;
+            clonePan.icons = originalPan.icons;
+        }
+    }
+
+    private void CopyPotValues(GameObject original, GameObject clone)
+    {
+        PotOnStove originalPot = original.GetComponent<PotOnStove>();
+        PotOnStove clonePot = clone.GetComponent<PotOnStove>();
+
+        if (originalPot != null && clonePot != null)
+        {
+            clonePot.canvas = originalPot.canvas;
+            clonePot.cookingBar = originalPot.cookingBar;
+            clonePot.ingredientUI = originalPot.ingredientUI;
+            clonePot.pfxFire = originalPot.pfxFire;
+            clonePot.icons = originalPot.icons;
         }
     }
 
     private Transform GetReturnPosition(Ingredient.Team team, string objectType)
     {
         TeamReturnPositions teamPositions = team == Ingredient.Team.Red ? redTeamPositions : blueTeamPositions;
-        Transform[] positions = null;
-
-        switch (objectType)
+        Transform[] positions = objectType switch
         {
-            case "Pan":
-                positions = teamPositions.panPositions;
-                break;
-            case "Pot":
-                positions = teamPositions.potPositions;
-                break;
-            case "Plate":
-                positions = teamPositions.platePositions;
-                break;
-        }
+            "Pan" => teamPositions.panPositions,
+            "Pot" => teamPositions.potPositions,
+            "Plate" => teamPositions.platePositions,
+            _ => null,
+        };
 
         if (positions != null)
         {
             foreach (Transform position in positions)
             {
-                if (position.parent.childCount == 2 && position.parent.gameObject.name.Contains("Plate"))
-                {
-                    return position;
-                }
-                else if (position.parent.childCount == 3 && (position.parent.gameObject.name.Contains("Pot") || position.parent.gameObject.name.Contains("Pan")))
+                if ((position.parent.childCount == 2 && position.parent.gameObject.name.Contains("Plate")) ||
+                    (position.parent.childCount == 3 && (position.parent.gameObject.name.Contains("Pot") || position.parent.gameObject.name.Contains("Pan"))))
                 {
                     return position;
                 }
