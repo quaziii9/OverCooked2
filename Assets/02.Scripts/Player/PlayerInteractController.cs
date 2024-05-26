@@ -42,12 +42,12 @@ public class PlayerInteractController : MonoBehaviour
     {
         masterController = PlayerInputSystem.GetComponent<PlayerMasterController2>();
 
-        if (pickupButton != null && masterController.currentPlayer == this.gameObject)
+        if (pickupButton != null)
         {
             pickupButton.onClick.AddListener(MobilePickupOrPlace); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
         }
 
-        if (cookButton != null && masterController.currentPlayer == this.gameObject)
+        if (cookButton != null)
         {
             cookButton.onClick.AddListener(MobileCookOrThrow); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
         }
