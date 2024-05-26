@@ -33,7 +33,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     // 버스 맵으로 전환
     public void ChangeToWorldMap()
     {
-        ChangeScene("WorldMap", "NewWorldMap", UIManager.Instance.loadingKeyBar);
+        ChangeScene("WorldMap", "WorldMap", UIManager.Instance.loadingKeyBar);
     }
 
     // 인트로 맵으로 전환
@@ -148,7 +148,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         Debug.Log($"씬 로드 완료: {scene.name}");
         switch (scene.name)
         {
-            case "NewWorldMap":
+            case "WorldMap":
                 //VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.EnterBusMapMaskIn();
 #if UNITY_ANDROID
