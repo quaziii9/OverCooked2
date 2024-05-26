@@ -42,7 +42,7 @@ public class PanOnStove : MonoBehaviour
     {
         if (transform.GetChild(2).gameObject != null)
         {
-            stateIsCooked = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked;
+            stateIsCooked = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().isCooked;
         }
     }
 
@@ -113,7 +113,7 @@ public class PanOnStove : MonoBehaviour
     {
         if (transform.childCount < 3)
             return;
-        Ingredient Ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
+        Ingredient_Net Ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient_Net>();
         Ingredient.isCooked = true;
 
         //여기선 이제 쿡되야함
@@ -128,70 +128,70 @@ public class PanOnStove : MonoBehaviour
         if (transform.childCount < 3)
             return;
 
-        Ingredient Ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
+        Ingredient_Net Ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient_Net>();
         GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
         madeUI.transform.GetChild(0).gameObject.SetActive(true);
         Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
         image.sprite = GetIcon(Ingredient.type);
-        madeUI.GetComponent<IngredientUI>().target = Ingredient.transform;
+        madeUI.GetComponent<IngredientUI_Net>().Target = Ingredient.transform;
     }
 
-    private Sprite GetIcon(Ingredient.IngredientType ingredientType)
+    private Sprite GetIcon(Ingredient_Net.IngredientType ingredientType)
     {
         switch (ingredientType)
         {
-            case Ingredient.IngredientType.Fish:
+            case Ingredient_Net.IngredientType.Fish:
                 return Icons[0];
 
-            case Ingredient.IngredientType.Shrimp:
+            case Ingredient_Net.IngredientType.Shrimp:
                 return Icons[1];
 
-            case Ingredient.IngredientType.Tomato:
+            case Ingredient_Net.IngredientType.Tomato:
                 return Icons[2];
 
-            case Ingredient.IngredientType.Lettuce:
+            case Ingredient_Net.IngredientType.Lettuce:
                 return Icons[3];
 
-            case Ingredient.IngredientType.Cucumber:
+            case Ingredient_Net.IngredientType.Cucumber:
                 return Icons[4];
 
-            case Ingredient.IngredientType.Potato:
+            case Ingredient_Net.IngredientType.Potato:
                 return Icons[5];
 
-            case Ingredient.IngredientType.Chicken:
+            case Ingredient_Net.IngredientType.Chicken:
                 return Icons[6];
 
-            case Ingredient.IngredientType.SeaWeed:
+            case Ingredient_Net.IngredientType.SeaWeed:
                 return Icons[7];
 
-            case Ingredient.IngredientType.Tortilla:
+            case Ingredient_Net.IngredientType.Tortilla:
                 return Icons[8];
 
-            case Ingredient.IngredientType.Rice:
+            case Ingredient_Net.IngredientType.Rice:
                 return Icons[9];
 
-            case Ingredient.IngredientType.Pepperoni:
+            case Ingredient_Net.IngredientType.Pepperoni:
                 return Icons[10];
 
-            case Ingredient.IngredientType.Meat:
+            case Ingredient_Net.IngredientType.Meat:
                 return Icons[11];
 
-            case Ingredient.IngredientType.Dough:
+            case Ingredient_Net.IngredientType.Dough:
                 return Icons[12];
 
-            case Ingredient.IngredientType.Cheese:
+            case Ingredient_Net.IngredientType.Cheese:
                 return Icons[13];
 
-            case Ingredient.IngredientType.SushiRice:
+            case Ingredient_Net.IngredientType.SushiRice:
                 return Icons[9];
 
-            case Ingredient.IngredientType.SushiFish:
+            case Ingredient_Net.IngredientType.SushiFish:
                 return Icons[0];
 
-            case Ingredient.IngredientType.SushiCucumber:
+            case Ingredient_Net.IngredientType.SushiCucumber:
                 return Icons[4];
 
-            case Ingredient.IngredientType.PizzaTomato:
+            case Ingredient_Net.IngredientType.PizzaTomato:
                 return Icons[2];
 
             default:

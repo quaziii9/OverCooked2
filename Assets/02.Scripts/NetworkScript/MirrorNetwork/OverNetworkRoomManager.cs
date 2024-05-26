@@ -78,6 +78,23 @@ public class OverNetworkRoomManager : NetworkRoomManager
         return Instantiate(spawnPrefabs[index]);
     }
 
+    public GameObject GetUIObject_RoomManager(string UIObject)
+    {
+        int index = 0;
+
+        switch (UIObject)
+        {
+            case "IngredientUI_Net":
+                index = 18; break;
+            case "Plate":
+                index = 19; break;
+            default:
+                throw new System.ArgumentOutOfRangeException(nameof(UIObject), "Invalid ingredient type");
+        }
+
+        return spawnPrefabs[index];
+    }
+
     #endregion
 
     #region Game Object Controller (처음알려준 이상한 방법)

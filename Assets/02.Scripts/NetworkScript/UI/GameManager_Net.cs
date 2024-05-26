@@ -830,11 +830,11 @@ public class GameManager_Net : MonoBehaviour
     private void AddTip(int i)
     {
         // 팁 추가 처리
-        if (CurrentOrderUI[i].GetComponent<OrderUI>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI>().timer.maxValue * 0.6f)
+        if (CurrentOrderUI[i].GetComponent<OrderUI_Net>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI_Net>().timer.maxValue * 0.6f)
         {
             Tip = 8;
         }
-        else if (CurrentOrderUI[i].GetComponent<OrderUI>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI>().timer.maxValue * 0.3f)
+        else if (CurrentOrderUI[i].GetComponent<OrderUI_Net>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI_Net>().timer.maxValue * 0.3f)
         {
             Tip = 5;
         }
@@ -952,7 +952,7 @@ public class GameManager_Net : MonoBehaviour
 
         for (int j = 0; j < CurrentOrderUI.Count; j++)
         {
-            if (i < j && !CurrentOrderUI[j].GetComponent<OrderUI>().goLeft)
+            if (i < j && !CurrentOrderUI[j].GetComponent<OrderUI_Net>().goLeft)
             {
                 Vector3 CurrentPosition = CurrentOrderUI[j].transform.position;
                 CurrentPosition.x -= width * 0.92f;
