@@ -93,9 +93,9 @@ public class SoundManager : Singleton<SoundManager>
         bgmAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
         bgmChangeAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
         stageAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
+        stageBackGroundAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume * 0.1f;
 
         effectAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
-        stageBackGroundAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume * 0.4f;
         stageEffectAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
         vanAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume * 0.2f;
 
@@ -223,7 +223,7 @@ public class SoundManager : Singleton<SoundManager>
     private void SetAllEffectVolume()
     {
         effectAudioSource.volume = volumeEffect;
-        stageBackGroundAudioSource.volume = volumeEffect * 0.4f;
+        stageBackGroundAudioSource.volume = volumeBGM * 0.1f;
         stageEffectAudioSource.volume = volumeEffect;
         vanAudioSource.volume = volumeEffect * 0.2f;
     }
@@ -329,8 +329,6 @@ public class SoundManager : Singleton<SoundManager>
 
     void MineBackGroundBGM()
     {
-        Debug.Log("?");
-        stageBackGroundAudioSource.volume = 0.2f;
         stageBackGroundAudioSource.clip = stageBackInNPC;
         stageBackGroundAudioSource.loop = true;
         stageBackGroundAudioSource.Play();
@@ -338,12 +336,11 @@ public class SoundManager : Singleton<SoundManager>
 
     void MineBgm()
     {
-        Debug.Log("?");
         stageAudioSource.clip = mineBGM;
         stageAudioSource.loop = true;
         stageAudioSource.Play();
     }
-
+    
     void MineBGM(AudioSource audioSource)
     {
         audioSource.clip = mineBGM;
