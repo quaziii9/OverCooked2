@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Menu_Net : ScriptableObject
 {
+    // 레벨 스시 3, 부리또 4, 피자 5로 해뒀습니다
     public int Level;
     public string MenuName;
     public List<Ingredient_Net.IngredientType> Ingredient;

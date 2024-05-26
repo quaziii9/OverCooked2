@@ -9,12 +9,7 @@ public class AutoTrash_Net : MonoBehaviour  // AutoTrash 클래스는 MonoBehavi
         // 충돌한 오브젝트가 'Ingredient' 태그를 가졌는지 확인하고,
         // 그 오브젝트의 부모가 PlayerController나 Player2Controller의 자식이 아닌지 확인함.
         if (other.CompareTag("Ingredient") && 
-                (
-                    !other.transform.parent.IsChildOf(FindObjectOfType<PlayerInteractController_Net>().transform) 
-                    && !other.transform.parent.IsChildOf(FindObjectOfType<Player2InteractController_Net>().transform)
-                    && !other.transform.parent.IsChildOf(FindObjectOfType<Player3InteractController_Net>().transform)
-                    && !other.transform.parent.IsChildOf(FindObjectOfType<Player4InteractController_Net>().transform)
-                )
+                !other.transform.parent.IsChildOf(FindObjectOfType<PlayerInteractController_Net>().transform)
             )
         {
             // 없어지는 소리 효과 재생 (ScaleSmaller 코루틴 호출 대신).
