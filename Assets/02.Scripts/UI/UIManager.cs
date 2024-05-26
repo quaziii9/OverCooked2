@@ -411,6 +411,9 @@ public class UIManager : Singleton<UIManager>
                     //mapType = MapType.Tuto;
                     EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.TestStageMapOpen);
                     break;
+                case "GoToStage2_5":
+                    EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.stage2_5MapOpen);
+                    break;
                 case "GoToMine":
                     EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.stageMineMapOpen);
                     break;
@@ -568,7 +571,7 @@ public class UIManager : Singleton<UIManager>
                 break;
             case MapType.stage2_5:
                 SetStageImageText(2);
-                MaskOutUI(pineappleMask, broccoliMask, "GoToTestStage");
+                MaskOutUI(pineappleMask, broccoliMask, "GoToStage2_5");
                 break;
             case MapType.stage3_3:
                 SetStageImageText(3);

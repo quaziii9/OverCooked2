@@ -285,9 +285,11 @@ public class SoundManager : Singleton<SoundManager>
                 WizardBGM(audioSource);
                 break;
             case "Mine":
-                MineBackGroundBGM();
-                
-                //MineBGM(audioSource);
+                //MineBackGroundBGM();
+                MineBGM(audioSource);
+                break;
+            case "Sushi":
+                NeonBGM(audioSource);
                 break;
         }
     }
@@ -340,6 +342,14 @@ public class SoundManager : Singleton<SoundManager>
         stageAudioSource.loop = true;
         stageAudioSource.Play();
     }
+    
+    void NeonBGM(AudioSource audioSource)
+    {
+        audioSource.clip = sushiBGM;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+
     
     void MineBGM(AudioSource audioSource)
     {

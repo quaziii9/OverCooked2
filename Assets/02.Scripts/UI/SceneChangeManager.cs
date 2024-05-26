@@ -33,7 +33,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     // 버스 맵으로 전환
     public void ChangeToWorldMap()
     {
-        ChangeScene("WorldMap", "NewWorldMap", UIManager.Instance.loadingKeyBar);
+        ChangeScene("WorldMap", "WorldMap", UIManager.Instance.loadingKeyBar);
     }
 
     // 인트로 맵으로 전환
@@ -58,19 +58,19 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
 
     public void ChangeToStage1_4()
     {
-        ChangeScene("StageMap", "TestStage", UIManager.Instance.loadingMapBar);
+        ChangeScene("Sushi", "TestStage", UIManager.Instance.loadingMapBar);
+        //ChangeScene("Sushi", "Stage1_4", UIManager.Instance.loadingMapBar);
     }
-
 
     public void ChangeToStage2_5()
     {
-        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+        ChangeScene("Mine", "Mine_Single", UIManager.Instance.loadingMapBar);
     }
 
 
     public void ChangeToStage3_3()
     {
-        ChangeScene("bgmName", "sceneName", UIManager.Instance.loadingMapBar);
+        ChangeScene("Wizard", "Stage3_3", UIManager.Instance.loadingMapBar);
     }
 
 
@@ -148,7 +148,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         Debug.Log($"씬 로드 완료: {scene.name}");
         switch (scene.name)
         {
-            case "NewWorldMap":
+            case "WorldMap":
                 //VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.EnterBusMapMaskIn();
 #if UNITY_ANDROID
@@ -187,15 +187,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 UIManager.Instance.escButton.SetActive(true);
 #endif
                 break;
-            case "stage1_4 scene_name":
-                UIManager.Instance.sceneType = SceneType.StageMap;
-                UIManager.Instance.RecipeUIOn(0);
-                UIManager.Instance.EnterStageMaskIn();
-#if UNITY_ANDROID
-                UIManager.Instance.escButton.SetActive(true);
-#endif
-                break;
-            case "stage2_5 scene_name":
+            case "Mine_Single":
                 UIManager.Instance.sceneType = SceneType.StageMap;
                 UIManager.Instance.RecipeUIOn(1);
                 UIManager.Instance.EnterStageMaskIn();
@@ -203,7 +195,15 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 UIManager.Instance.escButton.SetActive(true);
 #endif
                 break;
-            case "stage3_3 scene_name":
+            case "Stage2_5":
+                UIManager.Instance.sceneType = SceneType.StageMap;
+                UIManager.Instance.RecipeUIOn(1);
+                UIManager.Instance.EnterStageMaskIn();
+#if UNITY_ANDROID
+                UIManager.Instance.escButton.SetActive(true);
+#endif
+                break;
+            case "Stage3_3":
                 UIManager.Instance.sceneType = SceneType.StageMap;
                 UIManager.Instance.RecipeUIOn(2);
                 UIManager.Instance.EnterStageMaskIn();
