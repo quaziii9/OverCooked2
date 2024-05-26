@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour
 {
+    [Header("Team Positions")]
     [SerializeField] private TeamReturnPositions redTeamPositions;
     [SerializeField] private TeamReturnPositions blueTeamPositions;
+
+    [Space(10)]
+    [SerializeField] private RespawnManager respawnManager;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -38,7 +42,7 @@ public class DeathZone : MonoBehaviour
         yield return new WaitForSeconds(1f); // 1초 대기
 
         // RespawnManager를 통해 플레이어 리스폰
-        RespawnManager.Instance.StartRespawnCountdown(player);
+        respawnManager.StartRespawnCountdown(player);
     }
 
     private IEnumerator DeactivateAndRespawn(Ingredient ingredient)

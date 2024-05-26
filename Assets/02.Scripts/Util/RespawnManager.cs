@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RespawnManager : Singleton<RespawnManager>
+public class RespawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] countdown;
     [SerializeField] private Transform[] playerSpawnPositions; // 리스폰 위치들
