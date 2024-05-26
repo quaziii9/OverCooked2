@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/01.Scenes/Eunjoo/BattleLobby.unity
     guid: 729d3387385eb414ab0d7ed1346291e8
   - enabled: 1
+    path: Assets/01.Scenes/Seongwook/WorldMap.unity
+    guid: 050fddbe847789d449f85c793a8ce3c3
+  - enabled: 1
     path: Assets/01.Scenes/Minseok/Wizard.unity
     guid: 906302c6d1ef58143a5a5d505b4030f2
   - enabled: 1

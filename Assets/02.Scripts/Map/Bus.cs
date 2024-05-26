@@ -132,10 +132,10 @@ public class Bus : MonoBehaviour
         switch (enterFlagName)
         {
             case "Stage1 UI":
-                UIManager.Instance.sceneType = SceneType.BattleMap;
-                UIManager.Instance.mapType = MapType.stageMine;
-                //UIManager.Instance.sceneType = SceneType.StageMap;
-                //UIManager.Instance.mapType = MapType.stage1_4;
+                //UIManager.Instance.sceneType = SceneType.BattleMap;
+                //UIManager.Instance.mapType = MapType.stageMine;
+                UIManager.Instance.sceneType = SceneType.StageMap;
+                UIManager.Instance.mapType = MapType.stage2_5;
                 UIManager.Instance.EnterLoadingMapUI();
                 break;
             case "Stage2 UI":
