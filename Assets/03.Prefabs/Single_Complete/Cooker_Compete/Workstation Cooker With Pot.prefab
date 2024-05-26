@@ -1768,7 +1768,7 @@ GameObject:
   - component: {fileID: 3818059266377366565}
   - component: {fileID: 3818059266377366564}
   m_Layer: 0
-  m_Name: Pot (1)
+  m_Name: Pot
   m_TagString: Pot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1890,7 +1890,7 @@ MonoBehaviour:
   currentState: 0
   team: 0
   cookedIngredient: {fileID: 0}
-  cookedFish: {fileID: 0}
+  cookedMat: {fileID: 0}
   fishLocalPos: {x: 0, y: 0.138, z: 0.08}
   shrimpLocalPos: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
   lettuceLocalPos: {x: 0, y: 0.418, z: 0}

@@ -10,6 +10,10 @@ public class DeathZone : MonoBehaviour
     [Space(10)]
     [SerializeField] private RespawnManager respawnManager;
 
+    public GameObject Plate;
+    public GameObject Pan;
+    public GameObject Pot;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -28,7 +32,6 @@ public class DeathZone : MonoBehaviour
         }
         else if (other.CompareTag("Ingredient"))
         {
-            Debug.Log(other);
             Ingredient ingredient = other.GetComponent<Ingredient>();
             if (ingredient != null)
             {
