@@ -15,7 +15,7 @@ MonoBehaviour:
   Level: 4
   MenuName: ChickenBurrito
   Ingredient: 0a0000000c00000006000000
-  LimitTime: 165
+  LimitTime: 1200
   MenuIcon: {fileID: 21300000, guid: e397ed37f2a2c984483a4f6d2c584635, type: 3}
   IngredientIcon:
   - {fileID: 21300000, guid: a317b8c007215ba499388dcf169d9b78, type: 3}

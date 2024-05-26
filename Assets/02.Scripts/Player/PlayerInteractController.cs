@@ -466,7 +466,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void TryPickupObject(GameObject handleThing)
     {
-        SoundManager.Instance.PlayEffect("take");
+        SoundManager.Instance.PlayEffect("itemPickUp");
         objectHighlight.onSomething = false;
         // isHolding = true;
         // anim.SetBool("isHolding", isHolding);
@@ -477,7 +477,7 @@ public class PlayerInteractController : MonoBehaviour
     // true 테이블 위에 뭔가 있음 , false 테이블 위에 뭔가 없음
     private void TablePlaceOrDropObject(bool drop)
     {
-        SoundManager.Instance.PlayEffect(drop ? "put" : "put");
+        SoundManager.Instance.PlayEffect(drop ? "itemPickUp" : "itemputDown");
         if (drop)
         {
             // true 테이블 위에 뭔가 있는데 내가 가진게 접시고, 음식이면 담음
@@ -596,7 +596,7 @@ public class PlayerInteractController : MonoBehaviour
         var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient>().type;
         if (plate.AddIngredient(ingredient))
         {
-            SoundManager.Instance.PlayEffect("put");
+            SoundManager.Instance.PlayEffect("itemputDown");
             plate.InstantiateUI();
             Destroy(transform.GetChild(1).gameObject);
             isHolding = false;
@@ -675,7 +675,7 @@ public class PlayerInteractController : MonoBehaviour
         else
         {
             // 객체를 내려놓을 때의 로직
-            SoundManager.Instance.PlayEffect("put");
+            SoundManager.Instance.PlayEffect("itemputDown");
             GameObject handleThing = transform.GetChild(1).gameObject;
 
             if (interactObject.transform.parent.CompareTag("MineCounter"))
@@ -759,7 +759,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void PickupFromCraft()
     {
-        SoundManager.Instance.PlayEffect("take");
+        SoundManager.Instance.PlayEffect("itemPickUp");
         // Craft에서 아이템 꺼내기 로직 구현
         interactObject.GetComponent<Craft>().OpenCraftPlayer1();
         objectHighlight.onSomething = false;
@@ -781,7 +781,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void PickupIngredient()
     {
-        SoundManager.Instance.PlayEffect("take");
+        SoundManager.Instance.PlayEffect("itemPickUp");
         isHolding = true;
         anim.SetBool("isHolding", isHolding);
         // 재료 줍기 로직 상세 구현 필요
@@ -803,7 +803,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void PickupPot()
     {
-        SoundManager.Instance.PlayEffect("take");
+        SoundManager.Instance.PlayEffect("itemPickUp");
         isHolding = true;
         anim.SetBool("isHolding", isHolding);
         GameObject ingredientObj = interactObject.transform.parent.gameObject;

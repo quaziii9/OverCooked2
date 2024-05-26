@@ -8,7 +8,7 @@ public class InGameCanvas : MonoBehaviour
     public GameObject mobilePlayerController;
     public GameObject coinUI_PCBattle;
     public GameObject coinUI_MobileBattle;
-    //public GameObject coinUI_Single;
+    public GameObject coinUI_Single;
 
     public void OnEnable()
     {
@@ -32,6 +32,10 @@ public class InGameCanvas : MonoBehaviour
             coinUI_MobileBattle.SetActive(false);
             coinUI_PCBattle.SetActive(true);
         }
+
+        coinUI_MobileBattle.SetActive(false);
+        coinUI_PCBattle.SetActive(false);
+        coinUI_Single.SetActive(true);
     }
     
     private void MobilePlayerControllerSet()

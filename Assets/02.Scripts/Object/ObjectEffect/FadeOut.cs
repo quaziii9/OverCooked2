@@ -17,7 +17,7 @@ public class FadeOut : MonoBehaviour
     private void Start()
     {
         // Station 오브젝트의 위치를 화면 좌표로 변환하여 목표 위치 설정
-        target = Camera.main.WorldToScreenPoint(FindObjectOfType<Station>().transform.position) + new Vector3(0, 100, 0);
+        target = Camera.main.WorldToScreenPoint(FindObjectOfType<ScrollMT>().transform.position) + new Vector3(0, 100, 0);
     }
 
     private void Update()

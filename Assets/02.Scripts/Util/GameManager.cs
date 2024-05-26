@@ -389,87 +389,7 @@ public class GameManager : MonoBehaviour
         newPlate.transform.localPosition = spawnPos;
         newPlate.GetComponent<Plates>().canvas = Canvas;
     }
-    /*
-    public void MakeOrder()
-    {
-        // 새로운 주문 생성
-        if (CurrentOrder.Count >= maxMenuLimit)
-        {
-            return;
-        }
-        i = -1;
-        j = -1;
-        i = Random.Range(0, Menus.Length);
-        if (Menus[i].Ingredient.Count == 1) // 재료가 한 개일 때
-        {
-            for (j = 0; j < Single_Double_PoolUIs.Length; j++)
-            {
-                if (!Single_Double_PoolUIs[j].activeSelf) // 꺼져있는 UI 찾기
-                {
-                    Single_Double_PoolUIs[j].SetActive(true); // 켜주고
-                    Single_Double_PoolUIs[j].transform.GetChild(1).gameObject.SetActive(false); // 두번째 재료 부분은 끄고
-                    Single_Double_PoolUIs[j].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[0]; // 첫번째 재료 아이콘 바꾸기
-                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = Menus[i].MenuIcon; // 메뉴 아이콘 바꾸기
-                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().maxValue = Menus[i].LimitTime; // 슬라이더 시간 할당
-                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().value = Menus[i].LimitTime; // 풀로 시작
-                    CurrentOrder.Add(Menus[i]);
-                    CurrentOrderUI.Add(Single_Double_PoolUIs[j]);
-                    return;
-                }
-                else // 다 켜져있으면 실패
-                {
-                    continue;
-                }
-            }
-        }
-        else if (Menus[i].Ingredient.Count == 2) // 재료가 두 개일 때
-        {
-            for (j = 0; j < Single_Double_PoolUIs.Length; j++)
-            {
-                if (!Single_Double_PoolUIs[j].activeSelf) // 꺼져있는 UI 찾기
-                {
-                    Single_Double_PoolUIs[j].SetActive(true); // 켜주고
-                    Single_Double_PoolUIs[j].transform.GetChild(1).gameObject.SetActive(true); // 두번째 재료 부분 켜기
-                    Single_Double_PoolUIs[j].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[0]; // 첫번째 재료 아이콘 바꾸기
-                    Single_Double_PoolUIs[j].transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[1]; // 두번째 재료 아이콘 바꾸기
-                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = Menus[i].MenuIcon; // 메뉴 아이콘 바꾸기
-                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().maxValue = Menus[i].LimitTime; // 슬라이더 시간 할당
-                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().value = Menus[i].LimitTime; // 풀로 시작
-                    CurrentOrder.Add(Menus[i]);
-                    CurrentOrderUI.Add(Single_Double_PoolUIs[j]);
-                    return;
-                }
-                else // 다 켜져있으면 실패
-                {
-                    continue;
-                }
-            }
-        }
-        else // 재료가 세 개일 때
-        {
-            for (j = 0; j < Triple_PoolUIs.Length; j++)
-            {
-                if (!Triple_PoolUIs[j].activeSelf) // 꺼져있는 UI 찾기
-                {
-                    Triple_PoolUIs[j].SetActive(true); // 켜주고
-                    Triple_PoolUIs[j].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[0]; // 첫번째 재료 아이콘 바꾸기
-                    Triple_PoolUIs[j].transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = Menus[i].IngredientIcon[1]; // 두번째 재료 아이콘 바꾸기
-                    Triple_PoolUIs[j].transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = Menus[i].IngredientIcon[2]; // 세번째 재료 아이콘 바꾸기
-                    Triple_PoolUIs[j].transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = Menus[i].MenuIcon; // 메뉴 아이콘 바꾸기
-                    Triple_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().maxValue = Menus[i].LimitTime; // 슬라이더 시간 할당
-                    Triple_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().value = Menus[i].LimitTime; // 풀로 시작
-                    CurrentOrder.Add(Menus[i]);
-                    CurrentOrderUI.Add(Triple_PoolUIs[j]);
-                    return;
-                }
-                else // 다 켜져있으면 실패
-                {
-                    continue;
-                }
-            }
-        }
-    }
-    */
+ 
     public void MakeOrder()
     {
         // 새로운 주문 생성
@@ -560,162 +480,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
     private void SuccessEffect()
     {
         // 성공 효과
     }
 
-    //주문 4개 추가 리펙토링
-    /*
-    public bool CheckMenu(List<Ingredient.IngredientType> containIngredients) // plate의 재료 list들 통으로 받아서 비교
-    {
-        // 메뉴 확인 및 처리
-        OriginalMoney = Coin;
-        if (containIngredients == null) // 빈 접시만 내면 무조건 실패
-        {
-            // 빨간색 띵
-            // StartCoroutine(TurnAlpha(wrong));
-            return false;
-        }
-        else
-        {
-            for (int i = 0; i < CurrentOrder.Count; i++) // 현재 쌓인 order에서 비교
-            {
-                if (containIngredients.Count != CurrentOrder[i].Ingredient.Count) // 재료 개수부터 다르면 실패
-                {
-                    // StartCoroutine(TurnAlpha(wrong));
-                    continue;
-                }
-                else // 재료 개수가 같다면
-                {
-                    if (containIngredients.Count == 1) // 재료가 하나일 때
-                    {
-                        if (containIngredients[0] == CurrentOrder[i].Ingredient[0])
-                        {
-                            if (i == 0) // 순서대로 메뉴를 냈다면 콤보
-                            {
-                                tipCombo += 1;
-                                if (tipCombo >= 4)
-                                {
-                                    if (!flame.activeSelf)
-                                    {
-                                        flame.SetActive(true);
-                                    }
-                                    tipCombo = 4; // 최대 4콤보까지
-                                }
-                            }
-                            else
-                            {
-                                flame.SetActive(false);
-                                tipCombo = 0;
-                            }
-                            CurrentOrderUI[i].transform.position = poolPos;
-                            CurrentOrderUI[i].SetActive(false);
-                            if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
-                            Coin += CurrentOrder[i].Price;
-                            CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin");
-                            AddTip(i);
-                            SetPosition(i);
-                            CurrentOrder.RemoveAt(i);
-                            CurrentOrderUI.RemoveAt(i);
-                            if (StageManager.instance != null) StageManager.instance.success += 1;
-                            return true;
-                        }
-                    }
-                    else if (containIngredients.Count == 2) // 재료가 두 개일 때
-                    {
-                        if ((containIngredients[0] == CurrentOrder[i].Ingredient[0] && containIngredients[1] == CurrentOrder[i].Ingredient[1]) || (containIngredients[1] == CurrentOrder[i].Ingredient[0] && containIngredients[0] == CurrentOrder[i].Ingredient[1]))
-                        {
-                            if (i == 0) // 순서대로 메뉴를 냈다면 콤보
-                            {
-                                tipCombo += 1;
-                                if (tipCombo >= 4)
-                                {
-                                    if (!flame.activeSelf)
-                                    {
-                                        flame.SetActive(true);
-                                    }
-                                    tipCombo = 4; // 최대 4콤보까지
-                                }
-                            }
-                            else
-                            {
-                                flame.SetActive(false);
-                                tipCombo = 0;
-                            }
-                            CurrentOrderUI[i].transform.position = poolPos;
-                            CurrentOrderUI[i].SetActive(false);
-                            if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
-                            Coin += CurrentOrder[i].Price;
-                            CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin");
-                            AddTip(i);
-                            SetPosition(i);
-                            CurrentOrder.RemoveAt(i);
-                            CurrentOrderUI.RemoveAt(i);
-                            if (StageManager.instance != null) StageManager.instance.success += 1;
-                            return true;
-                        }
-                    }
-                    else if (containIngredients.Count == 3) // 재료가 세 개일 때
-                    {
-                        int count = 0;
-                        for (int j = 0; j < containIngredients.Count; j++)
-                        {
-                            for (int k = 0; k < CurrentOrder[i].Ingredient.Count; k++)
-                            {
-                                if (containIngredients[j].Equals(CurrentOrder[i].Ingredient[k]))
-                                {
-                                    count++;
-                                    break;
-                                }
-                            }
-                        }
-                        if (count == 3)
-                        {
-                            if (i == 0) // 순서대로 메뉴를 냈다면 콤보
-                            {
-                                tipCombo += 1;
-                                if (tipCombo >= 4)
-                                {
-                                    if (!flame.activeSelf)
-                                    {
-                                        flame.SetActive(true);
-                                    }
-                                    tipCombo = 4; // 최대 4콤보까지
-                                }
-                            }
-                            else
-                            {
-                                flame.SetActive(false);
-                                tipCombo = 0;
-                            }
-                            CurrentOrderUI[i].transform.position = poolPos;
-                            CurrentOrderUI[i].SetActive(false);
-                            if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
-                            Coin += CurrentOrder[i].Price;
-                            CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin");
-                            AddTip(i);
-                            SetPosition(i);
-                            CurrentOrder.RemoveAt(i);
-                            CurrentOrderUI.RemoveAt(i);
-                            if (StageManager.instance != null) StageManager.instance.success += 1;
-                            return true;
-                        }
-                        else
-                        {
-                            // StartCoroutine(TurnAlpha(wrong));
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        // StartCoroutine(TurnAlpha(wrong));
-        return false;
-    }
-    */
     public bool CheckMenu(List<Ingredient.IngredientType> containIngredients) // plate의 재료 list들 통으로 받아서 비교
     {
         // 메뉴 확인 및 처리
@@ -865,7 +634,7 @@ public class GameManager : MonoBehaviour
 
         if (Tip != 0)
         {
-            GameObject tipText = Instantiate(TextPrefabs, Camera.main.WorldToScreenPoint(FindObjectOfType<Station>().transform.position), Quaternion.identity, Canvas.transform);
+            GameObject tipText = Instantiate(TextPrefabs, Camera.main.WorldToScreenPoint(FindObjectOfType<ScrollMT>().transform.position), Quaternion.identity, Canvas.transform);
             tipText.GetComponent<Text>().text = "+" + Tip + " 팁!";
         }
     }
