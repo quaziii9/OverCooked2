@@ -507,14 +507,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 879e4b99a16b01f4ba8cfd472ab8b29e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
   cookingBar: {fileID: 0}
+  ingredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
+    type: 3}
+  pfxFire: {fileID: 3232324272951486417}
   isOnStove: 0
   inSomething: 0
   cookingTime: 0
-  Canvas: {fileID: 0}
-  IngredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
-    type: 3}
-  Icons:
+  icons:
   - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
   - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
   - {fileID: 21300000, guid: 395eaf5650b040947951375ff280d770, type: 3}
@@ -529,7 +530,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 403761297b603554f88e2ff404042b34, type: 3}
   - {fileID: 21300000, guid: 3a9a198e7fc58834d8f2935ac9620d34, type: 3}
   - {fileID: 21300000, guid: 2fdb47c4eb8a3cc44b51a24d673c1178, type: 3}
-  pfxFire: {fileID: 3232324272951486417}
 --- !u!1 &5505058152238829084
 GameObject:
   m_ObjectHideFlags: 0
