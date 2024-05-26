@@ -18,7 +18,7 @@ public class Ingredient : GameItem
     public Team team;
 
     [SerializeField] private Mesh cookedIngredient;
-    [SerializeField] private Material cookedFish;
+    [SerializeField] private Material cookedMat;
 
     public Vector3 fishLocalPos = new Vector3(0, 0.138f, 0.08f);
     public Vector3 shrimpLocalPos = new Vector3(-0.365000874f, -0.0890001357f, -0.423000485f);
@@ -176,7 +176,7 @@ public class Ingredient : GameItem
     private void ApplyMaterialAndAdjustPosition(IngredientType handType)
     {
         MeshRenderer meshRenderer = transform.parent.GetComponent<MeshRenderer>();
-        meshRenderer.material = cookedFish; // Example for applying material
+        meshRenderer.material = cookedMat; // Example for applying material
         Vector3 positionAdjustment = new Vector3(0, 0, 0);
         //Vector3 positionAdjustment = new Vector3(0, CalculatePositionAdjustment(handType), 0);
         AdjustPosition(transform.parent.parent, positionAdjustment);

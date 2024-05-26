@@ -107,11 +107,13 @@ MonoBehaviour:
   itemName: Tortilla
   isCooked: 0
   isOnDesk: 0
+  pizzazIsCooked: 0
   type: 10
   currentState: 0
+  team: 0
   cookedIngredient: {fileID: 8097617054539991953, guid: 12a386c2dfdf6504791895fae95723f0,
     type: 3}
-  cookedFish: {fileID: 2100000, guid: e3beb2d12aec27f45a3b339277d2132b, type: 2}
+  cookedMat: {fileID: 2100000, guid: b8dccfa5a32286d41ab6c7a34999eeaa, type: 2}
   fishLocalPos: {x: 0, y: 0.138, z: 0.08}
   shrimpLocalPos: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
   lettuceLocalPos: {x: 0, y: 0.418, z: 0}

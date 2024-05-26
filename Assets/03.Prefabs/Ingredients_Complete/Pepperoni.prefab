@@ -62,11 +62,14 @@ MonoBehaviour:
   itemName: Lettuce
   isCooked: 0
   isOnDesk: 0
+  pizzazIsCooked: 0
   type: 13
   currentState: 0
+  team: 0
   cookedIngredient: {fileID: -6802092280334239706, guid: 2d81b16af134af24c8bf45d52fcfff79,
     type: 3}
-  cookedFish: {fileID: 2100000, guid: a879e7adcfd5f7e40b1182e0ce970af7, type: 2}
+  cookedMat: {fileID: -5868565721752103771, guid: 2d81b16af134af24c8bf45d52fcfff79,
+    type: 3}
   fishLocalPos: {x: 0, y: 0.138, z: 0.08}
   shrimpLocalPos: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
   lettuceLocalPos: {x: 0, y: 0.418, z: 0}
