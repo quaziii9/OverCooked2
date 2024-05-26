@@ -27,9 +27,56 @@ using TMPro;
 public class OverNetworkRoomManager : NetworkRoomManager
 {
 
-    #region Game Object SpawnPosition
+    #region Game Object Spawn
 
+    public GameObject GetCraftIngredient_RoomManager(Ingredient_Net.IngredientType it)
+    {
+        int index = 0;
 
+        switch (it)
+        {
+            case Ingredient_Net.IngredientType.Cheese:
+                index = 0; break;
+            case Ingredient_Net.IngredientType.Chicken:
+                index = 1; break;
+            case Ingredient_Net.IngredientType.Cucumber:
+                index = 2; break;
+            case Ingredient_Net.IngredientType.Dough:
+                index = 3; break;
+            case Ingredient_Net.IngredientType.Fish:
+                index = 4; break;
+            case Ingredient_Net.IngredientType.Lettuce:
+                index = 5; break;
+            case Ingredient_Net.IngredientType.Meat:
+                index = 6; break;
+            case Ingredient_Net.IngredientType.Pepperoni:
+                index = 7; break;
+            case Ingredient_Net.IngredientType.PizzaTomato:
+                index = 8; break;
+            case Ingredient_Net.IngredientType.Potato:
+                index = 9; break;
+            case Ingredient_Net.IngredientType.Rice:
+                index = 10; break;
+            case Ingredient_Net.IngredientType.SeaWeed:
+                index = 11; break;
+            case Ingredient_Net.IngredientType.Shrimp:
+                index = 12; break;
+            case Ingredient_Net.IngredientType.SushiCucumber:
+                index = 13; break;
+            case Ingredient_Net.IngredientType.SushiFish:
+                index = 14; break;
+            case Ingredient_Net.IngredientType.SushiRice:
+                index = 15; break;
+            case Ingredient_Net.IngredientType.Tomato:
+                index = 16; break;
+            case Ingredient_Net.IngredientType.Tortilla:
+                index = 17; break;
+            default:
+                throw new System.ArgumentOutOfRangeException(nameof(it), "Invalid ingredient type");
+        }
+
+        return Instantiate(spawnPrefabs[index]);
+    }
 
     #endregion
 

@@ -1,18 +1,22 @@
-using DG.Tweening.Core.Easing;
+using Mirror;
 using System;
 using UnityEngine;
-using UnityEngine.XR;
 
-public class Ingredient_Net : GameItem
+public class Ingredient_Net : NetworkBehaviour
 {
-    public bool isCooked = false;
-    public bool isOnDesk = true;
+    [SyncVar] public bool isCooked = false;
+    [SyncVar] public bool isOnDesk = true;
+    // 오직 피자만을 위한 bool 값 / 피자 완성을 위한 값
+    [SyncVar] public bool pizzazIsCooked = false;
 
-    public enum IngredientType { Fish, Shrimp, Plate, Lettuce, Tomato, Cucumber, Chicken, Potato };
+    public enum IngredientType { Fish, Shrimp, Plate, Lettuce, Tomato, Cucumber, Chicken, Potato, Pot, Pan, Tortilla, SeaWeed, Rice, Pepperoni, Cheese, Dough, Meat, PizzaTomato, SushiRice, SushiFish, SushiCucumber };
     public IngredientType type; // 재료 유형: 채소, 고기 등
-    
+
     public enum IngredientState { Raw, Cooking, Cooked }
     public IngredientState currentState = IngredientState.Raw;
+
+    public enum Team { Red, Blue }
+    [SyncVar] public Team team;
 
     [SerializeField] private Mesh cookedIngredient;
     [SerializeField] private Material cookedFish;
@@ -21,11 +25,11 @@ public class Ingredient_Net : GameItem
     public Vector3 shrimpLocalPos = new Vector3(-0.365000874f, -0.0890001357f, -0.423000485f);
     public Vector3 lettuceLocalPos = new Vector3(0, 0.418000013f, 0);
 
-    public override void Interact(PlayerInteractController player)
-    {
-        // 기본 상호작용: 재료를 주움
-        //Pickup(player);
-    }
+    //public override void Interact(PlayerInteractController player)
+    //{
+    //    // 기본 상호작용: 재료를 주움
+    //    // Pickup(player);
+    //}
 
     // 상태 변경 메소드
     public void ChangeState(IngredientState newState)
@@ -38,9 +42,16 @@ public class Ingredient_Net : GameItem
     // Ingredient 핸들링과 관련된 로직
     public void HandleIngredient(Transform something, IngredientType handle, bool isActive)
     {
-
-        MeshCollider collider = transform.parent.GetComponent<MeshCollider>();
-        collider.isTrigger = isActive;
+        if (handle == IngredientType.Pot || handle == IngredientType.Pan)
+        {
+            BoxCollider collider = transform.GetComponent<BoxCollider>();
+            collider.isTrigger = isActive;
+        }
+        else
+        {
+            MeshCollider collider = transform.parent.GetComponent<MeshCollider>();
+            collider.isTrigger = isActive;
+        }
 
         Vector3 localPosition;
         Quaternion localRotation;
@@ -59,10 +70,29 @@ public class Ingredient_Net : GameItem
                 localPosition = lettuceLocalPos;
                 localRotation = Quaternion.identity;
                 break;
+            case IngredientType.Tortilla:
+                localPosition = Vector3.zero;
+                localRotation = Quaternion.Euler(new Vector3(0, 90f, 0));
+                break;
+            case IngredientType.SeaWeed:
+                localPosition = Vector3.zero;
+                localRotation = Quaternion.Euler(new Vector3(90f, 0, 0));
+                break;
+            case IngredientType.Pot:
+            case IngredientType.Pan:
             case IngredientType.Tomato:
+            case IngredientType.PizzaTomato:
             case IngredientType.Cucumber:
             case IngredientType.Chicken:
             case IngredientType.Potato:
+            case IngredientType.Rice:
+            case IngredientType.Pepperoni:
+            case IngredientType.Meat:
+            case IngredientType.Dough:
+            case IngredientType.Cheese:
+            case IngredientType.SushiRice:
+            case IngredientType.SushiFish:
+            case IngredientType.SushiCucumber:
                 localPosition = Vector3.zero;
                 localRotation = Quaternion.identity;
                 break;
@@ -70,11 +100,33 @@ public class Ingredient_Net : GameItem
                 throw new ArgumentOutOfRangeException(nameof(handle), $"Unsupported handle type: {handle}");
         }
 
-        Transform parentTransform = transform.parent;
-        parentTransform.localPosition = localPosition;
-        parentTransform.localRotation = localRotation;
+        Transform parentTransform;
+        if (handle == IngredientType.Pot || handle == IngredientType.Pan)
+        {
+            parentTransform = transform;
+            parentTransform.localPosition = localPosition;
+            parentTransform.localRotation = localRotation;
+        }
+        else
+        {
+            parentTransform = transform.parent;
+            parentTransform.localPosition = localPosition;
+            parentTransform.localRotation = localRotation;
+        }
 
-        if (isActive)
+        if (isActive && handle == IngredientType.Pot)
+        {
+            parentTransform.SetParent(something);
+            parentTransform.localRotation = Quaternion.identity;
+            parentTransform.localPosition = new Vector3(-0.409999996f, 0, 2.8f);
+        }
+        else if (isActive && handle == IngredientType.Pan)
+        {
+            parentTransform.SetParent(something);
+            parentTransform.localRotation = Quaternion.identity;
+            parentTransform.localPosition = new Vector3(-0.409999996f, 0.39f, 3.84000003f);
+        }
+        else if (isActive)
         {
             parentTransform.parent.SetParent(something);
             parentTransform.parent.localRotation = Quaternion.identity;
@@ -105,6 +157,14 @@ public class Ingredient_Net : GameItem
             case IngredientType.Tomato:
             case IngredientType.Shrimp:
             case IngredientType.Lettuce:
+            case IngredientType.Potato:
+            case IngredientType.PizzaTomato:
+            case IngredientType.Dough:
+            case IngredientType.Pepperoni:
+            case IngredientType.Cheese:
+            case IngredientType.Meat:
+            case IngredientType.Chicken:
+            case IngredientType.Rice:
                 ApplyMaterialAndAdjustPosition(handType);
                 break;
             default:
@@ -302,7 +362,7 @@ public class Ingredient_Net : GameItem
         switch (handle)
         {
             case IngredientType.Lettuce:
-                positionOffset = isCooked ? new Vector3(0,0,0) : new Vector3(0, 0, 0);
+                positionOffset = isCooked ? new Vector3(0, 0, 0) : new Vector3(0, 0, 0);
                 break;
             case IngredientType.Shrimp:
                 if (!isCooked)
@@ -333,11 +393,18 @@ public class Ingredient_Net : GameItem
         transform.parent.parent.localRotation = rotationOffset * transform.parent.parent.localRotation;
     }
     #endregion
-    
+
     public void PlayerHandleOff(Transform parent, Vector3 target)
     {
         transform.SetParent(parent);
         transform.rotation = Quaternion.identity;
         transform.localPosition = target;
+    }
+
+    public void PlayerHandleOff(Transform parent, Vector3 target, Quaternion rotation)
+    {
+        transform.SetParent(parent);
+        transform.localPosition = target;
+        transform.rotation = rotation;
     }
 }

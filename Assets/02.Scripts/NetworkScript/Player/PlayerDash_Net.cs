@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.PointerEventData;
 
 public class PlayerDash_Net : NetworkBehaviour
 {
@@ -27,8 +28,8 @@ public class PlayerDash_Net : NetworkBehaviour
     [Header("Dash Curve")]
     public AnimationCurve dashCurve; // AnimationCurve를 대시의 세기 변화에 사용
 
-    [Header("Player Master Controller")]
-    //public PlayerMasterController2_Net masterController;
+    //[Header("Player Master Controller")]
+    //public PlayerMasterController2 masterController;
 
     [Header("Mobile Button")]
     public Button dashButton; // UI 버튼 참조
@@ -50,8 +51,12 @@ public class PlayerDash_Net : NetworkBehaviour
 
     public void OnDash(InputValue inputButton)
     {
-        //if (inputButton.isPressed && !isDashing && masterController.currentPlayer == this.gameObject)
-            Dash();
+        if (isLocalPlayer)
+        {
+            //if (inputButton.isPressed && !isDashing && masterController.currentPlayer == this.gameObject)
+            if (inputButton.isPressed && !isDashing)
+                Dash();
+        }
     }
 
     // UI 버튼을 클릭할 때 호출될 메서드
@@ -59,6 +64,7 @@ public class PlayerDash_Net : NetworkBehaviour
     {
         // 현재 활성화 상태인지 확인해야할듯
         //if (!isDashing && dashCdTimer <= 0 && masterController.currentPlayer == this.gameObject)
+        if (!isDashing && dashCdTimer <= 0)
             Dash();
     }
 

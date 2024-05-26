@@ -31,7 +31,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
 
     //[Header("PlayerInputSystem")]
     //[SerializeField] private GameObject PlayerInputSystem;
-    //private PlayerMasterController2_Net masterController;
+    //private PlayerMasterController2 masterController;
 
     [Header("Mobile Button")]
     public Button pickupButton; // 모바일 줍기/놓기 버튼
@@ -39,49 +39,54 @@ public class PlayerInteractController_Net : NetworkBehaviour
 
     Vector3 placeTransform = Vector3.zero;
 
-    private void Awake()
-    {
-        //masterController = PlayerInputSystem.GetComponent<PlayerMasterController2_Net>();
-        //
-        //if (pickupButton != null && masterController.currentPlayer == this.gameObject)
-        //{
-        //    pickupButton.onClick.AddListener(MobilePickupOrPlace); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
-        //}
-        //
-        //if (cookButton != null && masterController.currentPlayer == this.gameObject)
-        //{
-        //    cookButton.onClick.AddListener(MobileCookOrThrow); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
-        //}
-    }
+    //private void Awake()
+    //{
+    //    masterController = PlayerInputSystem.GetComponent<PlayerMasterController2>();
+    //
+    //    if (pickupButton != null && masterController.currentPlayer == this.gameObject)
+    //    {
+    //        pickupButton.onClick.AddListener(MobilePickupOrPlace); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
+    //    }
+    //
+    //    if (cookButton != null && masterController.currentPlayer == this.gameObject)
+    //    {
+    //        cookButton.onClick.AddListener(MobileCookOrThrow); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
+    //    }
+    //}
 
     private void Update()
     {
-        SetHand();
+        if(isLocalPlayer)
+            SetHand();
     }
 
     #region OnSwitch
-    public void OnSwitch(InputValue inputValue)
-    {
-        //PlayerInputSystem.GetComponent<PlayerMasterController2_Net>().SwitchPlayerComponent();
-    }
+    //public void OnSwitch(InputValue inputValue)
+    //{
+    //    PlayerInputSystem.GetComponent<PlayerMasterController2>().SwitchPlayerComponent();
+    //}
     #endregion
 
     #region OnCookOrThrow
     public void OnCookOrThrow(InputValue inputValue)
     {
         Debug.Log("OnCookOrThrow");
-        if (checkInteractObject())
+        //Debug.Log(interactObject.transform.parent.name);
+        if (isLocalPlayer) 
         {
-            if (ShouldStartCutting())
-                StartCuttingProcess();
-            else
-                SoundManager.Instance.PlayEffect("no");
-        }
-        else
-        {
-            if (isHolding && CanThrowIngredient())
+            if (checkInteractObject())
             {
-                ThrowIngredient();
+                if (ShouldStartCutting())
+                    StartCuttingProcess();
+                else
+                    SoundManager.Instance.PlayEffect("no");
+            }
+            else
+            {
+                if (isHolding && CanThrowIngredient())
+                {
+                    ThrowIngredient();
+                }
             }
         }
     }
@@ -89,6 +94,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
     public void MobileCookOrThrow()
     {
         Debug.Log("MobileCookOrThrow");
+        Debug.Log(interactObject);
         if (checkInteractObject())
         {
             if (ShouldStartCutting())
@@ -121,23 +127,23 @@ public class PlayerInteractController_Net : NetworkBehaviour
     {
         return objectHighlight.objectType == ObjectHighlight.ObjectType.Board &&
                interactObject.transform.parent.childCount > 2 &&
-               !interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked &&
+               !interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().isCooked &&
                !isHolding &&
-                interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().type != Ingredient.IngredientType.Rice &&
-                interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().type != Ingredient.IngredientType.SeaWeed &&
-                interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().type != Ingredient.IngredientType.Tortilla;
+                interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().type != Ingredient_Net.IngredientType.Rice &&
+                interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().type != Ingredient_Net.IngredientType.SeaWeed &&
+                interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().type != Ingredient_Net.IngredientType.Tortilla;
     }
 
     void StartCuttingProcess()
     {
-        var cuttingBoard = interactObject.transform.GetChild(0).GetComponent<CuttingBoard>();
+        var cuttingBoard = interactObject.transform.GetChild(0).GetComponent<CuttingBoard_Net>();
 
         if (cuttingBoard._CoTimer == null) // 한번도 실행 안된거면 시작 가능
         {
             anim.SetTrigger("startCut");
             cuttingBoard.Pause = false;
             cuttingBoard.CuttingTime = 0;
-            cuttingBoard.StartCutting1();
+            cuttingBoard.StartCutting1(transform.gameObject);
         }
         else if (cuttingBoard.Pause) // 실행되다 만거라면
         {
@@ -148,7 +154,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
 
     bool CanThrowIngredient()
     {
-        return transform.GetChild(1).GetComponent<Ingredient>() == null;
+        return transform.GetChild(1).GetComponent<Ingredient_Net>() == null;
     }
 
     void ThrowIngredient()
@@ -216,7 +222,8 @@ public class PlayerInteractController_Net : NetworkBehaviour
     #region OnPickupOrPlace
     public void OnPickupOrPlace(InputValue inputValue)
     {
-        ProcessInteraction();
+        if(isLocalPlayer)
+            ProcessInteraction();
         //SetHand();
     }
 
@@ -233,8 +240,11 @@ public class PlayerInteractController_Net : NetworkBehaviour
         if (isHolding && objectHighlight == null)
         {
             // 뭔가 들고있고 앞에 상호작용 객체가 없을때
-            HoldingItemDropObject();
-            return;
+            if (isLocalPlayer)
+            {
+                CmdHoldingItemDropObject();
+                return;
+            }
         }
 
         Debug.Log($"objectHighlight.objectType : {objectHighlight.objectType}");
@@ -243,36 +253,54 @@ public class PlayerInteractController_Net : NetworkBehaviour
             case ObjectHighlight.ObjectType.CounterTop:
             case ObjectHighlight.ObjectType.Board:
             case ObjectHighlight.ObjectType.Return:
-                HandleCounterTopOrBoardInteraction();
+                if (isLocalPlayer)
+                    HandleCounterTopOrBoardInteraction();
                 break;
             case ObjectHighlight.ObjectType.Craft:
-                HandleCraftInteraction();
+                if (isLocalPlayer)
+                    HandleCraftInteraction();
                 break;
             case ObjectHighlight.ObjectType.Bin:
-                HandleBinInteraction();
+                if (isLocalPlayer)
+                    HandleBinInteraction();
                 break;
             case ObjectHighlight.ObjectType.Station:
-                HandleStationInteraction();
+                if (isLocalPlayer)
+                    HandleStationInteraction();
                 break;
             case ObjectHighlight.ObjectType.Oven:
-                HandleOvenInteraction();
+                if (isLocalPlayer)
+                    HandleOvenInteraction();
                 break;
             default:
-                HandleGeneralObjectInteraction();
+                if (isLocalPlayer)
+                    HandleGeneralObjectInteraction();
                 break;
         }
+    }
+
+    [Command]
+    private void CmdHoldingItemDropObject()
+    {
+        RpcHoldingItemDropObject();
+    }
+
+    [ClientRpc]
+    private void RpcHoldingItemDropObject()
+    {
+        HoldingItemDropObject();
     }
 
     private void HandleOvenInteraction()
     {
         // Ingredient 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
-        if (isHolding && transform.GetChild(1).gameObject.GetComponent<Ingredient>() != null
-            && transform.GetChild(1).gameObject.GetComponent<Ingredient>().type == Ingredient.IngredientType.Plate)
+        if (isHolding && transform.GetChild(1).gameObject.GetComponent<Ingredient_Net>() != null
+            && transform.GetChild(1).gameObject.GetComponent<Ingredient_Net>().type == Ingredient_Net.IngredientType.Plate)
         {
             GameObject plateComponent = transform.GetChild(1).gameObject;  // Plates Object
             GameObject Oven = objectHighlight.transform.parent.gameObject;
             bool isDough = plateComponent.transform.GetChild(9).gameObject.activeSelf;
-            if (Oven.transform.childCount == 2 && !plateComponent.transform.GetComponent<Ingredient>().pizzazIsCooked && isDough)
+            if (Oven.transform.childCount == 2 && !plateComponent.transform.GetComponent<Ingredient_Net>().pizzazIsCooked && isDough)
             {
                 plateComponent.transform.SetParent(Oven.transform);
 
@@ -318,17 +346,17 @@ public class PlayerInteractController_Net : NetworkBehaviour
     // Station
     private void HandleStationInteraction()
     {
-        if (isHolding && transform.GetChild(1).gameObject.GetComponent<Ingredient>() != null
-            && transform.GetChild(1).gameObject.GetComponent<Ingredient>().type == Ingredient.IngredientType.Plate)
+        if (isHolding && transform.GetChild(1).gameObject.GetComponent<Ingredient_Net>() != null
+            && transform.GetChild(1).gameObject.GetComponent<Ingredient_Net>().type == Ingredient_Net.IngredientType.Plate)
         {
             // Ingredient 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
-            Plates plateComponent = transform.GetChild(1).gameObject.GetComponent<Plates>();  // Plates 컴포넌트를 가져옴
+            Plates_Net plateComponent = transform.GetChild(1).gameObject.GetComponent<Plates_Net>();  // Plates 컴포넌트를 가져옴
 
-            if (GameManager.instance.CheckMenu(plateComponent.containIngredients))
+            if (GameManager_Net.instance.CheckMenu(plateComponent.containIngredients))
             {
                 // 접시의 재료가 메뉴와 일치하면
                 SoundManager.Instance.PlayEffect("right");  // 성공 효과음 재생
-                GameManager.instance.MakeOrder();  // 주문을 만듦
+                GameManager_Net.instance.MakeOrder();  // 주문을 만듦
             }
             else
             {
@@ -340,7 +368,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
             Destroy(transform.GetChild(1).gameObject);  // 접시 전체를 삭제 (추후 재활용을 고려)
             isHolding = false;  // 아이템을 들고 있는 상태를 해제
             anim.SetBool("isHolding", isHolding);  // 애니메이션 상태를 업데이트
-            GameManager.instance.PlateReturn();  // 접시 반환 처리
+            GameManager_Net.instance.PlateReturn();  // 접시 반환 처리
         }
 
     }
@@ -348,17 +376,18 @@ public class PlayerInteractController_Net : NetworkBehaviour
     // CounterTop, Board
     private void HandleCounterTopOrBoardInteraction()
     {
-
         if (canActive && isHolding && !objectHighlight.onSomething)
         {
             // 내가 뭘 들고있고, 테이블이나 찹핑테이블 위에 없을떄
-            TablePlaceOrDropObject(false);
+            CmdTablePlaceOrDropObject(false);
+            //TablePlaceOrDropObject(false);
         }
         else if (canActive && isHolding && objectHighlight.onSomething)
         {
             // 내가 뭘 들고있고, 테이블이나 찹핑테이블 리턴 위에 있을때
             Debug.Log("뭔가 있냐?");
-            TablePlaceOrDropObject(true);
+            CmdTablePlaceOrDropObject(true);
+            //TablePlaceOrDropObject(true);
         }
         else if (canActive && interactObject.GetComponent<ObjectHighlight>().onSomething)
         {
@@ -370,7 +399,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
             }
 
             if (handleThing.CompareTag("Ingredient") && objectHighlight.objectType == ObjectHighlight.ObjectType.Board &&
-                interactObject.transform.GetChild(0).GetComponent<CuttingBoard>().cookingBar.IsActive())
+                interactObject.transform.GetChild(0).GetComponent<CuttingBoard_Net>().cookingBar.IsActive())
             {
                 // 손질 중인 재료는 집을 수 없음
             }
@@ -410,7 +439,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
     // Bin
     private void HandleBinInteraction()
     {
-        if (isHolding && transform.GetChild(1).GetComponent<Ingredient>()?.type == Ingredient.IngredientType.Plate)
+        if (isHolding && transform.GetChild(1).GetComponent<Ingredient_Net>()?.type == Ingredient_Net.IngredientType.Plate)
         {
             DisposePlate();
         }
@@ -474,6 +503,18 @@ public class PlayerInteractController_Net : NetworkBehaviour
         HandleObject(handleThing);
     }
 
+    [Command]
+    private void CmdTablePlaceOrDropObject(bool drop)
+    {
+        RpcTablePlaceOrDropObject(drop);
+    }
+
+    [ClientRpc]
+    private void RpcTablePlaceOrDropObject(bool drop)
+    {
+        TablePlaceOrDropObject(drop);
+    }
+
     // 내가 뭔가를 들고있을 때
     // true 테이블 위에 뭔가 있음 , false 테이블 위에 뭔가 없음
     private void TablePlaceOrDropObject(bool drop)
@@ -484,24 +525,25 @@ public class PlayerInteractController_Net : NetworkBehaviour
             // true 테이블 위에 뭔가 있는데 내가 가진게 접시고, 음식이면 담음
             if (CanPlaceIngredient())
             {
-                PlaceIngredient();
+                CmdPlaceIngredient();
+                //PlaceIngredient();
             }
             else
             {
                 SoundManager.Instance.PlayEffect("no");
             }
 
-            if (objectHighlight.transform.parent.GetChild(2) != null)
+            if (objectHighlight.transform.parent.childCount > 2)
             {
                 GameObject ingredientObj = transform.GetChild(1).gameObject;
-                var ingredient = ingredientObj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type;
+                var ingredient = ingredientObj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().type;
 
                 GameObject potAndPan = objectHighlight.transform.parent.GetChild(2).gameObject;
                 if (objectHighlight.transform.parent.GetChild(2).name.Equals("PFX_PanFire"))
                     potAndPan = objectHighlight.transform.parent.GetChild(3).gameObject;
 
                 // 테이블에 있는게, Pan이고 내가 든게 미트, 닭고기면 실행
-                if (potAndPan.CompareTag("Pan") && (ingredient == Ingredient.IngredientType.Meat || ingredient == Ingredient.IngredientType.Chicken))
+                if (potAndPan.CompareTag("Pan") && (ingredient == Ingredient_Net.IngredientType.Meat || ingredient == Ingredient_Net.IngredientType.Chicken))
                 {
                     ingredientObj.transform.SetParent(potAndPan.transform);
                     // 위치 설정
@@ -520,7 +562,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
                 }
 
                 // 테이블에 있는게, Pot이고 내가 든게 쌀이고 화덕이면 Pot에 붙이기
-                if (potAndPan.CompareTag("Pot") && ingredient == Ingredient.IngredientType.Rice)
+                if (potAndPan.CompareTag("Pot") && ingredient == Ingredient_Net.IngredientType.Rice)
                 {
                     ingredientObj.transform.SetParent(potAndPan.transform);
                     // 위치 설정
@@ -542,11 +584,27 @@ public class PlayerInteractController_Net : NetworkBehaviour
         }
         else
         {
-            // false 테이블 위에 뭔가 없음 => 놓기.
-            GameObject handlingThing = transform.GetChild(1).gameObject;
-            Debug.Log($"handlingThing.name : {handlingThing.name}");
-            HandleObject(handlingThing, false);
+            if (transform.childCount > 1)
+            {
+                // false 테이블 위에 뭔가 없음 => 놓기.
+                GameObject handlingThing = transform.GetChild(1).gameObject;
+                Debug.Log($"handlingThing.name : {handlingThing.name}");
+                HandleObject(handlingThing, false);
+            }
         }
+    }
+
+    [Command]
+    private void CmdPlaceIngredient()
+    {
+        // PlaceIngredient() 서버에서 호출
+        RpcPlaceIngredient();
+    }
+
+    [ClientRpc]
+    private void RpcPlaceIngredient()
+    {
+        PlaceIngredient();
     }
 
     private bool CanPlaceIngredient()
@@ -560,8 +618,8 @@ public class PlayerInteractController_Net : NetworkBehaviour
 
     private bool IsPlate(UnityEngine.Transform obj)
     {
-        var handle = obj.GetComponent<Ingredient>();
-        return handle != null && handle.type == Ingredient.IngredientType.Plate;
+        var handle = obj.GetComponent<Ingredient_Net>();
+        return handle != null && handle.type == Ingredient_Net.IngredientType.Plate;
     }
 
     private bool IsHoldingCookedIngredient()
@@ -569,19 +627,19 @@ public class PlayerInteractController_Net : NetworkBehaviour
         var holdingObj = transform.GetChild(1).GetChild(0);
         if (holdingObj.childCount > 0)
         {
-            var handle = holdingObj.GetChild(0).GetComponent<Ingredient>();
+            var handle = holdingObj.GetChild(0).GetComponent<Ingredient_Net>();
             bool checkisCooked = handle.isCooked;
 
             // 김은 조리 안되어도 접시 올라감
-            if (handle.type == Ingredient.IngredientType.SeaWeed ||
-                handle.type == Ingredient.IngredientType.Tortilla)
+            if (handle.type == Ingredient_Net.IngredientType.SeaWeed ||
+                handle.type == Ingredient_Net.IngredientType.Tortilla)
             {
                 checkisCooked = true;
             }
 
             // 미트 치킨은 조리안하면 못올라감
-            //if (handle.type == Ingredient.IngredientType.Meat ||
-            //    handle.type == Ingredient.IngredientType.Chicken)
+            //if (handle.type == Ingredient_Net.IngredientType.Meat ||
+            //    handle.type == Ingredient_Net.IngredientType.Chicken)
             //{
             //    checkisCooked = false;
             //}
@@ -593,16 +651,28 @@ public class PlayerInteractController_Net : NetworkBehaviour
 
     private void PlaceIngredient()
     {
-        var plate = interactObject.transform.parent.GetChild(2).GetComponent<Plates>();
-        var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient>().type;
+        var plate = interactObject.transform.parent.GetChild(2).GetComponent<Plates_Net>();
+        var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient_Net>().type;
         if (plate.AddIngredient(ingredient))
         {
-            SoundManager.Instance.PlayEffect("put");
-            plate.InstantiateUI();
+            CmdPlayPutSound();
+            plate.CmdInstantiateUI();
             Destroy(transform.GetChild(1).gameObject);
             isHolding = false;
             anim.SetBool("isHolding", false);
         }
+    }
+
+    [Command]
+    private void CmdPlayPutSound()
+    {
+        RpcPlayPutSound();
+    }
+
+    [ClientRpc]
+    private void RpcPlayPutSound()
+    {
+        SoundManager.Instance.PlayEffect("put");
     }
 
     private void HandleObject(GameObject obj, bool isPickingUp = true)
@@ -624,15 +694,25 @@ public class PlayerInteractController_Net : NetworkBehaviour
             else if (obj.CompareTag("Pan") || obj.CompareTag("Pot"))
             {
                 //인데 Ingredient의 IsCooked = true이면 재료꺼내기.
-                if (obj.transform.childCount == 3 && obj.transform.GetChild(2).transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked)
+                if (obj.transform.childCount == 3 && obj.transform.GetChild(2).transform.GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().isCooked)
                 {
                     //포트는 놔둠
                     objectHighlight.onSomething = true;
+
+                    if (obj.CompareTag("Pan"))
+                    {
+                        obj.GetComponent<PanOnStove>().inSomething = false;
+                    }
+                    else if (obj.CompareTag("Pot"))
+                    {
+                        obj.GetComponent<PotOnStove>().inSomething = false;
+                    }
+
                     Debug.Log($"obj : {obj.name}");
 
                     GameObject cookedIngredientObj = obj.transform.GetChild(2).gameObject;
                     cookedIngredientObj.transform.SetParent(transform); // 플레이어의 하위 객체로 설정
-                    cookedIngredientObj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().HandleIngredient(transform, cookedIngredientObj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type, true);
+                    cookedIngredientObj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().HandleIngredient(transform, cookedIngredientObj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().type, true);
 
                     anim.SetBool("isHolding", true);
                     isHolding = true;
@@ -640,7 +720,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
                 else
                 {
                     obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    obj.transform.GetComponent<Ingredient>().HandleIngredient(transform, obj.transform.GetComponent<Ingredient>().type, true);
+                    obj.transform.GetComponent<Ingredient_Net>().HandleIngredient(transform, obj.transform.GetComponent<Ingredient_Net>().type, true);
                     objectHighlight.onSomething = false;
 
                     obj.transform.SetParent(transform); // 플레이어의 하위 객체로 설정
@@ -654,7 +734,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
             else
             {
                 obj.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                obj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().HandleIngredient(transform, obj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type, true);
+                obj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().HandleIngredient(transform, obj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().type, true);
 
                 obj.transform.SetParent(transform); // 플레이어의 하위 객체로 설정
                 // 플레이어에서 위치 잡기
@@ -678,6 +758,11 @@ public class PlayerInteractController_Net : NetworkBehaviour
                 placeTransform = interactObject.transform.parent.GetChild(1).localPosition + new Vector3(0.10746f, 0.00500000005f, 0.0235699993f);
                 Debug.Log(interactObject.transform.parent.GetChild(1).name);
             }
+            else if (interactObject.transform.parent.CompareTag("MineBoard"))
+            {
+                Debug.Log("MineBoard");
+                placeTransform = interactObject.transform.parent.GetChild(1).localPosition + new Vector3(0f, 0.0055f, 0f);
+            }
             else
             {
                 placeTransform = interactObject.transform.parent.GetChild(1).localPosition;
@@ -689,12 +774,12 @@ public class PlayerInteractController_Net : NetworkBehaviour
             {
                 objectHighlight.onSomething = true;
                 isHolding = false;
-                handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient>().isOnDesk = true;
-                handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient>().
+                handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient_Net>().isOnDesk = true;
+                handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient_Net>().
                     IngredientHandleOff(
                     interactObject.transform.parent,
                     placeTransform,
-                    handleThing.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type);
+                    handleThing.transform.GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().type);
             }
             else if (handleThing.CompareTag("Pot"))
             {
@@ -702,10 +787,10 @@ public class PlayerInteractController_Net : NetworkBehaviour
                 {
                     objectHighlight.onSomething = true;
                     isHolding = false;
-                    handleThing.GetComponent<Ingredient>().isOnDesk = true;
+                    handleThing.GetComponent<Ingredient_Net>().isOnDesk = true;
                     handleThing.transform.GetChild(0).GetComponent<BoxCollider>().size /= 2f;
 
-                    handleThing.GetComponent<Ingredient>().
+                    handleThing.GetComponent<Ingredient_Net>().
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform, Quaternion.LookRotation(playerDirection).normalized);
                 }
@@ -716,8 +801,8 @@ public class PlayerInteractController_Net : NetworkBehaviour
                 {
                     objectHighlight.onSomething = true;
                     isHolding = false;
-                    handleThing.GetComponent<Ingredient>().isOnDesk = true;
-                    handleThing.GetComponent<Ingredient>().
+                    handleThing.GetComponent<Ingredient_Net>().isOnDesk = true;
+                    handleThing.GetComponent<Ingredient_Net>().
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform, Quaternion.LookRotation(playerDirection).normalized);
                 }
@@ -730,8 +815,8 @@ public class PlayerInteractController_Net : NetworkBehaviour
                 {
                     objectHighlight.onSomething = true;
                     isHolding = false;
-                    handleThing.GetComponent<Ingredient>().isOnDesk = true;
-                    handleThing.GetComponent<Ingredient>().
+                    handleThing.GetComponent<Ingredient_Net>().isOnDesk = true;
+                    handleThing.GetComponent<Ingredient_Net>().
                         PlayerHandleOff(interactObject.transform.parent,
                         placeTransform);
                 }
@@ -743,19 +828,73 @@ public class PlayerInteractController_Net : NetworkBehaviour
         }
     }
 
+    //public void GetCraftIngredient(GameObject foodPrefabs)
+    //{
+    //    GameObject newFood = Instantiate(foodPrefabs, Vector3.zero, Quaternion.identity);
+    //    isHolding = true;
+    //    newFood.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+    //    Craft_Net craft_Net = interactObject.GetComponent<Craft_Net>();
+    //    newFood.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient_Net>().HandleIngredient(transform, craft_Net.ConvertFoodTypeToHandleType(craft_Net.food), true);
+    //}
+
     private void PickupFromCraft()
     {
         SoundManager.Instance.PlayEffect("take");
         // Craft에서 아이템 꺼내기 로직 구현
-        interactObject.GetComponent<Craft>().OpenCraftPlayer1();
+        interactObject.GetComponent<Craft_Net>().OpenCraft();
+        GameObject ingredient = interactObject.GetComponent<Craft_Net>().foodPrefabs;
+        GetCraftIngredient(ingredient);
         objectHighlight.onSomething = false;
         isHolding = true;
         anim.SetBool("isHolding", isHolding);
     }
 
+    // 그냥 지가 꺼내고 아무도 못봄.
+    //public void GetCraftIngredient(GameObject foodPrefabs)
+    //{
+    //    Ingredient_Net.IngredientType it =  foodPrefabs.transform.GetChild(0).GetChild(0).transform.GetComponent<Ingredient_Net>().type;
+    //    OverNetworkRoomManager manager = (OverNetworkRoomManager)NetworkRoomManager.singleton;
+    //    GameObject foodPrefab = manager.GetCraftIngredient_RoomManager(it);
+    //    isHolding = true;
+    //    foodPrefab.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+    //    Craft_Net craft_Net = interactObject.GetComponent<Craft_Net>();
+    //    foodPrefab.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient_Net>().HandleIngredient(transform, craft_Net.ConvertFoodTypeToHandleType(craft_Net.food), true);
+    //}
+
+    public void GetCraftIngredient(GameObject foodPrefabs)
+    {
+        Ingredient_Net.IngredientType it = foodPrefabs.transform.GetChild(0).GetChild(0).transform.GetComponent<Ingredient_Net>().type;
+        CmdRequestCraftIngredient(it);
+    }
+
+    [Command]
+    private void CmdRequestCraftIngredient(Ingredient_Net.IngredientType it)
+    {
+        OverNetworkRoomManager manager = (OverNetworkRoomManager)NetworkRoomManager.singleton;
+        GameObject foodPrefab = manager.GetCraftIngredient_RoomManager(it);
+        NetworkServer.Spawn(foodPrefab);
+        RpcAssignFoodToPlayer(foodPrefab.GetComponent<NetworkIdentity>().netId, it);
+    }
+
+    [ClientRpc]
+    private void RpcAssignFoodToPlayer(uint netId , Ingredient_Net.IngredientType it)
+    {
+        GameObject newFood = NetworkClient.spawned[netId].gameObject;
+        if (newFood != null)
+        {
+            isHolding = true;
+            newFood.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            newFood.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient_Net>().HandleIngredient(transform, it, true);
+        }
+        else
+        {
+            Debug.LogWarning("Failed to assign food to player, newFood is null.");
+        }
+    }
+
     private void DisposePlate()
     {
-        transform.GetChild(1).gameObject.GetComponent<Plates>().ClearIngredient();
+        transform.GetChild(1).gameObject.GetComponent<Plates_Net>().ClearIngredient();
     }
 
     private void DisposeObject()
@@ -773,7 +912,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
         // 재료 줍기 로직 상세 구현 필요
         GameObject ingredientObj = interactObject.transform.parent.gameObject;
         ingredientObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        ingredientObj.transform.GetChild(0).GetComponent<Ingredient>().HandleIngredient(transform, ingredientObj.transform.GetChild(0).GetComponent<Ingredient>().type, true);
+        ingredientObj.transform.GetChild(0).GetComponent<Ingredient_Net>().HandleIngredient(transform, ingredientObj.transform.GetChild(0).GetComponent<Ingredient_Net>().type, true);
     }
 
     private void PickupPlate()
@@ -794,7 +933,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
         anim.SetBool("isHolding", isHolding);
         GameObject ingredientObj = interactObject.transform.parent.gameObject;
         ingredientObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        ingredientObj.transform.GetComponent<Ingredient>().HandleIngredient(transform, ingredientObj.transform.GetComponent<Ingredient>().type, true);
+        ingredientObj.transform.GetComponent<Ingredient_Net>().HandleIngredient(transform, ingredientObj.transform.GetComponent<Ingredient_Net>().type, true);
     }
 
     #endregion
@@ -807,11 +946,11 @@ public class PlayerInteractController_Net : NetworkBehaviour
         //    HandleDeadZone();
         //    return;
         //}
+        if (isLocalPlayer)
+            if (CheckForIngredientHandling(other)) return;
 
-        if (CheckForIngredientHandling(other))
-            return;
-
-        HandleActiveObjectInteraction(other);
+        if(isLocalPlayer)
+            HandleActiveObjectInteraction(other);
     }
 
     private void HandleDeadZone()
@@ -843,17 +982,17 @@ public class PlayerInteractController_Net : NetworkBehaviour
 
     private void DeactivateObjectHighlight()
     {
-        interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(interactObject.GetComponent<Ingredient>().isCooked);
+        interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(interactObject.GetComponent<Ingredient_Net>().isCooked);
     }
 
     private bool HandlePickupIngredient(Collider other)
     {
         if (other.CompareTag("Ingredient"))
         {
-            if (interactObject == null && !other.GetComponent<Ingredient>().isOnDesk)
+            if (interactObject == null && !other.GetComponent<Ingredient_Net>().isOnDesk)
             {
                 SetinteractObject(other.gameObject);
-                other.GetComponent<ObjectHighlight>().ActivateHighlight(other.GetComponent<Ingredient>().isCooked);
+                other.GetComponent<ObjectHighlight>().ActivateHighlight(other.GetComponent<Ingredient_Net>().isCooked);
                 return true;
             }
         }
@@ -881,7 +1020,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
 
         if (other.CompareTag("Ingredient"))
         {
-            other.GetComponent<ObjectHighlight>().ActivateHighlight(other.GetComponent<Ingredient>().isCooked);
+            other.GetComponent<ObjectHighlight>().ActivateHighlight(other.GetComponent<Ingredient_Net>().isCooked);
         }
         else
         {
@@ -898,13 +1037,14 @@ public class PlayerInteractController_Net : NetworkBehaviour
     #region OnTriggerStay
     private void OnTriggerStay(Collider other)
     {
-        if (ShouldReturnEarly(other))
-            return;
+        if (isLocalPlayer)
+            if (ShouldReturnEarly(other)) return;
 
-        if (HandleActiveIngredientSwitch(other))
-            return;
+        if (isLocalPlayer)
+            if (HandleActiveIngredientSwitch(other)) return;
 
-        InitializeActiveObjectIfNull(other);
+        if (isLocalPlayer)
+            InitializeActiveObjectIfNull(other);
     }
 
     private bool ShouldReturnEarly(Collider other)
@@ -931,16 +1071,16 @@ public class PlayerInteractController_Net : NetworkBehaviour
 
     private void SwitchActiveObject()
     {
-        interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(interactObject.GetComponent<Ingredient>().isCooked);
+        interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(interactObject.GetComponent<Ingredient_Net>().isCooked);
         interactObject = nextInteractObject;
         objectHighlight = interactObject.GetComponent<ObjectHighlight>();
-        interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(interactObject.GetComponent<Ingredient>().isCooked);
+        interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(interactObject.GetComponent<Ingredient_Net>().isCooked);
         nextInteractObject = null;
     }
 
     private void ClearActiveObjects()
     {
-        interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(interactObject.GetComponent<Ingredient>().isCooked);
+        interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(interactObject.GetComponent<Ingredient_Net>().isCooked);
         ResetinteractObjects();
     }
 
@@ -960,7 +1100,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
 
     private void HighlightBasedOnTag(Collider other)
     {
-        bool highlightState = other.CompareTag("Ingredient") ? other.GetComponent<Ingredient>().isCooked : true;
+        bool highlightState = other.CompareTag("Ingredient") ? other.GetComponent<Ingredient_Net>().isCooked : true;
         other.GetComponent<ObjectHighlight>().ActivateHighlight(highlightState);
     }
     #endregion
@@ -968,19 +1108,23 @@ public class PlayerInteractController_Net : NetworkBehaviour
     #region OnTriggerExit
     private void OnTriggerExit(Collider other)
     {
-        if (ShouldDeactivateObjects())
+        if (isLocalPlayer)
         {
-            HandleBoardInteraction();
-            DeactivateObjects();
+            if (ShouldDeactivateObjects())
+            {
+                //HandleBoardInteraction();
+                DeactivateObjects();
+            }
+            else if (ShouldSwitchToNextObject(other))
+            {
+                SwitchActiveToNextObject();
+            }
+            else
+            {
+                ClearNextObject();
+            }
         }
-        else if (ShouldSwitchToNextObject(other))
-        {
-            SwitchActiveToNextObject();
-        }
-        else
-        {
-            ClearNextObject();
-        }
+
     }
 
     private bool ShouldDeactivateObjects()
@@ -998,7 +1142,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
         if (interactObject.GetComponent<ObjectHighlight>().objectType == ObjectHighlight.ObjectType.Board)
         {
             anim.SetBool("canCut", false);
-            interactObject.transform.GetChild(0).GetComponent<CuttingBoard>().PauseSlider(true);
+            interactObject.transform.GetChild(0).GetComponent<CuttingBoard_Net>().PauseSlider(true);
         }
     }
 
@@ -1030,7 +1174,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
     {
         if (interactObject != null && interactObject.GetComponent<ObjectHighlight>() != null)
         {
-            bool highlightState = interactObject.CompareTag("Ingredient") ? interactObject.GetComponent<Ingredient>().isCooked : true;
+            bool highlightState = interactObject.CompareTag("Ingredient") ? interactObject.GetComponent<Ingredient_Net>().isCooked : true;
             interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(highlightState);
         }
     }
@@ -1039,7 +1183,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
     {
         if (interactObject != null && interactObject.GetComponent<ObjectHighlight>() != null)
         {
-            bool highlightState = interactObject.CompareTag("Ingredient") ? interactObject.GetComponent<Ingredient>().isCooked : true;
+            bool highlightState = interactObject.CompareTag("Ingredient") ? interactObject.GetComponent<Ingredient_Net>().isCooked : true;
             interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(highlightState);
         }
     }
@@ -1093,7 +1237,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
         //switch (name)
         //{
         //    case "Plate":
-        //        //obj.GetComponent<Ingredient>().HandleIngredient(obj.transform, obj.transform.GetComponent<Ingredient>().type, true);
+        //        //obj.GetComponent<Ingredient_Net>().HandleIngredient(obj.transform, obj.transform.GetComponent<Ingredient_Net>().type, true);
         //        //Transform parentTransform = obj.transform.parent;
         //        //parentTransform.localPosition = localPosition;
         //        //parentTransform.localRotation = localRotation;
