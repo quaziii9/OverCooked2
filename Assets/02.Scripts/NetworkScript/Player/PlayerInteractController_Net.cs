@@ -253,22 +253,28 @@ public class PlayerInteractController_Net : NetworkBehaviour
             case ObjectHighlight.ObjectType.CounterTop:
             case ObjectHighlight.ObjectType.Board:
             case ObjectHighlight.ObjectType.Return:
-                HandleCounterTopOrBoardInteraction();
+                if (isLocalPlayer)
+                    HandleCounterTopOrBoardInteraction();
                 break;
             case ObjectHighlight.ObjectType.Craft:
-                HandleCraftInteraction();
+                if (isLocalPlayer)
+                    HandleCraftInteraction();
                 break;
             case ObjectHighlight.ObjectType.Bin:
-                HandleBinInteraction();
+                if (isLocalPlayer)
+                    HandleBinInteraction();
                 break;
             case ObjectHighlight.ObjectType.Station:
-                HandleStationInteraction();
+                if (isLocalPlayer)
+                    HandleStationInteraction();
                 break;
             case ObjectHighlight.ObjectType.Oven:
-                HandleOvenInteraction();
+                if (isLocalPlayer)
+                    HandleOvenInteraction();
                 break;
             default:
-                HandleGeneralObjectInteraction();
+                if (isLocalPlayer)
+                    HandleGeneralObjectInteraction();
                 break;
         }
     }
@@ -373,13 +379,15 @@ public class PlayerInteractController_Net : NetworkBehaviour
         if (canActive && isHolding && !objectHighlight.onSomething)
         {
             // 내가 뭘 들고있고, 테이블이나 찹핑테이블 위에 없을떄
-            TablePlaceOrDropObject(false);
+            CmdTablePlaceOrDropObject(false);
+            //TablePlaceOrDropObject(false);
         }
         else if (canActive && isHolding && objectHighlight.onSomething)
         {
             // 내가 뭘 들고있고, 테이블이나 찹핑테이블 리턴 위에 있을때
             Debug.Log("뭔가 있냐?");
-            TablePlaceOrDropObject(true);
+            CmdTablePlaceOrDropObject(true);
+            //TablePlaceOrDropObject(true);
         }
         else if (canActive && interactObject.GetComponent<ObjectHighlight>().onSomething)
         {
@@ -495,6 +503,18 @@ public class PlayerInteractController_Net : NetworkBehaviour
         HandleObject(handleThing);
     }
 
+    [Command]
+    private void CmdTablePlaceOrDropObject(bool drop)
+    {
+        RpcTablePlaceOrDropObject(drop);
+    }
+
+    [ClientRpc]
+    private void RpcTablePlaceOrDropObject(bool drop)
+    {
+        TablePlaceOrDropObject(drop);
+    }
+
     // 내가 뭔가를 들고있을 때
     // true 테이블 위에 뭔가 있음 , false 테이블 위에 뭔가 없음
     private void TablePlaceOrDropObject(bool drop)
@@ -505,14 +525,15 @@ public class PlayerInteractController_Net : NetworkBehaviour
             // true 테이블 위에 뭔가 있는데 내가 가진게 접시고, 음식이면 담음
             if (CanPlaceIngredient())
             {
-                PlaceIngredient();
+                CmdPlaceIngredient();
+                //PlaceIngredient();
             }
             else
             {
                 SoundManager.Instance.PlayEffect("no");
             }
 
-            if (objectHighlight.transform.parent.GetChild(2) != null)
+            if (objectHighlight.transform.parent.childCount > 2)
             {
                 GameObject ingredientObj = transform.GetChild(1).gameObject;
                 var ingredient = ingredientObj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().type;
@@ -563,11 +584,27 @@ public class PlayerInteractController_Net : NetworkBehaviour
         }
         else
         {
-            // false 테이블 위에 뭔가 없음 => 놓기.
-            GameObject handlingThing = transform.GetChild(1).gameObject;
-            Debug.Log($"handlingThing.name : {handlingThing.name}");
-            HandleObject(handlingThing, false);
+            if (transform.childCount > 1)
+            {
+                // false 테이블 위에 뭔가 없음 => 놓기.
+                GameObject handlingThing = transform.GetChild(1).gameObject;
+                Debug.Log($"handlingThing.name : {handlingThing.name}");
+                HandleObject(handlingThing, false);
+            }
         }
+    }
+
+    [Command]
+    private void CmdPlaceIngredient()
+    {
+        // PlaceIngredient() 서버에서 호출
+        RpcPlaceIngredient();
+    }
+
+    [ClientRpc]
+    private void RpcPlaceIngredient()
+    {
+        PlaceIngredient();
     }
 
     private bool CanPlaceIngredient()
@@ -618,12 +655,24 @@ public class PlayerInteractController_Net : NetworkBehaviour
         var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient_Net>().type;
         if (plate.AddIngredient(ingredient))
         {
-            SoundManager.Instance.PlayEffect("put");
-            plate.InstantiateUI();
+            CmdPlayPutSound();
+            plate.CmdInstantiateUI();
             Destroy(transform.GetChild(1).gameObject);
             isHolding = false;
             anim.SetBool("isHolding", false);
         }
+    }
+
+    [Command]
+    private void CmdPlayPutSound()
+    {
+        RpcPlayPutSound();
+    }
+
+    [ClientRpc]
+    private void RpcPlayPutSound()
+    {
+        SoundManager.Instance.PlayEffect("put");
     }
 
     private void HandleObject(GameObject obj, bool isPickingUp = true)

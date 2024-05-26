@@ -1,9 +1,10 @@
+using Mirror;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Plates_Net : MonoBehaviour
+public class Plates_Net : NetworkBehaviour
 {
     public List<Ingredient_Net.IngredientType> containIngredients = new List<Ingredient_Net.IngredientType>();
     public int limit = 1;
@@ -132,7 +133,14 @@ public class Plates_Net : MonoBehaviour
         return false;
     }
 
-    public void InstantiateUI()
+    [Command]
+    public void CmdInstantiateUI()
+    {
+        RpcInstantiateUI();
+    }
+
+    [ClientRpc]
+    private void RpcInstantiateUI()
     {
         if (containIngredients.Count == 1)
         {
