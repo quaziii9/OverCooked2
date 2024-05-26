@@ -16,8 +16,8 @@ public class AutoCheck : MonoBehaviour
         if (other.CompareTag("Player") || other.CompareTag("Plate")) return false;
 
         // 해당 오브젝트가 플레이어의 현재 상호작용 대상이 아니어야 함
-        var player = FindObjectOfType<PlayerInteractController_Net>();
-        var player2 = FindObjectOfType<Player2InteractController_Net>();
+        var player = FindObjectOfType<PlayerInteractController>();
+        var player2 = FindObjectOfType<Player2InteractController>();
         if (IsObjectHandledByPlayer(other, player) || IsObjectHandledByPlayer(other, player2))
             return false;
 
@@ -26,13 +26,13 @@ public class AutoCheck : MonoBehaviour
     }
 
     // 플레이어가 이미 처리 중인 오브젝트인지 확인
-    private bool IsObjectHandledByPlayer(Collider other, PlayerInteractController_Net player)
+    private bool IsObjectHandledByPlayer(Collider other, PlayerInteractController player)
     {
         return player.transform.childCount > 1 && player.transform.GetChild(1).GetChild(0) != null &&
                player.transform.GetChild(1).GetChild(0).childCount > 0 &&
                !player.transform.GetChild(1).GetChild(0).GetChild(0).Equals(other);
     }
-    private bool IsObjectHandledByPlayer(Collider other, Player2InteractController_Net player)
+    private bool IsObjectHandledByPlayer(Collider other, Player2InteractController player)
     {
         return player.transform.childCount > 1 && player.transform.GetChild(1).GetChild(0) != null &&
                player.transform.GetChild(1).GetChild(0).childCount > 0 &&

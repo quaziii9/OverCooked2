@@ -27,7 +27,7 @@ using TMPro;
 public class OverNetworkRoomManager : NetworkRoomManager
 {
 
-    #region Game Object Controller (GameScene에서만 적용)
+    #region Game Object SpawnPosition
 
 
 
@@ -397,69 +397,7 @@ public class OverNetworkRoomManager : NetworkRoomManager
         // GameScene으로 전환될 때 소유권 할당
         if (newSceneName == GameplayScene)
         {
-            AssignOwnershipToPlayers();
-        }
-    }
-
-    // 플레이어에게 오브젝트 소유권을 할당하는 메서드
-    private void AssignOwnershipToPlayers()
-    {
-        // PlayerAObject 스크립트를 가진 게임 오브젝트들을 찾아 리스트에 추가
-        foreach (var obj in FindObjectsOfType<PlayerAObject>())
-        {
-            playerAObjects.Add(obj.gameObject);
-        }
-
-        // PlayerBObject 스크립트를 가진 게임 오브젝트들을 찾아 리스트에 추가
-        foreach (var obj in FindObjectsOfType<PlayerBObject>())
-        {
-            playerBObjects.Add(obj.gameObject);
-        }
-
-        // 클라이언트 연결 순서에 따라 오브젝트 소유권 할당
-        int playerIndex = 0;
-        foreach (var conn in NetworkServer.connections.Values)
-        {
-            // 첫 번째 플레이어에게 playerAObjects 소유권을 할당
-            if (playerIndex == 0)
-            {
-                AssignOwnership(conn, playerAObjects);
-            }
-            // 두 번째 플레이어에게 playerBObjects 소유권을 할당
-            else if (playerIndex == 1)
-            {
-                AssignOwnership(conn, playerBObjects);
-            }
-            // 예상치 못한 플레이어 인덱스일 경우 오류 메시지 출력
-            else
-            {
-                Debug.LogError("Unexpected player index");
-            }
-            playerIndex++;
-        }
-    }
-
-    // 특정 클라이언트에게 오브젝트 소유권을 할당하는 메서드
-    private void AssignOwnership(NetworkConnectionToClient conn, List<GameObject> objects)
-    {
-        // 리스트에 있는 각 오브젝트에 대해 반복
-        foreach (var obj in objects)
-        {
-            // 각 오브젝트에서 NetworkIdentity 컴포넌트를 가져옴
-            NetworkIdentity networkIdentity = obj.GetComponent<NetworkIdentity>();
-
-            // NetworkIdentity가 존재할 경우 소유권 할당
-            if (networkIdentity != null)
-            {
-                // 해당 클라이언트에게 소유권 할당
-                networkIdentity.AssignClientAuthority(conn);
-                Debug.Log("Assigned ownership of " + obj.name + " to client: " + conn.connectionId);
-            }
-            // NetworkIdentity가 없을 경우 오류 메시지 출력
-            else
-            {
-                Debug.LogError(obj.name + " does not have a NetworkIdentity component.");
-            }
+            //AssignOwnershipToPlayers();
         }
     }
 
@@ -549,7 +487,7 @@ public class OverNetworkRoomManager : NetworkRoomManager
         // GameScene으로 전환될 때 소유권 할당
         if (newSceneName == GameplayScene)
         {
-            AssignOwnershipToPlayers();
+            //AssignOwnershipToPlayers();
         }
     }
 

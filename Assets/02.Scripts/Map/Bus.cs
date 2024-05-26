@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 public class Bus : MonoBehaviour
 {
@@ -24,10 +25,24 @@ public class Bus : MonoBehaviour
     private IObjectPool<Puff> burstPool;    // 버스트 퍼프 풀
     public int PuffCount = 0;
 
+    [Header("Mobile Button")]
+    public Button dashButton;   // 모바일 대쉬 버튼
+    public Button clickButton;   // 모바일 입장 버튼
+
     private void Awake() // 버스가 나올시 퍼프들의 풀을생성
     {
         walkPool = new ObjectPool<Puff>(CreateWalk, OnGetPuff, OnReleasePuff, OnDestroyPuff, maxSize: 1000);
         burstPool = new ObjectPool<Puff>(CreateBust, OnGetPuff, OnReleasePuff, OnDestroyPuff, maxSize: 1000);
+
+        if (dashButton != null)
+        {
+            dashButton.onClick.AddListener(MobileBoost); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
+        }
+
+        if (clickButton != null)
+        {
+            clickButton.onClick.AddListener(MobileBoost); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
+        }
     }
 
     private void Start()
@@ -91,7 +106,12 @@ public class Bus : MonoBehaviour
             isBoost = true;
             StartCoroutine("BoostCoroutine");
         }
-    } 
+    }
+
+    public void MobileEnter()
+    {
+        // UIManager의 Scene 변경 메서드 연결
+    }
 
     IEnumerator BoostCoroutine()
     {

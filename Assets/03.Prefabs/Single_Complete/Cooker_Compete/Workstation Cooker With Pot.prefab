@@ -1906,15 +1906,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b077a854b0e9fe4c8f8af639a97c7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
   cookingBar: {fileID: 0}
+  ingredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
+    type: 3}
+  pfxFire: {fileID: 1972225867942797097}
+  potAnim: {fileID: 3818059266377366564}
   isOnStove: 0
   inSomething: 0
   cookingTime: 0
-  potAnim: {fileID: 3818059266377366564}
-  Canvas: {fileID: 0}
-  IngredientUI: {fileID: 7702148511040529495, guid: bc38fd90eb538be48845667d3cbb70f0,
-    type: 3}
-  Icons:
+  icons:
   - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
   - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
   - {fileID: 21300000, guid: 395eaf5650b040947951375ff280d770, type: 3}
@@ -1924,9 +1925,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3c7bf3321bd71924aa300a5ac4bfdc15, type: 3}
   - {fileID: 21300000, guid: 75fcc262802227e469e54dd6b394d09a, type: 3}
   - {fileID: 21300000, guid: a317b8c007215ba499388dcf169d9b78, type: 3}
-  - {fileID: 21300000, guid: 6683e2615fc749f409f3058c7a61ece3, type: 3}
+  - {fileID: 21300000, guid: 1f4097d99759e534cb060081d93ac2a1, type: 3}
   - {fileID: 21300000, guid: efc05cddbe9edea4592baee255400fef, type: 3}
-  - {fileID: 21300000, guid: e65fe9f3a77081d4b9150e26a95470a4, type: 3}
+  - {fileID: 21300000, guid: 403761297b603554f88e2ff404042b34, type: 3}
   - {fileID: 21300000, guid: 3a9a198e7fc58834d8f2935ac9620d34, type: 3}
   - {fileID: 21300000, guid: 2fdb47c4eb8a3cc44b51a24d673c1178, type: 3}
 --- !u!95 &3818059266377366564
