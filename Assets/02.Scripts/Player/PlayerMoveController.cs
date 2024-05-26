@@ -66,7 +66,7 @@ public class PlayerMoveController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, rayDistance))
         {
-            if (hit.collider.CompareTag("Floor"))
+            if (hit.collider.CompareTag("Floor") || hit.collider.CompareTag("Stair"))
             {
                 isGrounded = true;
             }

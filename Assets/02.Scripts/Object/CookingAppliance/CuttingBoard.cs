@@ -8,14 +8,18 @@ using static Ingredient;
 public class CuttingBoard : MonoBehaviour
 {
     private ObjectHighlight parentObject;
+
+    [Header("UI")]
+    [SerializeField] private GameObject Canvas;
     public Slider cookingBar;
+    [SerializeField] private GameObject IngredientUI;
+
+    [Space(10)]
     [SerializeField] Vector3 pos;
     public Coroutine _CoTimer;
     public bool Pause = false;
     public float CuttingTime;
 
-    [SerializeField] private GameObject Canvas;
-    [SerializeField] private GameObject IngredientUI;
     [SerializeField] private Sprite[] Icons;
 
     private void Start()

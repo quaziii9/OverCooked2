@@ -3692,6 +3692,7 @@ MonoBehaviour:
   bgmChangeAudioSource: {fileID: 1159704214}
   effectAudioSource: {fileID: 4103381848875900730}
   stageBackGroundAudioSource: {fileID: 414474819}
+  stageAudioSource: {fileID: 0}
   stageEffectAudioSource: {fileID: 1962227903}
   vanAudioSource: {fileID: 1625868487}
   volumeBGM: 0.2
@@ -3700,7 +3701,7 @@ MonoBehaviour:
   settingEffect: 0.2
   introBGM: {fileID: 8300000, guid: 01b1aaca2935834478c244b44a7ce6ee, type: 3}
   battleBGM: {fileID: 8300000, guid: 744a78525d45b0142bd2c0abb9a59aec, type: 3}
-  busMapBGM: {fileID: 8300000, guid: 5823b65dce00b574f9c0480e31a676e6, type: 3}
+  worldMapBGM: {fileID: 0}
   stageBGM: {fileID: 8300000, guid: f6e3618938736824ba5b8414790e3c14, type: 3}
   sushiBGM: {fileID: 8300000, guid: 5a48867dda11bd648abfa8e78e5cafad, type: 3}
   mineBGM: {fileID: 8300000, guid: f6e3618938736824ba5b8414790e3c14, type: 3}
@@ -12576,13 +12577,13 @@ MonoBehaviour:
   worldMapEscUI: {fileID: 0}
   busTopUI: {fileID: 1178815807}
   stageMapEscUI: {fileID: 1719696563}
-  ingameStageMapEscUI: {fileID: 0}
   stageEscMapName: []
   recipeUI: {fileID: 801894127}
   recipeArr:
   - {fileID: 2140306841}
   - {fileID: 380438422}
   - {fileID: 2121462844}
+  recipeOff: 0
   resolutionText: {fileID: 1732526018}
   fullScreenButton: {fileID: 1478566060}
   fullScreenCheck: {fileID: 1378693494}
@@ -30116,8 +30117,37 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 154817030}
+    - target: {fileID: 8827853729248423641, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: normalSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 70342618658105c4dadbf72aa998d991,
+        type: 3}
+    - target: {fileID: 8827853729248423641, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: backgroundImage
+      value: 
+      objectReference: {fileID: 1479124098}
+    - target: {fileID: 8827853729248423641, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: highlightSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fbed77720f17cd24491fe5d8a852b114,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64b3fee616c164642b17f2676996f1c3, type: 3}
+--- !u!114 &1479124098 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2922589969209275287, guid: 64b3fee616c164642b17f2676996f1c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1479124097}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1486224984
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30320,6 +30350,23 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 154817030}
+    - target: {fileID: 8827853729248423641, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: normalSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 70342618658105c4dadbf72aa998d991,
+        type: 3}
+    - target: {fileID: 8827853729248423641, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: backgroundImage
+      value: 
+      objectReference: {fileID: 1486224986}
+    - target: {fileID: 8827853729248423641, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: highlightSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fbed77720f17cd24491fe5d8a852b114,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64b3fee616c164642b17f2676996f1c3, type: 3}
 --- !u!224 &1486224985 stripped
@@ -30328,6 +30375,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1486224984}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1486224986 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2922589969209275287, guid: 64b3fee616c164642b17f2676996f1c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1486224984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1493563262
 GameObject:
   m_ObjectHideFlags: 0
@@ -44571,8 +44630,37 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 154817030}
+    - target: {fileID: 8827853729248423641, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: normalSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 70342618658105c4dadbf72aa998d991,
+        type: 3}
+    - target: {fileID: 8827853729248423641, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: backgroundImage
+      value: 
+      objectReference: {fileID: 2147467199}
+    - target: {fileID: 8827853729248423641, guid: 64b3fee616c164642b17f2676996f1c3,
+        type: 3}
+      propertyPath: highlightSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fbed77720f17cd24491fe5d8a852b114,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64b3fee616c164642b17f2676996f1c3, type: 3}
+--- !u!114 &2147467199 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2922589969209275287, guid: 64b3fee616c164642b17f2676996f1c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2147467198}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5067730877816177
 RectTransform:
   m_ObjectHideFlags: 0
