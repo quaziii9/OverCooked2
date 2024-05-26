@@ -145,8 +145,6 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     {
         VanSingleton.Instance.van.SetActive(false);
 
-        UIManager.Instance.SetJoystick();
-
         Debug.Log($"씬 로드 완료: {scene.name}");
         switch (scene.name)
         {

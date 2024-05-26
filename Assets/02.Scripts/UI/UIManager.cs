@@ -68,6 +68,7 @@ public class UIManager : Singleton<UIManager>
     [Header("RecipeUI")]
     public GameObject recipeUI;
     public GameObject[] recipeArr;
+    public bool recipeOff = false;
 
     [Header("Resolution")]
     public TextMeshProUGUI resolutionText;
@@ -80,34 +81,11 @@ public class UIManager : Singleton<UIManager>
     public string[] resolutionTextArr
         = new string[] { "1280 x 720", "1680 x 1050", "1920 x 1080", "2560 x 1440", "3840 x 2160" };
 
-    [Header("Joystick")]
-    public GameObject playerJoystick;
-    public GameObject busJoystick;
-
-
     public bool first = true;
     public SceneType sceneType;
     public MapType mapType = MapType.None;
 
     private Stack<GameObject> popupStack = new Stack<GameObject>();
-
-    public void SetJoystick()
-    {
-        busJoystick.SetActive(false);
-        playerJoystick.SetActive(false);
-        switch (sceneType)
-        {
-
-            case SceneType.WorldMap:
-                busJoystick.SetActive(true);
-                break;
-            case SceneType.BattleMap:
-            case SceneType.StageMap:
-                playerJoystick.SetActive(true);
-                break;
-        }
-    }
-
 
     public void JsonUILoad()
     {
@@ -771,6 +749,8 @@ public class UIManager : Singleton<UIManager>
     public void RecipeUIOff()
     {
         recipeUI.SetActive(false);
+        if (Application.platform == RuntimePlatform.Android)
+            EventManager<UIEvents>.TriggerEvent(UIEvents.MobilePlayerController);
         foreach (var recipe in recipeArr)
             recipe.SetActive(false);
     }

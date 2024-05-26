@@ -54,6 +54,7 @@ namespace EnumTypes
     public enum UIEvents
     {
         EscUI,
+        MobilePlayerController,
     }
 
     public enum UIType
