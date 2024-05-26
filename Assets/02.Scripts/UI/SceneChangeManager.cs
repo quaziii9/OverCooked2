@@ -144,15 +144,15 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         VanSingleton.Instance.van.SetActive(false);
-      
+
+        UIManager.Instance.SetJoystick();
+
         Debug.Log($"씬 로드 완료: {scene.name}");
         switch (scene.name)
         {
             case "NewWorldMap":
                 //VanSingleton.Instance.van.SetActive(false);
                 UIManager.Instance.EnterBusMapMaskIn();
-                UIManager.Instance.sceneType = SceneType.WorldMap;
-
                 #if UNITY_ANDROID
                      UIManager.Instance.escButton.SetActive(true);
                 #endif

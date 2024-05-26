@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using EnumTypes;
 using EventLibrary;
 using System.Collections.Generic;
-using System.Linq;
+
 
 public class UIManager : Singleton<UIManager>
 {
@@ -63,7 +63,6 @@ public class UIManager : Singleton<UIManager>
 
     [Header("StageMap")]
     public GameObject stageMapEscUI;
-    public GameObject ingameStageMapEscUI;
     public GameObject[] stageEscMapName;
 
     [Header("RecipeUI")]
@@ -81,12 +80,59 @@ public class UIManager : Singleton<UIManager>
     public string[] resolutionTextArr
         = new string[] { "1280 x 720", "1680 x 1050", "1920 x 1080", "2560 x 1440", "3840 x 2160" };
 
+    [Header("Joystick")]
+    public GameObject playerJoystick;
+    public GameObject busJoystick;
+
 
     public bool first = true;
     public SceneType sceneType;
     public MapType mapType = MapType.None;
 
     private Stack<GameObject> popupStack = new Stack<GameObject>();
+
+    public void SetJoystick()
+    {
+        busJoystick.SetActive(false);
+        playerJoystick.SetActive(false);
+        switch (sceneType)
+        {
+
+            case SceneType.WorldMap:
+                busJoystick.SetActive(true);
+                break;
+            case SceneType.BattleMap:
+            case SceneType.StageMap:
+                playerJoystick.SetActive(true);
+                break;
+        }
+    }
+
+
+    public void JsonUILoad()
+    {
+        settingWindowScreen = LoadData.Instance.optionData.saveWindowMode;
+        windowScreen = LoadData.Instance.optionData.saveWindowMode;
+        resolutionArrNum = LoadData.Instance.optionData.saveResolutionNum;
+        settingResolutionArrNum = LoadData.Instance.optionData.saveResolutionNum;
+
+        SetResolution();
+        resolutionText.text = resolutionTextArr[resolutionArrNum];
+        fullScreenCheck.SetActive(windowScreen);
+    }
+
+    private void Start()
+    {
+        resolutionText.text = resolutionTextArr[resolutionArrNum];
+        fullScreenCheck.SetActive(windowScreen);
+    }
+
+    private void Update()
+    {
+        //Debug.Log(sceneType);
+        //Debug.Log(mapType);
+        HandleEscapeInput();
+    }
 
     private void ToggleUI(GameObject uiElement, bool state)
     {
@@ -119,32 +165,6 @@ public class UIManager : Singleton<UIManager>
                 popupStack.Push(tempStack.Pop());
             }
         }
-    }
-
-
-    public void JsonUILoad()
-    {
-        settingWindowScreen = LoadData.Instance.optionData.saveWindowMode;
-        windowScreen = LoadData.Instance.optionData.saveWindowMode;
-        resolutionArrNum = LoadData.Instance.optionData.saveResolutionNum;
-        settingResolutionArrNum = LoadData.Instance.optionData.saveResolutionNum;
-
-        SetResolution();
-        resolutionText.text = resolutionTextArr[resolutionArrNum];
-        fullScreenCheck.SetActive(windowScreen);
-    }
-
-    private void Start()
-    {
-        resolutionText.text = resolutionTextArr[resolutionArrNum];
-        fullScreenCheck.SetActive(windowScreen);
-    }
-
-    private void Update()
-    {
-        //Debug.Log(sceneType);
-        //Debug.Log(mapType);
-        HandleEscapeInput();
     }
 
 
@@ -398,12 +418,15 @@ public class UIManager : Singleton<UIManager>
             switch (goTo)
             {
                 case "GoToWorldMap":
+                    sceneType = SceneType.WorldMap;
                     EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.WorldMapOpen);
                     break;
                 case "GoToIntroMap":
+                    sceneType = SceneType.Intro;
                     EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.IntroMapOpen);
                     break;
                 case "GoToBattleRoom":
+                    sceneType = SceneType.BattleLobby;
                     EventManager<SceneChangeEvent>.TriggerEvent(SceneChangeEvent.BattleRoomOpen);
                     break;
                 case "GoToTestStage":
