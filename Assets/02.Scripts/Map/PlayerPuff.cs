@@ -27,7 +27,9 @@ public class PlayerPuff : Singleton<PlayerPuff>
     {
         var burst = burstPool.Get();
         burst.transform.position = puffPosition.position;
-        // burst.transform.rotation = puffPosition.rotation;
+        Vector3 currentRotationEuler = burst.transform.rotation.eulerAngles;
+
+        burst.transform.rotation = Quaternion.Euler(currentRotationEuler.x, puffPosition.rotation.eulerAngles.y, currentRotationEuler.z);
     }
 
     // 무브 퍼프 실행
