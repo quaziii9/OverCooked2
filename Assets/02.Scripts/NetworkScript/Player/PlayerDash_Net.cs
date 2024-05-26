@@ -28,7 +28,7 @@ public class PlayerDash_Net : NetworkBehaviour
     public AnimationCurve dashCurve; // AnimationCurve를 대시의 세기 변화에 사용
 
     [Header("Player Master Controller")]
-    public PlayerMasterController2_Net masterController;
+    //public PlayerMasterController2_Net masterController;
 
     [Header("Mobile Button")]
     public Button dashButton; // UI 버튼 참조
@@ -50,7 +50,7 @@ public class PlayerDash_Net : NetworkBehaviour
 
     public void OnDash(InputValue inputButton)
     {
-        if (inputButton.isPressed && !isDashing && masterController.currentPlayer == this.gameObject)
+        //if (inputButton.isPressed && !isDashing && masterController.currentPlayer == this.gameObject)
             Dash();
     }
 
@@ -58,7 +58,7 @@ public class PlayerDash_Net : NetworkBehaviour
     private void MobileDash()
     {
         // 현재 활성화 상태인지 확인해야할듯
-        if (!isDashing && dashCdTimer <= 0 && masterController.currentPlayer == this.gameObject)
+        //if (!isDashing && dashCdTimer <= 0 && masterController.currentPlayer == this.gameObject)
             Dash();
     }
 

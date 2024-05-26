@@ -28,6 +28,7 @@ TagManager:
   - stage2
   - Floor
   - MineBoard
+  - Flag
   layers:
   - Default
   - TransparentFX

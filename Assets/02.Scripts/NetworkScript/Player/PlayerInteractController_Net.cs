@@ -29,9 +29,9 @@ public class PlayerInteractController_Net : NetworkBehaviour
     [SerializeField] private GameObject grabL;
     [SerializeField] private GameObject knife;
 
-    [Header("PlayerInputSystem")]
-    [SerializeField] private GameObject PlayerInputSystem;
-    private PlayerMasterController2_Net masterController;
+    //[Header("PlayerInputSystem")]
+    //[SerializeField] private GameObject PlayerInputSystem;
+    //private PlayerMasterController2_Net masterController;
 
     [Header("Mobile Button")]
     public Button pickupButton; // 모바일 줍기/놓기 버튼
@@ -41,17 +41,17 @@ public class PlayerInteractController_Net : NetworkBehaviour
 
     private void Awake()
     {
-        masterController = PlayerInputSystem.GetComponent<PlayerMasterController2_Net>();
-
-        if (pickupButton != null && masterController.currentPlayer == this.gameObject)
-        {
-            pickupButton.onClick.AddListener(MobilePickupOrPlace); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
-        }
-
-        if (cookButton != null && masterController.currentPlayer == this.gameObject)
-        {
-            cookButton.onClick.AddListener(MobileCookOrThrow); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
-        }
+        //masterController = PlayerInputSystem.GetComponent<PlayerMasterController2_Net>();
+        //
+        //if (pickupButton != null && masterController.currentPlayer == this.gameObject)
+        //{
+        //    pickupButton.onClick.AddListener(MobilePickupOrPlace); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
+        //}
+        //
+        //if (cookButton != null && masterController.currentPlayer == this.gameObject)
+        //{
+        //    cookButton.onClick.AddListener(MobileCookOrThrow); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
+        //}
     }
 
     private void Update()
@@ -62,7 +62,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
     #region OnSwitch
     public void OnSwitch(InputValue inputValue)
     {
-        PlayerInputSystem.GetComponent<PlayerMasterController2_Net>().SwitchPlayerComponent();
+        //PlayerInputSystem.GetComponent<PlayerMasterController2_Net>().SwitchPlayerComponent();
     }
     #endregion
 

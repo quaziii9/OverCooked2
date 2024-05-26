@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class Plates : MonoBehaviour
 {
+    [Header("UI")]
+    public GameObject canvas;
+    [SerializeField] private GameObject ingredientUI;
+    [SerializeField] private GameObject madeUI;
+
     public List<Ingredient.IngredientType> containIngredients = new List<Ingredient.IngredientType>();
     public int limit = 1;
-    public GameObject Canvas;
-    [SerializeField] private GameObject IngredientUI;
-    [SerializeField] private Sprite[] Icons;
-    public GameObject madeUI;
+
+    [SerializeField] private Sprite[] icons;
 
     public bool AddIngredient(Ingredient.IngredientType handleType)
     {
@@ -136,7 +139,7 @@ public class Plates : MonoBehaviour
     {
         if (containIngredients.Count == 1)
         {
-            madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
+            madeUI = Instantiate(ingredientUI, Vector3.zero, Quaternion.identity, canvas.transform);
             madeUI.transform.GetChild(1).gameObject.SetActive(false);
             madeUI.transform.GetChild(2).gameObject.SetActive(false);
             madeUI.transform.GetChild(3).gameObject.SetActive(false);
@@ -189,58 +192,58 @@ public class Plates : MonoBehaviour
             switch (containIngredients[i])
             {
                 case Ingredient.IngredientType.Fish:
-                    images[i].sprite = Icons[0];
+                    images[i].sprite = icons[0];
                     break;
                 case Ingredient.IngredientType.Shrimp:
-                    images[i].sprite = Icons[1];
+                    images[i].sprite = icons[1];
                     break;
                 case Ingredient.IngredientType.Tomato:
-                    images[i].sprite = Icons[2];
+                    images[i].sprite = icons[2];
                     break;
                 case Ingredient.IngredientType.Lettuce:
-                    images[i].sprite = Icons[3];
+                    images[i].sprite = icons[3];
                     break;
                 case Ingredient.IngredientType.Cucumber:
-                    images[i].sprite = Icons[4];
+                    images[i].sprite = icons[4];
                     break;
                 case Ingredient.IngredientType.Potato:
-                    images[i].sprite = Icons[5];
+                    images[i].sprite = icons[5];
                     break;
                 case Ingredient.IngredientType.Chicken:
-                    images[i].sprite = Icons[6];
+                    images[i].sprite = icons[6];
                     break;
                 case Ingredient.IngredientType.SeaWeed:
-                    images[i].sprite = Icons[7];
+                    images[i].sprite = icons[7];
                     break;
                 case Ingredient.IngredientType.Tortilla:
-                    images[i].sprite = Icons[8];
+                    images[i].sprite = icons[8];
                     break;
                 case Ingredient.IngredientType.Rice:
-                    images[i].sprite = Icons[9];
+                    images[i].sprite = icons[9];
                     break;
                 case Ingredient.IngredientType.Pepperoni:
-                    images[i].sprite = Icons[10];
+                    images[i].sprite = icons[10];
                     break;
                 case Ingredient.IngredientType.Meat:
-                    images[i].sprite = Icons[11];
+                    images[i].sprite = icons[11];
                     break;
                 case Ingredient.IngredientType.Dough:
-                    images[i].sprite = Icons[12];
+                    images[i].sprite = icons[12];
                     break;
                 case Ingredient.IngredientType.Cheese:
-                    images[i].sprite = Icons[13];
+                    images[i].sprite = icons[13];
                     break;
                 case Ingredient.IngredientType.SushiRice:
-                    images[i].sprite = Icons[9];
+                    images[i].sprite = icons[9];
                     break;
                 case Ingredient.IngredientType.SushiFish:
-                    images[i].sprite = Icons[0];
+                    images[i].sprite = icons[0];
                     break;
                 case Ingredient.IngredientType.SushiCucumber:
-                    images[i].sprite = Icons[4];
+                    images[i].sprite = icons[4];
                     break;
                 case Ingredient.IngredientType.PizzaTomato:
-                    images[i].sprite = Icons[2];
+                    images[i].sprite = icons[2];
                     break;
                 default:
                     // 기본적으로 아무것도 하지 않음
