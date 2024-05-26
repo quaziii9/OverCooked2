@@ -26,7 +26,7 @@ public class GameManager_Net : MonoBehaviour
     private bool PlayTwice = false; // Go UI 표시 여부
     private bool StartSetting = false; // 게임 시작 설정 여부
     private bool once = false; // 한번만 실행되도록 하는 플래그
-    private bool isDone = false; // 게임 종료 여부
+    public bool isDone = false; // 게임 종료 여부
     private float lastSec = 0f; // 마지막 시간
     private float countSec = 0f; // 초 카운트
 
@@ -339,7 +339,8 @@ public class GameManager_Net : MonoBehaviour
                     lastSec += Time.unscaledDeltaTime;
                     if (lastSec > 1)
                     {
-                        SceneManager.LoadScene("ResultScene");
+                        //SceneManager.LoadScene("ResultScene");
+                        
                     }
                 }
             }

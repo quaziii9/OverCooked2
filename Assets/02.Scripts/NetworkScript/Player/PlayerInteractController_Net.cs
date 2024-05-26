@@ -75,6 +75,13 @@ public class PlayerInteractController_Net : NetworkBehaviour
 
         if (isLocalPlayer)
             SetHand();
+
+        if (GameManager_Net.instance.isDone)
+        {
+            UIManager.Instance.battleResultUI.SetActive(true);
+            UIManager.Instance.battleResultUI.GetComponent<BattleResultText>().targetRedTotalNum = Player1Money;
+            UIManager.Instance.battleResultUI.GetComponent<BattleResultText>().targetBlueTotalNum = Player2Money;
+        }
     }
 
     [SyncVar(hook = nameof(OnPlayer1MoneyChanged))]
