@@ -7,13 +7,13 @@ public class Plates : MonoBehaviour
 {
     [Header("UI")]
     public GameObject canvas;
-    [SerializeField] private GameObject ingredientUI;
+    public GameObject ingredientUI;
     [SerializeField] private GameObject madeUI;
 
     public List<Ingredient.IngredientType> containIngredients = new List<Ingredient.IngredientType>();
     public int limit = 1;
 
-    [SerializeField] private Sprite[] icons;
+    public Sprite[] icons;
 
     public bool AddIngredient(Ingredient.IngredientType handleType)
     {

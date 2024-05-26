@@ -7,12 +7,12 @@ using System;
 public class PotOnStove : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private GameObject canvas;
-    [SerializeField] private Slider cookingBar;
-    [SerializeField] private GameObject ingredientUI;
+    public GameObject canvas;
+    public Slider cookingBar;
+    public GameObject ingredientUI;
 
     [Space(10)]
-    [SerializeField] private GameObject pfxFire;
+    public GameObject pfxFire;
 
     public Animator potAnim;
 
@@ -25,7 +25,7 @@ public class PotOnStove : MonoBehaviour
     private bool pause = false;
     private bool stateIsCooked = false;
 
-    [SerializeField] private Sprite[] icons;
+    public Sprite[] icons;
 
     private void Start()
     {
