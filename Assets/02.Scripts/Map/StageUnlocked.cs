@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,11 +12,14 @@ public class StageUnlocked : MonoBehaviour
     public GameObject[] star;
     public GameObject[] level;
     public GameObject[] levelFlag;
+
     //[SerializeField]
     public int StageNum;
     public int StarNum;
     public Sprite YellowStar;
     public bool isLoading;
+
+    public GameObject clickButton;   // 모바일 입장 버튼
 
     void Start()
     {
@@ -28,38 +30,26 @@ public class StageUnlocked : MonoBehaviour
         }
         StarNum = MapManager.Instance.stages[StageNum];
         SetStar();
-        //Flip();
     }
-    //void Flip()
-    //{
-    //    for(int i = 1;i < childObjects.Length;i++)
-    //    {
-    //        if (StageManager.Instance.stages[StageNum - 1] > 0)
-    //        {
-    //            level[i].GetComponent<AniTEST>().PlayChildAnimations();
-    //            levelFlag[i].SetActive(true);
-    //        }
-    //    }
-
-    //}
 
     void OnTriggerStay(Collider other)
     {
-        // 해당 GameObject에 "Bus" 태그가 onenter되면
+        // 해당 GameObject에 "Bus" 태그가 onTriggerEnter되면
         if (other.CompareTag("Bus"))
         {
             SetChildrenActive(true);
-
+            clickButton.SetActive(true);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        // 해당 GameObject에 "Bus" 태그가 exit되면
+        // 해당 GameObject에 "Bus" 태그가 onTriggerExit되면
         if (other.CompareTag("Bus"))
         {
             // 자식 GameObject들을 비활성화
             SetChildrenActive(false);
+            clickButton.SetActive(false);
         }
     }
 
@@ -75,9 +65,6 @@ public class StageUnlocked : MonoBehaviour
                     childObject.SetActive(active);
 
                     CheckSpace();
-                    // space 누를때 씬 넘어가는걸로 
-                    //Debug.Log(MapManager.Instance.stages[StageNum].)
-
                 }
             }
         }
@@ -95,7 +82,6 @@ public class StageUnlocked : MonoBehaviour
 
     public void CheckSpace()
     {
-
         if (Input.GetKeyDown(KeyCode.Space) && isLoading ==false)
         {
             isLoading = true;
@@ -103,7 +89,6 @@ public class StageUnlocked : MonoBehaviour
             UIManager.Instance.sceneType = EnumTypes.SceneType.StageMap;
             UIManager.Instance.EnterLoadingMapUI();
         }
-
     }
 
     void SetStar()
@@ -120,7 +105,6 @@ public class StageUnlocked : MonoBehaviour
                 }
             }
         }
-        
     }
 
     IEnumerator ScaleDown()
