@@ -35,10 +35,7 @@ public class PlayerDash : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        if (dashButton != null)
-        {
-            dashButton.onClick.AddListener(MobileDash); // 버튼 클릭 이벤트에 MobileDash 메서드 연결
-        }
+        InitializeDashButton();
     }
 
     private void Update()
@@ -47,18 +44,29 @@ public class PlayerDash : MonoBehaviour
             dashCdTimer -= Time.deltaTime;
     }
 
+    private void InitializeDashButton()
+    {
+        if (dashButton != null)
+        {
+            dashButton.onClick.AddListener(MobileDash); // 버튼 클릭 이벤트에 MobileDash 메서드 연결
+        }
+    }
+
     public void OnDash(InputValue inputButton)
     {
-        if (inputButton.isPressed && !isDashing && masterController.currentPlayer == this.gameObject)
+        if (inputButton.isPressed && !isDashing && dashCdTimer <= 0 && masterController.currentPlayer == this.gameObject)
+        {
             Dash();
+        }
     }
 
     // UI 버튼을 클릭할 때 호출될 메서드
     private void MobileDash()
     {
-        // 현재 활성화 상태인지 확인해야할듯
         if (!isDashing && dashCdTimer <= 0 && masterController.currentPlayer == this.gameObject)
+        {
             Dash();
+        }
     }
 
     private void Dash()
@@ -67,8 +75,6 @@ public class PlayerDash : MonoBehaviour
             return;
 
         dashCdTimer = dashCd;
-        isDashing = true;
-
         if (disableGravity)
             rb.useGravity = false;
 
@@ -80,14 +86,17 @@ public class PlayerDash : MonoBehaviour
 
     private IEnumerator ExecuteDash()
     {
+        isDashing = true; // 코루틴 시작 시 isDashing 설정
         float elapsedTime = 0f;
         PlayerPuff.Instance.BoostPuff(transform);
+
+        Vector3 dashDirection = transform.forward; // 대시 방향을 미리 계산
 
         while (elapsedTime < dashDuration)
         {
             float dashProgress = elapsedTime / dashDuration;
             float curveValue = dashCurve.Evaluate(dashProgress); // AnimationCurve에서 값을 평가
-            Vector3 forceToApply = transform.forward * dashForce * curveValue;
+            Vector3 forceToApply = dashDirection * dashForce * curveValue;
             rb.AddForce(forceToApply, ForceMode.Impulse);
 
             elapsedTime += Time.deltaTime;

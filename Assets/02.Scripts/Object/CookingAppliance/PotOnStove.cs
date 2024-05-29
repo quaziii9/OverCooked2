@@ -139,10 +139,10 @@ public class PotOnStove : MonoBehaviour
         madeUI.transform.GetChild(0).gameObject.SetActive(true);
         Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
         image.sprite = GetIcon(Ingredient.type);
-        madeUI.GetComponent<IngredientUI_Net>().Target = Ingredient.transform;
+        madeUI.GetComponent<IngredientUI>().target = Ingredient.transform;
     }
 
-    private Sprite GetIcon(Ingredient_Net.IngredientType ingredientType)
+    private Sprite GetIcon(Ingredient.IngredientType ingredientType)
     {
         switch (ingredientType)
         {

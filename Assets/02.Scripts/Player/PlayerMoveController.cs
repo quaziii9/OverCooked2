@@ -49,8 +49,7 @@ public class PlayerMoveController : MonoBehaviour
 
     void FixedUpdate()
     {
-        CheckGroundStatus();
-        CheckStairStatus();
+        UpdateGroundAndStairStatus();
 
         if (!isDashing && moveInput != Vector2.zero)
         {
@@ -61,33 +60,22 @@ public class PlayerMoveController : MonoBehaviour
         HandleStairMovement();
     }
 
-    private void CheckGroundStatus()
+    private void UpdateGroundAndStairStatus()
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, rayDistance))
         {
-            if (hit.collider.CompareTag("Floor") || hit.collider.CompareTag("Stair"))
-            {
-                isGrounded = true;
-            }
-            else
-            {
-                isGrounded = false;
-            }
+            isGrounded = hit.collider.CompareTag("Floor") || hit.collider.CompareTag("Stair");
+            isOnStairs = hit.collider.CompareTag("Stair");
         }
         else
         {
             isGrounded = false;
+            isOnStairs = false;
         }
-        // 레이 디버그용 드로우
-        Debug.DrawRay(transform.position, Vector3.down * rayDistance, Color.red);
-    }
 
-    private void CheckStairStatus()
-    {
-        isOnStairs = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, rayDistance) && hit.collider.CompareTag("Stair");
         // 레이 디버그용 드로우
-        Debug.DrawRay(transform.position, Vector3.down * rayDistance, Color.blue);
+        Debug.DrawRay(transform.position, Vector3.down * rayDistance, isGrounded ? Color.red : Color.blue);
     }
 
     private void MoveCharacter()
