@@ -163,25 +163,25 @@ public class GameManager : MonoBehaviour
         }
 
         // 스테이지 매니저 초기화
-        if (StageManager.instance != null)
+        if (StageManager.Instance != null)
         {
-            StageManager.instance.success = 0;
-            StageManager.instance.tipMoney = 0;
-            StageManager.instance.fail = 0;
-            StageManager.instance.totalMoney = 0;
-            StageManager.instance.successMoney = 0;
-            StageManager.instance.failMoney = 0;
+            StageManager.Instance.success = 0;
+            StageManager.Instance.tipMoney = 0;
+            StageManager.Instance.fail = 0;
+            StageManager.Instance.totalMoney = 0;
+            StageManager.Instance.successMoney = 0;
+            StageManager.Instance.failMoney = 0;
             if (state == State.stage1)
             {
-                StageManager.instance.playStage = StageManager.State.stage1;
+                StageManager.Instance.playStage = StageManager.State.stage1;
             }
             else if (state == State.stage2)
             {
-                StageManager.instance.playStage = StageManager.State.stage2;
+                StageManager.Instance.playStage = StageManager.State.stage2;
             }
             else if (state == State.stage3)
             {
-                StageManager.instance.playStage = StageManager.State.stage3;
+                StageManager.Instance.playStage = StageManager.State.stage3;
             }
         }
 
@@ -298,21 +298,21 @@ public class GameManager : MonoBehaviour
             SoundManager.Instance.bgmAudioSource.Stop();
             SoundManager.Instance.PlayEffect("timesUp");
             Time.timeScale = 0;
-            if (StageManager.instance != null) StageManager.instance.totalMoney = Coin;
+            if (StageManager.Instance != null) StageManager.Instance.totalMoney = Coin;
             Timesup.SetActive(true);
-            if (StageManager.instance != null && StageManager.instance.totalMoney >= 0)
+            if (StageManager.Instance != null && StageManager.Instance.totalMoney >= 0)
             {
                 if (state == State.stage1)
                 {
-                    StageManager.instance.isClearMap1 = true;
+                    StageManager.Instance.isClearMap1 = true;
                 }
                 else if (state == State.stage2)
                 {
-                    StageManager.instance.isClearMap2 = true;
+                    StageManager.Instance.isClearMap2 = true;
                 }
                 else if (state == State.stage3)
                 {
-                    StageManager.instance.isClearMap3 = true;
+                    StageManager.Instance.isClearMap3 = true;
                 }
             }
             isDone = true;
@@ -586,14 +586,14 @@ public class GameManager : MonoBehaviour
         }
         CurrentOrderUI[i].transform.position = poolPos; // 주문 UI 위치 초기화
         CurrentOrderUI[i].SetActive(false); // 주문 UI 비활성화
-        if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price; // 성공한 주문의 금액 추가
+        if (StageManager.Instance != null) StageManager.Instance.successMoney += CurrentOrder[i].Price; // 성공한 주문의 금액 추가
         Coin += CurrentOrder[i].Price; // 동전 증가
         CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin"); // 애니메이션 트리거
         AddTip(i); // 팁 추가
         SetPosition(i); // 위치 설정
         CurrentOrder.RemoveAt(i); // 완료된 주문 제거
         CurrentOrderUI.RemoveAt(i); // 완료된 주문 UI 제거
-        if (StageManager.instance != null) StageManager.instance.success += 1; // 성공한 주문 수 증가
+        if (StageManager.Instance != null) StageManager.Instance.success += 1; // 성공한 주문 수 증가
     }
 
     private void AddTip(int i)
@@ -628,7 +628,7 @@ public class GameManager : MonoBehaviour
             Tip *= tipCombo;
         }
         TipSlider.value = tipCombo;
-        if (StageManager.instance != null) StageManager.instance.tipMoney += Tip;
+        if (StageManager.Instance != null) StageManager.Instance.tipMoney += Tip;
         Coin += Tip;
         TextCoin.text = Coin.ToString(); // 돈 얼마됐다고 업데이트
 
@@ -681,9 +681,9 @@ public class GameManager : MonoBehaviour
     public void MenuFail(GameObject whichUI) // 메뉴를 주어진 시간 내로 전달 못했을 때 작동
     {
         // 메뉴 실패 처리
-        if (StageManager.instance != null)
+        if (StageManager.Instance != null)
         {
-            StageManager.instance.fail += 1;
+            StageManager.Instance.fail += 1;
         }
         for (int i = 0; i < CurrentOrderUI.Count; i++)
         {
@@ -693,7 +693,7 @@ public class GameManager : MonoBehaviour
                 Tip = 0;
                 TextTip.text = "";
                 TipSlider.value = tipCombo;
-                if (StageManager.instance != null) StageManager.instance.failMoney += (int)(CurrentOrder[i].Price * 0.5f);
+                if (StageManager.Instance != null) StageManager.Instance.failMoney += (int)(CurrentOrder[i].Price * 0.5f);
                 Coin -= (int)(CurrentOrder[i].Price * 0.5f);
                 TextCoin.text = Coin.ToString(); // 돈 얼마됐다고 업데이트
                 if (alphaCo == null)
