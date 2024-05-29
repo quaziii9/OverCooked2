@@ -1,6 +1,4 @@
 using DanielLochner.Assets.SimpleScrollSnap;
-using Org.BouncyCastle.Bcpg.OpenPgp;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
