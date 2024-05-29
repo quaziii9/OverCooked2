@@ -1,4 +1,7 @@
 using Mirror;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -6,9 +9,14 @@ using Transform = UnityEngine.Transform;
 
 public class PlayerInteractController_Net : NetworkBehaviour
 {
+    public Sprite[] Icons;
+
+    //public GameObject Canvas;
+
+    //public GameObject madeUI;
+
     // 애니메이션
     public Animator anim;
-
     // 상호작용 할 수 있는 오브젝트
     public GameObject interactObject;
     public ObjectHighlight objectHighlight;
@@ -53,11 +61,83 @@ public class PlayerInteractController_Net : NetworkBehaviour
     //        cookButton.onClick.AddListener(MobileCookOrThrow); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
     //    }
     //}
-
+    public int coin_;
     private void Update()
     {
-        if(isLocalPlayer)
+        if (isLocalPlayer)
+        {
+            int localCoin = GameManager_Net.instance.Coin;
+            if (localCoin != Player1Money)
+            {
+                CmdUpdatePlayerMoney(localCoin);
+            }
+        }
+
+        if (isLocalPlayer)
             SetHand();
+
+        if (GameManager_Net.instance.isDone)
+        {
+            UIManager.Instance.battleResultUI.SetActive(true);
+            UIManager.Instance.battleResultUI.GetComponent<BattleResultText>().targetRedTotalNum = Player1Money;
+            UIManager.Instance.battleResultUI.GetComponent<BattleResultText>().targetBlueTotalNum = Player2Money;
+        }
+    }
+
+    [SyncVar(hook = nameof(OnPlayer1MoneyChanged))]
+    public int Player1Money; // 플레이어 1의 돈
+
+    [SyncVar(hook = nameof(OnPlayer2MoneyChanged))]
+    public int Player2Money; // 플레이어 2의 돈
+
+    [Command]
+    private void CmdUpdatePlayerMoney(int amount)
+    {
+        Player1Money = amount;
+
+        // 서버에서 각 클라이언트의 Player2Money를 업데이트합니다.
+        RpcUpdateSelfMoney(amount);
+        RpcUpdateOpponentMoney(amount);
+    }
+
+    [ClientRpc]
+    private void RpcUpdateSelfMoney(int amount)
+    {
+        if (isLocalPlayer)
+        {
+            GameManager_Net.instance.Coin = amount;
+        }
+    }
+
+    [ClientRpc]
+    private void RpcUpdateOpponentMoney(int amount)
+    {
+        if (!isLocalPlayer)
+        {
+            Player2Money = amount;
+            UpdateOpponentMoneyUI(Player2Money);
+        }
+    }
+
+    private void OnPlayer1MoneyChanged(int oldMoney, int newMoney)
+    {
+        if (isLocalPlayer)
+        {
+            GameManager_Net.instance.Coin = newMoney;
+        }
+    }
+
+    private void OnPlayer2MoneyChanged(int oldMoney, int newMoney)
+    {
+        if (!isLocalPlayer)
+        {
+            UpdateOpponentMoneyUI(newMoney);
+        }
+    }
+
+    private void UpdateOpponentMoneyUI(int amount)
+    {
+        GameManager_Net.instance.OppositeUI.transform.GetChild(0).GetComponent<Text>().text = amount.ToString();
     }
 
     #region OnSwitch
@@ -72,7 +152,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
     {
         Debug.Log("OnCookOrThrow");
         //Debug.Log(interactObject.transform.parent.name);
-        if (isLocalPlayer) 
+        if (isLocalPlayer)
         {
             if (checkInteractObject())
             {
@@ -222,7 +302,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
     #region OnPickupOrPlace
     public void OnPickupOrPlace(InputValue inputValue)
     {
-        if(isLocalPlayer)
+        if (isLocalPlayer)
             ProcessInteraction();
         //SetHand();
     }
@@ -265,7 +345,6 @@ public class PlayerInteractController_Net : NetworkBehaviour
                     HandleBinInteraction();
                 break;
             case ObjectHighlight.ObjectType.Station:
-                if (isLocalPlayer)
                     HandleStationInteraction();
                 break;
             case ObjectHighlight.ObjectType.Oven:
@@ -520,13 +599,13 @@ public class PlayerInteractController_Net : NetworkBehaviour
     private void TablePlaceOrDropObject(bool drop)
     {
         SoundManager.Instance.PlayEffect(drop ? "put" : "put");
-        if (drop)
+        if (drop && isLocalPlayer)
         {
             // true 테이블 위에 뭔가 있는데 내가 가진게 접시고, 음식이면 담음
             if (CanPlaceIngredient())
             {
-                CmdPlaceIngredient();
-                //PlaceIngredient();
+                //CmdPlaceIngredient();
+                PlaceIngredient();
             }
             else
             {
@@ -582,7 +661,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
             }
 
         }
-        else
+        else if (isLocalPlayer)
         {
             if (transform.childCount > 1)
             {
@@ -651,29 +730,36 @@ public class PlayerInteractController_Net : NetworkBehaviour
 
     private void PlaceIngredient()
     {
-        var plate = interactObject.transform.parent.GetChild(2).GetComponent<Plates_Net>();
-        var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient_Net>().type;
-        if (plate.AddIngredient(ingredient))
+        if (isLocalPlayer) 
         {
-            CmdPlayPutSound();
-            plate.CmdInstantiateUI();
-            Destroy(transform.GetChild(1).gameObject);
-            isHolding = false;
-            anim.SetBool("isHolding", false);
+            var plate = interactObject.transform.parent.GetChild(2).GetComponent<Plates_Net>();
+            var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient_Net>().type;
+            //plate.CmdAddIngredient(ingredient);
+    
+            if (plate.AddIngredient(ingredient))
+            {
+                //CmdPlayPutSound();
+                plate.InstantiateUI();
+                Destroy(transform.GetChild(1).gameObject);
+                isHolding = false;
+                anim.SetBool("isHolding", false);
+            }
+    
         }
     }
 
-    [Command]
-    private void CmdPlayPutSound()
-    {
-        RpcPlayPutSound();
-    }
+    //private void PlaceIngredient()
+    //{
+    //    if (isLocalPlayer)
+    //    {
+    //        var plate = interactObject.transform.parent.GetChild(2).GetComponent<Plates_Net>();
+    //        var ingredient = transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Ingredient_Net>().type;
+    //
+    //        // 서버에서 클라이언트의 요청을 처리할 수 있도록 서버측 메서드를 호출
+    //        CmdAddIngredient(plate.netIdentity, ingredient);
+    //    }
+    //}
 
-    [ClientRpc]
-    private void RpcPlayPutSound()
-    {
-        SoundManager.Instance.PlayEffect("put");
-    }
 
     private void HandleObject(GameObject obj, bool isPickingUp = true)
     {
@@ -877,7 +963,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void RpcAssignFoodToPlayer(uint netId , Ingredient_Net.IngredientType it)
+    private void RpcAssignFoodToPlayer(uint netId, Ingredient_Net.IngredientType it)
     {
         GameObject newFood = NetworkClient.spawned[netId].gameObject;
         if (newFood != null)
@@ -949,7 +1035,7 @@ public class PlayerInteractController_Net : NetworkBehaviour
         if (isLocalPlayer)
             if (CheckForIngredientHandling(other)) return;
 
-        if(isLocalPlayer)
+        if (isLocalPlayer)
             HandleActiveObjectInteraction(other);
     }
 
@@ -1250,5 +1336,12 @@ public class PlayerInteractController_Net : NetworkBehaviour
         //}
     }
     #endregion
+
+    #region Coin
+
+
+
+    #endregion
+
 
 }

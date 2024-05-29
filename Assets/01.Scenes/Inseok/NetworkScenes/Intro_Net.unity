@@ -4759,7 +4759,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Name
+  m_text: Player1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10361,7 +10361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &427169411
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15471,7 +15471,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &646080303
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19117,7 +19117,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &792880552
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20275,7 +20275,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Map Name
+  m_text: "\uAC10\uCE60\uB9DB \uB098\uB294 \uAD11\uC0B0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bcac1afcf4726db49aed484af3e38b56, type: 2}
   m_sharedMaterial: {fileID: -8389744838919443325, guid: bcac1afcf4726db49aed484af3e38b56,
@@ -20339,7 +20339,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -42.999023, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -32800,7 +32800,7 @@ MonoBehaviour:
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 7062811777805063771, guid: 5e75d41fe45ed6849901b2e06d5d2a7a,
+  playerPrefab: {fileID: 1965237012440607574, guid: 09d20030b23ae6c429a03f6d053f5478,
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 1
@@ -32823,6 +32823,8 @@ MonoBehaviour:
   - {fileID: 2103201706190798514, guid: bcb1c9131b5faf2439d3119b224214c3, type: 3}
   - {fileID: 5616692999402895066, guid: 45321372239b3c54dbbc85e0c43b9804, type: 3}
   - {fileID: 9164312972909353846, guid: 4ff3198dc0b118c48b15a69d173d9612, type: 3}
+  - {fileID: 994974245733298283, guid: 3142f24f12b85404093a3a359280d4aa, type: 3}
+  - {fileID: 1227164296233630574, guid: 3e21d5bde42286b458d8d720265a8d73, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -35135,7 +35137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1424044340
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35712,7 +35714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1441750984
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36061,7 +36063,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1448087643
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41443,7 +41445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1646518427
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43712,7 +43714,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Name
+  m_text: Player2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

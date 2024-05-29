@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,7 +26,7 @@ public class GameManager_Net : MonoBehaviour
     private bool PlayTwice = false; // Go UI 표시 여부
     private bool StartSetting = false; // 게임 시작 설정 여부
     private bool once = false; // 한번만 실행되도록 하는 플래그
-    private bool isDone = false; // 게임 종료 여부
+    public bool isDone = false; // 게임 종료 여부
     private float lastSec = 0f; // 마지막 시간
     private float countSec = 0f; // 초 카운트
 
@@ -37,13 +38,15 @@ public class GameManager_Net : MonoBehaviour
 
     // 돈 UI 관련 변수들
     public int OriginalMoney; // 원래 돈
+    //public int Player1Money; // 플레이어 1의 돈
+    //public int Player2Money; // 플레이어 2의 돈
     public int Player1Money; // 플레이어 1의 돈
     public int Player2Money; // 플레이어 2의 돈
     public GameObject OppositeUI; // 상대방 UI
 
     [SerializeField] private GameObject CoinOb; // 동전 오브젝트
     [SerializeField] private Slider TipSlider; // 팁 슬라이더 UI
-    [SerializeField] private int Coin; // 동전 개수
+    public int Coin; // 동전 개수
     [SerializeField] private int Tip; // 팁
     [SerializeField] private Text TextCoin; // 동전 텍스트 UI
     [SerializeField] private Text TextTip; // 팁 텍스트 UI
@@ -73,7 +76,7 @@ public class GameManager_Net : MonoBehaviour
 
     float duration = 75; // 색상 변화 시간
     float smoothness = 0.1f; // 색상 변화의 부드러움 정도
-    Color Start = new Color(0, 192 / 255f, 5 / 255f, 255 / 255f); // 초록색
+    Color Start_ = new Color(0, 192 / 255f, 5 / 255f, 255 / 255f); // 초록색
     Color Middle = new Color(243 / 255f, 239 / 255f, 0, 255 / 255f); // 노랑색
     Color End = new Color(215 / 255f, 11 / 255f, 0, 1f); // 빨강색
     Color currentColor; // 현재 색상
@@ -85,7 +88,7 @@ public class GameManager_Net : MonoBehaviour
         float increment = smoothness / duration; // 색상 변화 정도
         while (progress < 1)
         {
-            currentColor = Color.Lerp(Start, Middle, progress);
+            currentColor = Color.Lerp(Start_, Middle, progress);
             progress += increment;
             yield return new WaitForSeconds(smoothness);
             // 시간 슬라이더의 색상을 현재 색상으로 업데이트
@@ -192,6 +195,7 @@ public class GameManager_Net : MonoBehaviour
         Coin = 0;
         SetCoinText();
         StartCoroutine(LerpColor1());
+
     }
 
     private void Update()
@@ -335,7 +339,8 @@ public class GameManager_Net : MonoBehaviour
                     lastSec += Time.unscaledDeltaTime;
                     if (lastSec > 1)
                     {
-                        SceneManager.LoadScene("ResultScene");
+                        //SceneManager.LoadScene("ResultScene");
+                        
                     }
                 }
             }
@@ -389,87 +394,7 @@ public class GameManager_Net : MonoBehaviour
         newPlate.transform.localPosition = spawnPos;
         newPlate.GetComponent<Plates>().canvas = Canvas;
     }
-    /*
-    public void MakeOrder()
-    {
-        // 새로운 주문 생성
-        if (CurrentOrder.Count >= maxMenuLimit)
-        {
-            return;
-        }
-        i = -1;
-        j = -1;
-        i = Random.Range(0, Menus.Length);
-        if (Menus[i].Ingredient.Count == 1) // 재료가 한 개일 때
-        {
-            for (j = 0; j < Single_Double_PoolUIs.Length; j++)
-            {
-                if (!Single_Double_PoolUIs[j].activeSelf) // 꺼져있는 UI 찾기
-                {
-                    Single_Double_PoolUIs[j].SetActive(true); // 켜주고
-                    Single_Double_PoolUIs[j].transform.GetChild(1).gameObject.SetActive(false); // 두번째 재료 부분은 끄고
-                    Single_Double_PoolUIs[j].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[0]; // 첫번째 재료 아이콘 바꾸기
-                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = Menus[i].MenuIcon; // 메뉴 아이콘 바꾸기
-                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().maxValue = Menus[i].LimitTime; // 슬라이더 시간 할당
-                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().value = Menus[i].LimitTime; // 풀로 시작
-                    CurrentOrder.Add(Menus[i]);
-                    CurrentOrderUI.Add(Single_Double_PoolUIs[j]);
-                    return;
-                }
-                else // 다 켜져있으면 실패
-                {
-                    continue;
-                }
-            }
-        }
-        else if (Menus[i].Ingredient.Count == 2) // 재료가 두 개일 때
-        {
-            for (j = 0; j < Single_Double_PoolUIs.Length; j++)
-            {
-                if (!Single_Double_PoolUIs[j].activeSelf) // 꺼져있는 UI 찾기
-                {
-                    Single_Double_PoolUIs[j].SetActive(true); // 켜주고
-                    Single_Double_PoolUIs[j].transform.GetChild(1).gameObject.SetActive(true); // 두번째 재료 부분 켜기
-                    Single_Double_PoolUIs[j].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[0]; // 첫번째 재료 아이콘 바꾸기
-                    Single_Double_PoolUIs[j].transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[1]; // 두번째 재료 아이콘 바꾸기
-                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = Menus[i].MenuIcon; // 메뉴 아이콘 바꾸기
-                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().maxValue = Menus[i].LimitTime; // 슬라이더 시간 할당
-                    Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().value = Menus[i].LimitTime; // 풀로 시작
-                    CurrentOrder.Add(Menus[i]);
-                    CurrentOrderUI.Add(Single_Double_PoolUIs[j]);
-                    return;
-                }
-                else // 다 켜져있으면 실패
-                {
-                    continue;
-                }
-            }
-        }
-        else // 재료가 세 개일 때
-        {
-            for (j = 0; j < Triple_PoolUIs.Length; j++)
-            {
-                if (!Triple_PoolUIs[j].activeSelf) // 꺼져있는 UI 찾기
-                {
-                    Triple_PoolUIs[j].SetActive(true); // 켜주고
-                    Triple_PoolUIs[j].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[0]; // 첫번째 재료 아이콘 바꾸기
-                    Triple_PoolUIs[j].transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = Menus[i].IngredientIcon[1]; // 두번째 재료 아이콘 바꾸기
-                    Triple_PoolUIs[j].transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = Menus[i].IngredientIcon[2]; // 세번째 재료 아이콘 바꾸기
-                    Triple_PoolUIs[j].transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = Menus[i].MenuIcon; // 메뉴 아이콘 바꾸기
-                    Triple_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().maxValue = Menus[i].LimitTime; // 슬라이더 시간 할당
-                    Triple_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().value = Menus[i].LimitTime; // 풀로 시작
-                    CurrentOrder.Add(Menus[i]);
-                    CurrentOrderUI.Add(Triple_PoolUIs[j]);
-                    return;
-                }
-                else // 다 켜져있으면 실패
-                {
-                    continue;
-                }
-            }
-        }
-    }
-    */
+
     public void MakeOrder()
     {
         // 새로운 주문 생성
@@ -560,162 +485,12 @@ public class GameManager_Net : MonoBehaviour
         }
     }
 
-
-
     private void SuccessEffect()
     {
         // 성공 효과
     }
 
     //주문 4개 추가 리펙토링
-    /*
-    public bool CheckMenu(List<Ingredient.IngredientType> containIngredients) // plate의 재료 list들 통으로 받아서 비교
-    {
-        // 메뉴 확인 및 처리
-        OriginalMoney = Coin;
-        if (containIngredients == null) // 빈 접시만 내면 무조건 실패
-        {
-            // 빨간색 띵
-            // StartCoroutine(TurnAlpha(wrong));
-            return false;
-        }
-        else
-        {
-            for (int i = 0; i < CurrentOrder.Count; i++) // 현재 쌓인 order에서 비교
-            {
-                if (containIngredients.Count != CurrentOrder[i].Ingredient.Count) // 재료 개수부터 다르면 실패
-                {
-                    // StartCoroutine(TurnAlpha(wrong));
-                    continue;
-                }
-                else // 재료 개수가 같다면
-                {
-                    if (containIngredients.Count == 1) // 재료가 하나일 때
-                    {
-                        if (containIngredients[0] == CurrentOrder[i].Ingredient[0])
-                        {
-                            if (i == 0) // 순서대로 메뉴를 냈다면 콤보
-                            {
-                                tipCombo += 1;
-                                if (tipCombo >= 4)
-                                {
-                                    if (!flame.activeSelf)
-                                    {
-                                        flame.SetActive(true);
-                                    }
-                                    tipCombo = 4; // 최대 4콤보까지
-                                }
-                            }
-                            else
-                            {
-                                flame.SetActive(false);
-                                tipCombo = 0;
-                            }
-                            CurrentOrderUI[i].transform.position = poolPos;
-                            CurrentOrderUI[i].SetActive(false);
-                            if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
-                            Coin += CurrentOrder[i].Price;
-                            CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin");
-                            AddTip(i);
-                            SetPosition(i);
-                            CurrentOrder.RemoveAt(i);
-                            CurrentOrderUI.RemoveAt(i);
-                            if (StageManager.instance != null) StageManager.instance.success += 1;
-                            return true;
-                        }
-                    }
-                    else if (containIngredients.Count == 2) // 재료가 두 개일 때
-                    {
-                        if ((containIngredients[0] == CurrentOrder[i].Ingredient[0] && containIngredients[1] == CurrentOrder[i].Ingredient[1]) || (containIngredients[1] == CurrentOrder[i].Ingredient[0] && containIngredients[0] == CurrentOrder[i].Ingredient[1]))
-                        {
-                            if (i == 0) // 순서대로 메뉴를 냈다면 콤보
-                            {
-                                tipCombo += 1;
-                                if (tipCombo >= 4)
-                                {
-                                    if (!flame.activeSelf)
-                                    {
-                                        flame.SetActive(true);
-                                    }
-                                    tipCombo = 4; // 최대 4콤보까지
-                                }
-                            }
-                            else
-                            {
-                                flame.SetActive(false);
-                                tipCombo = 0;
-                            }
-                            CurrentOrderUI[i].transform.position = poolPos;
-                            CurrentOrderUI[i].SetActive(false);
-                            if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
-                            Coin += CurrentOrder[i].Price;
-                            CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin");
-                            AddTip(i);
-                            SetPosition(i);
-                            CurrentOrder.RemoveAt(i);
-                            CurrentOrderUI.RemoveAt(i);
-                            if (StageManager.instance != null) StageManager.instance.success += 1;
-                            return true;
-                        }
-                    }
-                    else if (containIngredients.Count == 3) // 재료가 세 개일 때
-                    {
-                        int count = 0;
-                        for (int j = 0; j < containIngredients.Count; j++)
-                        {
-                            for (int k = 0; k < CurrentOrder[i].Ingredient.Count; k++)
-                            {
-                                if (containIngredients[j].Equals(CurrentOrder[i].Ingredient[k]))
-                                {
-                                    count++;
-                                    break;
-                                }
-                            }
-                        }
-                        if (count == 3)
-                        {
-                            if (i == 0) // 순서대로 메뉴를 냈다면 콤보
-                            {
-                                tipCombo += 1;
-                                if (tipCombo >= 4)
-                                {
-                                    if (!flame.activeSelf)
-                                    {
-                                        flame.SetActive(true);
-                                    }
-                                    tipCombo = 4; // 최대 4콤보까지
-                                }
-                            }
-                            else
-                            {
-                                flame.SetActive(false);
-                                tipCombo = 0;
-                            }
-                            CurrentOrderUI[i].transform.position = poolPos;
-                            CurrentOrderUI[i].SetActive(false);
-                            if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
-                            Coin += CurrentOrder[i].Price;
-                            CoinOb.transform.parent.GetChild(2).GetComponent<Animator>().SetTrigger("spin");
-                            AddTip(i);
-                            SetPosition(i);
-                            CurrentOrder.RemoveAt(i);
-                            CurrentOrderUI.RemoveAt(i);
-                            if (StageManager.instance != null) StageManager.instance.success += 1;
-                            return true;
-                        }
-                        else
-                        {
-                            // StartCoroutine(TurnAlpha(wrong));
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        // StartCoroutine(TurnAlpha(wrong));
-        return false;
-    }
-    */
     public bool CheckMenu(List<Ingredient_Net.IngredientType> containIngredients) // plate의 재료 list들 통으로 받아서 비교
     {
         // 메뉴 확인 및 처리
@@ -830,11 +605,11 @@ public class GameManager_Net : MonoBehaviour
     private void AddTip(int i)
     {
         // 팁 추가 처리
-        if (CurrentOrderUI[i].GetComponent<OrderUI>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI>().timer.maxValue * 0.6f)
+        if (CurrentOrderUI[i].GetComponent<OrderUI_Net>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI_Net>().timer.maxValue * 0.6f)
         {
             Tip = 8;
         }
-        else if (CurrentOrderUI[i].GetComponent<OrderUI>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI>().timer.maxValue * 0.3f)
+        else if (CurrentOrderUI[i].GetComponent<OrderUI_Net>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI_Net>().timer.maxValue * 0.3f)
         {
             Tip = 5;
         }
@@ -862,7 +637,6 @@ public class GameManager_Net : MonoBehaviour
         if (StageManager.instance != null) StageManager.instance.tipMoney += Tip;
         Coin += Tip;
         TextCoin.text = Coin.ToString(); // 돈 얼마됐다고 업데이트
-
         if (Tip != 0)
         {
             GameObject tipText = Instantiate(TextPrefabs, Camera.main.WorldToScreenPoint(FindObjectOfType<Station>().transform.position), Quaternion.identity, Canvas.transform);
@@ -877,7 +651,7 @@ public class GameManager_Net : MonoBehaviour
         Color textColor = TextCoin.GetComponent<Text>().color;
         while (CoinOb.transform.localScale.x < 2)
         {
-            textColor = Color.Lerp(Color.white, Start, progress);
+            textColor = Color.Lerp(Color.white, Start_, progress);
             progress += Time.deltaTime * 3;
             TextCoin.GetComponent<Text>().color = textColor;
             Vector3 CurrentScale = TextCoin.gameObject.transform.localScale;
@@ -897,7 +671,7 @@ public class GameManager_Net : MonoBehaviour
         Color textColor = TextCoin.GetComponent<Text>().color;
         while (CoinOb.transform.localScale.x > 1)
         {
-            textColor = Color.Lerp(Start, Color.white, progress);
+            textColor = Color.Lerp(Start_, Color.white, progress);
             progress += Time.deltaTime * 3;
             TextCoin.GetComponent<Text>().color = textColor;
             Vector3 CurrentScale = TextCoin.gameObject.transform.localScale;
@@ -952,7 +726,7 @@ public class GameManager_Net : MonoBehaviour
 
         for (int j = 0; j < CurrentOrderUI.Count; j++)
         {
-            if (i < j && !CurrentOrderUI[j].GetComponent<OrderUI>().goLeft)
+            if (i < j && !CurrentOrderUI[j].GetComponent<OrderUI_Net>().goLeft)
             {
                 Vector3 CurrentPosition = CurrentOrderUI[j].transform.position;
                 CurrentPosition.x -= width * 0.92f;
@@ -960,4 +734,6 @@ public class GameManager_Net : MonoBehaviour
             }
         }
     }
+
+
 }

@@ -49,7 +49,7 @@ public class PotOnStove : MonoBehaviour
     {
         if (transform.GetChild(2).gameObject != null)
         {
-            stateIsCooked = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked;
+            stateIsCooked = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().isCooked;
         }
     }
 
@@ -119,7 +119,7 @@ public class PotOnStove : MonoBehaviour
     {
         if (transform.childCount < 3)
             return;
-        Ingredient Ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
+        Ingredient_Net Ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient_Net>();
         Ingredient.isCooked = true;
 
         //여기선 이제 쿡되야함
@@ -139,10 +139,10 @@ public class PotOnStove : MonoBehaviour
         madeUI.transform.GetChild(0).gameObject.SetActive(true);
         Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
         image.sprite = GetIcon(Ingredient.type);
-        madeUI.GetComponent<IngredientUI>().target = Ingredient.transform;
+        madeUI.GetComponent<IngredientUI_Net>().Target = Ingredient.transform;
     }
 
-    private Sprite GetIcon(Ingredient.IngredientType ingredientType)
+    private Sprite GetIcon(Ingredient_Net.IngredientType ingredientType)
     {
         switch (ingredientType)
         {

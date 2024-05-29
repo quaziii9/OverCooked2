@@ -1,8 +1,9 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IngredientUI_Net : MonoBehaviour
+public class IngredientUI_Net : NetworkBehaviour
 {
     public Transform Target;
     [SerializeField] private new Vector3 pos = Vector3.zero;

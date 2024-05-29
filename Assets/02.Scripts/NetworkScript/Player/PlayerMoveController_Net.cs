@@ -46,6 +46,7 @@ public class PlayerMoveController_Net : NetworkBehaviour
                 puffCount = 0;
             }
         }
+
     }
 
     void FixedUpdate()
