@@ -340,7 +340,6 @@ public class GameManager_Net : MonoBehaviour
                     if (lastSec > 1)
                     {
                         //SceneManager.LoadScene("ResultScene");
-                        
                     }
                 }
             }
