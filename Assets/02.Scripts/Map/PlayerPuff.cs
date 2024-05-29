@@ -12,7 +12,8 @@ public class PlayerPuff : Singleton<PlayerPuff>
     private IObjectPool<Puff> burstPool; // 버스트 퍼프 풀
     private IObjectPool<Puff> switchEfPool;
     private IObjectPool<Puff> spawnPool;
-    private new void Awake()
+
+    protected override void Awake()
     {
         base.Awake();
         walkPool = new ObjectPool<Puff>(CreateWalk, OnGetPuff, OnReleasePuff, OnDestroyPuff, maxSize: 1000);

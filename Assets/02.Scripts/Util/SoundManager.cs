@@ -3,7 +3,6 @@ using EventLibrary;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
 
 public class SoundManager : Singleton<SoundManager>
 {
