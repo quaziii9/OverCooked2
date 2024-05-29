@@ -6,7 +6,7 @@ public class LoadData : Singleton<LoadData>
 {
     public OptionData optionData;
 
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
         LoadOptionDataFromJson();

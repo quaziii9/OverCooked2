@@ -3,7 +3,7 @@ using UnityEngine;
 public class IngredientUI : MonoBehaviour
 {
     public Transform target;
-    [SerializeField] private new Vector3 pos = Vector3.zero;
+    [SerializeField] private Vector3 pos = Vector3.zero;
     private void Update()
     {
         if (target != null)

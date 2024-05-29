@@ -6,6 +6,9 @@ public class IntroManager : MonoBehaviour
     private bool isSpace;
     private bool isLoading = true;
 
+    private const float INTRO_DURATION = 18f; // 인트로 지속 시간
+    private const float SHUTTER_OUT_DELAY = 2f; // 셔터 비활성화 딜레이
+
     void Start()
     {
         InitUI();
@@ -13,43 +16,42 @@ public class IntroManager : MonoBehaviour
 
     void FixedUpdate()
     {
-    
+        CheckInput();
+    }
 
-        if (isSpace==false && isLoading==false && Input.GetKeyDown(KeyCode.Space))
-        {           
+    private void CheckInput()
+    {
+        bool isInputReceived = Input.GetKeyDown(KeyCode.Space) ||
+#if UNITY_ANDROID
+                               (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began);
+#else
+                               false;
+#endif
+
+        if (!isSpace && !isLoading && isInputReceived)
+        {
             StartSpace();
         }
-
-        #if UNITY_ANDROID
-            if (isSpace == false && isLoading == false && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-            {
-                StartSpace();
-            }
-        #endif
     }
 
-    // 처음 인트로 들어갈때 세팅
+    // 처음 인트로 들어갈 때 세팅
     public void InitUI()
     {
-        if (UIManager.Instance.first == true)
+        if (UIManager.Instance.first)
         {
-            // First Intro UI
-            UIManager.Instance.loadingUI.SetActive(true);
-            UIManager.Instance.spaceToStart.SetActive(true);
-
-            // VAN 
-            UIManager.Instance.ingamePlayerUI.SetActive(false);
-            UIManager.Instance.buttonUI.SetActive(false);
-            UIManager.Instance.shutter.SetActive(true);
-
-            // UnderBar UI
-            //UIManager.Instance.underBarStop.SetActive(false);
-            //UIManager.Instance.underBarCancle.SetActive(false);
-
-            StartCoroutine("IntroSetting");
+            ActivateIntroUI();
+            StartCoroutine(IntroSetting());
         }
     }
 
+    private void ActivateIntroUI()
+    {
+        UIManager.Instance.loadingUI.SetActive(true);
+        UIManager.Instance.spaceToStart.SetActive(true);
+        UIManager.Instance.ingamePlayerUI.SetActive(false);
+        UIManager.Instance.buttonUI.SetActive(false);
+        UIManager.Instance.shutter.SetActive(true);
+    }
 
     // 게임을 시작하려면 스페이스바
     public void StartSpace()
@@ -60,35 +62,33 @@ public class IntroManager : MonoBehaviour
         SoundManager.Instance.Load();
         SoundManager.Instance.StartPlay();
 
-        // VAN 
+        ActivateGameUI();
+        StartCoroutine(ShutterOut());
+
+        UIManager.Instance.loadingUI.SetActive(false);
+        UIManager.Instance.spaceToStart.SetActive(false);
+    }
+
+    private void ActivateGameUI()
+    {
         UIManager.Instance.ingamePlayerUI.SetActive(true);
         UIManager.Instance.buttonUI.SetActive(true);
         UIManager.Instance.shutterAnim.SetTrigger("ShutterOn");
         SoundManager.Instance.VanShutter();
         UIManager.Instance.shutterCamera.Priority = 9;
-        StartCoroutine("ShutterOut");
-
-        // First Intro UI
-        UIManager.Instance.loadingUI.SetActive(false);
-        UIManager.Instance.spaceToStart.SetActive(false);
-
-        // UnderBar UI
-        // UIManager.Instance.UnderBarStop.SetActive(true);
     }
 
     // 셔터 비활성화
-    IEnumerator ShutterOut()
+    private IEnumerator ShutterOut()
     {
-        yield return new WaitForSeconds(2f);
-
+        yield return new WaitForSeconds(SHUTTER_OUT_DELAY);
         UIManager.Instance.shutter.SetActive(false);
     }
 
     // 처음 인트로 로딩 영상
-    IEnumerator IntroSetting()
+    private IEnumerator IntroSetting()
     {
-        yield return new WaitForSeconds(18f);
-
+        yield return new WaitForSeconds(INTRO_DURATION);
         isLoading = false;
     }
 }

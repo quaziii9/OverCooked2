@@ -26,7 +26,6 @@ public class RespawnManager : MonoBehaviour
 
     public void StartRespawnCountdown(GameObject player)
     {
-        // 객체의 이름에서 숫자를 추출
         int spawnIndex = GetSpawnIndexFromParentName(player.transform.name);
 
         if (spawnIndex >= 0 && spawnIndex < countdown.Length)
@@ -66,8 +65,9 @@ public class RespawnManager : MonoBehaviour
     private IEnumerator RespawnCountdownCoroutine(GameObject player, int index)
     {
         Text countdownText = countdown[index].transform.GetChild(1).GetComponent<Text>();
-        countdown[index].transform.position = Camera.main.WorldToScreenPoint(playerSpawnPositions[index].transform.position);
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(playerSpawnPositions[index].position);
 
+        countdown[index].transform.position = screenPosition;
         countdown[index].SetActive(true);
 
         for (int i = (int)respawnDelay; i > 0; i--)
@@ -88,6 +88,9 @@ public class RespawnManager : MonoBehaviour
         // 연기 발생 및 플레이어 스폰
         PlayerPuff.Instance.SpawnPuff(spawnPosition);
         player.transform.position = spawnPosition.position;
+
+        // 아래 방향을 바라보도록 설정
+        player.transform.rotation = Quaternion.Euler(0, 180, 0);
 
         // 연기가 모두 나오고 스폰해야 하기에 1초 딜레이
         player.transform.GetChild(0).gameObject.SetActive(true);
