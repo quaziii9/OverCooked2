@@ -43,7 +43,7 @@ public class PanOnStove : MonoBehaviour
     {
         if (transform.GetChild(2).gameObject != null)
         {
-            stateIsCooked = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient_Net>().isCooked;
+            stateIsCooked = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked;
         }
     }
 
@@ -114,7 +114,7 @@ public class PanOnStove : MonoBehaviour
     {
         if (transform.childCount < 3)
             return;
-        Ingredient_Net Ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient_Net>();
+        Ingredient Ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
         Ingredient.isCooked = true;
 
         //여기선 이제 쿡되야함
