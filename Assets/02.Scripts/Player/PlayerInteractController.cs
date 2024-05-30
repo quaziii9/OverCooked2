@@ -502,6 +502,13 @@ public class PlayerInteractController : MonoBehaviour
                 // 테이블에 있는게, Pan이고 내가 든게 미트, 닭고기면 실행
                 if (potAndPan.CompareTag("Pan") && (ingredient == Ingredient.IngredientType.Meat || ingredient == Ingredient.IngredientType.Chicken))
                 {
+                    MeshFilter meshFilter = ingredientObj.transform.GetChild(0).GetComponent<MeshFilter>();
+                    string meshFileName = meshFilter.sharedMesh.name;
+                    //Debug.Log(meshFileName);
+                    if (meshFileName.Equals("m_ingredients_chicken_01_0") || meshFileName.Equals("m_ingredients_meat_01_0"))
+                    {
+                        return;
+                    }
                     ingredientObj.transform.SetParent(potAndPan.transform);
                     // 위치 설정
                     ingredientObj.transform.localPosition = new Vector3(2e-05f, -0.00017f, 0.00013f);
