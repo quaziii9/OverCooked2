@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class IntroManager : MonoBehaviour

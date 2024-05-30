@@ -1,19 +1,19 @@
-using System.Collections;
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
-    [Header("Coroutine Management")]
-    private Coroutine alpahCoroutine = null; // 알파값 변화 코루틴 저장용 변수
-    public Coroutine activeCoroutine = null; // 현재 활성화된 코루틴
+    private CancellationTokenSource alphaCancellationTokenSource = null; // 알파값 변화 작업 취소용 변수
 
     [Header("Game State Management")]
     public bool isPaused = true; // 일시정지 여부
-    private bool isMoving = false; // 이동 여부
+    // private bool isMoving = false; // 이동 여부
 
     public enum State { Stage1, Stage2, Stage3 }; // 게임 상태 열거형
     [SerializeField] private State state = State.Stage1; // 현재 게임 상태
@@ -74,7 +74,7 @@ public class GameManager : Singleton<GameManager>
     public List<Menu> currentOrder; // 현재 주문 목록
     public List<GameObject> currentOrderUI; // 현재 주문 UI 목록
     private int i = -1; // 메뉴 인덱스
-    private int j = -1; // UI 인덱스
+    // private int j = -1; // UI 인덱스
 
     [Header("Respawn Management")]
     // 접시 리스폰 관련 변수들
@@ -84,7 +84,7 @@ public class GameManager : Singleton<GameManager>
 
     [Header("Color Change Settings")]
     private float duration = 75f; // 색상 변화 시간
-    private float smoothness = 0.1f; // 색상 변화의 부드러움 정도
+    // private float smoothness = 0.1f; // 색상 변화의 부드러움 정도
     private Color startColor = new Color(0, 192 / 255f, 5 / 255f, 255 / 255f); // 초록색
     private Color middleColor = new Color(243 / 255f, 239 / 255f, 0, 255 / 255f); // 노랑색
     private Color endColor = new Color(215 / 255f, 11 / 255f, 0, 1f); // 빨강색
@@ -94,9 +94,9 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
 
-        InitializeVariables();      // 변수 초기화
-        InitializeStageManager();   // 스테이지 매니저 초기화
-        InitializeGameSettings();   // 게임 세팅 초기화
+        InitializeVariables();                  // 변수 초기화
+        InitializeStageManager();               // 스테이지 매니저 초기화
+        InitializeGameSettingsAsync().Forget(); // 게임 세팅 초기화
     }
 
     private void InitializeVariables()
@@ -133,18 +133,18 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private void InitializeGameSettings()
+    private async UniTaskVoid InitializeGameSettingsAsync()
     {
         isPaused = true;
         coin = 0;
         SetCoinText();
-        StartCoroutine(StartColorAnimation());
+        await StartColorAnimationAsync();
     }
 
-    private IEnumerator StartColorAnimation()
+    private async UniTask StartColorAnimationAsync()
     {
-        yield return StartCoroutine(LerpColor(startColor, middleColor, gameTime / 2));
-        yield return StartCoroutine(LerpColor(middleColor, endColor, gameTime / 2));
+        await LerpColorAsync(startColor, middleColor, gameTime / 2);
+        await LerpColorAsync(middleColor, endColor, gameTime / 2);
     }
 
     private void Update()
@@ -336,30 +336,20 @@ public class GameManager : Singleton<GameManager>
     public void PlateReturn()
     {
         // 접시 반환 처리
-        StartCoroutine(PlateReturnCo());
+        PlateReturnAsync().Forget();
     }
 
-    IEnumerator PlateReturnCo()
+    private async UniTask PlateReturnAsync()
     {
         // 일정 시간 후에 접시를 생성하여 반환 카운터에 추가
-        yield return new WaitForSeconds(respawnTime);
+        await UniTask.Delay(TimeSpan.FromSeconds(respawnTime));
         GameObject newPlate = Instantiate(platePrefabs, Vector3.zero, Quaternion.identity);
-        if (state == State.Stage1)
-        {
-            newPlate.GetComponent<Plates>().limit = 3;
-        }
-        else if (state == State.Stage2)
-        {
-            newPlate.GetComponent<Plates>().limit = 3;
-        }
-        else if (state == State.Stage3)
-        {
-            newPlate.GetComponent<Plates>().limit = 3;
-        }
+
         newPlate.transform.SetParent(returnCounter.transform);
         newPlate.transform.localScale = Vector3.one;
-        returnCounter.transform.GetChild(1).GetComponent<Return>().returnPlates.Add(newPlate);
-        Vector3 spawnPos = returnCounter.transform.GetChild(1).GetComponent<Return>().SetPosition();
+        var returnComponent = returnCounter.transform.GetChild(1).GetComponent<Return>();
+        returnComponent.returnPlates.Add(newPlate);
+        Vector3 spawnPos = returnComponent.SetPosition();
         newPlate.transform.localPosition = spawnPos;
         newPlate.GetComponent<Plates>().canvas = canvas;
     }
@@ -372,7 +362,7 @@ public class GameManager : Singleton<GameManager>
             return; // 현재 주문이 최대 주문 수를 초과하면 함수를 종료
         }
 
-        i = Random.Range(0, menus.Length); // 랜덤으로 메뉴 선택
+        i = UnityEngine.Random.Range(0, menus.Length); // 랜덤으로 메뉴 선택
         Menu selectedMenu = menus[i];
         int ingredientCount = selectedMenu.Ingredient.Count;
 
@@ -516,7 +506,7 @@ public class GameManager : Singleton<GameManager>
               timerValue > maxTimerValue * 0.3f ? 5 : 3;
 
         SetCoinText();
-        StartCoroutine(StartBigger()); //---> 커졌다가 작아지는 코루틴 
+        StartBigger(); // 동전 텍스트 커졌다 작아지는 Unitask
     }
 
     private void SetCoinText()
@@ -544,29 +534,38 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    IEnumerator StartBigger()
+    public void StartBigger()
+    {
+        // 동전 텍스트 커졌다가 작아지는 애니메이션 시작
+        StartBiggerAsync().Forget();
+    }
+
+    private async UniTaskVoid StartBiggerAsync()
     {
         // 동전 텍스트 커지는 애니메이션
-        yield return ScaleCoinText(Vector3.one * 2, Color.white, startColor);
-        StartCoroutine(StartSmaller());
+        await ScaleCoinTextAsync(Vector3.one * 2, Color.white, startColor);
+        await StartSmallerAsync();
     }
 
-    IEnumerator StartSmaller()
+    private async UniTask StartSmallerAsync()
     {
         // 동전 텍스트 작아지는 애니메이션
-        yield return ScaleCoinText(Vector3.one, startColor, Color.white);
+        await ScaleCoinTextAsync(Vector3.one, startColor, Color.white);
     }
 
-    private IEnumerator ScaleCoinText(Vector3 targetScale, Color startColor, Color endColor)
+    private async UniTask ScaleCoinTextAsync(Vector3 targetScale, Color startColor, Color endColor)
     {
         float progress = 0;
-        while ((targetScale == Vector3.one && coinOb.transform.localScale.x > 1) ||
-               (targetScale == Vector3.one * 2 && coinOb.transform.localScale.x < 2))
+        Text coinTextComponent = textCoin.GetComponent<Text>();
+        Transform coinObTransform = coinOb.transform;
+
+        while ((targetScale == Vector3.one && coinObTransform.localScale.x > 1) ||
+               (targetScale == Vector3.one * 2 && coinObTransform.localScale.x < 2))
         {
             progress += Time.deltaTime * 3;
-            textCoin.GetComponent<Text>().color = Color.Lerp(startColor, endColor, progress);
-            coinOb.transform.localScale = Vector3.Lerp(coinOb.transform.localScale, targetScale, Time.deltaTime * 3);
-            yield return null;
+            coinTextComponent.color = Color.Lerp(startColor, endColor, progress);
+            coinObTransform.localScale = Vector3.Lerp(coinObTransform.localScale, targetScale, Time.deltaTime * 3);
+            await UniTask.Yield(); // 다음 프레임까지 대기
         }
     }
 
@@ -605,9 +604,9 @@ public class GameManager : Singleton<GameManager>
         coin -= (int)(currentOrder[index].Price * 0.5f);
         textCoin.text = coin.ToString(); // 돈 얼마됐다고 업데이트
 
-        if (alpahCoroutine == null)
+        if (alphaCancellationTokenSource == null)
         {
-            alpahCoroutine = StartCoroutine(TurnAlpha(wrong));
+            ExecuteTurnAlphaAsync(wrong).Forget();
         }
 
         GameObject failedOrderUI = currentOrderUI[index];
@@ -638,43 +637,66 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private IEnumerator LerpColor(Color start, Color end, float duration)
+    private async UniTask LerpColorAsync(Color start, Color end, float duration)
     {
         float progress = 0;
         float increment = Time.deltaTime / duration;
+        Image sliderImage = timeSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>();
 
         while (progress < 1)
         {
             currentColor = Color.Lerp(start, end, progress);
-            timeSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = currentColor;
+            sliderImage.color = currentColor;
             progress += increment;
-            yield return null;
+            await UniTask.Yield(); // 다음 프레임까지 대기
         }
     }
 
-    public IEnumerator TurnAlpha(GameObject panel)
+    private async UniTaskVoid ExecuteTurnAlphaAsync(GameObject panel)
     {
-        // 패널의 알파값을 증가시키는 코루틴
-        while (panel.GetComponent<Image>().color.a < 0.4f)
+        // 이전 작업이 있다면 취소
+        alphaCancellationTokenSource?.Cancel();
+
+        // 새로운 CancellationTokenSource 생성
+        alphaCancellationTokenSource = new CancellationTokenSource();
+
+        try
         {
-            float alpha = panel.GetComponent<Image>().color.a;
+            await TurnAlpha(panel, alphaCancellationTokenSource.Token);
+        }
+        finally
+        {
+            alphaCancellationTokenSource = null;
+        }
+    }
+
+    public async UniTask TurnAlpha(GameObject panel, CancellationToken cancellationToken)
+    {
+        // 패널의 알파값을 증가시키는 비동기 메서드
+        Image panelImage = panel.GetComponent<Image>();
+
+        while (panelImage.color.a < 0.4f)
+        {
+            float alpha = panelImage.color.a;
             alpha += 0.05f;
-            panel.GetComponent<Image>().color = new Color(panel.GetComponent<Image>().color.r, panel.GetComponent<Image>().color.g, panel.GetComponent<Image>().color.b, alpha);
-            yield return new WaitForSeconds(0.01f);
+            panelImage.color = new Color(panelImage.color.r, panelImage.color.g, panelImage.color.b, alpha);
+            await UniTask.Delay(10, cancellationToken: cancellationToken); // 0.01초 대기
         }
-        StartCoroutine(TurnAlphaZero(panel));
+
+        await TurnAlphaZero(panel, cancellationToken);
     }
 
-    public IEnumerator TurnAlphaZero(GameObject panel)
+    public async UniTask TurnAlphaZero(GameObject panel, CancellationToken cancellationToken)
     {
-        // 패널의 알파값을 감소시키는 코루틴
-        while (panel.GetComponent<Image>().color.a > 0)
+        // 패널의 알파값을 감소시키는 비동기 메서드
+        Image panelImage = panel.GetComponent<Image>();
+
+        while (panelImage.color.a > 0)
         {
-            float alpha = panel.GetComponent<Image>().color.a;
+            float alpha = panelImage.color.a;
             alpha -= 0.05f;
-            panel.GetComponent<Image>().color = new Color(panel.GetComponent<Image>().color.r, panel.GetComponent<Image>().color.g, panel.GetComponent<Image>().color.b, alpha);
-            yield return new WaitForSeconds(0.01f);
+            panelImage.color = new Color(panelImage.color.r, panelImage.color.g, panelImage.color.b, alpha);
+            await UniTask.Delay(10, cancellationToken: cancellationToken); // 0.01초 대기
         }
-        alpahCoroutine = null; // 알파값 변화 코루틴 종료
     }
 }
