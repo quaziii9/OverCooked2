@@ -106,7 +106,6 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
 
     private async UniTaskVoid LoadSceneAsyncUniTask(string sceneName, Image loadingBar)
     {
-        Debug.Log("loadseneunitask");
         operation = SceneManager.LoadSceneAsync(sceneName);
         UIManager.Instance.LoadingFood();
 
@@ -134,6 +133,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                     break;
                 }
             }
+            await UniTask.Yield(); // 프레임을 넘기기 위해 대기
         }
     }
 

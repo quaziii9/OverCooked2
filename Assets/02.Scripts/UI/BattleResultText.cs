@@ -84,9 +84,6 @@ public class BattleResultText : MonoBehaviour
 
     public void VictoryTeam()
     {
-        //Debug.Log(targetRedTotalNum > targetBlueTotalNum);
-        //Debug.Log(targetRedTotalNum < targetBlueTotalNum);
-
         if (targetRedTotalNum > targetBlueTotalNum) redVictory.SetActive(true);
         else if (targetRedTotalNum < targetBlueTotalNum) blueVictory.SetActive(true);
     }

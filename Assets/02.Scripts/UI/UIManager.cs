@@ -7,6 +7,8 @@ using EnumTypes;
 using EventLibrary;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using System;
+using Random = UnityEngine.Random;
 
 
 public class UIManager : Singleton<UIManager>
@@ -306,7 +308,7 @@ public class UIManager : Singleton<UIManager>
     #region Mask InOut Tool
 
     // 마스크 축소 UI
-    public void MaskInUI(GameObject inMask, string goTo)
+    public async void MaskInUI(GameObject inMask, string goTo)
     {
         SoundManager.Instance.ScreenInUI();
         inMask.SetActive(true);
@@ -326,8 +328,7 @@ public class UIManager : Singleton<UIManager>
             MaskInTime = 0.5f;
         }
 
-        //MaskInOutUnitask(inMaskRect, Vector2.zero, MaskInTime, () =>
-        StartCoroutine(MaskInOut(inMaskRect, Vector2.zero, MaskInTime, () =>
+        await MaskInOutAsync(inMaskRect, Vector2.zero, MaskInTime, () =>
         {
             LoadingFood();
             switch (goTo)
@@ -359,11 +360,11 @@ public class UIManager : Singleton<UIManager>
                     Invoke(goTo, 1f);
                     break;
             }
-        }));
+        });
     }
 
     // 마스크 확대 UI
-    public void MaskOutUI(GameObject inMask, GameObject outMask, string goTo)
+    public async void MaskOutUI(GameObject inMask, GameObject outMask, string goTo)
     {
         SoundManager.Instance.ScreenOutUI();
         inMask.SetActive(false);
@@ -391,7 +392,7 @@ public class UIManager : Singleton<UIManager>
         if (goTo == "") Invoke("LoadingFoodOff", 0.5f);
         else LoadingFoodOff();
 
-        StartCoroutine(MaskInOut(outMaskRect, targetRect, MaskOutTime, () =>
+        await MaskInOutAsync(outMaskRect, targetRect, MaskOutTime, () =>
         {
             outMask.SetActive(false);
 
@@ -429,10 +430,10 @@ public class UIManager : Singleton<UIManager>
                 default:
                     break;
             }
-        }));
+        });
     }
 
-    IEnumerator MaskInOut(RectTransform rt, Vector2 toSize, float time, System.Action onComplete)
+    private async UniTask MaskInOutAsync(RectTransform rt, Vector2 toSize, float time, System.Action onComplete = null)
     {
         Vector2 fromSize = rt.sizeDelta;
         float elapsedTime = 0f;
@@ -441,25 +442,11 @@ public class UIManager : Singleton<UIManager>
         {
             rt.sizeDelta = Vector2.Lerp(fromSize, toSize, (elapsedTime / time));
             elapsedTime += Time.deltaTime;
-            yield return null;
+            await UniTask.Yield();
         }
 
         rt.sizeDelta = toSize; // 최종 크기 설정
-        onComplete?.Invoke(); // 완료 시 콜백 호출
-    }
-
-    private async UniTaskVoid MaskInOutUnitask(RectTransform rt, Vector2 toSize, float time, System.Action onComplete)
-    {
-        Vector2 fromSize = rt.sizeDelta;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < time)
-        {
-            rt.sizeDelta = Vector2.Lerp(fromSize, toSize, (elapsedTime / time));
-        }
-
-        rt.sizeDelta = toSize; // 최종 크기 설정
-        onComplete?.Invoke(); // 완료 시 콜백 호출
+        onComplete?.Invoke();  // 완료 시 콜백 호출
     }
 
     #endregion
@@ -756,12 +743,12 @@ public class UIManager : Singleton<UIManager>
     {
         recipeUI.SetActive(true);
         recipeArr[arr].SetActive(true);
-        StartCoroutine("IRecipeUIPopIn");
+        RecipeUIPopIn().Forget();
     }
 
-    IEnumerator IRecipeUIPopIn()
+    private async UniTask RecipeUIPopIn()
     {
-        yield return new WaitForSeconds(1f);
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
         SoundManager.Instance.RecipeUIPopIn();
     }
 
@@ -773,6 +760,7 @@ public class UIManager : Singleton<UIManager>
         foreach (var recipe in recipeArr)
             recipe.SetActive(false);
     }
+
     #endregion 
 
 }
