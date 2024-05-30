@@ -1,6 +1,8 @@
 using Cinemachine;
+using Cysharp.Threading.Tasks;
 using EnumTypes;
 using EventLibrary;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -67,12 +69,10 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         ChangeScene("Mine", "Mine_Single", UIManager.Instance.loadingMapBar);
     }
 
-
     public void ChangeToStage3_3()
     {
         ChangeScene("Wizard", "Stage3_3", UIManager.Instance.loadingMapBar);
     }
-
 
     public void ChangeToStageWizard()
     {
@@ -99,14 +99,14 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
             SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, bgmName);
         }
 
-
-        StartCoroutine(LoadSceneAsyncCoroutine(sceneName, loadingBar));
+        LoadSceneAsyncUniTask(sceneName, loadingBar).Forget();      
     }
 
     // 씬을 비동기로 로드하는 코루틴
-    IEnumerator LoadSceneAsyncCoroutine(string sceneName, Image loadingBar)
+
+    private async UniTaskVoid LoadSceneAsyncUniTask(string sceneName, Image loadingBar)
     {
-        yield return null;
+        Debug.Log("loadseneunitask");
         operation = SceneManager.LoadSceneAsync(sceneName);
         UIManager.Instance.LoadingFood();
 
@@ -115,7 +115,6 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
 
         while (!operation.isDone)
         {
-            yield return null;
             timer += Time.deltaTime;
             if (operation.progress < 0.9f)
             {
@@ -132,13 +131,11 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 {
                     operation.allowSceneActivation = true;
                     UIManager.Instance.LoadingFoodOff();
-                    yield break;
+                    break;
                 }
             }
         }
     }
-
-
 
     // 씬 로드 완료 후 호출되는 메서드
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)

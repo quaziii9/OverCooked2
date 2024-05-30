@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using EnumTypes;
 using EventLibrary;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 
 
 public class UIManager : Singleton<UIManager>
@@ -112,6 +113,9 @@ public class UIManager : Singleton<UIManager>
         HandleEscapeInput();
     }
 
+
+
+    #region Popup
     private void ToggleUI(GameObject uiElement, bool state)
     {
         uiElement.SetActive(state);
@@ -144,9 +148,6 @@ public class UIManager : Singleton<UIManager>
             }
         }
     }
-
-
-    #region Popup
     // 옵션창 On
     public void SettingOn()
     {
@@ -169,7 +170,7 @@ public class UIManager : Singleton<UIManager>
         ToggleUI(worldMapEscUI, false);
         ToggleUI(stageMapEscUI, false);
     }
-
+    
     public void ExitLobbyUIOn()
     {
         ToggleUI(exitLobbyUI, true);
@@ -325,6 +326,7 @@ public class UIManager : Singleton<UIManager>
             MaskInTime = 0.5f;
         }
 
+        //MaskInOutUnitask(inMaskRect, Vector2.zero, MaskInTime, () =>
         StartCoroutine(MaskInOut(inMaskRect, Vector2.zero, MaskInTime, () =>
         {
             LoadingFood();
@@ -440,6 +442,20 @@ public class UIManager : Singleton<UIManager>
             rt.sizeDelta = Vector2.Lerp(fromSize, toSize, (elapsedTime / time));
             elapsedTime += Time.deltaTime;
             yield return null;
+        }
+
+        rt.sizeDelta = toSize; // 최종 크기 설정
+        onComplete?.Invoke(); // 완료 시 콜백 호출
+    }
+
+    private async UniTaskVoid MaskInOutUnitask(RectTransform rt, Vector2 toSize, float time, System.Action onComplete)
+    {
+        Vector2 fromSize = rt.sizeDelta;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < time)
+        {
+            rt.sizeDelta = Vector2.Lerp(fromSize, toSize, (elapsedTime / time));
         }
 
         rt.sizeDelta = toSize; // 최종 크기 설정

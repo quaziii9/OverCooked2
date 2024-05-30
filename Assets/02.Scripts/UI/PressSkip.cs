@@ -57,7 +57,7 @@ public class PressSkip : MonoBehaviour
         SoundManager.Instance.RecipeUIPopOut();
         if (UIManager.Instance.mapType == MapType.stageMine)
         {
-            EventManager<SoundEvents>.TriggerEvent(SoundEvents.MineBgmPlay);
+            //EventManager<SoundEvents>.TriggerEvent(SoundEvents.MineBgmPlay);
         }
         // UI 비활성화 및 게임 시작
     }
