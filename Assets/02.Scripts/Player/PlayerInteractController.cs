@@ -324,11 +324,11 @@ public class PlayerInteractController : MonoBehaviour
             // Ingredient 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
             Plates plateComponent = transform.GetChild(1).gameObject.GetComponent<Plates>();  // Plates 컴포넌트를 가져옴
 
-            if (GameManager.instance.CheckMenu(plateComponent.containIngredients))
+            if (GameManager.Instance.CheckMenu(plateComponent.containIngredients))
             {
                 // 접시의 재료가 메뉴와 일치하면
                 SoundManager.Instance.PlayEffect("right");  // 성공 효과음 재생
-                GameManager.instance.MakeOrder();  // 주문을 만듦
+                GameManager.Instance.MakeOrder();  // 주문을 만듦
             }
             else
             {
@@ -340,7 +340,7 @@ public class PlayerInteractController : MonoBehaviour
             Destroy(transform.GetChild(1).gameObject);  // 접시 전체를 삭제 (추후 재활용을 고려)
             isHolding = false;  // 아이템을 들고 있는 상태를 해제
             anim.SetBool("isHolding", isHolding);  // 애니메이션 상태를 업데이트
-            GameManager.instance.PlateReturn();  // 접시 반환 처리
+            GameManager.Instance.PlateReturn();  // 접시 반환 처리
         }
 
     }

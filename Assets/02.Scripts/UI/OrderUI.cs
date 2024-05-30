@@ -40,7 +40,7 @@ public class OrderUI : MonoBehaviour
     private void OnEnable()
     {
         // 오브젝트가 활성화될 때 초기 위치를 설정하고, 이동을 시작하며 색상 변화 및 타이머를 시작
-        transform.localPosition = GameManager.instance.poolPos;
+        transform.localPosition = GameManager.Instance.poolPos;
         goLeft = true;
         StartCoroutine(TimerStart());
         StartCoroutine(LerpColor1());
@@ -99,6 +99,6 @@ public class OrderUI : MonoBehaviour
             timer.value -= 1f;
         }
         // 타이머가 0이 되면 실패 처리 (메뉴 실패 메서드 호출)
-        GameManager.instance.MenuFail(gameObject);
+        GameManager.Instance.MenuFail(gameObject);
     }
 }
