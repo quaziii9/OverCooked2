@@ -63,12 +63,16 @@ public class GameManager : Singleton<GameManager>
     [Header("Order Management")]
     [SerializeField] private Menu[] menus; // 이번 스테이지에 등장할 메뉴들
     [SerializeField] private int maxMenuLimit; // 이번 스테이지에서 최대로 쌓일 수 있는 메뉴 개수들
+
+    [Header("Menu UI Pools")]
     [SerializeField] private GameObject[] singleDoublePoolUIs; // 오브젝트 풀링으로 쓸 단일 메뉴 UI들
     [SerializeField] private GameObject[] triplePoolUIs; // 오브젝트 풀링으로 쓸 3개짜리 메뉴 UI들
     [SerializeField] private GameObject[] quadruplePoolUIs; // 오브젝트 풀링으로 쓸 4개짜리 메뉴 UI들
+    public Vector3 poolPos; // 풀 위치
+
+    [Space(10)]
     public List<Menu> currentOrder; // 현재 주문 목록
     public List<GameObject> currentOrderUI; // 현재 주문 UI 목록
-    public Vector3 poolPos; // 풀 위치
     private int i = -1; // 메뉴 인덱스
     private int j = -1; // UI 인덱스
 
