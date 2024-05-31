@@ -643,31 +643,37 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private async UniTask LerpColorAsync(Color start, Color end, float duration)
+    public async UniTask LerpColorAsync(Color start, Color end, float duration)
     {
         float progress = 0;
         float increment = Time.deltaTime / duration;
         Image sliderImage = timeSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>();
 
+        // 슬라이더 객체가 null인지 확인
+        if (sliderImage == null)
+        {
+            Debug.LogWarning("sliderImage 객체가 파괴되었습니다."); // 경고 로그
+            return; // 함수 종료
+        }
+
         while (progress < 1)
         {
+            // 슬라이더 객체가 null인지 확인
             if (sliderImage == null)
             {
                 Debug.LogWarning("sliderImage 객체가 파괴되었습니다."); // 경고 로그
                 return; // 함수 종료
             }
 
-            // 색상 보간 및 적용
             currentColor = Color.Lerp(start, end, progress);
             sliderImage.color = currentColor;
             progress += increment;
 
-            // 다음 프레임까지 대기
-            await UniTask.Yield();
+            await UniTask.Yield(); // 다음 프레임까지 대기
         }
 
         // 마지막 색상 설정
-        if (sliderImage != null)
+        if (sliderImage != null) // null 체크
         {
             sliderImage.color = end;
         }
