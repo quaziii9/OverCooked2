@@ -555,18 +555,24 @@ public class GameManager : Singleton<GameManager>
 
     private async UniTask ScaleCoinTextAsync(Vector3 targetScale, Color startColor, Color endColor)
     {
+        float duration = 1.0f; // 애니메이션 지속 시간
         float progress = 0;
         Text coinTextComponent = textCoin.GetComponent<Text>();
         Transform coinObTransform = coinOb.transform;
+        Vector3 initialScale = coinObTransform.localScale;
 
-        while ((targetScale == Vector3.one && coinObTransform.localScale.x > 1) ||
-               (targetScale == Vector3.one * 2 && coinObTransform.localScale.x < 2))
+        while (progress < duration)
         {
-            progress += Time.deltaTime * 3;
-            coinTextComponent.color = Color.Lerp(startColor, endColor, progress);
-            coinObTransform.localScale = Vector3.Lerp(coinObTransform.localScale, targetScale, Time.deltaTime * 3);
+            progress += Time.deltaTime;
+            float t = Mathf.Clamp01(progress / duration); // 0에서 1 사이로 제한된 진행도
+            coinTextComponent.color = Color.Lerp(startColor, endColor, t);
+            coinObTransform.localScale = Vector3.Lerp(initialScale, targetScale, t);
             await UniTask.Yield(); // 다음 프레임까지 대기
         }
+
+        // 목표 스케일과 색상을 최종적으로 설정
+        coinObTransform.localScale = targetScale;
+        coinTextComponent.color = endColor;
     }
 
     public void MenuFail(GameObject whichUI) // 메뉴를 주어진 시간 내로 전달 못했을 때 작동
@@ -645,10 +651,25 @@ public class GameManager : Singleton<GameManager>
 
         while (progress < 1)
         {
+            if (sliderImage == null)
+            {
+                Debug.LogWarning("sliderImage 객체가 파괴되었습니다."); // 경고 로그
+                return; // 함수 종료
+            }
+
+            // 색상 보간 및 적용
             currentColor = Color.Lerp(start, end, progress);
             sliderImage.color = currentColor;
             progress += increment;
-            await UniTask.Yield(); // 다음 프레임까지 대기
+
+            // 다음 프레임까지 대기
+            await UniTask.Yield();
+        }
+
+        // 마지막 색상 설정
+        if (sliderImage != null)
+        {
+            sliderImage.color = end;
         }
     }
 
