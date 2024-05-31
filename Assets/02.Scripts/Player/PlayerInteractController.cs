@@ -134,6 +134,16 @@ public class PlayerInteractController : MonoBehaviour
 
         if (cuttingBoard._CoTimer == null) // 한번도 실행 안된거면 시작 가능
         {
+            GameObject ingredientObj = interactObject.transform.parent.GetChild(2).GetChild(0).gameObject;
+            MeshFilter meshFilter = ingredientObj.transform.GetComponent<MeshFilter>();
+            string meshFileName = meshFilter.sharedMesh.name;
+            Debug.Log(meshFileName);
+            if (meshFileName.Equals("m_ingredients_chicken_sliced_01_0") || meshFileName.Equals("m_ingredients_meat_sliced_01_0"))
+            {
+                SoundManager.Instance.PlayEffect("no");
+                return;
+            }
+            
             anim.SetTrigger("startCut");
             cuttingBoard.Pause = false;
             cuttingBoard.CuttingTime = 0;
@@ -507,6 +517,7 @@ public class PlayerInteractController : MonoBehaviour
                     //Debug.Log(meshFileName);
                     if (meshFileName.Equals("m_ingredients_chicken_01_0") || meshFileName.Equals("m_ingredients_meat_01_0"))
                     {
+                        SoundManager.Instance.PlayEffect("no");
                         return;
                     }
                     ingredientObj.transform.SetParent(potAndPan.transform);
