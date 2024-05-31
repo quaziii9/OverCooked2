@@ -89,6 +89,22 @@ public class RespawnManager : MonoBehaviour
         PlayerPuff.Instance.SpawnPuff(spawnPosition);
         player.transform.position = spawnPosition.position;
 
+        PlayerInteractController playerInteractController = player.GetComponent<PlayerInteractController>();
+        Player2InteractController player2InteractController = player.GetComponent<Player2InteractController>();
+        Animator playerAnimator = player.transform.GetChild(0).GetChild(1).GetComponent<Animator>();
+
+        if(playerInteractController != null)
+        {
+            playerInteractController.isHolding = false;
+            playerInteractController.canActive = false;
+        } else
+        {
+            player2InteractController.isHolding = false;
+            player2InteractController.canActive = false;
+        }
+
+        playerAnimator.SetBool("isHolding", false);
+
         // 아래 방향을 바라보도록 설정
         player.transform.rotation = Quaternion.Euler(0, 180, 0);
 
