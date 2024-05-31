@@ -1,4 +1,5 @@
-using System.Collections;
+using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 public class IntroManager : MonoBehaviour
@@ -40,7 +41,7 @@ public class IntroManager : MonoBehaviour
         if (UIManager.Instance.first)
         {
             ActivateIntroUI();
-            StartCoroutine(IntroSetting());
+            IntroSetting().Forget();
         }
     }
 
@@ -63,7 +64,7 @@ public class IntroManager : MonoBehaviour
         SoundManager.Instance.StartPlay();
 
         ActivateGameUI();
-        StartCoroutine(ShutterOut());
+        ShutterOut().Forget();
 
         UIManager.Instance.loadingUI.SetActive(false);
         UIManager.Instance.spaceToStart.SetActive(false);
@@ -78,17 +79,15 @@ public class IntroManager : MonoBehaviour
         UIManager.Instance.shutterCamera.Priority = 9;
     }
 
-    // 셔터 비활성화
-    private IEnumerator ShutterOut()
+    private async UniTaskVoid ShutterOut()
     {
-        yield return new WaitForSeconds(SHUTTER_OUT_DELAY);
+        await UniTask.Delay(TimeSpan.FromSeconds(SHUTTER_OUT_DELAY));
         UIManager.Instance.shutter.SetActive(false);
     }
 
-    // 처음 인트로 로딩 영상
-    private IEnumerator IntroSetting()
+    private async UniTaskVoid IntroSetting()
     {
-        yield return new WaitForSeconds(INTRO_DURATION);
+        await UniTask.Delay(TimeSpan.FromSeconds(INTRO_DURATION));
         isLoading = false;
     }
 }

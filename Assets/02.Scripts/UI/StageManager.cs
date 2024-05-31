@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class StageManager : Singleton<StageManager>
 {
-    [SerializeField] public enum State { start, stage1, stage2, stage3 };   // 게임 상태 열거형
-    public State playStage = State.stage1;                                  // 현재 게임 상태 초기값 설정
+    [SerializeField] public enum State { Start, Stage1, Stage2, Stage3 };   // 게임 상태 열거형
+    public State playStage = State.Stage1;                                  // 현재 게임 상태 초기값 설정
 
     private bool isStop = false; // 일시정지 여부
 

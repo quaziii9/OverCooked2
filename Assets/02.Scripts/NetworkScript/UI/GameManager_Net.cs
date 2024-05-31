@@ -176,15 +176,15 @@ public class GameManager_Net : MonoBehaviour
             StageManager.Instance.failMoney = 0;
             if (state == State.stage1)
             {
-                StageManager.Instance.playStage = StageManager.State.stage1;
+                StageManager.Instance.playStage = StageManager.State.Stage1;
             }
             else if (state == State.stage2)
             {
-                StageManager.Instance.playStage = StageManager.State.stage2;
+                StageManager.Instance.playStage = StageManager.State.Stage2;
             }
             else if (state == State.stage3)
             {
-                StageManager.Instance.playStage = StageManager.State.stage3;
+                StageManager.Instance.playStage = StageManager.State.Stage3;
             }
         }
 

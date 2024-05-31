@@ -1,5 +1,7 @@
+using Cysharp.Threading.Tasks;
 using EnumTypes;
 using EventLibrary;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -112,7 +114,8 @@ public class SoundManager : Singleton<SoundManager>
     void Start()
     {
         SettingAudioVolume();
-        StartCoroutine(FadeInVolume(bgmAudioSource, 8f, "Intro"));
+
+        FadeInVolumeAsync(bgmAudioSource, 8f, "Intro").Forget();
 
         musicSource = gameObject.AddComponent<AudioSource>();
         effectSource = gameObject.AddComponent<AudioSource>();
@@ -232,32 +235,33 @@ public class SoundManager : Singleton<SoundManager>
     #region FadeInOut
     public void FadeInAudio(AudioSource audioSource, float waitTime, string bgmName)
     {
-        StartCoroutine(FadeInVolume(audioSource, waitTime, bgmName));
+        FadeInVolumeAsync(audioSource, waitTime, bgmName).Forget();
     }
 
     public void FadeOutAudio(AudioSource audioSource, float waitTime)
     {
-        StartCoroutine(FadeOutVolume(audioSource, waitTime));
+        FadeOutVolumeAsync(audioSource, waitTime).Forget();
     }
 
-    IEnumerator FadeInVolume(AudioSource audioSource, float waitTime, string bgmName)
+    async UniTask FadeInVolumeAsync(AudioSource audioSource, float waitTime, string bgmName)
     {
-        yield return new WaitForSeconds(waitTime);
-        playBgm(audioSource,bgmName);
+        await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
+        playBgm(audioSource, bgmName);
+
         while (audioSource.volume < volumeBGM)
         {
             audioSource.volume += Time.deltaTime * 0.2f;
-            yield return new WaitForSeconds(Time.deltaTime * 0.5f);
+            await UniTask.Delay(TimeSpan.FromSeconds(Time.deltaTime * 0.5f));
         }
     }
 
-    IEnumerator FadeOutVolume(AudioSource audioSource, float waitTime)
+    async UniTask FadeOutVolumeAsync(AudioSource audioSource, float waitTime)
     {
-        yield return new WaitForSeconds(waitTime);
+        await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
         while (audioSource.volume > 0)
         {
             audioSource.volume -= Time.deltaTime * 0.2f;
-            yield return new WaitForSeconds(Time.deltaTime * 0.5f);
+            await UniTask.Delay(TimeSpan.FromSeconds(Time.deltaTime * 0.5f));
         }
         audioSource.volume = 0;
         audioSource.Stop();
