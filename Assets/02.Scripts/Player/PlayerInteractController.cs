@@ -634,7 +634,7 @@ public class PlayerInteractController : MonoBehaviour
 
                 obj.transform.SetParent(transform); // 플레이어의 하위 객체로 설정
                 // 플레이어에서 위치 잡기
-                SetPositionbetweenPlayerandObject(obj);
+                SetPositionbetweenPlayerAndObject(obj);
                 anim.SetBool("isHolding", true);
                 isHolding = true;
             }
@@ -672,7 +672,7 @@ public class PlayerInteractController : MonoBehaviour
 
                     obj.transform.SetParent(transform); // 플레이어의 하위 객체로 설정
                     // 플레이어에서 위치 잡기
-                    // SetPositionbetweenPlayerandObject(obj);
+                    // SetPositionbetweenPlayerAndObject(obj);
                     anim.SetBool("isHolding", true);
                     isHolding = true;
                     if (obj.CompareTag("Pan")) obj.transform.GetChild(0).GetComponent<BoxCollider>().size *= 2f;
@@ -685,7 +685,7 @@ public class PlayerInteractController : MonoBehaviour
                 
                 obj.transform.SetParent(transform); // 플레이어의 하위 객체로 설정
                 // 플레이어에서 위치 잡기
-                SetPositionbetweenPlayerandObject(obj);
+                SetPositionbetweenPlayerAndObject(obj);
                 anim.SetBool("isHolding", true);
                 isHolding = true;
             }
@@ -816,7 +816,7 @@ public class PlayerInteractController : MonoBehaviour
         GameObject plateObject = interactObject.transform.parent.gameObject;
         TryPickupObject(plateObject);
         //plateObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        //SetPositionbetweenPlayerandObject(plateObject);
+        //SetPositionbetweenPlayerAndObject(plateObject);
     }
 
     private void PickupPot()
@@ -1109,7 +1109,7 @@ public class PlayerInteractController : MonoBehaviour
         }
     }
 
-    void SetPositionbetweenPlayerandObject(GameObject obj) 
+    void SetPositionbetweenPlayerAndObject(GameObject obj) 
     {
         //string name = obj.name;
 

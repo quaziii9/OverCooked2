@@ -9,6 +9,7 @@ public class DeathZone : MonoBehaviour
 
     [Space(10)]
     [SerializeField] private RespawnManager respawnManager;
+    [SerializeField] private PlayerMasterController2 playerController;
 
     public GameObject Plate;
     public GameObject Pan;
@@ -53,6 +54,7 @@ public class DeathZone : MonoBehaviour
     private IEnumerator DeactivateAndRespawnPlayer(GameObject player)
     {
         yield return new WaitForSeconds(1f);
+        playerController.SwitchPlayerComponent();
         respawnManager.StartRespawnCountdown(player);
     }
 
