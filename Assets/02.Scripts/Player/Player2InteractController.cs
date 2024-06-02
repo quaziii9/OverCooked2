@@ -61,7 +61,7 @@ public class Player2InteractController : MonoBehaviour
     #region OnSwitch
     public void OnSwitch(InputValue inputValue)
     {
-        PlayerInputSystem.GetComponent<PlayerMasterController2>().SwitchPlayerComponent();
+        masterController.SwitchPlayerComponent();
     }
     #endregion
 
@@ -69,37 +69,33 @@ public class Player2InteractController : MonoBehaviour
     public void OnCookOrThrow(InputValue inputValue)
     {
         Debug.Log("OnCookOrThrow");
-        if (checkInteractObject())
-        {
-            if (ShouldStartCutting())
-                StartCuttingProcess();
-            else
-                SoundManager.Instance.PlayEffect("no");
-        }
-        else
-        {
-            if (isHolding && CanThrowIngredient())
-            {
-                ThrowIngredient();
-            }
-        }
+        CookOrThrow();
     }
 
     public void MobileCookOrThrow()
     {
         Debug.Log("MobileCookOrThrow");
-        if (checkInteractObject())
+        CookOrThrow();
+    }
+
+    public void CookOrThrow()
+    {
+        Debug.Log(interactObject);
+        if (masterController.currentPlayer == this.gameObject)
         {
-            if (ShouldStartCutting())
-                StartCuttingProcess();
-            else
-                SoundManager.Instance.PlayEffect("no");
-        }
-        else
-        {
-            if (isHolding && CanThrowIngredient())
+            if (checkInteractObject())
             {
-                ThrowIngredient();
+                if (ShouldStartCutting())
+                    StartCuttingProcess();
+                else
+                    SoundManager.Instance.PlayEffect("no");
+            }
+            else
+            {
+                if (isHolding && CanThrowIngredient())
+                {
+                    ThrowIngredient();
+                }
             }
         }
     }
@@ -146,7 +142,7 @@ public class Player2InteractController : MonoBehaviour
             anim.SetTrigger("startCut");
             cuttingBoard.Pause = false;
             cuttingBoard.CuttingTime = 0;
-            cuttingBoard.StartCutting1();
+            cuttingBoard.StartCutting2();
         }
         else if (cuttingBoard.Pause) // 실행되다 만거라면
         {

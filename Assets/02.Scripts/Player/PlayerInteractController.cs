@@ -61,7 +61,7 @@ public class PlayerInteractController : MonoBehaviour
     #region OnSwitch
     public void OnSwitch(InputValue inputValue)
     {
-        PlayerInputSystem.GetComponent<PlayerMasterController2>().SwitchPlayerComponent();
+        masterController.SwitchPlayerComponent();
     }
     #endregion
 
@@ -69,38 +69,33 @@ public class PlayerInteractController : MonoBehaviour
     public void OnCookOrThrow(InputValue inputValue)
     {
         Debug.Log("OnCookOrThrow");
-        if (checkInteractObject())
-        {
-            if(ShouldStartCutting())
-                StartCuttingProcess();
-            else
-                SoundManager.Instance.PlayEffect("no");
-        }
-        else
-        {
-            if (isHolding && CanThrowIngredient())
-            {
-                ThrowIngredient();
-            }
-        }
+        CookOrThrow();
     }
 
     public void MobileCookOrThrow()
     {
         Debug.Log("MobileCookOrThrow");
+        CookOrThrow();
+    }
+
+    public void CookOrThrow()
+    {
         Debug.Log(interactObject);
-        if (checkInteractObject())
+        if (masterController.currentPlayer == this.gameObject)
         {
-            if (ShouldStartCutting())
-                StartCuttingProcess();
-            else
-                SoundManager.Instance.PlayEffect("no");
-        }
-        else
-        {
-            if (isHolding && CanThrowIngredient())
+            if (checkInteractObject())
             {
-                ThrowIngredient();
+                if (ShouldStartCutting())
+                    StartCuttingProcess();
+                else
+                    SoundManager.Instance.PlayEffect("no");
+            }
+            else
+            {
+                if (isHolding && CanThrowIngredient())
+                {
+                    ThrowIngredient();
+                }
             }
         }
     }
