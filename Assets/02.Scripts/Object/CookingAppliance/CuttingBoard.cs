@@ -22,9 +22,14 @@ public class CuttingBoard : MonoBehaviour
 
     [SerializeField] private Sprite[] Icons;
 
+    private PlayerInteractController player1Controller;
+    private Player2InteractController player2Controller;
+
     private void Start()
     {
         parentObject = transform.parent.GetComponent<ObjectHighlight>();
+        player1Controller = FindObjectOfType<PlayerInteractController>();
+        player2Controller = FindObjectOfType<Player2InteractController>();
     }
 
     private void Update()
@@ -36,30 +41,35 @@ public class CuttingBoard : MonoBehaviour
 
     private void UpdateCookingBarPosition()
     {
+        // 칼을 사용하는 UI 바의 위치를 업데이트
         cookingBar.transform.position = Camera.main.WorldToScreenPoint(parentObject.transform.position + pos);
     }
 
     private void UpdateCookingBarValue()
     {
+        // 칼질 진행 상태를 나타내는 UI 바의 값을 업데이트
         cookingBar.value = CuttingTime;
     }
 
     private void ToggleKnife()
     {
+        // 객체가 활성화된 상태에 따라 칼 UI를 토글
         transform.GetChild(0).GetChild(0).gameObject.SetActive(!parentObject.onSomething);
     }
 
     public void StartCutting1(UnityAction EndCallBack = null)
     {
-        StartCutting(FindObjectOfType<PlayerInteractController>(), EndCallBack);
+        // 플레이어 1의 칼질을 시작
+        StartCutting(player1Controller, EndCallBack);
     }
 
     public void StartCutting2(UnityAction EndCallBack = null)
     {
-        StartCutting(FindObjectOfType<Player2InteractController>(), EndCallBack);
+        // 플레이어 2의 칼질을 시작
+        StartCutting(player2Controller, EndCallBack);
     }
 
-    private void StartCutting(PlayerInteractController playerController, UnityAction EndCallBack = null)
+    private void StartCutting(object playerController, UnityAction EndCallBack = null)
     {
         if (parentObject.onSomething)
         {
@@ -67,30 +77,28 @@ public class CuttingBoard : MonoBehaviour
             cookingBar.gameObject.SetActive(true);
             ClearTime();
             _CoTimer = StartCoroutine(CoStartCutting(EndCallBack));
-            playerController.anim.SetTrigger("startCut");
-            playerController.anim.SetBool("canCut", true);
-        }
-    }
-    private void StartCutting(Player2InteractController playerController, UnityAction EndCallBack = null)
-    {
-        if (parentObject.onSomething)
-        {
-            SoundManager.Instance.PlayEffect("cut");
-            cookingBar.gameObject.SetActive(true);
-            ClearTime();
-            _CoTimer = StartCoroutine(CoStartCutting(EndCallBack));
-            playerController.anim.SetTrigger("startCut");
-            playerController.anim.SetBool("canCut", true);
+            if (playerController is PlayerInteractController player1)
+            {
+                player1.anim.SetTrigger("startCut");
+                player1.anim.SetBool("canCut", true);
+            }
+            else if (playerController is Player2InteractController player2)
+            {
+                player2.anim.SetTrigger("startCut");
+                player2.anim.SetBool("canCut", true);
+            }
         }
     }
 
     public void PauseSlider(bool pause)
     {
+        // 칼질 진행을 일시 중지하거나 재개
         Pause = pause;
     }
 
     private IEnumerator CoStartCutting(UnityAction EndCallBack = null)
     {
+        // 칼질을 일정 시간 동안 진행
         while (CuttingTime <= 1)
         {
             while (Pause)
@@ -99,7 +107,6 @@ public class CuttingBoard : MonoBehaviour
             }
             yield return new WaitForSeconds(0.45f);
             CuttingTime += 0.25f;
-            //SoundManager.instance.PlayEffect("cut");
         }
         EndCallBack?.Invoke();
         OffSlider();
@@ -110,6 +117,7 @@ public class CuttingBoard : MonoBehaviour
 
     private void ClearTime()
     {
+        // 칼질 타이머를 초기화
         if (_CoTimer != null)
         {
             StopCoroutine(_CoTimer);
@@ -120,117 +128,81 @@ public class CuttingBoard : MonoBehaviour
 
     public void OffSlider()
     {
+        // 칼질 진행 UI를 비활성화
         cookingBar.value = 0f;
         cookingBar.gameObject.SetActive(false);
-        UpdateCanCutState(FindObjectOfType<PlayerInteractController>());
-        UpdateCanCutState(FindObjectOfType<Player2InteractController>());
+        UpdateCanCutState(player1Controller);
+        UpdateCanCutState(player2Controller);
         UpdateIngredientState();
         InstantiateUI();
     }
 
-    private void UpdateCanCutState(PlayerInteractController playerController)
+    private void UpdateCanCutState(object playerController)
     {
-        if (playerController.interactObject == transform.parent.gameObject)
+        // 플레이어의 칼질 가능 상태를 업데이트
+        if (playerController is PlayerInteractController player1 && player1.interactObject == transform.parent.gameObject)
         {
-            playerController.anim.SetBool("canCut", false);
+            player1.anim.SetBool("canCut", false);
         }
-    }
-    private void UpdateCanCutState(Player2InteractController playerController)
-    {
-        if (playerController.interactObject == transform.parent.gameObject)
+        else if (playerController is Player2InteractController player2 && player2.interactObject == transform.parent.gameObject)
         {
-            playerController.anim.SetBool("canCut", false);
+            player2.anim.SetBool("canCut", false);
         }
     }
 
     private void UpdateIngredientState()
     {
-        Ingredient Ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
-        Ingredient.isCooked = true;
+        // 재료의 상태를 업데이트
+        Ingredient ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
+        ingredient.isCooked = true;
 
-        if (Ingredient.type == IngredientType.Meat || Ingredient.type == IngredientType.Chicken)
-            Ingredient.isCooked = false;
-        
-        Ingredient.ChangeMesh(Ingredient.type);
+        if (ingredient.type == IngredientType.Meat || ingredient.type == IngredientType.Chicken)
+            ingredient.isCooked = false;
+
+        ingredient.ChangeMesh(ingredient.type);
     }
 
     public void OffAnim1()
     {
-
+        
     }
 
     public void InstantiateUI()
     {
-        Ingredient Ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
+        // 재료 UI를 생성
+        Ingredient ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
         GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
 
         madeUI.transform.GetChild(0).gameObject.SetActive(true);
         Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
-        image.sprite = GetIcon(Ingredient.type);
-        madeUI.GetComponent<IngredientUI>().target = Ingredient.transform;
+        image.sprite = GetIcon(ingredient.type);
+        madeUI.GetComponent<IngredientUI>().target = ingredient.transform;
     }
 
-    private Sprite GetIcon(Ingredient.IngredientType ingredientType)
+    private Sprite GetIcon(IngredientType ingredientType)
     {
+        // 재료 유형에 따른 아이콘을 반환
         switch (ingredientType)
         {
-            case Ingredient.IngredientType.Fish:
-                return Icons[0];
-                
-            case Ingredient.IngredientType.Shrimp:
-                return Icons[1];
-                
-            case Ingredient.IngredientType.Tomato:
-                return Icons[2];
-                
-            case Ingredient.IngredientType.Lettuce:
-                return Icons[3];
-                
-            case Ingredient.IngredientType.Cucumber:
-                return Icons[4];
-                
-            case Ingredient.IngredientType.Potato:
-                return Icons[5];
-                
-            case Ingredient.IngredientType.Chicken:
-                return Icons[6];
-                
-            case Ingredient.IngredientType.SeaWeed:
-                return Icons[7];
-                
-            case Ingredient.IngredientType.Tortilla:
-                return Icons[8];
-                
-            case Ingredient.IngredientType.Rice:
-                return Icons[9];
-                
-            case Ingredient.IngredientType.Pepperoni:
-                return Icons[10];
-                
-            case Ingredient.IngredientType.Meat:
-                return Icons[11];
-                
-            case Ingredient.IngredientType.Dough:
-                return Icons[12];
-                
-            case Ingredient.IngredientType.Cheese:
-                return Icons[13];
-                
-            case Ingredient.IngredientType.SushiRice:
-                return Icons[9];
-                
-            case Ingredient.IngredientType.SushiFish:
-                return Icons[0];
-                
-            case Ingredient.IngredientType.SushiCucumber:
-                return Icons[4];
-                
-            case Ingredient.IngredientType.PizzaTomato:
-                return Icons[2];
-                
-            default:
-                // 기본적으로 아무것도 하지 않음
-                throw new ArgumentOutOfRangeException();
+            case IngredientType.Fish: return Icons[0];
+            case IngredientType.Shrimp: return Icons[1];
+            case IngredientType.Tomato: return Icons[2];
+            case IngredientType.Lettuce: return Icons[3];
+            case IngredientType.Cucumber: return Icons[4];
+            case IngredientType.Potato: return Icons[5];
+            case IngredientType.Chicken: return Icons[6];
+            case IngredientType.SeaWeed: return Icons[7];
+            case IngredientType.Tortilla: return Icons[8];
+            case IngredientType.Rice: return Icons[9];
+            case IngredientType.Pepperoni: return Icons[10];
+            case IngredientType.Meat: return Icons[11];
+            case IngredientType.Dough: return Icons[12];
+            case IngredientType.Cheese: return Icons[13];
+            case IngredientType.SushiRice: return Icons[9];
+            case IngredientType.SushiFish: return Icons[0];
+            case IngredientType.SushiCucumber: return Icons[4];
+            case IngredientType.PizzaTomato: return Icons[2];
+            default: throw new ArgumentOutOfRangeException();
         }
     }
 }
