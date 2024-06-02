@@ -1057,7 +1057,7 @@ MonoBehaviour:
   currentState: 0
   team: 0
   cookedIngredient: {fileID: 0}
-  cookedFish: {fileID: 0}
+  cookedMat: {fileID: 0}
   fishLocalPos: {x: 0, y: 0.138, z: 0.08}
   shrimpLocalPos: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
   lettuceLocalPos: {x: 0, y: 0.418, z: 0}

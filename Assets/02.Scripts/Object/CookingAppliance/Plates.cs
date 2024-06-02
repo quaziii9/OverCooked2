@@ -81,7 +81,7 @@ public class Plates : MonoBehaviour
 
     private void ActivateIngredientUI(Ingredient.IngredientType handleType)
     {
-        // 해당 재료에 맞는 UI를 활성화
+        // 해당 재료에 맞는 Object, UI를 활성화
         if (ingredientToChildIndex.ContainsKey(handleType))
         {
             transform.GetChild(ingredientToChildIndex[handleType]).gameObject.SetActive(true);
