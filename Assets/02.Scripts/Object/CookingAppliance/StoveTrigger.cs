@@ -8,6 +8,8 @@ public class StoveTrigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        //Debug.Log("ontrigger");
+        
         PotOnStove pot = other.GetComponent<PotOnStove>();
         if (pot != null && pot.inSomething && ObjectHighlight.onSomething)
         {
@@ -15,9 +17,11 @@ public class StoveTrigger : MonoBehaviour
             pot.StartCooking();
         }
 
-        PanOnStove pan = other.GetComponent<PanOnStove>();
+        PanOnStove pan = other.GetComponent<PanOnStove>();      
         if (pan != null && pan.inSomething && ObjectHighlight.onSomething)
         {
+            Debug.Log(pan.inSomething);
+            Debug.Log(ObjectHighlight.onSomething);
             pan.isOnStove = true;
             pan.StartCooking();
         }

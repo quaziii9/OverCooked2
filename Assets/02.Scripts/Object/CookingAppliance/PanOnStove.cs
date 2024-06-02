@@ -37,6 +37,15 @@ public class PanOnStove : MonoBehaviour
 
     private void Update()
     {
+        if (isOnStove && inSomething)
+        {
+            pfxFire.SetActive(true); // 팬 위에 음식이 있을 때 불을 켜기
+        }
+        else
+        {
+            pfxFire.SetActive(false); // 팬 위에 음식이 없을 때 불을 끄기
+        }
+
         if (isOnStove && inSomething && !stateIsCooked)
         {
             UpdateCookingBarPosition();
@@ -50,11 +59,7 @@ public class PanOnStove : MonoBehaviour
 
     private void pfxFireOff()
     {
-        //if (issom))
-        //{
-            
-        //}
-        pfxFire.SetActive(false);      
+        pfxFire.SetActive(false);
     }
 
     private void UpdateisIngredientState()
@@ -77,6 +82,8 @@ public class PanOnStove : MonoBehaviour
 
     public async void StartCooking(UnityAction EndCallBack = null)
     {
+        
+        Debug.Log("cooking!");
         if (_cts == null)
         {
             Debug.Log("start cooking");
@@ -93,10 +100,8 @@ public class PanOnStove : MonoBehaviour
         }
     }
 
-    private async UniTask StartCookingAsync(UnityAction EndCallBack = null,  CancellationToken cancellationToken = default)
+    private async UniTask StartCookingAsync(UnityAction EndCallBack = null, CancellationToken cancellationToken = default)
     {
-        pfxFire.SetActive(true);
-
         if (inSomething == false)
         {
             pfxFire.SetActive(false);
@@ -124,7 +129,6 @@ public class PanOnStove : MonoBehaviour
             cookingTime += 0.25f;
         }
         Debug.Log("Cooking End");
-        pfxFire.SetActive(false);
         EndCallBack?.Invoke();
         OffSlider();
 
