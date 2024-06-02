@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -64,7 +65,7 @@ public class Plates : MonoBehaviour
             return false;
         }
 
-        // SeaWeed가 포함되지 않은 상태에서 requiresTortilla 타입이 들어오면 false 반환
+        // SeaWeed가 포함되지 않은 상태에서 requiresSeaWeed 타입이 들어오면 false 반환
         if (requiresSeaWeed.Contains(handleType) && !containIngredients.Contains(Ingredient.IngredientType.SeaWeed))
         {
             return false;
@@ -104,11 +105,94 @@ public class Plates : MonoBehaviour
             transform.GetChild(parentIndex).GetChild(i).gameObject.SetActive(false);
         }
 
-        // 재료 조합 상태에 따라 UI를 활성화
-        var activeIndexes = ingredientTypes.Select((type, index) => containIngredients.Contains(type) ? index : -1).Where(index => index >= 0).ToArray();
-        if (activeIndexes.Length > 0)
+        bool[] hasIngredients = ingredientTypes.Select(type => containIngredients.Contains(type)).ToArray();
+        
+        // 특정 조합에 따라 자식 인덱스 활성화 로직 처리
+        if (parentIndex == 13) // Sushi 조합의 경우
         {
-            transform.GetChild(parentIndex).GetChild(activeIndexes.Length - 1).gameObject.SetActive(true);
+            bool hasSeaWeed = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.SeaWeed)];
+            bool hasSushiRice = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.SushiRice)];
+            bool hasSushiFish = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.SushiFish)];
+            bool hasSushiCucumber = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.SushiCucumber)];
+
+            if (hasSeaWeed)
+            {
+                if (hasSushiRice && hasSushiFish && hasSushiCucumber)
+                {
+                    transform.GetChild(parentIndex).GetChild(6).gameObject.SetActive(true); // SeaWeed + SushiRice + SushiFish + SushiCucumber
+                }
+                else if (hasSushiFish && hasSushiCucumber)
+                {
+                    transform.GetChild(parentIndex).GetChild(3).gameObject.SetActive(true); // SeaWeed + SushiFish + SushiCucumber
+                }
+                else if (hasSushiRice && hasSushiFish)
+                {
+                    transform.GetChild(parentIndex).GetChild(4).gameObject.SetActive(true); // SeaWeed + SushiRice + SushiFish
+                }
+                else if (hasSushiRice && hasSushiCucumber)
+                {
+                    transform.GetChild(parentIndex).GetChild(5).gameObject.SetActive(true); // SeaWeed + SushiRice + SushiCucumber
+                }
+                else if (hasSushiFish)
+                {
+                    transform.GetChild(parentIndex).GetChild(0).gameObject.SetActive(true); // SeaWeed + SushiFish
+                }
+                else if (hasSushiCucumber)
+                {
+                    transform.GetChild(parentIndex).GetChild(1).gameObject.SetActive(true); // SeaWeed + SushiCucumber
+                }
+                else if (hasSushiRice)
+                {
+                    transform.GetChild(parentIndex).GetChild(2).gameObject.SetActive(true); // SeaWeed + SushiRice
+                }
+                else
+                {
+                    transform.GetChild(parentIndex).GetChild(7).gameObject.SetActive(true); // SeaWeed만 활성화
+                }
+            }
+        }
+        else if (parentIndex == 14) // Tortilla 조합의 경우
+        {
+            bool hasTortilla = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.Tortilla)];
+            bool hasMeat = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.Meat)];
+            bool hasChicken = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.Chicken)];
+            bool hasRice = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.Rice)];
+
+            if (hasTortilla)
+            {
+                if (hasMeat && hasChicken && hasRice)
+                {
+                    transform.GetChild(parentIndex).GetChild(6).gameObject.SetActive(true); // Tortilla + Rice + Meat + Chicken
+                }
+                else if (hasChicken && hasMeat)
+                {
+                    transform.GetChild(parentIndex).GetChild(5).gameObject.SetActive(true); // Tortilla + Chicken + Meat
+                }
+                else if (hasRice && hasMeat)
+                {
+                    transform.GetChild(parentIndex).GetChild(3).gameObject.SetActive(true); // Tortilla + Rice + Meat
+                }
+                else if (hasRice && hasChicken)
+                {
+                    transform.GetChild(parentIndex).GetChild(4).gameObject.SetActive(true); // Tortilla + Rice + Chicken
+                }
+                else if (hasMeat)
+                {
+                    transform.GetChild(parentIndex).GetChild(0).gameObject.SetActive(true); // Tortilla + Meat
+                }
+                else if (hasChicken)
+                {
+                    transform.GetChild(parentIndex).GetChild(1).gameObject.SetActive(true); // Tortilla + Chicken
+                }
+                else if (hasRice)
+                {
+                    transform.GetChild(parentIndex).GetChild(2).gameObject.SetActive(true); // Tortilla + Rice
+                }
+                else
+                {
+                    transform.GetChild(8).gameObject.SetActive(true); // Tortilla만 활성화
+                }
+            }
         }
     }
 
@@ -187,4 +271,3 @@ public class Plates : MonoBehaviour
         };
     }
 }
-
