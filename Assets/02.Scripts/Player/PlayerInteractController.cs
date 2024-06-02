@@ -38,6 +38,8 @@ public class PlayerInteractController : MonoBehaviour
 
     Vector3 placeTransform = Vector3.zero;
 
+    private bool isButtonPressed = false;
+
     private void Awake()
     {
         masterController = PlayerInputSystem.GetComponent<PlayerMasterController2>();
@@ -66,24 +68,133 @@ public class PlayerInteractController : MonoBehaviour
     #endregion
 
     #region OnCookOrThrow
-    public void OnCookOrThrow(InputValue inputValue)
+    public void OnCookOrThrow(InputAction.CallbackContext context)
     {
-        Debug.Log("OnCookOrThrow");
-        if (checkInteractObject())
+        PlayerMoveController mov = gameObject.GetComponent<PlayerMoveController>();
+
+        // 버튼이 눌렸을 때
+        if (context.started)
         {
-            if(ShouldStartCutting())
-                StartCuttingProcess();
-            else
-                SoundManager.Instance.PlayEffect("no");
+            Debug.Log("Button Pressed");
+            isButtonPressed = true;
+            mov.moveSpeed = 0; // 버튼이 눌렸을 때의 동작 수행
         }
-        else
+
+        // 버튼이 떼어졌을 때
+        if (context.canceled)
         {
-            if (isHolding && CanThrowIngredient())
-            {
-                ThrowIngredient();
-            }
+            Debug.Log("Button Released");
+            isButtonPressed = false;
+            mov.moveSpeed = 15; // 버튼이 떼어졌을 때의 동작 수행
         }
     }
+
+    //public void OnCookOrThrow(InputValue inputValue)
+    //{
+    //    PlayerMoveController mov = gameObject.GetComponent<PlayerMoveController>();
+
+    //    // 현재 버튼의 상태를 저장합니다.
+    //    bool isPressed = inputValue.isPressed;
+
+    //    // 버튼을 처음 눌렀을 때
+    //    if (isPressed && !isButtonPressed)
+    //    {
+    //        Debug.Log("Button Pressed");
+    //        // 팝업 이미지를 활성화하거나 원하는 동작을 수행합니다.
+    //        // (예시: popupImage.SetActive(true);)
+    //        isButtonPressed = true;
+    //        mov.moveSpeed = 0; // 움직임 속도를 0으로 설정합니다.
+    //    }
+    //    // 버튼을 떼었을 때
+    //    else if (!isPressed && isButtonPressed)
+    //    {
+    //        Debug.Log("Button Released");
+    //        // 팝업 이미지를 비활성화하거나 원하는 동작을 수행합니다.
+    //        // (예시: popupImage.SetActive(false);)
+
+    //        // 기존 코드 실행
+    //        if (checkInteractObject())
+    //        {
+    //            if (ShouldStartCutting())
+    //                StartCuttingProcess();
+    //            else
+    //                SoundManager.Instance.PlayEffect("no");
+    //        }
+    //        else
+    //        {
+    //            if (isHolding && CanThrowIngredient())
+    //            {
+    //                ThrowIngredient();
+    //            }
+    //        }
+
+    //        isButtonPressed = false;
+    //        mov.moveSpeed = 15; // 기존의 움직임 속도로 설정합니다.
+    //    }
+    //    Debug.Log(isPressed);
+    //}
+    //public void OnCookOrThrow(InputValue inputValue)
+    //{
+    //    bool isPressed = inputValue.isPressed;
+    //    PlayerMoveController mov = gameObject.GetComponent<PlayerMoveController>();
+    //    if (isPressed && !isButtonPressed)
+    //    {
+    //        // 버튼을 처음 눌렀을 때
+    //        Debug.Log("Button Pressed");
+    //        //if (popupImage != null)
+    //        //{
+    //        //    popupImage.SetActive(true); // 팝업 이미지 활성화
+    //        //}
+    //        isButtonPressed = true;
+    //        mov.moveSpeed = 0;
+    //    }
+    //    else if (!isPressed && isButtonPressed)
+    //    {
+    //        // 버튼을 뗄 때
+    //        Debug.Log("Button Released");
+    //        //if (popupImage != null)
+    //        //{
+    //        //    popupImage.SetActive(false); // 팝업 이미지 비활성화
+    //        //}
+
+    //        // 기존 코드 실행
+    //        if (checkInteractObject())
+    //        {
+    //            if (ShouldStartCutting())
+    //                StartCuttingProcess();
+    //            else
+    //                SoundManager.Instance.PlayEffect("no");
+    //        }
+    //        else
+    //        {
+    //            if (isHolding && CanThrowIngredient())
+    //            {
+    //                ThrowIngredient();
+    //            }
+    //        }
+
+    //        isButtonPressed = false;
+    //        mov.moveSpeed = 15;
+    //    }
+    //}
+    //public void OnCookOrThrow(InputValue inputValue)
+    //{
+    //    Debug.Log("OnCookOrThrow");
+    //    if (checkInteractObject())
+    //    {
+    //        if(ShouldStartCutting())
+    //            StartCuttingProcess();
+    //        else
+    //            SoundManager.Instance.PlayEffect("no");
+    //    }
+    //    else
+    //    {
+    //        if (isHolding && CanThrowIngredient())
+    //        {
+    //            ThrowIngredient();
+    //        }
+    //    }
+    //}
 
     public void MobileCookOrThrow()
     {
