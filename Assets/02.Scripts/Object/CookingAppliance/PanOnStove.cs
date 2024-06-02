@@ -28,18 +28,35 @@ public class PanOnStove : MonoBehaviour
     [Header("CookedMaterial")]
     public Material chicken_mat;
     public Material meat_mat;
+    public Material[] friedMaterials;
 
     private void Update()
     {
+        if (!inSomething)
+        {
+            cookingTime = 0;
+        }
         if (isOnStove && inSomething && !stateIsCooked)
         {
             UpdateCookingBarPosition();
             UpdateCookingBarValue();
             UpdateisIngredientState();
         }
-
         if (stateIsCooked)
+        {
             cookingBar.gameObject.SetActive(false);
+        }
+        if (stateIsCooked!&&inSomething)
+        {
+            cookingBar.gameObject.SetActive(false);
+            //ChangeCookedMaterial();
+        }
+        if(cookingTime>=1)
+        {
+            ChangeCookedMaterial();
+        }
+
+
     }
 
     private void UpdateisIngredientState()
@@ -62,7 +79,8 @@ public class PanOnStove : MonoBehaviour
 
     public void StartCooking(UnityAction EndCallBack = null)
     {
-        if (_coTimer == null)
+
+        if (_coTimer == null && cookingTime <= 0)
         {
             cookingBar.gameObject.SetActive(true);
             ClearTime();
@@ -76,6 +94,7 @@ public class PanOnStove : MonoBehaviour
 
     private IEnumerator CoStartCooking(UnityAction EndCallBack = null)
     {
+        Debug.Break();
         pfxFire.SetActive(true);
         while (cookingTime <= 1)
         {
@@ -88,13 +107,12 @@ public class PanOnStove : MonoBehaviour
         }
         Debug.Log("Cooking End");
         // 마테리얼 변경 추가
-        ChangeCookedMaterial();
+        //ChangeCookedMaterial();
         pfxFire.SetActive(false);
         EndCallBack?.Invoke();
         OffSlider();
         _coTimer = null;
         pause = false;
-        cookingTime = 0;
     }
 
     private void ClearTime()
@@ -211,23 +229,55 @@ public class PanOnStove : MonoBehaviour
 
     private void ChangeCookedMaterial()
     {
+        //MeshFilter meshFilter = transform.GetChild(2).GetChild(0).GetComponent<MeshFilter>();
+        //MeshRenderer mr = transform.GetChild(2).GetChild(0).GetComponent<MeshRenderer>();
+        //string meshFileName = meshFilter.sharedMesh.name;
+
+        //Debug.Log(meshFileName);
+        //if (meshFileName.Equals("m_ingredients_chicken_sliced_01_0"))
+        //{
+        //    //mr.material = chicken_mat;
+        //    Material[] materials = mr.materials;
+        //    materials[0] = chicken_mat;
+        //    mr.materials = materials;
+        //}
+        //else if (meshFileName.Equals("m_ingredients_meat_sliced_01_0"))
+        //{
+        //    //mr.material = meat_mat;
+
+        //    Material[] materials = mr.materials;
+        //    materials[0] = meat_mat;
+        //    mr.materials = materials;
+        //    Debug.Log(mr);
+        //    Debug.Log(materials);
+        //    Debug.Log(mr.materials);
+        //    Debug.Log(materials);
+        //    mr.material = meat_mat;
+        //}
         MeshFilter meshFilter = transform.GetChild(2).GetChild(0).GetComponent<MeshFilter>();
         MeshRenderer mr = transform.GetChild(2).GetChild(0).GetComponent<MeshRenderer>();
         string meshFileName = meshFilter.sharedMesh.name;
 
+        Debug.Log("Mesh Name: " + meshFileName);
+        Debug.Log("Materials Name " + mr.material);
         if (meshFileName.Equals("m_ingredients_chicken_sliced_01_0"))
         {
-            //mr.material = chicken_mat;
-            Material[] materials = mr.materials;
-            materials[0] = chicken_mat;
-            mr.materials = materials;
+            mr.material = friedMaterials[0];
+            Debug.Log(mr.material + " ", friedMaterials[0]);
+            Debug.Log("Material Changed to Chicken");
+            
         }
         else if (meshFileName.Equals("m_ingredients_meat_sliced_01_0"))
         {
-            //mr.material = meat_mat;
-            Material[] materials = mr.materials;
-            materials[0] = meat_mat;
-            mr.materials = materials;
+
+            mr.material = friedMaterials[1];
+            Debug.Log(mr.material);
+            Debug.Log("Material Changed to Meat");
+
+        }
+        else
+        {
+            Debug.Log("No matching mesh name found");
         }
     }
 
