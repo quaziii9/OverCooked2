@@ -30,11 +30,6 @@ public class PanOnStove : MonoBehaviour
 
     public Sprite[] icons;
 
-    private void Start()
-    {
-        EventManager<GameEvent>.StartListening(GameEvent.FireOff, pfxFireOff);
-    }
-
     private void Update()
     {
         if (isOnStove && inSomething)
