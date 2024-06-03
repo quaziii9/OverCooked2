@@ -96,7 +96,7 @@ public class PlayerDash : MonoBehaviour
         {
             float dashProgress = elapsedTime / dashDuration;
             float curveValue = dashCurve.Evaluate(dashProgress); // AnimationCurve에서 값을 평가
-            Vector3 forceToApply = dashDirection * dashForce * curveValue;
+            Vector3 forceToApply = dashDirection * (dashForce * curveValue);
             rb.AddForce(forceToApply, ForceMode.Impulse);
 
             elapsedTime += Time.deltaTime;

@@ -1,5 +1,4 @@
 using Cinemachine;
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +8,6 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System;
 using Random = UnityEngine.Random;
-
 
 public class UIManager : Singleton<UIManager>
 {
@@ -66,12 +64,11 @@ public class UIManager : Singleton<UIManager>
 
     [Header("StageMap")]
     public GameObject stageMapEscUI;
-    public GameObject[] stageEscMapName;
+    [SerializeField] private GameObject[] stageEscMapName;
 
     [Header("RecipeUI")]
     public GameObject recipeUI;
-    public GameObject[] recipeArr;
-    public bool recipeOff = false;
+    [SerializeField] private GameObject[] recipeArr;
 
     [Header("Resolution")]
     public TextMeshProUGUI resolutionText;
@@ -81,7 +78,7 @@ public class UIManager : Singleton<UIManager>
     private bool settingWindowScreen;
     public int resolutionArrNum;
     private int settingResolutionArrNum;
-    public string[] resolutionTextArr
+    [SerializeField] private string[] resolutionTextArr
         = new string[] { "1280 x 720", "1680 x 1050", "1920 x 1080", "2560 x 1440", "3840 x 2160" };
 
     public bool first = true;
@@ -308,7 +305,7 @@ public class UIManager : Singleton<UIManager>
     #region Mask InOut Tool
 
     // 마스크 축소 UI
-    public async void MaskInUI(GameObject inMask, string goTo)
+    private async void MaskInUI(GameObject inMask, string goTo)
     {
         SoundManager.Instance.ScreenInUI();
         inMask.SetActive(true);
@@ -339,16 +336,13 @@ public class UIManager : Singleton<UIManager>
                 case "LoadingKeyUIOn":
                     Invoke(goTo, 1f);
                     break;
-                case "LoadingKeyUIONBattle":
+                case "LoadingKeyUIOnBattle":
                     Invoke(goTo, 1f);
                     break;
                 case "EnterBusMapMaskOut":
                     Invoke(goTo, 1f);
                     break;
                 case "EnterIntroLoadingMaskOut":
-                    busTopUI.SetActive(false);
-                    Invoke(goTo, 1f);
-                    break;
                 case "LoadingMapUIOn":
                     busTopUI.SetActive(false);
                     Invoke(goTo, 1f);
@@ -456,11 +450,11 @@ public class UIManager : Singleton<UIManager>
     // 배틀로비 들어가기 전 LodingUI MaskIn
     public void EnterLoadingKeyUIBattle()
     {
-        MaskInUI(broccoliMask, "LoadingKeyUIONBattle");
+        MaskInUI(broccoliMask, "LoadingKeyUIOnBattle");
     }
 
     // 배틀로비 들어가기전 LoadingUI MaskOut
-    public void LoadingKeyUIONBattle()
+    public void LoadingKeyUIOnBattle()
     {
         buttonUI.SetActive(false);
         escButton.SetActive(false);
