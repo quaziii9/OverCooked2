@@ -1,0 +1,44 @@
+
+ucsharpsquid:S1125Ã"*Remove the unnecessary Boolean literal(s).(×éÑÑ8ïš®‰ş1J$922245e7-50c4-4546-b4c6-070f529306ea
+zcsharpsquid:S1125	"*Remove the unnecessary Boolean literal(s).(÷ú¥úÿÿÿÿ8ñš®‰ş1J$09143db9-0d82-4fc9-8586-b18cc8d43f79
+zcsharpsquid:S1125˜	"*Remove the unnecessary Boolean literal(s).(÷ú¥úÿÿÿÿ8òš®‰ş1J$8bb4b0f2-b20f-4fe0-9736-b6e594a06307
+csharpsquid:S3776³"RRefactor this method to reduce its Cognitive Complexity from 27 to the 15 allowed.(ç“¾²8ùš®‰ş1J$6829ccc6-b398-4e40-b4f1-9582c35471a9
+csharpsquid:S3776¿"RRefactor this method to reduce its Cognitive Complexity from 40 to the 15 allowed.(—8úš®‰ş1J$d4eee0fa-a86d-4687-a6fa-a1726cf2daa9
+€csharpsquid:S3903"7Move 'PlayerInteractController' into a named namespace.(‰ä38‚êüˆş1J$c6436082-aaf8-4a6d-b793-f1cc8a4ff363
+lcsharpsquid:S1116¿"Remove this empty statement.(Åñ­õşÿÿÿÿ8úš®‰ş1J$6cd85297-a3c2-49f7-8ff4-cc9dd5eb8a43
+“csharpsquid:S1104
+"DMake this field 'private' and encapsulate it in a 'public' property.(·åÀıÿÿÿÿ8ƒêüˆş1J$c4bcae02-c17d-4c8b-b054-54526a8c0f3a
+“csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(ÿÀüıÿÿÿÿÿ8ƒêüˆş1J$14bc6978-9e57-4a07-9920-18d8b242c0b1
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(½É×8ƒêüˆş1J$3a7c14a3-a597-4c84-a6d4-2f7673696e96
+“csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(Ì–æ¦úÿÿÿÿ8ƒêüˆş1J$92ab21f2-6243-4d1e-be79-c2f2b9dd0d5f
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(ÆÿŒ8„êüˆş1J$584ac9d0-efc6-44d3-8df2-002be2aaaff4
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(§¦›Û8ûš®‰ş1J$3b400ac0-7a1d-4c6f-8aba-815509acf400
+csharpsquid:S1104)"DMake this field 'private' and encapsulate it in a 'public' property.(²ïğ¬8ûš®‰ş1J$434b678b-3620-4202-bec5-1dc98a9ff219
+csharpsquid:S1104*"DMake this field 'private' and encapsulate it in a 'public' property.(é›Öé8ûš®‰ş1J$e1dc72de-0c1f-4406-9e95-7413c9d75a6d
+zcsharpsquid:S1066Ì"/Merge this if statement with the enclosing one.(ù¶»8ûš®‰ş1J$e33a5ae0-3f54-4ab5-b3fe-b25454a330d9
+wcsharpsquid:S1172",Remove this unused method parameter 'other'.(¯Åë¨8üš®‰ş1J$813c3461-4b6a-4d65-a22c-64b8d01616dc
+•csharpsquid:S1192€"EDefine a constant instead of using this literal 'isHolding' 17 times.(÷ä‚ãÿÿÿÿÿ8üš®‰ş1J$e6ce1ee3-c0da-47ec-9cdb-82b5d7b0e860
+‘csharpsquid:S1192Æ"FDefine a constant instead of using this literal 'Ingredient' 11 times.(©ÆİØ8üš®‰ş1J$817c6a82-f0bb-4986-856d-e31fb0fbca44
+csharpsquid:S1192€"@Define a constant instead of using this literal 'Plate' 5 times.(ƒ•õËÿÿÿÿÿ8ıš®‰ş1J$757a1d69-3c7a-4395-af50-18bf32de9f76
+•csharpsquid:S1192ª"EDefine a constant instead of using this literal 'itemPickUp' 5 times.(ÍÈ¤ùÿÿÿÿ8ıš®‰ş1J$2bce04ae-8311-4322-94e5-aa9039bc3b6c
+”csharpsquid:S2589«"DChange this condition so that it does not always evaluate to 'True'.(ºÇ…øşÿÿÿÿ8ıš®‰ş1J$e5ae9722-3e62-45ea-a1a6-04010b05c322
+|csharpsquid:S1481Ä	"1Remove the unused local variable 'localPosition'.(Æ ‹8şš®‰ş1J$ede7dace-cb03-494d-ad89-3a079eef901f
+|csharpsquid:S1481Å	"1Remove the unused local variable 'localRotation'.(ªËüç8şš®‰ş1J$7d55740e-8c8b-443e-be1d-916c2920674a
+icsharpsquid:S125œ"Remove this commented out code.(ƒòØÂ8€›®‰ş1J$cfa7d4cf-26a1-408a-91ba-fa21eec200b0
+icsharpsquid:S125¬"Remove this commented out code.(áù…ñ8‚›®‰ş1J$06fe5442-6d4c-466d-8452-84d61395dab4
+icsharpsquid:S125²"Remove this commented out code.(áù…ñ8ƒ›®‰ş1J$a90f4647-f2e9-4af6-8cd8-528e1bd9e3f6
+ncsharpsquid:S125Î"Remove this commented out code.(úÀı±üÿÿÿÿ8„›®‰ş1J$07da080b-bb86-4419-a91f-7737b02ce4c9
+ncsharpsquid:S125ä"Remove this commented out code.(§ÉÙ¼ÿÿÿÿÿ8…›®‰ş1J$49a8b0ed-759d-4583-b231-cb78178a1b39
+icsharpsquid:S125”"Remove this commented out code.(òŞ–ë8…›®‰ş1J$7e2d3305-f1c6-4fff-aaeb-8a40fc3961df
+icsharpsquid:S125¬"Remove this commented out code.(Š½ÌÛ8†›®‰ş1J$08865cc1-7561-40dc-a3b0-bc88fa58bec6
+hcsharpsquid:S125Ñ"Remove this commented out code.(Û¤‘8†›®‰ş1J$e4f5d112-9364-4fbe-9733-d23eaa9f4235
+ncsharpsquid:S125¥"Remove this commented out code.(£â³ßÿÿÿÿÿ8†›®‰ş1J$74189533-e86e-416a-a1ac-52e2e9b43400
+ncsharpsquid:S125õ"Remove this commented out code.(„’§µùÿÿÿÿ8‡›®‰ş1J$b3468a9c-d13e-468c-8cdc-a59f6e6735af
+icsharpsquid:S125Ø"Remove this commented out code.(éÙ¢8‡›®‰ş1J$ea063103-71a0-437c-afda-f7e533835a22
+icsharpsquid:S125"Remove this commented out code.(Š½ÌÛ8ˆ›®‰ş1J$1629196b-3f8b-4cd6-ae37-1f50b33bdb80
+icsharpsquid:S125†"Remove this commented out code.(şÛ8ˆ›®‰ş1J$b25e3641-138b-4473-b51e-df9d5a4db54c
+icsharpsquid:S125œ"Remove this commented out code.(Ú°à¬8ˆ›®‰ş1J$1c5bf3d4-324e-4df1-b8c0-0ca77dc4cd24
+ncsharpsquid:S125«"Remove this commented out code.(“Çáöûÿÿÿÿ8ˆ›®‰ş1J$a667b68c-c057-45e8-8894-bd4583f3e892
+hcsharpsquid:S125ñ"Remove this commented out code.(šûÓ8‰›®‰ş1J$211e8fa8-3b07-44eb-a04c-1a566a20ae71
+ncsharpsquid:S125Â	"Remove this commented out code.(¿Íà›ùÿÿÿÿ8‰›®‰ş1J$ecae4ea8-3e04-4088-8718-58cdf377d95f
+icsharpsquid:S125Í	"Remove this commented out code.(·æ¾8‰›®‰ş1J$725b7eac-6d19-4165-af10-1c3495cf564e

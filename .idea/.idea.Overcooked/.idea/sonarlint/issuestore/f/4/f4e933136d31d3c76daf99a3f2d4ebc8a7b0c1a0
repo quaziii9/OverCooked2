@@ -1,0 +1,45 @@
+
+csharpsquid:S3923”"]This conditional operation returns the same value whether the condition is "true" or "false".(õå‹(8Ãæ×‰ş1
+Ocsharpsquid:S1125ù"*Remove the unnecessary Boolean literal(s).(×éÑÑ8Çæ×‰ş1
+Ocsharpsquid:S1125¿"*Remove the unnecessary Boolean literal(s).(üĞëó8Êæ×‰ş1
+Ocsharpsquid:S1125È"*Remove the unnecessary Boolean literal(s).(üĞëó8Ìæ×‰ş1
+wcsharpsquid:S3776’"RRefactor this method to reduce its Cognitive Complexity from 22 to the 15 allowed.(ç“¾²8äæ×‰ş1
+wcsharpsquid:S3776“"RRefactor this method to reduce its Cognitive Complexity from 35 to the 15 allowed.(—8„ç×‰ş1
+‡csharpsquid:S3903"8Move 'Player2InteractController' into a named namespace.(œ’ïÃşÿÿÿÿ8ô‹Å‰ş1J$30536d32-b2ff-4dd4-9471-3f5b87e2b544
+@csharpsquid:S1116 "Remove this empty statement.(¼Ç¼8…ç×‰ş1
+kcsharpsquid:S2933,""Make 'isButtonPressed' 'readonly'.( Àş8åƒË‰ş1J$133fdc68-32fd-4848-852c-5a6afd14ead5
+“csharpsquid:S1104
+"DMake this field 'private' and encapsulate it in a 'public' property.(·åÀıÿÿÿÿ8ô‹Å‰ş1J$9c508e18-d6b1-48a6-86e6-854d5fad2e6d
+“csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(ÿÀüıÿÿÿÿÿ8ô‹Å‰ş1J$aa611b14-9d5a-4bdb-98f1-2dafd44f212e
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(½É×8ô‹Å‰ş1J$a945ca5b-287a-4817-9674-c887681a40d1
+“csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(Ì–æ¦úÿÿÿÿ8ô‹Å‰ş1J$1d6eb617-47f3-4f68-ba19-da39f2f0dc15
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(äÜ£è8ô‹Å‰ş1J$576a533e-a998-4047-a510-f062a50b1ff2
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(ÆÿŒ8ô‹Å‰ş1J$6ff62926-6f05-47ac-acb2-12fdac797086
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(§¦›Û8ô‹Å‰ş1J$107e5018-389a-49e2-8fa9-8b43cd15291f
+csharpsquid:S1104'"DMake this field 'private' and encapsulate it in a 'public' property.(²ïğ¬8çùÅ‰ş1J$1ab32515-e790-45e7-8f17-1f9f3e608253
+csharpsquid:S1104("DMake this field 'private' and encapsulate it in a 'public' property.(é›Öé8èùÅ‰ş1J$2598ed34-df92-4466-a9c1-db535a2f329c
+Tcsharpsquid:S1066‹"/Merge this if statement with the enclosing one.(ù¶»8Šç×‰ş1
+Qcsharpsquid:S1172É",Remove this unused method parameter 'other'.(¯Åë¨8‹ç×‰ş1
+ocsharpsquid:S1192å"EDefine a constant instead of using this literal 'isHolding' 17 times.(÷ä‚ãÿÿÿÿÿ8ç×‰ş1
+kcsharpsquid:S1192§"FDefine a constant instead of using this literal 'Ingredient' 11 times.(˜ÌÇğ8ç×‰ş1
+jcsharpsquid:S1192à"@Define a constant instead of using this literal 'Plate' 5 times.(ƒ•õËÿÿÿÿÿ8¦ç×‰ş1
+ncsharpsquid:S2589€"DChange this condition so that it does not always evaluate to 'True'.(ºÇ…øşÿÿÿÿ8§ç×‰ş1
+Vcsharpsquid:S1481ò"1Remove the unused local variable 'localPosition'.(Æ ‹8©ç×‰ş1
+Vcsharpsquid:S1481ó"1Remove the unused local variable 'localRotation'.(ªËüç8«ç×‰ş1
+Ccsharpsquid:S125"Remove this commented out code.(ƒòØÂ8­ç×‰ş1
+Ccsharpsquid:S125"Remove this commented out code.(áù…ñ8®ç×‰ş1
+Ccsharpsquid:S125•"Remove this commented out code.(áù…ñ8°ç×‰ş1
+Hcsharpsquid:S125®"Remove this commented out code.(úÀı±üÿÿÿÿ8±ç×‰ş1
+Hcsharpsquid:S125Ä"Remove this commented out code.(§ÉÙ¼ÿÿÿÿÿ8³ç×‰ş1
+Ccsharpsquid:S125ô"Remove this commented out code.(òŞ–ë8µç×‰ş1
+Ccsharpsquid:S125‹"Remove this commented out code.(Š½ÌÛ8µç×‰ş1
+Hcsharpsquid:S125ú"Remove this commented out code.(£â³ßÿÿÿÿÿ8¶ç×‰ş1
+Hcsharpsquid:S125»"Remove this commented out code.(„’§µùÿÿÿÿ8¶ç×‰ş1
+Ccsharpsquid:S125›"Remove this commented out code.(éÙ¢8·ç×‰ş1
+Ccsharpsquid:S125Ã"Remove this commented out code.(Š½ÌÛ8¸ç×‰ş1
+Ccsharpsquid:S125È"Remove this commented out code.(şÛ8¸ç×‰ş1
+Ccsharpsquid:S125Ü"Remove this commented out code.(Ú°à¬8¸ç×‰ş1
+Hcsharpsquid:S125ë"Remove this commented out code.(“Çáöûÿÿÿÿ8¹ç×‰ş1
+Bcsharpsquid:S125¥"Remove this commented out code.(šûÓ8¹ç×‰ş1
+Hcsharpsquid:S125ğ"Remove this commented out code.(¿Íà›ùÿÿÿÿ8¹ç×‰ş1
+Ccsharpsquid:S125û"Remove this commented out code.(·æ¾8¹ç×‰ş1

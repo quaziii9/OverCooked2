@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Transform = UnityEngine.Transform;
@@ -12,6 +13,7 @@ public class Player2InteractController : MonoBehaviour
     public GameObject interactObject;
     public ObjectHighlight objectHighlight;
     public GameObject nextInteractObject;
+    public GameObject throwArrow;
 
     // 변경되는 Bool값
     [SerializeField] public bool isHolding = false;
@@ -28,19 +30,23 @@ public class Player2InteractController : MonoBehaviour
     [SerializeField] private GameObject grabL;
     [SerializeField] private GameObject knife;
 
-    [Header("PlayerInputSystem")]
-    [SerializeField] private GameObject PlayerInputSystem;
-    private PlayerMasterController2 masterController;
+    [Header("PlayerInputSystem")] [SerializeField]
+    private GameObject PlayerInputSystem;
 
-    [Header("Mobile Button")]
-    public Button pickupButton; // 모바일 줍기/놓기 버튼
-    public Button cookButton;   // 모바일 요리/던지기 버튼
+    private PlayerMasterController2 _masterController;
+    private PlayerMoveController _moveController;
+
+    [Header("Mobile Button")] public Button pickupButton; // 모바일 줍기/놓기 버튼
+    public Button cookButton; // 모바일 요리/던지기 버튼
 
     Vector3 placeTransform = Vector3.zero;
 
+    private bool isButtonPressed = false;
+
     private void Awake()
     {
-        masterController = PlayerInputSystem.GetComponent<PlayerMasterController2>();
+        _masterController = PlayerInputSystem.GetComponent<PlayerMasterController2>();
+        _moveController = gameObject.GetComponent<PlayerMoveController>();
 
         if (pickupButton != null)
         {
@@ -50,6 +56,52 @@ public class Player2InteractController : MonoBehaviour
         if (cookButton != null)
         {
             cookButton.onClick.AddListener(MobileCookOrThrow); // 버튼 클릭 이벤트에 MobileCookOrThrow 메서드 연결
+
+            EventTrigger trigger = cookButton.gameObject.AddComponent<EventTrigger>();
+
+            EventTrigger.Entry pointerDownEntry = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerDown
+            };
+            pointerDownEntry.callback.AddListener((data) => { OnButtonPress(); });
+            trigger.triggers.Add(pointerDownEntry);
+
+            EventTrigger.Entry pointerUpEntry = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerUp
+            };
+            pointerUpEntry.callback.AddListener((data) => { OnButtonRelease(); });
+            trigger.triggers.Add(pointerUpEntry);
+        }
+    }
+    
+    private void OnButtonPress()
+    {
+        Debug.Log("Button Pressed");
+        _moveController.moveSpeed = 0;
+        throwArrow.SetActive(true);
+    }
+
+    private void OnButtonRelease()
+    {
+        Debug.Log("Button Released");
+        _moveController.moveSpeed = 15;
+        throwArrow.SetActive(false);
+
+        // 기존 코드 실행
+        if (CheckInteractObject())
+        {
+            if (ShouldStartCutting())
+                StartCuttingProcess();
+            else
+                SoundManager.Instance.PlayEffect("no");
+        }
+        else
+        {
+            if (isHolding && CanThrowIngredient())
+            {
+                ThrowIngredient();
+            }
         }
     }
 
@@ -68,55 +120,55 @@ public class Player2InteractController : MonoBehaviour
     #region OnCookOrThrow
     public void OnCookOrThrow(InputValue inputValue)
     {
-        Debug.Log("OnCookOrThrow");
-        if (checkInteractObject())
-        {
-            if (ShouldStartCutting())
-                StartCuttingProcess();
-            else
-                SoundManager.Instance.PlayEffect("no");
-        }
-        else
-        {
-            if (isHolding && CanThrowIngredient())
-            {
-                ThrowIngredient();
-            }
-        }
+        bool isPressed = inputValue.isPressed;
+        CookOrThrow(isPressed);
     }
 
-    public void MobileCookOrThrow()
+    private void MobileCookOrThrow()
     {
         Debug.Log("MobileCookOrThrow");
-        if (checkInteractObject())
+        CookOrThrow(true); // 모바일에서는 터치가 눌린 것으로 처리
+    }
+
+    private void CookOrThrow(bool isPressed)
+    {
+        if (CheckInteractObject())
         {
             if (ShouldStartCutting())
+            {
                 StartCuttingProcess();
+            }
             else
+            {
                 SoundManager.Instance.PlayEffect("no");
+            }
         }
         else
         {
-            if (isHolding && CanThrowIngredient())
+            if (!isHolding || !CanThrowIngredient()) return;
+            if (isPressed)
+            {
+                Debug.Log("Button Pressed");
+                _moveController.moveSpeed = 0; // 버튼이 눌렸을 때의 동작 수행
+                throwArrow.SetActive(true);
+            }
+            else // 버튼이 떼어졌을 때만 동작 수행
             {
                 ThrowIngredient();
+                Debug.Log("Button Released");
+                _moveController.moveSpeed = 15; // 버튼이 떼어졌을 때의 동작 수행
+                throwArrow.SetActive(false);
             }
         }
     }
 
-    bool checkInteractObject()
+    private bool CheckInteractObject()
     {
-        if (interactObject != null)
-        {
-            if (interactObject.GetComponent<ObjectHighlight>().objectType == ObjectHighlight.ObjectType.Ingredient)
-                return false;
-            else
-                return true;
-        }
-        return false;
+        if (interactObject == null) return false;
+        return interactObject.GetComponent<ObjectHighlight>().objectType != ObjectHighlight.ObjectType.Ingredient;
     }
 
-    bool ShouldStartCutting()
+    private bool ShouldStartCutting()
     {
         return objectHighlight.objectType == ObjectHighlight.ObjectType.Board &&
                interactObject.transform.parent.childCount > 2 &&
@@ -127,7 +179,7 @@ public class Player2InteractController : MonoBehaviour
                 interactObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().type != Ingredient.IngredientType.Tortilla;
     }
 
-    void StartCuttingProcess()
+    private void StartCuttingProcess()
     {
         var cuttingBoard = interactObject.transform.GetChild(0).GetComponent<CuttingBoard>();
 

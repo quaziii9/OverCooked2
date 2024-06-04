@@ -29,8 +29,8 @@
                     "id": "176805df-c351-40e9-a90a-6e2df654c866",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": "Press(pressPoint=0.1,behavior=2)",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Dash",
@@ -122,7 +122,7 @@
                     "name": "",
                     "id": "2e95315a-3df6-400c-9b48-0f0dcfd82317",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "",
                     "action": "CookOrThrow",
