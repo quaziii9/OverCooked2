@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class Ingredient : GameItem
 {
-    public bool isCooked = false;
-    public bool isOnDesk = true;
+    public bool isCooked;
+    public bool isOnDesk;
     // 오직 피자만을 위한 bool 값 / 피자 완성을 위한 값
-    public bool pizzazIsCooked = false;
+    public bool pizzaIsCooked;
 
     public enum IngredientType { Fish, Shrimp, Plate, Lettuce, Tomato, Cucumber, Chicken, Potato, Pot, Pan, Tortilla, SeaWeed, Rice, Pepperoni, Cheese, Dough, Meat, PizzaTomato, SushiRice, SushiFish, SushiCucumber };
     public IngredientType type; // 재료 유형: 채소, 고기 등
     
     public enum IngredientState { Raw, Cooking, Cooked }
-    public IngredientState currentState = IngredientState.Raw;
+    public IngredientState currentState;
 
     public enum Team { Red, Blue }
     public Team team;
@@ -20,9 +20,18 @@ public class Ingredient : GameItem
     [SerializeField] private Mesh cookedIngredient;
     [SerializeField] private Material cookedMat;
 
-    public Vector3 fishLocalPos = new Vector3(0, 0.138f, 0.08f);
-    public Vector3 shrimpLocalPos = new Vector3(-0.365000874f, -0.0890001357f, -0.423000485f);
-    public Vector3 lettuceLocalPos = new Vector3(0, 0.418000013f, 0);
+    public Vector3 fishLocalPos;
+    public Vector3 shrimpLocalPos;
+    public Vector3 lettuceLocalPos;
+
+    public Ingredient()
+    {
+        isOnDesk = true;
+        currentState = IngredientState.Raw;
+        fishLocalPos = new Vector3(0, 0.138f, 0.08f);
+        shrimpLocalPos = new Vector3(-0.365000874f, -0.0890001357f, -0.423000485f);
+        lettuceLocalPos = new Vector3(0, 0.418000013f, 0);
+    }
 
     public override void Interact(PlayerInteractController player)
     {
@@ -43,13 +52,13 @@ public class Ingredient : GameItem
     {
         if (handle == IngredientType.Pot || handle == IngredientType.Pan)
         {
-            BoxCollider collider = transform.GetComponent<BoxCollider>();
-            collider.isTrigger = isActive;
+            BoxCollider boxCollider = transform.GetComponent<BoxCollider>();
+            boxCollider.isTrigger = isActive;
         }
         else
         {
-            MeshCollider collider = transform.parent.GetComponent<MeshCollider>();
-            collider.isTrigger = isActive;
+            MeshCollider meshCollider = transform.parent.GetComponent<MeshCollider>();
+            meshCollider.isTrigger = isActive;
         }
 
         Vector3 localPosition;
@@ -202,29 +211,6 @@ public class Ingredient : GameItem
     private void AdjustPosition(Transform targetTransform, Vector3 adjustment)
     {
         targetTransform.localPosition += adjustment;
-    }
-
-    // 사용되지 않는 코드의 주석 처리 및 정리
-    private void OnTriggerEnter(Collider other)
-    {
-        //if (other.CompareTag("deadZone"))
-        //{
-        //    HandleDeadZoneInteraction(type);
-        //}
-    }
-
-    private void HandleDeadZoneInteraction(IngredientType handType)
-    {
-        GameObject parent = transform.parent.parent.gameObject;
-        if (handType != IngredientType.Plate)
-        {
-            //parent.GetComponent<DestroyIngredient>().DestroySelf();
-        }
-        else // Plate handling
-        {
-            Destroy(gameObject);
-            //GameManager.instance.PlateReturn();
-        }
     }
 
     // 각 재료에 대한 자동 배치를 수행하는 메서드

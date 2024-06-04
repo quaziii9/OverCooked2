@@ -1,0 +1,19 @@
+
+­csharpsquid:S3923Ş"]This conditional operation returns the same value whether the condition is "true" or "false".(ˆ²”·şÿÿÿÿ8Á˜Œş1J$2a4db49b-c4d3-421d-811c-1873c1fa0115
+œcsharpsquid:S37763"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Âºëã8Á˜Œş1J$7684b3a2-ee63-4856-9c88-b91535854c6b
+xcsharpsquid:S3903")Move 'Ingredient' into a named namespace.(ğ˜ˆùÿÿÿÿ8Á˜Œş1J$914ee3d8-ce4e-4b5c-9ce6-eca065fc20a1
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(•Øñé8Á˜Œş1J$bf297630-2233-4b26-9269-b8aa9e053ce4
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(ÙÍë†8Á˜Œş1J$c31c9b3b-14ce-4220-9d27-5f3c46a63482
+“csharpsquid:S1104	"DMake this field 'private' and encapsulate it in a 'public' property.(Ã´‚åüÿÿÿÿ8Á˜Œş1J$a37e15ea-8910-4292-838b-7683fec9a9f0
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(’•äë8Â˜Œş1J$ecd9df47-c92c-4edc-a996-dc28af529a21
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(Òë/8Â˜Œş1J$5180fa43-713c-42f6-9165-307c1272cbc9
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(üùúÎ8Â˜Œş1J$98f4afa8-cc20-4c70-a77c-d1f5a0fd452d
+“csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(ıÖ§Çüÿÿÿÿ8¶”©Œş1J$f7ca85d5-c286-483c-9413-438d6ed6edc7
+csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(¼¹¥8·©Œş1J$a617d57d-982d-4a2e-9ae2-67cd55ce752c
+hcsharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(©ú›©8éã©Œş1
+csharpsquid:S1172¹"/Remove this unused method parameter 'handType'.(¥É·¹ÿÿÿÿÿ8Â˜Œş1J$9fc613b1-88d2-4923-a131-acd2255507c2
+mcsharpsquid:S125'"Remove this commented out code.(å„‹×ıÿÿÿÿ8Â˜Œş1J$46a4272e-5b45-43c0-8126-17770bde37b1
+ncsharpsquid:S125¾"Remove this commented out code.(é˜”ïıÿÿÿÿ8Â˜Œş1J$478622fa-5042-4b03-bef6-5f9db3026601
+ncsharpsquid:S125­"Remove this commented out code.(¨“Ü„üÿÿÿÿ8Â˜Œş1J$f2a2dd07-b0e4-4acd-8bbf-c9c146e7f43c
+icsharpsquid:S125³"Remove this commented out code.(ŞÙÂ‡8Â˜Œş1J$b391e126-3341-4927-b884-491ef4c71eb2
+icsharpsquid:S125ñ"Remove this commented out code.(Ø—Äİ8Â˜Œş1J$a7f9d3e8-09ff-432a-b0d5-2ac7bd4ee211

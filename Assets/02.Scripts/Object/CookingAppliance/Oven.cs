@@ -35,7 +35,7 @@ public class Oven : MonoBehaviour
     {
         if (transform.childCount == 3)
         {
-            stateIsCooked = transform.GetChild(2).GetComponent<Ingredient>().pizzazIsCooked;
+            stateIsCooked = transform.GetChild(2).GetComponent<Ingredient>().pizzaIsCooked;
         }
     }
 
@@ -79,7 +79,7 @@ public class Oven : MonoBehaviour
         _coTimer = null;
         pause = false;
         cookingTime = 0;
-        transform.GetChild(2).GetComponent<Ingredient>().pizzazIsCooked = true;
+        transform.GetChild(2).GetComponent<Ingredient>().pizzaIsCooked = true;
     }
 
     private void ClearTime()

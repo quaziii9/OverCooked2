@@ -180,7 +180,7 @@ public class Player2InteractController : MonoBehaviour
     {
         var cuttingBoard = interactObject.transform.GetChild(0).GetComponent<CuttingBoard>();
 
-        if (cuttingBoard._CoTimer == null) // 한번도 실행 안된거면 시작 가능
+        if (cuttingBoard.CoTimer == null) // 한번도 실행 안된거면 시작 가능
         {
             GameObject ingredientObj = interactObject.transform.parent.GetChild(2).GetChild(0).gameObject;
             MeshFilter meshFilter = ingredientObj.transform.GetComponent<MeshFilter>();
@@ -330,7 +330,7 @@ public class Player2InteractController : MonoBehaviour
             GameObject plateComponent = transform.GetChild(1).gameObject;  // Plates Object
             GameObject oven = objectHighlight.transform.parent.gameObject;
             bool isDough = plateComponent.transform.GetChild(9).gameObject.activeSelf;
-            if (oven.transform.childCount == 2 && !plateComponent.transform.GetComponent<Ingredient>().pizzazIsCooked && isDough)
+            if (oven.transform.childCount == 2 && !plateComponent.transform.GetComponent<Ingredient>().pizzaIsCooked && isDough)
             {
                 plateComponent.transform.SetParent(oven.transform);
 
