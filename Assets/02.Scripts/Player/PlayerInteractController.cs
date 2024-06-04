@@ -667,8 +667,7 @@ public class PlayerInteractController : MonoBehaviour
             bool checkisCooked = handle.isCooked;
 
             // 김은 조리 안되어도 접시 올라감
-            if (handle.type == Ingredient.IngredientType.SeaWeed ||
-                handle.type == Ingredient.IngredientType.Tortilla)
+            if (handle.type == Ingredient.IngredientType.SeaWeed || handle.type == Ingredient.IngredientType.Tortilla)
             {
                 checkisCooked = true;
             }
@@ -712,7 +711,7 @@ public class PlayerInteractController : MonoBehaviour
 
                 obj.transform.SetParent(transform); // 플레이어의 하위 객체로 설정
                 // 플레이어에서 위치 잡기
-                SetPositionbetweenPlayerAndObject(obj);
+                SetPositionBetweenPlayerAndObject(obj);
                 Animator.SetBool("isHolding", true);
                 IsHolding = true;
             }
@@ -768,7 +767,7 @@ public class PlayerInteractController : MonoBehaviour
 
                 obj.transform.SetParent(transform); // 플레이어의 하위 객체로 설정
                 // 플레이어에서 위치 잡기
-                SetPositionbetweenPlayerAndObject(obj);
+                SetPositionBetweenPlayerAndObject(obj);
                 Animator.SetBool("isHolding", true);
                 IsHolding = true;
             }
@@ -920,14 +919,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.CompareTag("deadZone"))
-        //{
-        //    HandleDeadZone();
-        //    return;
-        //}
-
-        if (CheckForIngredientHandling(other))
-            return;
+        if (CheckForIngredientHandling(other)) return;
 
         HandleActiveObjectInteraction(other);
     }
@@ -1088,7 +1080,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private void HighlightBasedOnTag(Collider other)
     {
-        bool highlightState = other.CompareTag("Ingredient") ? other.GetComponent<Ingredient>().isCooked : true;
+        bool highlightState = !other.CompareTag("Ingredient") || other.GetComponent<Ingredient>().isCooked;
         other.GetComponent<ObjectHighlight>().ActivateHighlight(highlightState);
     }
 
@@ -1134,7 +1126,6 @@ public class PlayerInteractController : MonoBehaviour
 
     private void DeactivateObjects()
     {
-        //Debug.Log($"DeactivateObjects : {canActive}");
         CanActive = false;
         OffHighlightCurrentObject();
         interactObject = null;
@@ -1160,9 +1151,7 @@ public class PlayerInteractController : MonoBehaviour
     {
         if (interactObject != null && interactObject.GetComponent<ObjectHighlight>() != null)
         {
-            bool highlightState = interactObject.CompareTag("Ingredient")
-                ? interactObject.GetComponent<Ingredient>().isCooked
-                : true;
+            bool highlightState = !interactObject.CompareTag("Ingredient") || interactObject.GetComponent<Ingredient>().isCooked;
             interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(highlightState);
         }
     }
@@ -1171,9 +1160,12 @@ public class PlayerInteractController : MonoBehaviour
     {
         if (interactObject != null && interactObject.GetComponent<ObjectHighlight>() != null)
         {
+            /*
             bool highlightState = interactObject.CompareTag("Ingredient")
                 ? interactObject.GetComponent<Ingredient>().isCooked
                 : true;
+            */
+            bool highlightState = !interactObject.CompareTag("Ingredient") || interactObject.GetComponent<Ingredient>().isCooked;
             interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(highlightState);
         }
     }
@@ -1213,33 +1205,13 @@ public class PlayerInteractController : MonoBehaviour
         }
     }
 
-    void SetPositionbetweenPlayerAndObject(GameObject obj)
+    private void SetPositionBetweenPlayerAndObject(GameObject obj)
     {
-        //string name = obj.name;
-
-        Vector3 localPosition = Vector3.zero;
-        Quaternion localRotation = Quaternion.identity;
-
         if (obj.CompareTag("Plate"))
         {
             obj.transform.localRotation = Quaternion.identity;
             obj.transform.localPosition = new Vector3(-0.409999996f, 0.4700001f, 1.84000003f);
         }
-
-        //switch (name)
-        //{
-        //    case "Plate":
-        //        //obj.GetComponent<Ingredient>().HandleIngredient(obj.transform, obj.transform.GetComponent<Ingredient>().type, true);
-        //        //Transform parentTransform = obj.transform.parent;
-        //        //parentTransform.localPosition = localPosition;
-        //        //parentTransform.localRotation = localRotation;
-        //        //parentTransform.parent.SetParent(something);
-        //        obj.transform.localRotation = Quaternion.identity;
-        //        obj.transform.localPosition = new Vector3(-0.409999996f, 0.4700001f, 1.84000003f);
-        //        break;
-        //    default:
-        //        break;
-        //}
     }
 
     #endregion

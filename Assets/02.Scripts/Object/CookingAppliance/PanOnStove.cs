@@ -10,16 +10,13 @@ using EnumTypes;
 
 public class PanOnStove : MonoBehaviour
 {
-    [Header("UI")]
-    public GameObject canvas;
+    [Header("UI")] public GameObject canvas;
     public Slider cookingBar;
     public GameObject ingredientUI;
 
-    [Space(10)]
-    public GameObject pfxFire;
+    [Space(10)] public GameObject pfxFire;
 
-    [Header("State")]
-    public bool isOnStove = false;
+    [Header("State")] public bool isOnStove = false;
     public bool inSomething = false;
     public float cookingTime;
 
@@ -30,10 +27,7 @@ public class PanOnStove : MonoBehaviour
 
     public Sprite[] icons;
 
-    [Header("CookedMaterial")]
-    public Material chicken_mat;
-    public Material meat_mat;
-    public Material[] friedMaterials;
+    [Header("CookedMaterial")] public Material[] friedMaterials;
 
     private void Update()
     {
@@ -52,21 +46,22 @@ public class PanOnStove : MonoBehaviour
             UpdateCookingBarValue();
             UpdateisIngredientState();
         }
+
         if (stateIsCooked)
         {
             cookingBar.gameObject.SetActive(false);
         }
-        if (stateIsCooked!&&inSomething)
+
+        if (stateIsCooked! && inSomething)
         {
             cookingBar.gameObject.SetActive(false);
             //ChangeCookedMaterial();
         }
-        if(cookingTime>=1)
+
+        if (cookingTime >= 1)
         {
             ChangeCookedMaterial();
         }
-
-
     }
 
     private void pfxFireOff()
@@ -84,7 +79,8 @@ public class PanOnStove : MonoBehaviour
 
     private void UpdateCookingBarPosition()
     {
-        cookingBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0)); // 적절한 위치 조정
+        cookingBar.transform.position =
+            Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0)); // 적절한 위치 조정
     }
 
     private void UpdateCookingBarValue()
@@ -94,7 +90,6 @@ public class PanOnStove : MonoBehaviour
 
     public async void StartCooking(UnityAction EndCallBack = null)
     {
-        
         Debug.Log("cooking!");
         if (_cts == null)
         {
@@ -112,7 +107,8 @@ public class PanOnStove : MonoBehaviour
         }
     }
 
-    private async UniTask StartCookingAsync(UnityAction EndCallBack = null, CancellationToken cancellationToken = default)
+    private async UniTask StartCookingAsync(UnityAction EndCallBack = null,
+        CancellationToken cancellationToken = default)
     {
         if (inSomething == false)
         {
@@ -137,9 +133,11 @@ public class PanOnStove : MonoBehaviour
             {
                 await UniTask.Yield(cancellationToken);
             }
+
             await UniTask.Delay(450, cancellationToken: cancellationToken);
             cookingTime += 0.25f;
         }
+
         Debug.Log("Cooking End");
         // 마테리얼 변경 추가
         //ChangeCookedMaterial();
@@ -161,6 +159,7 @@ public class PanOnStove : MonoBehaviour
             _cts.Dispose();
             _cts = null;
         }
+
         pause = false;
     }
 
@@ -263,36 +262,8 @@ public class PanOnStove : MonoBehaviour
         }
     }
 
-    /*public Material chicken_mat;
-    public Material meat_mat;*/
-
     private void ChangeCookedMaterial()
     {
-        //MeshFilter meshFilter = transform.GetChild(2).GetChild(0).GetComponent<MeshFilter>();
-        //MeshRenderer mr = transform.GetChild(2).GetChild(0).GetComponent<MeshRenderer>();
-        //string meshFileName = meshFilter.sharedMesh.name;
-
-        //Debug.Log(meshFileName);
-        //if (meshFileName.Equals("m_ingredients_chicken_sliced_01_0"))
-        //{
-        //    //mr.material = chicken_mat;
-        //    Material[] materials = mr.materials;
-        //    materials[0] = chicken_mat;
-        //    mr.materials = materials;
-        //}
-        //else if (meshFileName.Equals("m_ingredients_meat_sliced_01_0"))
-        //{
-        //    //mr.material = meat_mat;
-
-        //    Material[] materials = mr.materials;
-        //    materials[0] = meat_mat;
-        //    mr.materials = materials;
-        //    Debug.Log(mr);
-        //    Debug.Log(materials);
-        //    Debug.Log(mr.materials);
-        //    Debug.Log(materials);
-        //    mr.material = meat_mat;
-        //}
         MeshFilter meshFilter = transform.GetChild(2).GetChild(0).GetComponent<MeshFilter>();
         MeshRenderer mr = transform.GetChild(2).GetChild(0).GetComponent<MeshRenderer>();
         string meshFileName = meshFilter.sharedMesh.name;
@@ -304,20 +275,16 @@ public class PanOnStove : MonoBehaviour
             mr.material = friedMaterials[0];
             Debug.Log(mr.material + " ", friedMaterials[0]);
             Debug.Log("Material Changed to Chicken");
-            
         }
         else if (meshFileName.Equals("m_ingredients_meat_sliced_01_0"))
         {
-
             mr.material = friedMaterials[1];
             Debug.Log(mr.material);
             Debug.Log("Material Changed to Meat");
-
         }
         else
         {
             Debug.Log("No matching mesh name found");
         }
     }
-
 }

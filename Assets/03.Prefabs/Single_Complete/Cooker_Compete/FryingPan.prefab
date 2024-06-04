@@ -197,7 +197,7 @@ MonoBehaviour:
   itemName: 
   isCooked: 0
   isOnDesk: 1
-  pizzazIsCooked: 0
+  pizzaIsCooked: 0
   type: 9
   currentState: 0
   team: 0
@@ -241,6 +241,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 403761297b603554f88e2ff404042b34, type: 3}
   - {fileID: 21300000, guid: 3a9a198e7fc58834d8f2935ac9620d34, type: 3}
   - {fileID: 21300000, guid: 2fdb47c4eb8a3cc44b51a24d673c1178, type: 3}
+  chicken_mat: {fileID: 0}
+  meat_mat: {fileID: 0}
+  friedMaterials:
+  - {fileID: 2100000, guid: d1c49314a06d5fe4d8dbff757f659595, type: 2}
+  - {fileID: 2100000, guid: 1dcd818160dec6f47b216418a4f09afb, type: 2}
 --- !u!1 &563371444128589918
 GameObject:
   m_ObjectHideFlags: 0
