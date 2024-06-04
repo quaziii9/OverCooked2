@@ -25,6 +25,9 @@ public class PanOnStove : MonoBehaviour
 
     public Sprite[] icons;
 
+    [Header("CookedMaterial")]
+    public Material chicken_mat;
+    public Material meat_mat;
 
     private void Update()
     {
@@ -84,6 +87,8 @@ public class PanOnStove : MonoBehaviour
             cookingTime += 0.25f;
         }
         Debug.Log("Cooking End");
+        // 마테리얼 변경 추가
+        ChangeCookedMaterial();
         pfxFire.SetActive(false);
         EndCallBack?.Invoke();
         OffSlider();
@@ -200,4 +205,30 @@ public class PanOnStove : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
     }
+
+    /*public Material chicken_mat;
+    public Material meat_mat;*/
+
+    private void ChangeCookedMaterial()
+    {
+        MeshFilter meshFilter = transform.GetChild(2).GetChild(0).GetComponent<MeshFilter>();
+        MeshRenderer mr = transform.GetChild(2).GetChild(0).GetComponent<MeshRenderer>();
+        string meshFileName = meshFilter.sharedMesh.name;
+
+        if (meshFileName.Equals("m_ingredients_chicken_sliced_01_0"))
+        {
+            //mr.material = chicken_mat;
+            Material[] materials = mr.materials;
+            materials[0] = chicken_mat;
+            mr.materials = materials;
+        }
+        else if (meshFileName.Equals("m_ingredients_meat_sliced_01_0"))
+        {
+            //mr.material = meat_mat;
+            Material[] materials = mr.materials;
+            materials[0] = meat_mat;
+            mr.materials = materials;
+        }
+    }
+
 }
