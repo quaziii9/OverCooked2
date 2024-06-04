@@ -95,12 +95,12 @@ public class RespawnManager : MonoBehaviour
 
         if(playerInteractController != null)
         {
-            playerInteractController.isHolding = false;
-            playerInteractController.canActive = false;
+            playerInteractController.IsHolding = false;
+            playerInteractController.CanActive = false;
         } else
         {
-            player2InteractController.isHolding = false;
-            player2InteractController.canActive = false;
+            player2InteractController.IsHolding = false;
+            player2InteractController.CanActive = false;
         }
 
         playerAnimator.SetBool("isHolding", false);

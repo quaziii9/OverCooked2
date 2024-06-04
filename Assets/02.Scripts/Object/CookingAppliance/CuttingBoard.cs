@@ -79,13 +79,13 @@ public class CuttingBoard : MonoBehaviour
             _CoTimer = StartCoroutine(CoStartCutting(EndCallBack));
             if (playerController is PlayerInteractController player1)
             {
-                player1.anim.SetTrigger("startCut");
-                player1.anim.SetBool("canCut", true);
+                player1.Animator.SetTrigger("startCut");
+                player1.Animator.SetBool("canCut", true);
             }
             else if (playerController is Player2InteractController player2)
             {
-                player2.anim.SetTrigger("startCut");
-                player2.anim.SetBool("canCut", true);
+                player2.Animator.SetTrigger("startCut");
+                player2.Animator.SetBool("canCut", true);
             }
         }
     }
@@ -142,11 +142,11 @@ public class CuttingBoard : MonoBehaviour
         // 플레이어의 칼질 가능 상태를 업데이트
         if (playerController is PlayerInteractController player1 && player1.interactObject == transform.parent.gameObject)
         {
-            player1.anim.SetBool("canCut", false);
+            player1.Animator.SetBool("canCut", false);
         }
         else if (playerController is Player2InteractController player2 && player2.interactObject == transform.parent.gameObject)
         {
-            player2.anim.SetBool("canCut", false);
+            player2.Animator.SetBool("canCut", false);
         }
     }
 

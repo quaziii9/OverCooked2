@@ -1,0 +1,9 @@
+
+¤csharpsquid:S3928Í"[Use a constructor overloads that allows a more meaningful exception message to be provided.(õ§ÓùÿÿÿÿJ$781a40c6-e6be-4ad7-b3e3-930a4d98665f
+scsharpsquid:S3903"+Move 'CuttingBoard' into a named namespace.(¦ÑÿıÿÿÿÿJ$61293977-091f-485d-8e81-6ea47f87bd5a
+½csharpsquid:S1186¥"yAdd a nested comment explaining why this method is empty, throw a 'NotSupportedException' or complete the implementation.(ËæşÌJ$fc335897-f994-4485-af7f-ae17e848de64
+Œcsharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(í•¸”ûÿÿÿÿJ$345badae-eb67-4d0a-bf9b-3a9dee61999b
+‡csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(‰Áá¶J$3bec6abb-dbfb-4d20-bfc9-5ab7efa20703
+Œcsharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(Ó¨‹àüÿÿÿÿJ$635572db-67bb-450c-ae11-58189cdeb17c
+‡csharpsquid:S1104"DMake this field 'private' and encapsulate it in a 'public' property.(¤Âÿ¿J$7c2571ec-a5ca-4c67-9c9f-4e0cfb169e07
+ecsharpsquid:S1192S"ADefine a constant instead of using this literal 'canCut' 4 times.(¹•í³8®ıã‹ş1

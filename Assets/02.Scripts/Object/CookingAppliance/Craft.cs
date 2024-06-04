@@ -21,7 +21,7 @@ public class Craft : MonoBehaviour
     {
         CraftAnim.SetTrigger("Open");
         GameObject newFood = Instantiate(foodPrefabs, Vector3.zero, Quaternion.identity);
-        player.isHolding = true;
+        player.IsHolding = true;
         newFood.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         newFood.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient>().HandleIngredient(player.transform, ConvertFoodTypeToHandleType(food), true);
     }
@@ -29,7 +29,7 @@ public class Craft : MonoBehaviour
     {
         CraftAnim.SetTrigger("Open");
         GameObject newFood = Instantiate(foodPrefabs, Vector3.zero, Quaternion.identity);
-        player.isHolding = true;
+        player.IsHolding = true;
         newFood.transform.GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         newFood.transform.GetChild(0).transform.GetChild(0).GetComponent<Ingredient>().HandleIngredient(player.transform, ConvertFoodTypeToHandleType(food), true);
     }
