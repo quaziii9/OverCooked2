@@ -3,6 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
+using Cysharp.Threading.Tasks;
+using System.Threading;
+using EventLibrary;
+using EnumTypes;
 
 public class PanOnStove : MonoBehaviour
 {
@@ -19,7 +23,8 @@ public class PanOnStove : MonoBehaviour
     public bool inSomething = false;
     public float cookingTime;
 
-    private Coroutine _coTimer;
+    //private Coroutine _coTimer;
+    private CancellationTokenSource _cts;
     private bool pause = false;
     private bool stateIsCooked = false;
 
@@ -31,6 +36,15 @@ public class PanOnStove : MonoBehaviour
 
     private void Update()
     {
+        if (isOnStove && inSomething)
+        {
+            pfxFire.SetActive(true); // 팬 위에 음식이 있을 때 불을 켜기
+        }
+        else
+        {
+            pfxFire.SetActive(false); // 팬 위에 음식이 없을 때 불을 끄기
+        }
+
         if (isOnStove && inSomething && !stateIsCooked)
         {
             UpdateCookingBarPosition();
@@ -40,6 +54,11 @@ public class PanOnStove : MonoBehaviour
 
         if (stateIsCooked)
             cookingBar.gameObject.SetActive(false);
+    }
+
+    private void pfxFireOff()
+    {
+        pfxFire.SetActive(false);
     }
 
     private void UpdateisIngredientState()
@@ -60,13 +79,19 @@ public class PanOnStove : MonoBehaviour
         cookingBar.value = cookingTime;
     }
 
-    public void StartCooking(UnityAction EndCallBack = null)
+    public async void StartCooking(UnityAction EndCallBack = null)
     {
-        if (_coTimer == null)
+        
+        Debug.Log("cooking!");
+        if (_cts == null)
         {
+            Debug.Log("start cooking");
             cookingBar.gameObject.SetActive(true);
             ClearTime();
-            _coTimer = StartCoroutine(CoStartCooking(EndCallBack));
+
+            _cts = new CancellationTokenSource();
+            StartCookingAsync(EndCallBack, _cts.Token).Forget();
+            //_coTimer = StartCoroutine(CoStartCooking(EndCallBack));
         }
         else if (pause)
         {
@@ -74,16 +99,32 @@ public class PanOnStove : MonoBehaviour
         }
     }
 
-    private IEnumerator CoStartCooking(UnityAction EndCallBack = null)
+    private async UniTask StartCookingAsync(UnityAction EndCallBack = null, CancellationToken cancellationToken = default)
     {
-        pfxFire.SetActive(true);
+        if (inSomething == false)
+        {
+            pfxFire.SetActive(false);
+            return;
+        }
+
         while (cookingTime <= 1)
         {
+            if (inSomething == false)
+            {
+                pfxFire.SetActive(false);
+                return;
+            }
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                break;
+            }
+
             while (pause)
             {
-                yield return null;
+                await UniTask.Yield(cancellationToken);
             }
-            yield return new WaitForSeconds(0.45f);
+            await UniTask.Delay(450, cancellationToken: cancellationToken);
             cookingTime += 0.25f;
         }
         Debug.Log("Cooking End");
@@ -92,17 +133,20 @@ public class PanOnStove : MonoBehaviour
         pfxFire.SetActive(false);
         EndCallBack?.Invoke();
         OffSlider();
-        _coTimer = null;
+
         pause = false;
         cookingTime = 0;
+        _cts.Dispose();
+        _cts = null;
     }
 
     private void ClearTime()
     {
-        if (_coTimer != null)
+        if (_cts != null)
         {
-            StopCoroutine(_coTimer);
-            _coTimer = null;
+            _cts.Cancel();
+            _cts.Dispose();
+            _cts = null;
         }
         pause = false;
     }

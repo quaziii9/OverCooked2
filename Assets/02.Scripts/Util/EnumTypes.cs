@@ -73,6 +73,11 @@ namespace EnumTypes
         EscUI,
     }
 
+    public enum GameEvent
+    {
+        FireOff,
+    }
+
 
     public enum SceneType
     {
