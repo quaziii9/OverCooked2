@@ -23,14 +23,7 @@ public class ScrollSnapButton : MonoBehaviour
 
     public void Update()
     {
-        if (snap.OnPanelSelectedGetName() == MapObject.name)
-        {
-            backImage.sprite = selectImg;
-        }
-        else
-        {
-            backImage.sprite = notselectImg;
-        }
+        backImage.sprite = snap.OnPanelSelectedGetName() == MapObject.name ? selectImg : notselectImg;
     }
 
     public void SnapMapCancle()

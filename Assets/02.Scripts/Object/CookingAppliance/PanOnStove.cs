@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using System;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 
@@ -16,17 +15,16 @@ public class PanOnStove : MonoBehaviour
     public GameObject pfxFire; // 불 이펙트
 
     [Header("State")]
-    public bool isOnStove = false; // 팬이 스토브 위에 있는지 여부
-    public bool inSomething = false; // 팬에 재료가 있는지 여부
+    public bool isOnStove; // 팬이 스토브 위에 있는지 여부
+    public bool inSomething; // 팬에 재료가 있는지 여부
     public float cookingTime; // 요리 시간
 
     [Space(10)]
-    public Sprite[] icons; // 재료 아이콘 배열
     public Material[] friedMaterials; // 요리된 재료의 재질 배열
 
     private CancellationTokenSource _cts; // 비동기 작업 취소 토큰
-    private bool pause = false; // 요리 일시 정지 여부
-    private bool stateIsCooked = false; // 재료가 요리되었는지 여부
+    private bool pause; // 요리 일시 정지 여부
+    private bool stateIsCooked; // 재료가 요리되었는지 여부
 
     private void Update()
     {
@@ -174,54 +172,8 @@ public class PanOnStove : MonoBehaviour
         GameObject madeUI = Instantiate(ingredientUI, Vector3.zero, Quaternion.identity, canvas.transform);
         madeUI.transform.GetChild(0).gameObject.SetActive(true);
         Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
-        image.sprite = GetIcon(ingredient.type);
+        image.sprite = IconManager.Instance.GetIcon(ingredient.type);
         madeUI.GetComponent<IngredientUI>().target = ingredient.transform;
-    }
-
-    // 재료 타입에 따른 아이콘을 반환합니다.
-    private Sprite GetIcon(Ingredient.IngredientType ingredientType)
-    {
-        switch (ingredientType)
-        {
-            case Ingredient.IngredientType.Fish:
-                return icons[0];
-            case Ingredient.IngredientType.Shrimp:
-                return icons[1];
-            case Ingredient.IngredientType.Tomato:
-                return icons[2];
-            case Ingredient.IngredientType.Lettuce:
-                return icons[3];
-            case Ingredient.IngredientType.Cucumber:
-                return icons[4];
-            case Ingredient.IngredientType.Potato:
-                return icons[5];
-            case Ingredient.IngredientType.Chicken:
-                return icons[6];
-            case Ingredient.IngredientType.SeaWeed:
-                return icons[7];
-            case Ingredient.IngredientType.Tortilla:
-                return icons[8];
-            case Ingredient.IngredientType.Rice:
-                return icons[9];
-            case Ingredient.IngredientType.Pepperoni:
-                return icons[10];
-            case Ingredient.IngredientType.Meat:
-                return icons[11];
-            case Ingredient.IngredientType.Dough:
-                return icons[12];
-            case Ingredient.IngredientType.Cheese:
-                return icons[13];
-            case Ingredient.IngredientType.SushiRice:
-                return icons[9];
-            case Ingredient.IngredientType.SushiFish:
-                return icons[0];
-            case Ingredient.IngredientType.SushiCucumber:
-                return icons[4];
-            case Ingredient.IngredientType.PizzaTomato:
-                return icons[2];
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
     }
 
     // 요리된 재료의 재질을 변경합니다.

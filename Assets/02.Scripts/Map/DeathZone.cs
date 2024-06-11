@@ -15,7 +15,6 @@ public class DeathZone : MonoBehaviour
     public GameObject Pan;
     public GameObject Pot;
     public GameObject ingredientUI;
-    public Sprite[] icons;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -139,7 +138,6 @@ public class DeathZone : MonoBehaviour
         {
             clonePlates.canvas = originalPlates.canvas;
             clonePlates.ingredientUI = ingredientUI;
-            clonePlates.icons = icons;
         }
     }
 
@@ -154,7 +152,6 @@ public class DeathZone : MonoBehaviour
             clonePan.cookingBar = originalPan.cookingBar;
             clonePan.ingredientUI = ingredientUI;
             clonePan.pfxFire = originalPan.pfxFire;
-            clonePan.icons = icons;
         }
     }
 
@@ -169,7 +166,6 @@ public class DeathZone : MonoBehaviour
             clonePot.cookingBar = originalPot.cookingBar;
             clonePot.ingredientUI = ingredientUI;
             clonePot.pfxFire = originalPot.pfxFire;
-            clonePot.icons = icons;
         }
     }
 

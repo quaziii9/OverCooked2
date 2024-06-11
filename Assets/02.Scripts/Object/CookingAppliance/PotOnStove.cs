@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using System;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 
@@ -24,7 +23,11 @@ public class PotOnStove : MonoBehaviour
     private bool pause; // 요리 일시 정지 여부
     private bool stateIsCooked; // 재료가 요리되었는지 여부
 
-    public Sprite[] icons; // 재료 아이콘 배열
+    private void Start()
+    {
+        // 초기 설정: 부모 오브젝트가 있는지 확인하고 isOnStove 상태를 설정합니다.
+        isOnStove = transform.parent != null;
+    }
 
     private void Update()
     {
@@ -69,7 +72,6 @@ public class PotOnStove : MonoBehaviour
     // 요리를 시작합니다.
     public async void StartCooking(UnityAction EndCallBack = null)
     {
-        
         if (_cts == null)
         {
             Debug.LogError("요리 시작!!!!");
@@ -168,53 +170,7 @@ public class PotOnStove : MonoBehaviour
         GameObject madeUI = Instantiate(ingredientUI, Vector3.zero, Quaternion.identity, canvas.transform);
         madeUI.transform.GetChild(0).gameObject.SetActive(true);
         Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
-        image.sprite = GetIcon(ingredient.type);
+        image.sprite = IconManager.Instance.GetIcon(ingredient.type);
         madeUI.GetComponent<IngredientUI>().target = ingredient.transform;
-    }
-
-    // 재료 타입에 따른 아이콘을 반환합니다.
-    private Sprite GetIcon(Ingredient.IngredientType ingredientType)
-    {
-        switch (ingredientType)
-        {
-            case Ingredient.IngredientType.Fish:
-                return icons[0];
-            case Ingredient.IngredientType.Shrimp:
-                return icons[1];
-            case Ingredient.IngredientType.Tomato:
-                return icons[2];
-            case Ingredient.IngredientType.Lettuce:
-                return icons[3];
-            case Ingredient.IngredientType.Cucumber:
-                return icons[4];
-            case Ingredient.IngredientType.Potato:
-                return icons[5];
-            case Ingredient.IngredientType.Chicken:
-                return icons[6];
-            case Ingredient.IngredientType.SeaWeed:
-                return icons[7];
-            case Ingredient.IngredientType.Tortilla:
-                return icons[8];
-            case Ingredient.IngredientType.Rice:
-                return icons[9];
-            case Ingredient.IngredientType.Pepperoni:
-                return icons[10];
-            case Ingredient.IngredientType.Meat:
-                return icons[11];
-            case Ingredient.IngredientType.Dough:
-                return icons[12];
-            case Ingredient.IngredientType.Cheese:
-                return icons[13];
-            case Ingredient.IngredientType.SushiRice:
-                return icons[9];
-            case Ingredient.IngredientType.SushiFish:
-                return icons[0];
-            case Ingredient.IngredientType.SushiCucumber:
-                return icons[4];
-            case Ingredient.IngredientType.PizzaTomato:
-                return icons[2];
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
     }
 }
