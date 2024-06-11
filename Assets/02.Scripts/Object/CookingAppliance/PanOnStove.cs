@@ -54,11 +54,6 @@ public class PanOnStove : MonoBehaviour
         }
     }
 
-    private void pfxFireOff()
-    {
-        pfxFire.SetActive(false); // 불 이펙트를 끕니다.
-    }
-
     // 재료의 상태 업데이트
     private void UpdateIsIngredientState()
     {
@@ -133,6 +128,7 @@ public class PanOnStove : MonoBehaviour
 
         pause = false;
         cookingTime = 0;
+        stateIsCooked = true; // 요리가 끝난 후 상태를 요리됨으로 설정
         _cts.Dispose(); // 취소 토큰 소스를 해제합니다.
         _cts = null;
     }
@@ -237,13 +233,11 @@ public class PanOnStove : MonoBehaviour
         MeshRenderer mr = transform.GetChild(2).GetChild(0).GetComponent<MeshRenderer>();
         string meshFileName = meshFilter.sharedMesh.name;
 
-        if (meshFileName.Equals("m_ingredients_chicken_sliced_01_0"))
+        mr.material = meshFileName switch
         {
-            mr.material = friedMaterials[0];
-        }
-        else if (meshFileName.Equals("m_ingredients_meat_sliced_01_0"))
-        {
-            mr.material = friedMaterials[1];
-        }
+            "m_ingredients_chicken_sliced_01_0" => friedMaterials[0],
+            "m_ingredients_meat_sliced_01_0" => friedMaterials[1],
+            _ => mr.material
+        };
     }
 }

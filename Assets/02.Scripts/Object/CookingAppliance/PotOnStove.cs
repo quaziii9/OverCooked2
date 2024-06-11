@@ -16,31 +16,30 @@ public class PotOnStove : MonoBehaviour
     public GameObject pfxFire; // 불 이펙트
 
     [Header("State")]
-    public bool isOnStove = false; // 냄비가 스토브 위에 있는지 여부
-    public bool inSomething = false; // 냄비에 재료가 있는지 여부
+    public bool isOnStove; // 냄비가 스토브 위에 있는지 여부
+    public bool inSomething; // 냄비에 재료가 있는지 여부
     public float cookingTime; // 요리 시간
 
     private CancellationTokenSource _cts; // 비동기 작업 취소 토큰
-    private bool pause = false; // 요리 일시 정지 여부
-    private bool stateIsCooked = false; // 재료가 요리되었는지 여부
+    private bool pause; // 요리 일시 정지 여부
+    private bool stateIsCooked; // 재료가 요리되었는지 여부
 
     public Sprite[] icons; // 재료 아이콘 배열
 
     private void Update()
     {
-        // 팬 위에 음식이 있을 때 불을 켜고, 없으면 끕니다.
+        // 냄비 위에 음식이 있을 때 불을 켜고, 없으면 끕니다.
         pfxFire.SetActive(isOnStove && inSomething);
 
         // 요리 중인 상태 업데이트
         if (isOnStove && inSomething && !stateIsCooked)
         {
-            UpdateCookingBarPosition();
             UpdateCookingBarValue();
             UpdateIsIngredientState();
         }
 
         // 요리가 완료되면 요리 진행 바를 비활성화합니다.
-        if (stateIsCooked)
+        if (stateIsCooked || !inSomething)
         {
             cookingBar.gameObject.SetActive(false);
         }
@@ -70,13 +69,17 @@ public class PotOnStove : MonoBehaviour
     // 요리를 시작합니다.
     public async void StartCooking(UnityAction EndCallBack = null)
     {
+        
         if (_cts == null)
         {
-            Debug.Log("start cooking");
+            Debug.LogError("요리 시작!!!!");
             cookingBar.gameObject.SetActive(true);
+            UpdateCookingBarPosition(); // 요리 시작 시 슬라이더의 위치를 업데이트합니다.
+            Debug.Log("Cooking bar activated: " + cookingBar.gameObject.activeSelf);
             ClearTime();
 
             _cts = new CancellationTokenSource();
+            stateIsCooked = false; // 요리를 시작할 때 상태 초기화
             StartCookingAsync(EndCallBack, _cts.Token).Forget();
         }
         else if (pause)
@@ -110,6 +113,8 @@ public class PotOnStove : MonoBehaviour
 
             await UniTask.Delay(450, cancellationToken: cancellationToken); // 요리 시간이 증가하는 간격
             cookingTime += 0.25f;
+            UpdateCookingBarValue();
+            Debug.Log("Cooking time: " + cookingTime);
         }
 
         Debug.Log("Cooking End");
@@ -118,6 +123,7 @@ public class PotOnStove : MonoBehaviour
 
         pause = false;
         cookingTime = 0;
+        stateIsCooked = true; // 요리가 끝난 후 상태를 요리됨으로 설정
         _cts.Dispose(); // 취소 토큰 소스를 해제합니다.
         _cts = null;
     }
