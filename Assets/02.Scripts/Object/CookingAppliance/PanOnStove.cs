@@ -1,8 +1,8 @@
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
-using Cysharp.Threading.Tasks;
 using System.Threading;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class PanOnStove : MonoBehaviour
 {
@@ -23,8 +23,8 @@ public class PanOnStove : MonoBehaviour
     public Material[] friedMaterials; // 요리된 재료의 재질 배열
 
     private CancellationTokenSource _cts; // 비동기 작업 취소 토큰
-    private bool pause; // 요리 일시 정지 여부
-    private bool stateIsCooked; // 재료가 요리되었는지 여부
+    private bool _pause; // 요리 일시 정지 여부
+    private bool _stateIsCooked; // 재료가 요리되었는지 여부
 
     private void Update()
     {
@@ -32,17 +32,10 @@ public class PanOnStove : MonoBehaviour
         pfxFire.SetActive(isOnStove && inSomething);
 
         // 요리 중인 상태 업데이트
-        if (isOnStove && inSomething && !stateIsCooked)
+        if (isOnStove && inSomething && !_stateIsCooked)
         {
-            UpdateCookingBarPosition();
             UpdateCookingBarValue();
             UpdateIsIngredientState();
-        }
-
-        // 요리가 완료되었거나 재료가 없을 때 요리 진행 바 비활성화
-        if (stateIsCooked || !inSomething)
-        {
-            cookingBar.gameObject.SetActive(false);
         }
 
         // 요리 시간이 1 이상일 때 요리된 재료로 변경
@@ -57,7 +50,7 @@ public class PanOnStove : MonoBehaviour
     {
         if (transform.childCount > 2)
         {
-            stateIsCooked = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked;
+            _stateIsCooked = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked;
         }
     }
 
@@ -73,22 +66,30 @@ public class PanOnStove : MonoBehaviour
         cookingBar.value = cookingTime;
     }
 
+    // 새로운 재료가 팬에 추가될 때 호출되는 메서드
+    public void AddNewIngredient(GameObject ingredient)
+    {
+        inSomething = true;
+        _stateIsCooked = false; // 새로운 재료가 추가되면 요리 상태를 초기화
+        cookingTime = 0; // 요리 시간을 초기화
+        cookingBar.gameObject.SetActive(true); // 슬라이더를 활성화
+        UpdateCookingBarPosition(); // 슬라이더의 위치를 업데이트
+    }
+
     // 요리를 시작합니다.
     public async void StartCooking(UnityAction EndCallBack = null)
     {
-        Debug.Log("cooking!");
         if (_cts == null)
         {
             Debug.Log("start cooking");
-            cookingBar.gameObject.SetActive(true);
             ClearTime();
 
             _cts = new CancellationTokenSource();
             StartCookingAsync(EndCallBack, _cts.Token).Forget();
         }
-        else if (pause)
+        else if (_pause)
         {
-            pause = false; // 일시 정지를 해제합니다.
+            _pause = false; // 일시 정지를 해제합니다.
         }
     }
 
@@ -110,13 +111,14 @@ public class PanOnStove : MonoBehaviour
                 return;
             }
 
-            while (pause)
+            while (_pause)
             {
                 await UniTask.Yield(cancellationToken); // 일시 정지된 동안 대기합니다.
             }
 
             await UniTask.Delay(450, cancellationToken: cancellationToken); // 요리 시간이 증가하는 간격
             cookingTime += 0.25f;
+            UpdateCookingBarValue();
         }
 
         Debug.Log("Cooking End");
@@ -124,9 +126,9 @@ public class PanOnStove : MonoBehaviour
         EndCallBack?.Invoke();
         OffSlider();
 
-        pause = false;
+        _pause = false;
         cookingTime = 0;
-        stateIsCooked = true; // 요리가 끝난 후 상태를 요리됨으로 설정
+        _stateIsCooked = true; // 요리가 끝난 후 상태를 요리됨으로 설정
         _cts.Dispose(); // 취소 토큰 소스를 해제합니다.
         _cts = null;
     }
@@ -141,7 +143,7 @@ public class PanOnStove : MonoBehaviour
             _cts = null;
         }
 
-        pause = false;
+        _pause = false;
     }
 
     // 요리 진행 바를 비활성화합니다.

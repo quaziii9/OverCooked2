@@ -20,8 +20,6 @@ public class StoveTrigger : MonoBehaviour
         PanOnStove pan = other.GetComponent<PanOnStove>();      
         if (pan != null && pan.inSomething && ObjectHighlight.onSomething)
         {
-            Debug.Log(pan.inSomething);
-            Debug.Log(ObjectHighlight.onSomething);
             pan.isOnStove = true;
             pan.StartCooking();
         }
