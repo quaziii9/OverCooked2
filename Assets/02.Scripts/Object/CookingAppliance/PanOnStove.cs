@@ -1,63 +1,53 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using EventLibrary;
-using EnumTypes;
 
 public class PanOnStove : MonoBehaviour
 {
-    [Header("UI")] public GameObject canvas;
-    public Slider cookingBar;
-    public GameObject ingredientUI;
+    [Header("UI")]
+    public GameObject canvas; // UI 캔버스
+    public Slider cookingBar; // 요리 진행 바
+    public GameObject ingredientUI; // 재료 UI
 
-    [Space(10)] public GameObject pfxFire;
+    [Space(10)]
+    public GameObject pfxFire; // 불 이펙트
 
-    [Header("State")] public bool isOnStove = false;
-    public bool inSomething = false;
-    public float cookingTime;
+    [Header("State")]
+    public bool isOnStove = false; // 팬이 스토브 위에 있는지 여부
+    public bool inSomething = false; // 팬에 재료가 있는지 여부
+    public float cookingTime; // 요리 시간
 
-    //private Coroutine _coTimer;
-    private CancellationTokenSource _cts;
-    private bool pause = false;
-    private bool stateIsCooked = false;
+    [Space(10)]
+    public Sprite[] icons; // 재료 아이콘 배열
+    public Material[] friedMaterials; // 요리된 재료의 재질 배열
 
-    public Sprite[] icons;
-
-    [Header("CookedMaterial")] public Material[] friedMaterials;
+    private CancellationTokenSource _cts; // 비동기 작업 취소 토큰
+    private bool pause = false; // 요리 일시 정지 여부
+    private bool stateIsCooked = false; // 재료가 요리되었는지 여부
 
     private void Update()
     {
-        if (isOnStove && inSomething)
-        {
-            pfxFire.SetActive(true); // 팬 위에 음식이 있을 때 불을 켜기
-        }
-        else
-        {
-            pfxFire.SetActive(false); // 팬 위에 음식이 없을 때 불을 끄기
-        }
+        // 팬 위에 음식이 있을 때 불을 켜고, 없으면 끕니다.
+        pfxFire.SetActive(isOnStove && inSomething);
 
+        // 요리 중인 상태 업데이트
         if (isOnStove && inSomething && !stateIsCooked)
         {
             UpdateCookingBarPosition();
             UpdateCookingBarValue();
-            UpdateisIngredientState();
+            UpdateIsIngredientState();
         }
 
-        if (stateIsCooked)
+        // 요리가 완료되었거나 재료가 없을 때 요리 진행 바 비활성화
+        if (stateIsCooked || !inSomething)
         {
             cookingBar.gameObject.SetActive(false);
         }
 
-        if (stateIsCooked! && inSomething)
-        {
-            cookingBar.gameObject.SetActive(false);
-            //ChangeCookedMaterial();
-        }
-
+        // 요리 시간이 1 이상일 때 요리된 재료로 변경
         if (cookingTime >= 1)
         {
             ChangeCookedMaterial();
@@ -66,28 +56,31 @@ public class PanOnStove : MonoBehaviour
 
     private void pfxFireOff()
     {
-        pfxFire.SetActive(false);
+        pfxFire.SetActive(false); // 불 이펙트를 끕니다.
     }
 
-    private void UpdateisIngredientState()
+    // 재료의 상태 업데이트
+    private void UpdateIsIngredientState()
     {
-        if (transform.GetChild(2).gameObject != null)
+        if (transform.childCount > 2)
         {
             stateIsCooked = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked;
         }
     }
 
+    // 요리 진행 바의 위치 업데이트
     private void UpdateCookingBarPosition()
     {
-        cookingBar.transform.position =
-            Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0)); // 적절한 위치 조정
+        cookingBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0)); // 적절한 위치 조정
     }
 
+    // 요리 진행 바의 값 업데이트
     private void UpdateCookingBarValue()
     {
         cookingBar.value = cookingTime;
     }
 
+    // 요리를 시작합니다.
     public async void StartCooking(UnityAction EndCallBack = null)
     {
         Debug.Log("cooking!");
@@ -99,58 +92,52 @@ public class PanOnStove : MonoBehaviour
 
             _cts = new CancellationTokenSource();
             StartCookingAsync(EndCallBack, _cts.Token).Forget();
-            //_coTimer = StartCoroutine(CoStartCooking(EndCallBack));
         }
         else if (pause)
         {
-            pause = false;
+            pause = false; // 일시 정지를 해제합니다.
         }
     }
 
-    private async UniTask StartCookingAsync(UnityAction EndCallBack = null,
-        CancellationToken cancellationToken = default)
+    // 비동기적으로 요리를 시작합니다.
+    private async UniTask StartCookingAsync(UnityAction EndCallBack = null, CancellationToken cancellationToken = default)
     {
-        if (inSomething == false)
+        if (!inSomething)
         {
-            pfxFire.SetActive(false);
+            pfxFire.SetActive(false); // 재료가 없으면 불을 끕니다.
             return;
         }
 
+        // 요리 시간을 증가시키며 요리 상태를 업데이트합니다.
         while (cookingTime <= 1)
         {
-            if (inSomething == false)
+            if (!inSomething || cancellationToken.IsCancellationRequested)
             {
                 pfxFire.SetActive(false);
                 return;
             }
 
-            if (cancellationToken.IsCancellationRequested)
-            {
-                break;
-            }
-
             while (pause)
             {
-                await UniTask.Yield(cancellationToken);
+                await UniTask.Yield(cancellationToken); // 일시 정지된 동안 대기합니다.
             }
 
-            await UniTask.Delay(450, cancellationToken: cancellationToken);
+            await UniTask.Delay(450, cancellationToken: cancellationToken); // 요리 시간이 증가하는 간격
             cookingTime += 0.25f;
         }
 
         Debug.Log("Cooking End");
-        // 마테리얼 변경 추가
-        //ChangeCookedMaterial();
-        pfxFire.SetActive(false);
+        pfxFire.SetActive(false); // 요리가 끝나면 불을 끕니다.
         EndCallBack?.Invoke();
         OffSlider();
 
         pause = false;
         cookingTime = 0;
-        _cts.Dispose();
+        _cts.Dispose(); // 취소 토큰 소스를 해제합니다.
         _cts = null;
     }
 
+    // 요리 시간을 초기화합니다.
     private void ClearTime()
     {
         if (_cts != null)
@@ -163,6 +150,7 @@ public class PanOnStove : MonoBehaviour
         pause = false;
     }
 
+    // 요리 진행 바를 비활성화합니다.
     public void OffSlider()
     {
         cookingBar.value = 0f;
@@ -171,120 +159,91 @@ public class PanOnStove : MonoBehaviour
         InstantiateUI();
     }
 
+    // 재료의 상태를 업데이트합니다.
     private void UpdateIngredientState()
     {
-        if (transform.childCount < 3)
-            return;
-        Ingredient Ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
-        Ingredient.isCooked = true;
+        if (transform.childCount < 3) return;
 
-        //여기선 이제 쿡되야함
-        //if (Ingredient.type == Ingredient.IngredientType.Meat || Ingredient.type == Ingredient.IngredientType.Chicken)
-        //    Ingredient.isCooked = false;
-
-        Ingredient.ChangeMesh(Ingredient.type);
+        Ingredient ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
+        ingredient.isCooked = true;
+        ingredient.ChangeMesh(ingredient.type);
     }
 
-    public void InstantiateUI()
+    // 재료 UI를 생성합니다.
+    private void InstantiateUI()
     {
-        if (transform.childCount < 3)
-            return;
+        if (transform.childCount < 3) return;
 
-        Ingredient Ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
+        Ingredient ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
         GameObject madeUI = Instantiate(ingredientUI, Vector3.zero, Quaternion.identity, canvas.transform);
         madeUI.transform.GetChild(0).gameObject.SetActive(true);
         Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
-        image.sprite = GetIcon(Ingredient.type);
-        madeUI.GetComponent<IngredientUI>().target = Ingredient.transform;
+        image.sprite = GetIcon(ingredient.type);
+        madeUI.GetComponent<IngredientUI>().target = ingredient.transform;
     }
 
+    // 재료 타입에 따른 아이콘을 반환합니다.
     private Sprite GetIcon(Ingredient.IngredientType ingredientType)
     {
         switch (ingredientType)
         {
             case Ingredient.IngredientType.Fish:
                 return icons[0];
-
             case Ingredient.IngredientType.Shrimp:
                 return icons[1];
-
             case Ingredient.IngredientType.Tomato:
                 return icons[2];
-
             case Ingredient.IngredientType.Lettuce:
                 return icons[3];
-
             case Ingredient.IngredientType.Cucumber:
                 return icons[4];
-
             case Ingredient.IngredientType.Potato:
                 return icons[5];
-
             case Ingredient.IngredientType.Chicken:
                 return icons[6];
-
             case Ingredient.IngredientType.SeaWeed:
                 return icons[7];
-
             case Ingredient.IngredientType.Tortilla:
                 return icons[8];
-
             case Ingredient.IngredientType.Rice:
                 return icons[9];
-
             case Ingredient.IngredientType.Pepperoni:
                 return icons[10];
-
             case Ingredient.IngredientType.Meat:
                 return icons[11];
-
             case Ingredient.IngredientType.Dough:
                 return icons[12];
-
             case Ingredient.IngredientType.Cheese:
                 return icons[13];
-
             case Ingredient.IngredientType.SushiRice:
                 return icons[9];
-
             case Ingredient.IngredientType.SushiFish:
                 return icons[0];
-
             case Ingredient.IngredientType.SushiCucumber:
                 return icons[4];
-
             case Ingredient.IngredientType.PizzaTomato:
                 return icons[2];
-
             default:
-                // 기본적으로 아무것도 하지 않음
                 throw new ArgumentOutOfRangeException();
         }
     }
 
+    // 요리된 재료의 재질을 변경합니다.
     private void ChangeCookedMaterial()
     {
+        if (transform.childCount < 3) return;
+
         MeshFilter meshFilter = transform.GetChild(2).GetChild(0).GetComponent<MeshFilter>();
         MeshRenderer mr = transform.GetChild(2).GetChild(0).GetComponent<MeshRenderer>();
         string meshFileName = meshFilter.sharedMesh.name;
 
-        Debug.Log("Mesh Name: " + meshFileName);
-        Debug.Log("Materials Name " + mr.material);
         if (meshFileName.Equals("m_ingredients_chicken_sliced_01_0"))
         {
             mr.material = friedMaterials[0];
-            Debug.Log(mr.material + " ", friedMaterials[0]);
-            Debug.Log("Material Changed to Chicken");
         }
         else if (meshFileName.Equals("m_ingredients_meat_sliced_01_0"))
         {
             mr.material = friedMaterials[1];
-            Debug.Log(mr.material);
-            Debug.Log("Material Changed to Meat");
-        }
-        else
-        {
-            Debug.Log("No matching mesh name found");
         }
     }
 }
