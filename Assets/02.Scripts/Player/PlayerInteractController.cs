@@ -335,11 +335,6 @@ public class PlayerInteractController : MonoBehaviour
             case ObjectHighlight.ObjectType.Oven:
                 HandleOvenInteraction();
                 break;
-            case ObjectHighlight.ObjectType.Sink:
-            case ObjectHighlight.ObjectType.Ingredient:
-            case ObjectHighlight.ObjectType.Plate:
-            case ObjectHighlight.ObjectType.Pot:
-            case ObjectHighlight.ObjectType.Pan:
             default:
                 HandleGeneralObjectInteraction();
                 break;
@@ -577,7 +572,7 @@ public class PlayerInteractController : MonoBehaviour
                 SoundManager.Instance.PlayEffect("no");
             }
 
-            if (objectHighlight.transform.parent.GetChild(2) != null)
+            if (objectHighlight.transform.parent.GetChild(2))
             {
                 var ingredientObj = transform.GetChild(1).gameObject;
                 var ingredient = ingredientObj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>().type;
@@ -603,6 +598,7 @@ public class PlayerInteractController : MonoBehaviour
                     ingredientObj.transform.localRotation = Quaternion.Euler(0f, -168.905f, 0f); // 회전 설정
 
                     potAndPan.GetComponent<PanOnStove>().inSomething = true;
+                    potAndPan.GetComponent<PanOnStove>().AddNewIngredient();
 
                     Animator.SetBool("isHolding", false);
                     IsHolding = false;

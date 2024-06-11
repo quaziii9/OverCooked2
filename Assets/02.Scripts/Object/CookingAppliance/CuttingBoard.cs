@@ -9,22 +9,16 @@ using static Ingredient;
 public class CuttingBoard : MonoBehaviour
 {
     private ObjectHighlight _parentObject;
-
-    [FormerlySerializedAs("Canvas")]
+    
     [Header("UI")]
     [SerializeField] private GameObject canvas;
-    public Slider cookingBar;
-    [FormerlySerializedAs("IngredientUI")] [SerializeField] private GameObject ingredientUI;
+    public Slider cookingBar; [SerializeField] private GameObject ingredientUI;
 
     [Space(10)]
     [SerializeField] Vector3 pos;
-    public Coroutine CoTimer;
-    [field: FormerlySerializedAs("Pause")] public bool Pause { get; set; }
-
-    [field: FormerlySerializedAs("CuttingTime")]
+    public Coroutine CoTimer; 
+    public bool Pause { get; set; }
     public float CuttingTime { get; set; }
-
-    [FormerlySerializedAs("Icons")] [SerializeField] private Sprite[] icons;
 
     private PlayerInteractController _player1Controller;
     private Player2InteractController _player2Controller;
@@ -42,7 +36,6 @@ public class CuttingBoard : MonoBehaviour
 
     private void Update()
     {
-        UpdateCookingBarPosition();
         UpdateCookingBarValue();
         ToggleKnife();
     }
@@ -81,7 +74,8 @@ public class CuttingBoard : MonoBehaviour
     private void StartCutting(object playerController, UnityAction endCallBack = null)
     {
         if (!_parentObject.onSomething) return;
-        
+     
+        UpdateCookingBarPosition();
         SoundManager.Instance.PlayEffect("cut");
         cookingBar.gameObject.SetActive(true);
         ClearTime();
@@ -180,34 +174,7 @@ public class CuttingBoard : MonoBehaviour
 
         madeUI.transform.GetChild(0).gameObject.SetActive(true);
         Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
-        image.sprite = GetIcon(ingredient.type);
+        image.sprite = IconManager.Instance.GetIcon(ingredient.type);
         madeUI.GetComponent<IngredientUI>().target = ingredient.transform;
-    }
-
-    private Sprite GetIcon(IngredientType ingredientType)
-    {
-        // 재료 유형에 따른 아이콘을 반환
-        switch (ingredientType)
-        {
-            case IngredientType.Fish: return icons[0];
-            case IngredientType.Shrimp: return icons[1];
-            case IngredientType.Tomato: return icons[2];
-            case IngredientType.Lettuce: return icons[3];
-            case IngredientType.Cucumber: return icons[4];
-            case IngredientType.Potato: return icons[5];
-            case IngredientType.Chicken: return icons[6];
-            case IngredientType.SeaWeed: return icons[7];
-            case IngredientType.Tortilla: return icons[8];
-            case IngredientType.Rice: return icons[9];
-            case IngredientType.Pepperoni: return icons[10];
-            case IngredientType.Meat: return icons[11];
-            case IngredientType.Dough: return icons[12];
-            case IngredientType.Cheese: return icons[13];
-            case IngredientType.SushiRice: return icons[9];
-            case IngredientType.SushiFish: return icons[0];
-            case IngredientType.SushiCucumber: return icons[4];
-            case IngredientType.PizzaTomato: return icons[2];
-            default: throw new ArgumentOutOfRangeException();
-        }
     }
 }

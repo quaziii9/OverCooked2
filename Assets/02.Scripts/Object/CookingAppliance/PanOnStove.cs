@@ -25,6 +25,12 @@ public class PanOnStove : MonoBehaviour
     private CancellationTokenSource _cts; // 비동기 작업 취소 토큰
     private bool _pause; // 요리 일시 정지 여부
     private bool _stateIsCooked; // 재료가 요리되었는지 여부
+    private Camera _camera;
+
+    private void Start()
+    {
+        _camera = Camera.main;
+    }
 
     private void Update()
     {
@@ -35,14 +41,20 @@ public class PanOnStove : MonoBehaviour
         if (isOnStove && inSomething && !_stateIsCooked)
         {
             UpdateCookingBarValue();
-            UpdateIsIngredientState();
         }
+    }
 
-        // 요리 시간이 1 이상일 때 요리된 재료로 변경
-        if (cookingTime >= 1)
-        {
-            ChangeCookedMaterial();
-        }
+    // 요리 진행 바의 위치 업데이트
+    private void UpdateCookingBarPosition()
+    {
+        if (_camera)
+            cookingBar.transform.position = _camera.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0)); // 적절한 위치 조정
+    }
+
+    // 요리 진행 바의 값 업데이트
+    private void UpdateCookingBarValue()
+    {
+        cookingBar.value = cookingTime;
     }
 
     // 재료의 상태 업데이트
@@ -54,26 +66,17 @@ public class PanOnStove : MonoBehaviour
         }
     }
 
-    // 요리 진행 바의 위치 업데이트
-    private void UpdateCookingBarPosition()
-    {
-        cookingBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0)); // 적절한 위치 조정
-    }
-
-    // 요리 진행 바의 값 업데이트
-    private void UpdateCookingBarValue()
-    {
-        cookingBar.value = cookingTime;
-    }
-
     // 새로운 재료가 팬에 추가될 때 호출되는 메서드
-    public void AddNewIngredient(GameObject ingredient)
+    public void AddNewIngredient()
     {
+        Debug.Log("AddNewIngredient");
         inSomething = true;
         _stateIsCooked = false; // 새로운 재료가 추가되면 요리 상태를 초기화
         cookingTime = 0; // 요리 시간을 초기화
+        StartCooking();
         cookingBar.gameObject.SetActive(true); // 슬라이더를 활성화
         UpdateCookingBarPosition(); // 슬라이더의 위치를 업데이트
+        UpdateCookingBarValue();
     }
 
     // 요리를 시작합니다.
@@ -123,6 +126,7 @@ public class PanOnStove : MonoBehaviour
 
         Debug.Log("Cooking End");
         pfxFire.SetActive(false); // 요리가 끝나면 불을 끕니다.
+        ChangeCookedMaterial();
         EndCallBack?.Invoke();
         OffSlider();
 
@@ -181,6 +185,7 @@ public class PanOnStove : MonoBehaviour
     // 요리된 재료의 재질을 변경합니다.
     private void ChangeCookedMaterial()
     {
+        Debug.LogError("ChangeCookedMaterial");
         if (transform.childCount < 3) return;
 
         MeshFilter meshFilter = transform.GetChild(2).GetChild(0).GetComponent<MeshFilter>();
