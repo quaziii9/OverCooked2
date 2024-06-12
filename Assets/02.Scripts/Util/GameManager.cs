@@ -6,6 +6,8 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using EventLibrary;
+using EnumTypes;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -99,6 +101,31 @@ public class GameManager : Singleton<GameManager>
         InitializeGameSettingsAsync().Forget(); // 게임 세팅 초기화
     }
 
+    private void OnEnable()
+    {
+        EventManager<GameEvent>.StartListening(GameEvent.StartGame, HandleGameStartEvent);
+    }
+
+    private void OnDisable()
+    {
+        EventManager<GameEvent>.StopListening(GameEvent.StartGame, HandleGameStartEvent);
+    }
+
+    private void HandleGameStartEvent()
+    {
+        isPaused = false;
+        startSetting = true;
+        Time.timeScale = 1;
+        once = true;
+
+        // 초기 주문 생성
+        Invoke("MakeOrder", 0.5f);
+        Invoke("MakeOrder", 5f);
+        Invoke("MakeOrder", 30f);
+        Invoke("MakeOrder", 80f);
+        Invoke("MakeOrder", 150f);
+    }
+
     private void InitializeVariables()
     {
         duration = gameTime / 2;
@@ -106,6 +133,7 @@ public class GameManager : Singleton<GameManager>
         timeSlider.maxValue = gameTime;
         timeSlider.value = timeSlider.maxValue;
     }
+
 
     private void InitializeStageManager()
     {
@@ -149,7 +177,12 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        HandleGameStart();
+        if (isPaused || startSetting == false)
+        {
+            return;
+        }
+
+        //HandleGameStart();
         HandleGamePause();
         UpdateGameTime();
     }
