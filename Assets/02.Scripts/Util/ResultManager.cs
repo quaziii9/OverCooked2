@@ -32,7 +32,7 @@ public class ResultManager : MonoBehaviour
         Time.timeScale = 1;
         if (StageManager.Instance.playStage == StageManager.State.Stage1)
         {
-            Stagename.text = "Stage 1";
+            Stagename.text = "Mine";
         }
         //else if (StageManager.Instance.playStage == StageManager.State.stage2)
         //{

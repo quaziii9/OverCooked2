@@ -1394,7 +1394,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Stage 1
+  m_Text: Mine
 --- !u!1 &585414017
 GameObject:
   m_ObjectHideFlags: 0
@@ -3145,16 +3145,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1225273568}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9c536b4413c24947b6214a642d18ce4, type: 3}
+  m_Script: {fileID: 11500000, guid: d088ee967452d5d4eb617aad0f368654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Stagename: {fileID: 571736075}
   name1: {fileID: 1628883393}
   name2: {fileID: 735124571}
   limits:
-  - {fileID: 11400000, guid: 42deb512a3debee479aab351c2d42f0c, type: 2}
-  - {fileID: 11400000, guid: b2bb14481ffe9e04094b11e09686b623, type: 2}
-  - {fileID: 11400000, guid: 101ab3ae6715e874a82889f910f202e9, type: 2}
+  - {fileID: 11400000, guid: c37421c31ca74304ebe0ad5a91b66e1e, type: 2}
   newStars:
   - {fileID: 585414017}
   - {fileID: 486697635}
@@ -5170,7 +5168,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1967597218
 RectTransform:
   m_ObjectHideFlags: 0

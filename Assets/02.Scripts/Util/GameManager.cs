@@ -118,18 +118,20 @@ public class GameManager : Singleton<GameManager>
             StageManager.Instance.successMoney = 0;
             StageManager.Instance.failMoney = 0;
 
-            switch (state)
-            {
-                case State.Stage1:
-                    StageManager.Instance.playStage = StageManager.State.Stage1;
-                    break;
-                case State.Stage2:
-                    StageManager.Instance.playStage = StageManager.State.Stage2;
-                    break;
-                case State.Stage3:
-                    StageManager.Instance.playStage = StageManager.State.Stage3;
-                    break;
-            }
+
+            StageManager.Instance.playStage = StageManager.State.Stage1;
+            //switch (state)
+            //{
+            //    case State.Stage1:
+            //        StageManager.Instance.playStage = StageManager.State.Stage1;
+            //        break;
+            //    case State.Stage2:
+            //        StageManager.Instance.playStage = StageManager.State.Stage2;
+            //        break;
+            //    case State.Stage3:
+            //        StageManager.Instance.playStage = StageManager.State.Stage3;
+            //        break;
+            //}
         }
     }
 
