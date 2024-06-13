@@ -206,6 +206,7 @@ public class PanOnStove : MonoBehaviour
 
         string meshFileName = meshFilter.sharedMesh.name;
 
+        Debug.Log("메쉬 렌더러 머테리얼 변경~~~~~~~~~~~~~~~~");
         mr.material = meshFileName switch
         {
             "m_ingredients_chicken_sliced_01_0" => friedMaterials[0],

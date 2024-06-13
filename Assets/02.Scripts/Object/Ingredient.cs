@@ -173,7 +173,8 @@ public class Ingredient : GameItem
             case IngredientType.Meat:
             case IngredientType.Chicken:
             case IngredientType.Rice:
-                ApplyMaterialAndAdjustPosition(handType);
+                // 이 부분 때문에  다 구워져도 머테리얼 이상함
+                // ApplyMaterialAndAdjustPosition(handType);
                 break;
             default:
                 Vector3 positionAdjustment = new Vector3(0, -0.0025f, 0);
