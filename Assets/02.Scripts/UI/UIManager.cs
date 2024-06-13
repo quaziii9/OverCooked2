@@ -681,6 +681,7 @@ public class UIManager : Singleton<UIManager>
         else if (sceneType == SceneType.BattleMap)
         {
             EnterLoadingKeyUIBattle();
+            EventManager<GameEvent>.TriggerEvent(GameEvent.ResetGameSetting);
         }
         else if (sceneType == SceneType.StageMap)
         {
@@ -688,6 +689,7 @@ public class UIManager : Singleton<UIManager>
             StageMapEscUIOff();
             EnterLoadingKeyUI();
             RecipeUIOff();
+            EventManager<GameEvent>.TriggerEvent(GameEvent.ResetGameSetting);
         }
         else if (sceneType == SceneType.Intro)
         {

@@ -76,7 +76,8 @@ namespace EnumTypes
     public enum GameEvent
     {
         FireOff,
-        StartGame
+        StartGame,
+        ResetGameSetting,
     }
 
 
