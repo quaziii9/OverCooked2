@@ -299,8 +299,9 @@ public class GameManager : Singleton<GameManager>
             if (SoundManager.Instance.isSingle)
             {
                 lastSec += Time.unscaledDeltaTime;
-                if (lastSec > 1)
+                if (lastSec > 1.5f)
                 {
+                    timesUp.SetActive(false);
                     SceneManager.LoadScene("ResultScene");
                 }
             }

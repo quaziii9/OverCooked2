@@ -41,6 +41,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/Seongwook/Mine.unity
     guid: 800c38123ea652b489e0c9467597c194
+  - enabled: 1
+    path: Assets/01.Scenes/Inseok/ResultScene.unity
+    guid: 145ca98d4cc40e248b46a3b7ee9bf4c1
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c6c6f27b5f47b074396d1e2d4b77956a,
       type: 2}
