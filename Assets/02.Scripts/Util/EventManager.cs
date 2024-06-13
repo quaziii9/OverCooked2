@@ -59,7 +59,7 @@ namespace EventLibrary
             {
                 thisEvent = new TEvent();
                 eventDictionary.Add(eventName, thisEvent);
-                Debug.Log($"Event created: {eventName}");
+                // Debug.Log($"Event created: {eventName}");
             }
             return thisEvent as TEvent;
         }
@@ -70,7 +70,7 @@ namespace EventLibrary
             if (thisEvent.GetPersistentEventCount() == 0)
             {
                 eventDictionary.Remove(eventName);
-                Debug.Log($"Event removed: {eventName}");
+                // Debug.Log($"Event removed: {eventName}");
             }
         }
 
@@ -81,7 +81,7 @@ namespace EventLibrary
             {
                 GenericEvent<T> genericEvent = GetOrCreateEvent<GenericEvent<T>>(eventName);
                 genericEvent.AddListener(listener);
-                Debug.Log($"Listener added to event: {eventName}");
+                // Debug.Log($"Listener added to event: {eventName}");
             }
         }
 
@@ -132,7 +132,7 @@ namespace EventLibrary
                     if (eventDictionary.TryGetValue(eventName, out var thisEvent) && thisEvent is GenericEvent<T> genericEvent)
                     {
                         genericEvent.Invoke(parameter);
-                        Debug.Log($"Event triggered: {eventName} with parameter: {parameter}");
+                        // Debug.Log($"Event triggered: {eventName} with parameter: {parameter}");
                     }
                 }
                 catch (Exception e)
@@ -151,7 +151,7 @@ namespace EventLibrary
                     if (eventDictionary.TryGetValue(eventName, out var thisEvent) && thisEvent is UnityEvent unityEvent)
                     {
                         unityEvent.Invoke();
-                        Debug.Log($"Event triggered: {eventName}");
+                        // Debug.Log($"Event triggered: {eventName}");
                     }
                 }
                 catch (Exception e)

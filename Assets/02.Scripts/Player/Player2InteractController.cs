@@ -76,14 +76,12 @@ public class Player2InteractController : MonoBehaviour
 
     private void OnButtonPress()
     {
-        Debug.Log("Button Pressed");
         _moveController.moveSpeed = 0;
         throwArrow.SetActive(true);
     }
 
     private void OnButtonRelease()
     {
-        Debug.Log("Button Released");
         _moveController.moveSpeed = 15;
         throwArrow.SetActive(false);
 
@@ -129,7 +127,6 @@ public class Player2InteractController : MonoBehaviour
 
     private void MobileCookOrThrow()
     {
-        Debug.Log("MobileCookOrThrow");
         CookOrThrow(true); // 모바일에서는 터치가 눌린 것으로 처리
     }
 
@@ -148,14 +145,12 @@ public class Player2InteractController : MonoBehaviour
             {
                 if (isPressed)
                 {
-                    Debug.Log("Button Pressed");
                     _moveController.moveSpeed = 0; // 버튼이 눌렸을 때의 동작 수행
                     throwArrow.SetActive(true);
                 }
                 else // 버튼이 떼어졌을 때만 동작 수행
                 {
                     ThrowIngredient();
-                    Debug.Log("Button Released");
                     _moveController.moveSpeed = 15; // 버튼이 떼어졌을 때의 동작 수행
                     throwArrow.SetActive(false);
                 }
@@ -310,7 +305,6 @@ public class Player2InteractController : MonoBehaviour
             return;
         }
 
-        Debug.Log($"objectHighlight.objectType : {objectHighlight.objectType}");
         switch (objectHighlight.objectType)
         {
             case ObjectHighlight.ObjectType.CounterTop:
@@ -607,7 +601,6 @@ public class Player2InteractController : MonoBehaviour
         {
             // false 테이블 위에 뭔가 없음 => 놓기.
             GameObject handlingThing = transform.GetChild(1).gameObject;
-            Debug.Log($"handlingThing.name : {handlingThing.name}");
             HandleObject(handlingThing, false);
         }
     }

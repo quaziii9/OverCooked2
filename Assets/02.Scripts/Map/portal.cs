@@ -1,20 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class portal : MonoBehaviour
 {
-
     public Transform targetPortal;
     public bool isTeleport;
     public float currentMoveSpeed;
-    public float currentdashForce;
+    public float currentDashForce;
 
     private void Start()
     {
          isTeleport = false;
     }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")&&!isTeleport)
@@ -32,7 +30,7 @@ public class portal : MonoBehaviour
         Vector3 originalScale = player.localScale;
         Vector3 targetScale = Vector3.zero;
         PlayerDash dash = player.GetComponent<PlayerDash>();
-        currentdashForce = dash.dashForce;
+        currentDashForce = dash.dashForce;
         dash.dashForce = 0;
 
         PlayerMoveController moveController = player.GetComponent<PlayerMoveController>();
@@ -46,7 +44,7 @@ public class portal : MonoBehaviour
         // 플레이어 스케일 다시 키우기
         yield return ScaleOverTime(player, targetScale, originalScale, scaleDuration);
         isTeleport = false;
-        dash.dashForce = currentdashForce;
+        dash.dashForce = currentDashForce;
         moveController.moveSpeed = currentMoveSpeed;
     }
 
