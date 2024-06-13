@@ -14,41 +14,45 @@ public class PlayerMoveController : MonoBehaviour
 
     private Vector2 moveInput;
     private bool isDashing = false;
-    private int puffCount = 5;
+    private int puffCount = 0;
+    private int puffThreshold = 5;
 
     [Header("State")]
     [SerializeField] private bool isGrounded;
     [SerializeField] private bool isOnStairs;
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    private void Update()
     {
-        puffCount++;
-
         // 이동 입력이 없을 때 애니메이터의 이동 파라미터를 false로 설정
         if (moveInput == Vector2.zero)
         {
             rb.velocity = Vector3.zero;
             animator.SetBool("isWalking", false);
-            puffCount = 5;
         }
         else
         {
             animator.SetBool("isWalking", true);
-            if (puffCount >= 5)
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        puffCount++;
+
+        if (moveInput != Vector2.zero)
+        {
+            if (puffCount >= puffThreshold)
             {
                 PlayerPuff.Instance.MovePuff(transform);
                 puffCount = 0;
             }
         }
-    }
 
-    void FixedUpdate()
-    {
         UpdateGroundAndStairStatus();
 
         if (!isDashing && moveInput != Vector2.zero)
@@ -73,9 +77,6 @@ public class PlayerMoveController : MonoBehaviour
             isGrounded = false;
             isOnStairs = false;
         }
-
-        // 레이 디버그용 드로우
-        Debug.DrawRay(transform.position, Vector3.down * rayDistance, isGrounded ? Color.red : Color.blue);
     }
 
     private void MoveCharacter()
@@ -85,11 +86,10 @@ public class PlayerMoveController : MonoBehaviour
         rb.velocity = movement;
 
         // 플레이어가 이동하는 방향을 바라보도록 회전
-        if (moveDir != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
-        }
+        if (moveDir == Vector3.zero) return;
+        
+        Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
     private void ApplyAdditionalGravity()

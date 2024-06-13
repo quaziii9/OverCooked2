@@ -50,12 +50,12 @@ public class PlayerPuff : Singleton<PlayerPuff>
 
     public void Switching(Transform Start, Transform End)
     {
-        var switcing = switchEfPool.Get();
-        switcing.transform.position = Start.position;
+        var switching = switchEfPool.Get();
+        switching.transform.position = Start.position;
         if (Start != null && End != null)
         {
 
-            SwitchParticle Sp = switcing.GetComponent<SwitchParticle>();
+            SwitchParticle Sp = switching.GetComponent<SwitchParticle>();
             Sp.SwitchPlayer(Start, End);
         }
     }

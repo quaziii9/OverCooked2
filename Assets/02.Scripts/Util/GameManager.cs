@@ -109,30 +109,28 @@ public class GameManager : Singleton<GameManager>
 
     private void InitializeStageManager()
     {
-        if (StageManager.Instance != null)
-        {
-            StageManager.Instance.success = 0;
-            StageManager.Instance.fail = 0;
-            StageManager.Instance.tipMoney = 0;
-            StageManager.Instance.totalMoney = 0;
-            StageManager.Instance.successMoney = 0;
-            StageManager.Instance.failMoney = 0;
+        if (StageManager.Instance == null) return;
+        
+        StageManager.Instance.success = 0;
+        StageManager.Instance.fail = 0;
+        StageManager.Instance.tipMoney = 0;
+        StageManager.Instance.totalMoney = 0;
+        StageManager.Instance.successMoney = 0;
+        StageManager.Instance.failMoney = 0;
 
-
-            StageManager.Instance.playStage = StageManager.State.Stage1;
-            //switch (state)
-            //{
-            //    case State.Stage1:
-            //        StageManager.Instance.playStage = StageManager.State.Stage1;
-            //        break;
-            //    case State.Stage2:
-            //        StageManager.Instance.playStage = StageManager.State.Stage2;
-            //        break;
-            //    case State.Stage3:
-            //        StageManager.Instance.playStage = StageManager.State.Stage3;
-            //        break;
-            //}
-        }
+        StageManager.Instance.playStage = StageManager.State.Stage1;
+        //switch (state)
+        //{
+        //    case State.Stage1:
+        //        StageManager.Instance.playStage = StageManager.State.Stage1;
+        //        break;
+        //    case State.Stage2:
+        //        StageManager.Instance.playStage = StageManager.State.Stage2;
+        //        break;
+        //    case State.Stage3:
+        //        StageManager.Instance.playStage = StageManager.State.Stage3;
+        //        break;
+        //}
     }
 
     private async UniTaskVoid InitializeGameSettingsAsync()
@@ -213,11 +211,11 @@ public class GameManager : Singleton<GameManager>
         startSetting = true;
         Time.timeScale = 1;
         once = true;
-        Invoke("MakeOrder", 0.5f);
-        Invoke("MakeOrder", 5f);
-        Invoke("MakeOrder", 30f);
-        Invoke("MakeOrder", 80f);
-        Invoke("MakeOrder", 150f);
+        Invoke(nameof(MakeOrder), 0.5f);
+        Invoke(nameof(MakeOrder), 5f);
+        Invoke(nameof(MakeOrder), 30f);
+        Invoke(nameof(MakeOrder), 80f);
+        Invoke(nameof(MakeOrder), 150f);
     }
 
     private void HandleGamePause()
@@ -333,7 +331,7 @@ public class GameManager : Singleton<GameManager>
         int sec = 0;
         min = (int)(gameTime / 60);
         sec = (int)(gameTime % 60);
-        textTime.text = string.Format("{0:00}", min) + ":" + string.Format("{0:00}", sec);
+        textTime.text = $"{min:00}" + ":" + $"{sec:00}";
     }
 
     public void PlateReturn()
@@ -389,33 +387,32 @@ public class GameManager : Singleton<GameManager>
         // 선택된 UI 풀에서 비활성화된 UI를 찾기
         foreach (var ui in targetPoolUIs)
         {
-            if (!ui.activeSelf)
+            if (ui.activeSelf) continue;
+            
+            ui.SetActive(true);
+
+            // 재료 아이콘 설정
+            for (int k = 0; k < ingredientCount; k++)
             {
-                ui.SetActive(true);
-
-                // 재료 아이콘 설정
-                for (int k = 0; k < ingredientCount; k++)
-                {
-                    ui.transform.GetChild(0).GetChild(k).GetComponent<Image>().sprite = selectedMenu.IngredientIcon[k];
-                }
-
-                // 두 번째 재료 UI 비활성화 (재료가 2개 이하일 경우)
-                if (ingredientCount <= 2)
-                {
-                    ui.transform.GetChild(1).gameObject.SetActive(ingredientCount == 2);
-                }
-
-                // 메뉴 아이콘 및 슬라이더 설정
-                ui.transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = selectedMenu.MenuIcon;
-                var slider = ui.transform.GetChild(2).GetChild(0).GetComponent<Slider>();
-                slider.maxValue = selectedMenu.LimitTime;
-                slider.value = selectedMenu.LimitTime; // 슬라이더 현재 시간 설정 (풀로 시작)
-
-                // 현재 주문에 추가
-                currentOrder.Add(selectedMenu);
-                currentOrderUI.Add(ui);
-                return;
+                ui.transform.GetChild(0).GetChild(k).GetComponent<Image>().sprite = selectedMenu.IngredientIcon[k];
             }
+
+            // 두 번째 재료 UI 비활성화 (재료가 2개 이하일 경우)
+            if (ingredientCount <= 2)
+            {
+                ui.transform.GetChild(1).gameObject.SetActive(ingredientCount == 2);
+            }
+
+            // 메뉴 아이콘 및 슬라이더 설정
+            ui.transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = selectedMenu.MenuIcon;
+            var slider = ui.transform.GetChild(2).GetChild(0).GetComponent<Slider>();
+            slider.maxValue = selectedMenu.LimitTime;
+            slider.value = selectedMenu.LimitTime; // 슬라이더 현재 시간 설정 (풀로 시작)
+
+            // 현재 주문에 추가
+            currentOrder.Add(selectedMenu);
+            currentOrderUI.Add(ui);
+            return;
         }
     }
 
@@ -530,14 +527,13 @@ public class GameManager : Singleton<GameManager>
         coin += tip;
         textCoin.text = coin.ToString(); // 돈 얼마됐다고 업데이트
 
-        if (tip != 0)
-        {
-            GameObject tipText = Instantiate(textPrefabs, Camera.main.WorldToScreenPoint(FindObjectOfType<ScrollMT>().transform.position), Quaternion.identity, canvas.transform);
-            tipText.GetComponent<Text>().text = $"+{tip} 팁!";
-        }
+        if (tip == 0) return;
+        
+        GameObject tipText = Instantiate(textPrefabs, Camera.main.WorldToScreenPoint(FindObjectOfType<ScrollMT>().transform.position), Quaternion.identity, canvas.transform);
+        tipText.GetComponent<Text>().text = $"+{tip} 팁!";
     }
 
-    public void StartBigger()
+    private void StartBigger()
     {
         // 동전 텍스트 커졌다가 작아지는 애니메이션 시작
         StartBiggerAsync().Forget();
@@ -630,7 +626,7 @@ public class GameManager : Singleton<GameManager>
         MakeOrder();
     }
 
-    public void SetPosition(int index)
+    private void SetPosition(int index)
     {
         // UI 위치 조정
         float width = currentOrderUI[index].GetComponent<BoxCollider2D>().size.x;
@@ -646,7 +642,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public async UniTask LerpColorAsync(Color start, Color end, float duration)
+    private async UniTask LerpColorAsync(Color start, Color end, float duration)
     {
         float progress = 0;
         float increment = Time.deltaTime / duration;
@@ -701,7 +697,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public async UniTask TurnAlpha(GameObject panel, CancellationToken cancellationToken)
+    private async UniTask TurnAlpha(GameObject panel, CancellationToken cancellationToken)
     {
         // 패널의 알파값을 증가시키는 비동기 메서드
         Image panelImage = panel.GetComponent<Image>();
@@ -717,7 +713,7 @@ public class GameManager : Singleton<GameManager>
         await TurnAlphaZero(panel, cancellationToken);
     }
 
-    public async UniTask TurnAlphaZero(GameObject panel, CancellationToken cancellationToken)
+    private async UniTask TurnAlphaZero(GameObject panel, CancellationToken cancellationToken)
     {
         // 패널의 알파값을 감소시키는 비동기 메서드
         Image panelImage = panel.GetComponent<Image>();
