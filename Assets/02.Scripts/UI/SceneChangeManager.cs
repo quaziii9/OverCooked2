@@ -24,6 +24,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.Stage3_3MapOpen, ChangeToStage3_3);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.StageWizardMapOpen, ChangeToStageWizard);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.StageMineMapOpen, ChangeToStageMine);
+        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.ResultOpen, ChangeToResult);
     }
 
     private void OnDisable()
@@ -82,6 +83,24 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     private void ChangeToStageMine()
     {
         ChangeScene("Mine", "Mine", UIManager.Instance.loadingMapBar);
+    }
+    private void ChangeToResult()
+    {
+        ChangeScene("Result", "ResultScene");
+    }
+
+    private void ChangeScene(string bgmName, string sceneName)
+    {
+        if (SoundManager.Instance.bgmChangeAudioSource.isPlaying)
+        {
+            SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
+            SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, bgmName);
+        }
+        else if (SoundManager.Instance.bgmAudioSource.isPlaying)
+        {
+            SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
+            SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, bgmName);
+        }
     }
 
     // 씬 전환을 위한 공통 메서드

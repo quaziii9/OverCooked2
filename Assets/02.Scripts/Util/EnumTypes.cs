@@ -43,6 +43,7 @@ namespace EnumTypes
         StageWizardMapOpen,
         StageMineMapOpen,
         TestStageMapOpen,
+        ResultOpen
     }
 
     public enum SoundEvents
@@ -92,6 +93,7 @@ namespace EnumTypes
         StageMap,
         // Canvas분기 처리를 위한 추가
         NetworkBattleMap,
+        Result
     }
 
     public enum MapType

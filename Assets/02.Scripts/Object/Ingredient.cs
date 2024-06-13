@@ -43,7 +43,6 @@ public class Ingredient : GameItem
     public void ChangeState(IngredientState newState)
     {
         currentState = newState;
-        Debug.Log("State changed to: " + currentState);
     }
 
     #region HandleIngredient

@@ -23,13 +23,11 @@ public class ResultManager : MonoBehaviour
 
     private void Awake()
     {
-        //if (NameManager.instance != null)
-        //{
-        //    name1.text = NameManager.instance.name1;
-        //    name2.text = NameManager.instance.name2;
-        //}
+        UIManager.Instance.sceneType = EnumTypes.SceneType.Result;
+        UIManager.Instance.mapType = EnumTypes.MapType.None;
         canSkip = false;
         Time.timeScale = 1;
+
         if (StageManager.Instance.playStage == StageManager.State.Stage1)
         {
             Stagename.text = "Mine";
