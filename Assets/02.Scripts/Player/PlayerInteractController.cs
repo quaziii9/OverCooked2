@@ -113,6 +113,7 @@ public class PlayerInteractController : MonoBehaviour
     public void OnSwitch(InputValue inputValue)
     {
         playerInputSystem.GetComponent<PlayerMasterController2>().SwitchPlayerComponent();
+        SoundManager.Instance.PlayEffect("changeChef");
     }
 
     #endregion
@@ -138,10 +139,6 @@ public class PlayerInteractController : MonoBehaviour
             if (ShouldStartCutting())
             {
                 StartCuttingProcess();
-            }
-            else
-            {
-                SoundManager.Instance.PlayEffect("no");
             }
         }
         else
@@ -205,10 +202,6 @@ public class PlayerInteractController : MonoBehaviour
             Debug.Log(meshFileName);
             if (meshFileName.Equals("m_ingredients_chicken_sliced_01_0") ||
                 meshFileName.Equals("m_ingredients_meat_sliced_01_0"))
-            {
-                SoundManager.Instance.PlayEffect("no");
-                return;
-            }
 
             Animator.SetTrigger("startCut");
             cuttingBoard.Pause = false;
@@ -368,10 +361,6 @@ public class PlayerInteractController : MonoBehaviour
 
                 IsHolding = false;
                 Animator.SetBool("isHolding", IsHolding);
-            }
-            else
-            {
-                SoundManager.Instance.PlayEffect("no");
             }
         }
         else if (!IsHolding)
@@ -567,10 +556,6 @@ public class PlayerInteractController : MonoBehaviour
             {
                 PlaceIngredient();
             }
-            else
-            {
-                SoundManager.Instance.PlayEffect("no");
-            }
 
             if (objectHighlight.transform.parent.GetChild(2))
             {
@@ -587,11 +572,6 @@ public class PlayerInteractController : MonoBehaviour
                     var meshFilter = ingredientObj.transform.GetChild(0).GetComponent<MeshFilter>();
                     
                     string meshFileName = meshFilter.sharedMesh.name;
-                    if (meshFileName.Equals("m_ingredients_chicken_01_0") || meshFileName.Equals("m_ingredients_meat_01_0"))
-                    {
-                        SoundManager.Instance.PlayEffect("no");
-                        return;
-                    }
 
                     ingredientObj.transform.SetParent(potAndPan.transform);
                     ingredientObj.transform.localPosition = new Vector3(2e-05f, -0.00017f, 0.00013f); // 위치 설정
@@ -602,10 +582,6 @@ public class PlayerInteractController : MonoBehaviour
 
                     Animator.SetBool("isHolding", false);
                     IsHolding = false;
-                }
-                else
-                {
-                    SoundManager.Instance.PlayEffect("no");
                 }
 
                 // 테이블에 있는게, Pot이고 내가 든게 쌀이고 화덕이면 Pot에 붙이기
@@ -620,10 +596,6 @@ public class PlayerInteractController : MonoBehaviour
 
                     Animator.SetBool("isHolding", false);
                     IsHolding = false;
-                }
-                else
-                {
-                    SoundManager.Instance.PlayEffect("no");
                 }
             }
         }

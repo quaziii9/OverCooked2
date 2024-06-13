@@ -84,6 +84,7 @@ public class RespawnManager : MonoBehaviour
     {
         Transform spawnPosition = playerSpawnPositions[index];
         Debug.Log($"플레이어가 {spawnPosition.position}에서 리스폰되었습니다.");
+        SoundManager.Instance.PlayEffect("spawn");
 
         // 연기 발생 및 플레이어 스폰
         PlayerPuff.Instance.SpawnPuff(spawnPosition);

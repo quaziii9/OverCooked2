@@ -118,6 +118,7 @@ public class PotOnStove : MonoBehaviour
         UpdateIsIngredientState();
         EndCallBack?.Invoke();
         OffSlider();
+        SoundManager.Instance.PlayEffect("imCooked");
 
         _pause = false;
         cookingTime = 0;

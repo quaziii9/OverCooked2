@@ -42,6 +42,7 @@ public class PositionTweener : MonoBehaviour
         {
             cameraTransform.DOKill(); // 이전 트윈이 있으면 중지
             cameraTransform.localPosition = originalCameraPosition; // 원래 위치로 복귀
+            SoundManager.Instance.MineCameraShake();
             cameraTransform.DOShakePosition(shakeDuration, new Vector3(shakeStrength, 0, 0), shakeVibrato, 0, false, true).OnComplete(() =>
             {
                 cameraTransform.localPosition = originalCameraPosition; // 흔들림이 끝나면 원래 위치로 복귀

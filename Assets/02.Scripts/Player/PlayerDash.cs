@@ -94,6 +94,7 @@ public class PlayerDash : MonoBehaviour
 
         while (elapsedTime < dashDuration)
         {
+            SoundManager.Instance.PlayEffect("dash");
             float dashProgress = elapsedTime / dashDuration;
             float curveValue = dashCurve.Evaluate(dashProgress); // AnimationCurve에서 값을 평가
             Vector3 forceToApply = dashDirection * (dashForce * curveValue);

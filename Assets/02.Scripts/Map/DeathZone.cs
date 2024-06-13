@@ -20,6 +20,7 @@ public class DeathZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            SoundManager.Instance.PlayEffect("fall");
             StartCoroutine(DeactivateAndRespawnPlayer(other.gameObject));
         }
         else if (other.CompareTag("Plate") || other.CompareTag("Pan") || other.CompareTag("Pot"))

@@ -133,6 +133,7 @@ public class PanOnStove : MonoBehaviour
 
         _pause = false;
         cookingTime = 0;
+        SoundManager.Instance.PlayEffect("imCooked");
         _stateIsCooked = true; // 요리가 끝난 후 상태를 요리됨으로 설정
         _cts.Dispose(); // 취소 토큰 소스를 해제합니다.
         _cts = null;

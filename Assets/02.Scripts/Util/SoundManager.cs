@@ -74,6 +74,12 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip right;
     public AudioClip no;
     public AudioClip cut;
+    public AudioClip changeChef;
+    public AudioClip recipeTimeOut;
+    public AudioClip imCooked;
+    public AudioClip dash;
+    public AudioClip spawn;
+
 
     [Header("Van")]
     public AudioClip boing;
@@ -361,6 +367,11 @@ public class SoundManager : Singleton<SoundManager>
         audioSource.Play();
     }
 
+    public void MineCameraShake()
+    {
+        stageEffectAudioSource.PlayOneShot(mineCameraShake);
+    }
+
 
     public void ButtonPop()
     {
@@ -424,6 +435,12 @@ public class SoundManager : Singleton<SoundManager>
             case "fall":
                 effectAudioSource.clip = fall;
                 break;
+            case "dash":
+                effectAudioSource.clip = dash;
+                break;
+            case "spawn":
+                effectAudioSource.clip = spawn;
+                break;
             case "throwItem":
                 effectAudioSource.clip = throwItem;
                 break;
@@ -445,6 +462,15 @@ public class SoundManager : Singleton<SoundManager>
             case "cut":
                 effectAudioSource.clip = cut;
                 break;
+            case "changeChef":
+                effectAudioSource.clip = changeChef;
+                break;           
+            case "recipeTimeOut":
+                effectAudioSource.clip = recipeTimeOut;
+                break; 
+            case "imCooked":
+                effectAudioSource.clip = imCooked;
+                break; 
             case "boing":
                 effectAudioSource.clip = boing;
                 effectAudioSource.volume = volumeEffect;

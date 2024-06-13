@@ -76,7 +76,7 @@ public class CuttingBoard : MonoBehaviour
         if (!_parentObject.onSomething) return;
      
         UpdateCookingBarPosition();
-        SoundManager.Instance.PlayEffect("cut");
+        
         cookingBar.gameObject.SetActive(true);
         ClearTime();
         CoTimer = StartCoroutine(CoStartCutting(endCallBack));
@@ -110,6 +110,7 @@ public class CuttingBoard : MonoBehaviour
                 yield return null;
             }
             yield return new WaitForSeconds(0.45f);
+            SoundManager.Instance.PlayEffect("cut");
             CuttingTime += 0.25f;
         }
         endCallBack?.Invoke();
