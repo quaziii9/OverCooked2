@@ -665,9 +665,10 @@ public class GameManager : Singleton<GameManager>
                 return; // 함수 종료
             }
 
+            progress += Time.deltaTime / duration;
             currentColor = Color.Lerp(start, end, progress);
             sliderImage.color = currentColor;
-            progress += increment;
+            // progress += increment;
 
             await UniTask.Yield(); // 다음 프레임까지 대기
         }

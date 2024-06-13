@@ -11,7 +11,7 @@ public class Ingredient : GameItem
     public enum IngredientType { Fish, Shrimp, Plate, Lettuce, Tomato, Cucumber, Chicken, Potato, Pot, Pan, Tortilla, SeaWeed, Rice, Pepperoni, Cheese, Dough, Meat, PizzaTomato, SushiRice, SushiFish, SushiCucumber };
     public IngredientType type; // 재료 유형: 채소, 고기 등
     
-    public enum IngredientState { Raw, Cooking, Cooked }
+    public enum IngredientState { Raw, Chopped, Cooking, Cooked }
     public IngredientState currentState;
 
     public enum Team { Red, Blue }

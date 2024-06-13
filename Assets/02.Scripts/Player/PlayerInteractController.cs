@@ -193,20 +193,20 @@ public class PlayerInteractController : MonoBehaviour
     void StartCuttingProcess()
     {
         var cuttingBoard = interactObject.transform.GetChild(0).GetComponent<CuttingBoard>();
-
-        if (cuttingBoard.CoTimer == null) // 한번도 실행 안된거면 시작 가능
+        var ingredient = cuttingBoard.transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
+        
+        if (cuttingBoard.CoTimer == null && ingredient.currentState != Ingredient.IngredientState.Chopped) // 한번도 실행 안된거면 시작 가능
         {
             GameObject ingredientObj = interactObject.transform.parent.GetChild(2).GetChild(0).gameObject;
             MeshFilter meshFilter = ingredientObj.transform.GetComponent<MeshFilter>();
             string meshFileName = meshFilter.sharedMesh.name;
-            Debug.Log(meshFileName);
             if (meshFileName.Equals("m_ingredients_chicken_sliced_01_0") ||
                 meshFileName.Equals("m_ingredients_meat_sliced_01_0"))
-
-            Animator.SetTrigger("startCut");
+                
             cuttingBoard.Pause = false;
             cuttingBoard.CuttingTime = 0;
             cuttingBoard.StartCutting1();
+            Animator.SetTrigger("startCut");
         }
         else if (cuttingBoard.Pause) // 실행되다 만거라면
         {

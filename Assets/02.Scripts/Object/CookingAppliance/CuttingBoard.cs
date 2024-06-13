@@ -1,9 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using System;
-using UnityEngine.UI;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
+using UnityEngine.UI;
 using static Ingredient;
 
 public class CuttingBoard : MonoBehaviour
@@ -73,8 +71,10 @@ public class CuttingBoard : MonoBehaviour
 
     private void StartCutting(object playerController, UnityAction endCallBack = null)
     {
+        Ingredient ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
+        if (ingredient.currentState == IngredientState.Chopped) return;
         if (!_parentObject.onSomething) return;
-     
+        
         UpdateCookingBarPosition();
         
         cookingBar.gameObject.SetActive(true);
@@ -161,8 +161,11 @@ public class CuttingBoard : MonoBehaviour
         Ingredient ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
         ingredient.isCooked = true;
 
-        if (ingredient.type == IngredientType.Meat || ingredient.type == IngredientType.Chicken)
+        if (ingredient.type is IngredientType.Meat or IngredientType.Chicken)
+        {
             ingredient.isCooked = false;
+            ingredient.currentState = IngredientState.Chopped;
+        }
 
         ingredient.ChangeMesh(ingredient.type);
     }
