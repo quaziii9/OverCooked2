@@ -1,4 +1,5 @@
 using EnumTypes;
+using EventLibrary;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,10 +55,8 @@ public class PressSkip : MonoBehaviour
     {
         UIManager.Instance.RecipeUIOff();
         SoundManager.Instance.RecipeUIPopOut();
-        if (UIManager.Instance.mapType == MapType.StageMine)
-        {
-            //EventManager<SoundEvents>.TriggerEvent(SoundEvents.MineBgmPlay);
-        }
+        EventManager<GameEvent>.TriggerEvent(GameEvent.StartGame);
+
         // UI 비활성화 및 게임 시작
     }
 }

@@ -16,8 +16,11 @@ public class OrderUI : MonoBehaviour
     Color End = new Color(215 / 255f, 11 / 255f, 0, 1f); // 종료 색상 (빨강)
     Color currentColor; // 현재 색상 상태
 
+    private GameManager _gameManager;
     private void Awake()
     {
+        _gameManager = FindObjectOfType<GameManager>();
+
         // 타이머 슬라이더를 초기화하고, 색상 시작점을 설정
         timer = transform.GetChild(2).GetChild(0).GetComponent<Slider>();
         duration = timer.maxValue / 2 * 30;
@@ -38,7 +41,7 @@ public class OrderUI : MonoBehaviour
     private void OnEnable()
     {
         // 오브젝트가 활성화될 때 초기 위치를 설정하고, 이동을 시작하며 색상 변화 및 타이머를 시작
-        transform.localPosition = GameManager.Instance.poolPos;
+        transform.localPosition = _gameManager.poolPos;
         goLeft = true;
         StartCoroutine(TimerStart());
         StartCoroutine(LerpColor1());
@@ -97,6 +100,6 @@ public class OrderUI : MonoBehaviour
             timer.value -= 1f;
         }
         // 타이머가 0이 되면 실패 처리 (메뉴 실패 메서드 호출)
-        GameManager.Instance.MenuFail(gameObject);
+        _gameManager.MenuFail(gameObject);
     }
 }

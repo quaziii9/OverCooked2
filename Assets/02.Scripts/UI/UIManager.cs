@@ -681,13 +681,21 @@ public class UIManager : Singleton<UIManager>
         else if (sceneType == SceneType.BattleMap)
         {
             EnterLoadingKeyUIBattle();
+            
+            EventManager<GameEvent>.TriggerEvent(GameEvent.ResetGameSetting);
+            EventManager<SoundEvents>.TriggerEvent(SoundEvents.StageBgmFadeOut);
+
         }
         else if (sceneType == SceneType.StageMap)
         {
+            sceneType = SceneType.WorldMap;
+            mapType = MapType.None;
             StopUIOff();
             StageMapEscUIOff();
             EnterLoadingKeyUI();
             RecipeUIOff();
+            EventManager<GameEvent>.TriggerEvent(GameEvent.ResetGameSetting);
+            EventManager<SoundEvents>.TriggerEvent(SoundEvents.StageBgmFadeOut);
         }
         else if (sceneType == SceneType.Intro)
         {
