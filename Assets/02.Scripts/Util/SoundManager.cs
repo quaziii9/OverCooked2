@@ -82,6 +82,7 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip panSizzle;
     public AudioClip potSizzle;
     public AudioClip move;
+    public AudioClip timesUp;
 
     [Header("Van")]
     public AudioClip boing;
@@ -420,6 +421,11 @@ public class SoundManager : Singleton<SoundManager>
         vanAudioSource.PlayOneShot(vanShutter);
     }
 
+    public void ResultBgm()
+    {
+
+    }
+
 
     public void PlayEffect(string effect)
     {
@@ -481,6 +487,9 @@ public class SoundManager : Singleton<SoundManager>
                 break;
             case "move":
                 effectAudioSource.clip = move;
+                break;
+            case "timesUp":
+                effectAudioSource.clip = timesUp;
                 break;
             case "boing":
                 effectAudioSource.clip = boing;

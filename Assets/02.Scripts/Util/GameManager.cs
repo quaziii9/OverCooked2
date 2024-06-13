@@ -272,6 +272,8 @@ public class GameManager : Singleton<GameManager>
         {
             SoundManager.Instance.bgmAudioSource.pitch = 1;
             SoundManager.Instance.bgmAudioSource.Stop();
+            //SoundManager.Instance.stageAudioSource.Stop();
+            //SoundManager.Instance.stageBackGroundAudioSource.Stop();
             SoundManager.Instance.PlayEffect("timesUp");
             Time.timeScale = 0;
             if (StageManager.Instance != null)
@@ -302,6 +304,7 @@ public class GameManager : Singleton<GameManager>
                 if (lastSec > 1.5f)
                 {
                     timesUp.SetActive(false);
+                    //SceneChangeManager.
                     SceneManager.LoadScene("ResultScene");
                 }
             }
