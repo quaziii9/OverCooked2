@@ -56,6 +56,7 @@ public class PlayerDash : MonoBehaviour
     {
         if (inputButton.isPressed && !isDashing && dashCdTimer <= 0 && masterController.currentPlayer == this.gameObject)
         {
+            SoundManager.Instance.PlayEffect("dash");
             Dash();
         }
     }
@@ -71,6 +72,7 @@ public class PlayerDash : MonoBehaviour
 
     private void Dash()
     {
+        
         if (dashCdTimer > 0 || isDashing)
             return;
 
@@ -94,7 +96,6 @@ public class PlayerDash : MonoBehaviour
 
         while (elapsedTime < dashDuration)
         {
-            SoundManager.Instance.PlayEffect("dash");
             float dashProgress = elapsedTime / dashDuration;
             float curveValue = dashCurve.Evaluate(dashProgress); // AnimationCurve에서 값을 평가
             Vector3 forceToApply = dashDirection * (dashForce * curveValue);

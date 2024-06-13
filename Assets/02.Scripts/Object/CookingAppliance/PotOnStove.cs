@@ -87,6 +87,7 @@ public class PotOnStove : MonoBehaviour
     // 비동기적으로 요리를 시작합니다.
     private async UniTask StartCookingAsync(UnityAction EndCallBack = null, CancellationToken cancellationToken = default)
     {
+        SoundManager.Instance.PlayEffect("potSizzle");
         if (!inSomething)
         {
             pfxFire.SetActive(false); // 재료가 없으면 불을 끕니다.
@@ -106,13 +107,14 @@ public class PotOnStove : MonoBehaviour
             {
                 await UniTask.Yield(cancellationToken); // 일시 정지된 동안 대기합니다.
             }
-
+            
             await UniTask.Delay(450, cancellationToken: cancellationToken); // 요리 시간이 증가하는 간격
             cookingTime += 0.25f;
             UpdateCookingBarValue();
             Debug.Log("Cooking time: " + cookingTime);
         }
 
+        SoundManager.Instance.effectAudioSource.Stop();
         Debug.Log("Cooking End");
         pfxFire.SetActive(false); // 요리가 끝나면 불을 끕니다.
         UpdateIsIngredientState();

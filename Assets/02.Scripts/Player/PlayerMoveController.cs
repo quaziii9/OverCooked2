@@ -5,6 +5,8 @@ public class PlayerMoveController : MonoBehaviour
 {
     public Animator animator;
     private Rigidbody rb;
+    private float soundTimer = 0f;
+    private float soundInterval = 0.5f; // 소리 재생 간격을 0.5초로 변경
 
     [Header("Speed")]
     public float moveSpeed = 15f;
@@ -51,6 +53,14 @@ public class PlayerMoveController : MonoBehaviour
                 PlayerPuff.Instance.MovePuff(transform);
                 puffCount = 0;
             }
+        }
+
+        // 매 초마다 소리 재생
+        soundTimer += Time.deltaTime;
+        if (soundTimer >= soundInterval && moveInput != Vector2.zero)
+        {
+            soundTimer -= soundInterval;
+            SoundManager.Instance.PlayEffect("move");
         }
 
         UpdateGroundAndStairStatus();
