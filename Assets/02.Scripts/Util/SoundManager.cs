@@ -94,7 +94,7 @@ public class SoundManager : Singleton<SoundManager>
         bgmAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
         bgmChangeAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
         stageAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume;
-        stageBackGroundAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume * 0.1f;
+        stageBackGroundAudioSource.volume = LoadData.Instance.optionData.saveBgmVolume * 0.2f;
 
         effectAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
         stageEffectAudioSource.volume = LoadData.Instance.optionData.saveEffectVolume;
@@ -128,6 +128,7 @@ public class SoundManager : Singleton<SoundManager>
     private void OnEnable()
     {
         EventManager<SoundEvents>.StartListening(SoundEvents.MineBgmPlay, MineBgm);
+        EventManager<SoundEvents>.StartListening(SoundEvents.StageBgmFadeOut, StageBgmFadeOut);
     }
 
     #region settingAuido
@@ -225,7 +226,7 @@ public class SoundManager : Singleton<SoundManager>
     private void SetAllEffectVolume()
     {
         effectAudioSource.volume = volumeEffect;
-        stageBackGroundAudioSource.volume = volumeBGM * 0.1f;
+        stageBackGroundAudioSource.volume = volumeBGM * 0.2f;
         stageEffectAudioSource.volume = volumeEffect;
         vanAudioSource.volume = volumeEffect * 0.2f;
     }
@@ -248,11 +249,24 @@ public class SoundManager : Singleton<SoundManager>
         await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
         playBgm(audioSource, bgmName);
 
-        while (audioSource.volume < volumeBGM)
+        if(audioSource == stageBackGroundAudioSource)
         {
-            audioSource.volume += Time.deltaTime * 0.2f;
-            await UniTask.Delay(TimeSpan.FromSeconds(Time.deltaTime * 0.5f));
+            while (audioSource.volume < volumeBGM * 0.2f)
+            {
+                audioSource.volume += Time.deltaTime * 0.2f;
+                await UniTask.Delay(TimeSpan.FromSeconds(Time.deltaTime * 0.5f));
+            }
         }
+        else
+        {
+            while (audioSource.volume < volumeBGM)
+            {
+                audioSource.volume += Time.deltaTime * 0.2f;
+                await UniTask.Delay(TimeSpan.FromSeconds(Time.deltaTime * 0.5f));
+            }
+        }
+
+   
     }
 
     async UniTask FadeOutVolumeAsync(AudioSource audioSource, float waitTime)
@@ -288,14 +302,20 @@ public class SoundManager : Singleton<SoundManager>
                 WizardBGM(audioSource);
                 break;
             case "Mine":
-                //MineBackGroundBGM();
-                MineBGM(audioSource);
+                MineBackGroundBGM(audioSource);
+                //MineBGM(audioSource);
                 break;
             case "Sushi":
                 NeonBGM(audioSource);
                 break;
         }
     }
+    void StageBgmFadeOut()
+    {
+        FadeOutVolumeAsync(stageBackGroundAudioSource, 0).Forget();
+        FadeOutVolumeAsync(stageAudioSource, 0).Forget();
+    }
+
 
     void IntroBGM(AudioSource audioSource)
     {
@@ -332,15 +352,17 @@ public class SoundManager : Singleton<SoundManager>
         audioSource.Play();
     }
 
-    void MineBackGroundBGM()
+    void MineBackGroundBGM(AudioSource audioSource)
     {
-        stageBackGroundAudioSource.clip = stageBackInNPC;
-        stageBackGroundAudioSource.loop = true;
-        stageBackGroundAudioSource.Play();
+        audioSource.clip = stageBackInNPC;
+        audioSource.loop = true;
+        audioSource.Play();
     }
 
     void MineBgm()
     {
+        Debug.Log("minebgm");
+        stageAudioSource.volume = volumeBGM;
         stageAudioSource.clip = mineBGM;
         stageAudioSource.loop = true;
         stageAudioSource.Play();

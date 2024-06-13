@@ -239,7 +239,11 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
-        
+        EventManager<GameEvent>.TriggerEvent(GameEvent.MovingCart);
+        if (UIManager.Instance.mapType == MapType.Stage2_5)
+        {
+            EventManager<SoundEvents>.TriggerEvent(SoundEvents.MineBgmPlay);
+        }
         go.SetActive(false);
         isPaused = false;
         startSetting = true;
