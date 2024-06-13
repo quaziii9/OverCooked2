@@ -6,8 +6,10 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using EventLibrary;
+using EnumTypes;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
     private CancellationTokenSource alphaCancellationTokenSource = null; // 알파값 변화 작업 취소용 변수
 
@@ -90,13 +92,41 @@ public class GameManager : Singleton<GameManager>
     private Color endColor = new Color(215 / 255f, 11 / 255f, 0, 1f); // 빨강색
     private Color currentColor; // 현재 색상
 
-    protected override void Awake()
+    private bool recipeOff = false;
+
+    protected void Awake()
     {
-        base.Awake();
+       // base.Awake();
 
         InitializeVariables();                  // 변수 초기화
         InitializeStageManager();               // 스테이지 매니저 초기화
         InitializeGameSettingsAsync().Forget(); // 게임 세팅 초기화
+    }
+
+    public void InitSceneLoad()
+    {
+        recipeOff = false;
+        InitializeVariables();                  // 변수 초기화
+        InitializeStageManager();               // 스테이지 매니저 초기화
+        InitializeGameSettingsAsync().Forget(); // 게임 세팅 초기화
+    }
+
+    private void OnEnable()
+    {
+        EventManager<GameEvent>.StartListening(GameEvent.StartGame, HandleGameStartEvent);
+        EventManager<GameEvent>.StartListening(GameEvent.ResetGameSetting, InitSceneLoad);
+    }
+
+    private void OnDisable()
+    {
+        EventManager<GameEvent>.StopListening(GameEvent.StartGame, HandleGameStartEvent);
+        EventManager<GameEvent>.StopListening(GameEvent.ResetGameSetting, InitSceneLoad);
+
+    }
+
+    private void HandleGameStartEvent()
+    {
+        recipeOff = true;
     }
 
     private void InitializeVariables()
@@ -106,6 +136,7 @@ public class GameManager : Singleton<GameManager>
         timeSlider.maxValue = gameTime;
         timeSlider.value = timeSlider.maxValue;
     }
+
 
     private void InitializeStageManager()
     {
@@ -149,6 +180,8 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
+        if (recipeOff == false) return;
+
         HandleGameStart();
         HandleGamePause();
         UpdateGameTime();
@@ -159,8 +192,8 @@ public class GameManager : Singleton<GameManager>
         if (isPaused && !startSetting)
         {
             ToClock();
-            startTime += Time.unscaledDeltaTime;
             Time.timeScale = 0;
+            startTime += Time.unscaledDeltaTime;
 
             if (startTime > 1 && !playOnce)
             {
@@ -206,6 +239,11 @@ public class GameManager : Singleton<GameManager>
 
     private void StartGame()
     {
+        EventManager<GameEvent>.TriggerEvent(GameEvent.MovingCart);
+        if (UIManager.Instance.mapType == MapType.Stage2_5)
+        {
+            EventManager<SoundEvents>.TriggerEvent(SoundEvents.MineBgmPlay);
+        }
         go.SetActive(false);
         isPaused = false;
         startSetting = true;
@@ -232,7 +270,8 @@ public class GameManager : Singleton<GameManager>
 
     private void UpdateGameTime()
     {
-        gameTime -= Time.deltaTime;
+        if(startSetting == true)
+            gameTime -= Time.deltaTime;
         ToClock();
 
         AdjustBgmPitch();

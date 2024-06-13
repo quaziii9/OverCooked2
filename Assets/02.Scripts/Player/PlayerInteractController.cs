@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -35,6 +36,7 @@ public class PlayerInteractController : MonoBehaviour
 
     private PlayerMasterController2 _masterController;
     private PlayerMoveController _moveController;
+    private GameManager _gameManager;
 
     [Header("Mobile Button")] public Button pickupButton; // 모바일 줍기/놓기 버튼
     public Button cookButton; // 모바일 요리/던지기 버튼
@@ -45,6 +47,7 @@ public class PlayerInteractController : MonoBehaviour
     {
         _masterController = playerInputSystem.GetComponent<PlayerMasterController2>();
         _moveController = gameObject.GetComponent<PlayerMoveController>();
+        _gameManager = FindObjectOfType<GameManager>();
 
         if (pickupButton != null)
         {
@@ -392,11 +395,11 @@ public class PlayerInteractController : MonoBehaviour
         if (!IsHolding || ingredient == null || ingredient.type != Ingredient.IngredientType.Plate) return;
         var plateComponent = transform.GetChild(1).gameObject.GetComponent<Plates>(); // Plates 컴포넌트를 가져옴
 
-        if (GameManager.Instance.CheckMenu(plateComponent.containIngredients))
+        if (_gameManager.CheckMenu(plateComponent.containIngredients))
         {
             // 접시의 재료가 메뉴와 일치하면
             SoundManager.Instance.PlayEffect("right"); // 성공 효과음 재생
-            GameManager.Instance.MakeOrder(); // 주문을 만듦
+            _gameManager.MakeOrder(); // 주문을 만듦
         }
         else
         {
@@ -408,7 +411,7 @@ public class PlayerInteractController : MonoBehaviour
         Destroy(transform.GetChild(1).gameObject); // 접시 전체를 삭제 (추후 재활용을 고려)
         IsHolding = false; // 아이템을 들고 있는 상태를 해제
         Animator.SetBool("isHolding", IsHolding); // 애니메이션 상태를 업데이트
-        GameManager.Instance.PlateReturn(); // 접시 반환 처리
+        _gameManager.PlateReturn(); // 접시 반환 처리
         // Ingredient 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
     }
 

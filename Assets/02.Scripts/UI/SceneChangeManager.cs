@@ -87,16 +87,38 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     // 씬 전환을 위한 공통 메서드
     private void ChangeScene(string bgmName, string sceneName, Image loadingBar)
     {
-        if (SoundManager.Instance.bgmChangeAudioSource.isPlaying)
+        if (UIManager.Instance.sceneType == SceneType.BattleMap || UIManager.Instance.sceneType == SceneType.StageMap)
         {
-            SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
-            SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, bgmName);
+            if (SoundManager.Instance.bgmChangeAudioSource.isPlaying)
+            {
+                SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
+                SoundManager.Instance.FadeInAudio(SoundManager.Instance.stageBackGroundAudioSource, 0, bgmName);
+            }
+            else if (SoundManager.Instance.bgmAudioSource.isPlaying)
+            {
+                SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
+                SoundManager.Instance.FadeInAudio(SoundManager.Instance.stageBackGroundAudioSource, 0, bgmName);
+            }
         }
-        else if (SoundManager.Instance.bgmAudioSource.isPlaying)
+        else
         {
-            SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
-            SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, bgmName);
+            Debug.Log("scenetype success");
+            if (SoundManager.Instance.bgmChangeAudioSource.isPlaying)
+            {
+                SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
+                SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, bgmName);
+            }
+            else if (SoundManager.Instance.bgmAudioSource.isPlaying)
+            {
+                SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmAudioSource, 0);
+                SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmChangeAudioSource, 0, bgmName);
+            }
+            else
+            {
+                SoundManager.Instance.FadeInAudio(SoundManager.Instance.bgmAudioSource, 0, bgmName);
+            }
         }
+       
 
         LoadSceneAsyncUniTask(sceneName, loadingBar).Forget();      
     }

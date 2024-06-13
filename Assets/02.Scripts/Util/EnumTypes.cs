@@ -50,6 +50,7 @@ namespace EnumTypes
         FadeIn,
         FadeOut,
         MineBgmPlay,
+        StageBgmFadeOut,
     }
 
     public enum UIEvents
@@ -76,6 +77,9 @@ namespace EnumTypes
     public enum GameEvent
     {
         FireOff,
+        StartGame,
+        ResetGameSetting,
+        MovingCart
     }
 
 

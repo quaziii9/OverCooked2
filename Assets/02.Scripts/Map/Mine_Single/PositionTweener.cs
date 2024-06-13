@@ -1,5 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
+using EventLibrary;
+using EnumTypes;
 
 public class PositionTweener : MonoBehaviour
 {
@@ -16,7 +18,21 @@ public class PositionTweener : MonoBehaviour
         {
             originalCameraPosition = cameraTransform.localPosition;
         }
+        
+    }
 
+    private void OnEnable()
+    {
+        EventManager<GameEvent>.StartListening(GameEvent.MovingCart, MovingCart);
+    }
+
+    private void OnDisable()
+    {
+        EventManager<GameEvent>.StopListening(GameEvent.MovingCart, MovingCart);
+    }
+
+    private void MovingCart()
+    {
         // 시퀀스 생성
         Sequence sequence = DOTween.Sequence();
 
@@ -35,6 +51,7 @@ public class PositionTweener : MonoBehaviour
         // 시퀀스를 무한 반복
         sequence.SetLoops(-1, LoopType.Restart);
     }
+
 
     void ShakeCamera()
     {
