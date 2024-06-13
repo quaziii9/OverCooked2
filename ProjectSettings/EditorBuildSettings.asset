@@ -32,7 +32,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/01.Scenes/Inseok/NetworkScenes/Mine_Net.unity
     guid: cac8b37b704f6ef47aa35a0f7738551d
-  - enabled: 1
+  - enabled: 0
     path: Assets/01.Scenes/Minseok/NewWorldMap.unity
     guid: 05d9d4554190aca46a8338e0f8e9bcc3
   - enabled: 1

@@ -79,7 +79,9 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip imCooked;
     public AudioClip dash;
     public AudioClip spawn;
-
+    public AudioClip panSizzle;
+    public AudioClip potSizzle;
+    public AudioClip move;
 
     [Header("Van")]
     public AudioClip boing;
@@ -470,7 +472,16 @@ public class SoundManager : Singleton<SoundManager>
                 break; 
             case "imCooked":
                 effectAudioSource.clip = imCooked;
-                break; 
+                break;
+            case "potSizzle":
+                effectAudioSource.clip = potSizzle;
+                break;
+            case "panSizzle":
+                effectAudioSource.clip = panSizzle;
+                break;
+            case "move":
+                effectAudioSource.clip = move;
+                break;
             case "boing":
                 effectAudioSource.clip = boing;
                 effectAudioSource.volume = volumeEffect;
