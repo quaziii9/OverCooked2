@@ -647,6 +647,7 @@ public class GameManager : Singleton<GameManager>
     {
         float progress = 0;
         float increment = Time.deltaTime / duration;
+        
         Image sliderImage = timeSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>();
 
         // 슬라이더 객체가 null인지 확인

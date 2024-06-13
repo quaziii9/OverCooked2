@@ -14,7 +14,7 @@ public class Plates : MonoBehaviour
     public List<Ingredient.IngredientType> containIngredients = new List<Ingredient.IngredientType>();
     public int limit = 1;
     
-    private Dictionary<Ingredient.IngredientType, int> ingredientToChildIndex = new Dictionary<Ingredient.IngredientType, int>
+    private Dictionary<Ingredient.IngredientType, int> _ingredientToChildIndex = new Dictionary<Ingredient.IngredientType, int>
     {
         { Ingredient.IngredientType.Fish, 1 },
         { Ingredient.IngredientType.Shrimp, 2 },
@@ -69,29 +69,34 @@ public class Plates : MonoBehaviour
             return false;
         }
 
-        if (!CheckOverlap(handleType) && containIngredients.Count < limit)
-        {
-            containIngredients.Add(handleType);
-            ActivateIngredientUI(handleType);
-            return true;
-        }
-        return false;
+        if (CheckOverlap(handleType) || containIngredients.Count >= limit) return false;
+        
+        containIngredients.Add(handleType);
+        ActivateIngredientUI(handleType);
+        return true;
     }
 
     private void ActivateIngredientUI(Ingredient.IngredientType handleType)
     {
         // 해당 재료에 맞는 Object, UI를 활성화
-        if (ingredientToChildIndex.ContainsKey(handleType))
+        if (_ingredientToChildIndex.TryGetValue(handleType, out var childIndex))
         {
-            transform.GetChild(ingredientToChildIndex[handleType]).gameObject.SetActive(true);
+            transform.GetChild(childIndex).gameObject.SetActive(true);
         }
-        else if (handleType == Ingredient.IngredientType.SeaWeed || handleType == Ingredient.IngredientType.SushiRice || handleType == Ingredient.IngredientType.SushiFish || handleType == Ingredient.IngredientType.SushiCucumber)
+        else switch (handleType)
         {
-            UpdateCombinationUI(13, new[] { Ingredient.IngredientType.SeaWeed, Ingredient.IngredientType.SushiRice, Ingredient.IngredientType.SushiFish, Ingredient.IngredientType.SushiCucumber });
-        }
-        else if (handleType == Ingredient.IngredientType.Tortilla || handleType == Ingredient.IngredientType.Meat || handleType == Ingredient.IngredientType.Chicken || handleType == Ingredient.IngredientType.Rice)
-        {
-            UpdateCombinationUI(14, new[] { Ingredient.IngredientType.Tortilla, Ingredient.IngredientType.Rice, Ingredient.IngredientType.Meat, Ingredient.IngredientType.Chicken });
+            case Ingredient.IngredientType.SeaWeed:
+            case Ingredient.IngredientType.SushiRice:
+            case Ingredient.IngredientType.SushiFish:
+            case Ingredient.IngredientType.SushiCucumber:
+                UpdateCombinationUI(13, new[] { Ingredient.IngredientType.SeaWeed, Ingredient.IngredientType.SushiRice, Ingredient.IngredientType.SushiFish, Ingredient.IngredientType.SushiCucumber });
+                break;
+            case Ingredient.IngredientType.Tortilla:
+            case Ingredient.IngredientType.Meat:
+            case Ingredient.IngredientType.Chicken:
+            case Ingredient.IngredientType.Rice:
+                UpdateCombinationUI(14, new[] { Ingredient.IngredientType.Tortilla, Ingredient.IngredientType.Rice, Ingredient.IngredientType.Meat, Ingredient.IngredientType.Chicken });
+                break;
         }
     }
 
@@ -104,17 +109,20 @@ public class Plates : MonoBehaviour
         }
 
         bool[] hasIngredients = ingredientTypes.Select(type => containIngredients.Contains(type)).ToArray();
-        
-        // 특정 조합에 따라 자식 인덱스 활성화 로직 처리
-        if (parentIndex == 13) // Sushi 조합의 경우
-        {
-            bool hasSeaWeed = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.SeaWeed)];
-            bool hasSushiRice = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.SushiRice)];
-            bool hasSushiFish = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.SushiFish)];
-            bool hasSushiCucumber = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.SushiCucumber)];
 
-            if (hasSeaWeed)
+        switch (parentIndex)
+        {
+            // 특정 조합에 따라 자식 인덱스 활성화 로직 처리
+            // Sushi 조합의 경우
+            case 13:
             {
+                bool hasSeaWeed = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.SeaWeed)];
+                bool hasSushiRice = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.SushiRice)];
+                bool hasSushiFish = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.SushiFish)];
+                bool hasSushiCucumber = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.SushiCucumber)];
+
+                if (!hasSeaWeed) return;
+            
                 if (hasSushiRice && hasSushiFish && hasSushiCucumber)
                 {
                     transform.GetChild(parentIndex).GetChild(6).gameObject.SetActive(true); // SeaWeed + SushiRice + SushiFish + SushiCucumber
@@ -123,73 +131,84 @@ public class Plates : MonoBehaviour
                 {
                     transform.GetChild(parentIndex).GetChild(3).gameObject.SetActive(true); // SeaWeed + SushiFish + SushiCucumber
                 }
-                else if (hasSushiRice && hasSushiFish)
+                else switch (hasSushiRice)
                 {
-                    transform.GetChild(parentIndex).GetChild(4).gameObject.SetActive(true); // SeaWeed + SushiRice + SushiFish
-                }
-                else if (hasSushiRice && hasSushiCucumber)
-                {
-                    transform.GetChild(parentIndex).GetChild(5).gameObject.SetActive(true); // SeaWeed + SushiRice + SushiCucumber
-                }
-                else if (hasSushiFish)
-                {
-                    transform.GetChild(parentIndex).GetChild(0).gameObject.SetActive(true); // SeaWeed + SushiFish
-                }
-                else if (hasSushiCucumber)
-                {
-                    transform.GetChild(parentIndex).GetChild(1).gameObject.SetActive(true); // SeaWeed + SushiCucumber
-                }
-                else if (hasSushiRice)
-                {
-                    transform.GetChild(parentIndex).GetChild(2).gameObject.SetActive(true); // SeaWeed + SushiRice
-                }
-                else
-                {
-                    transform.GetChild(parentIndex).GetChild(7).gameObject.SetActive(true); // SeaWeed만 활성화
-                }
-            }
-        }
-        else if (parentIndex == 14) // Tortilla 조합의 경우
-        {
-            bool hasTortilla = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.Tortilla)];
-            bool hasMeat = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.Meat)];
-            bool hasChicken = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.Chicken)];
-            bool hasRice = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.Rice)];
+                    case true when hasSushiFish:
+                        transform.GetChild(parentIndex).GetChild(4).gameObject.SetActive(true); // SeaWeed + SushiRice + SushiFish
+                        break;
+                    case true when hasSushiCucumber:
+                        transform.GetChild(parentIndex).GetChild(5).gameObject.SetActive(true); // SeaWeed + SushiRice + SushiCucumber
+                        break;
+                    default:
+                    {
+                        if (hasSushiFish)
+                        {
+                            transform.GetChild(parentIndex).GetChild(0).gameObject.SetActive(true); // SeaWeed + SushiFish
+                        }
+                        else if (hasSushiCucumber)
+                        {
+                            transform.GetChild(parentIndex).GetChild(1).gameObject.SetActive(true); // SeaWeed + SushiCucumber
+                        }
+                        else if (hasSushiRice)
+                        {
+                            transform.GetChild(parentIndex).GetChild(2).gameObject.SetActive(true); // SeaWeed + SushiRice
+                        }
+                        else
+                        {
+                            transform.GetChild(parentIndex).GetChild(7).gameObject.SetActive(true); // SeaWeed만 활성화
+                        }
 
-            if (hasTortilla)
+                        break;
+                    }
+                }
+
+                break;
+            }
+            // Tortilla 조합의 경우
+            case 14:
             {
-                if (hasMeat && hasChicken && hasRice)
+                bool hasTortilla = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.Tortilla)];
+                bool hasMeat = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.Meat)];
+                bool hasChicken = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.Chicken)];
+                bool hasRice = hasIngredients[Array.IndexOf(ingredientTypes, Ingredient.IngredientType.Rice)];
+
+                if (hasTortilla)
                 {
-                    transform.GetChild(parentIndex).GetChild(6).gameObject.SetActive(true); // Tortilla + Rice + Meat + Chicken
+                    if (hasMeat && hasChicken && hasRice)
+                    {
+                        transform.GetChild(parentIndex).GetChild(6).gameObject.SetActive(true); // Tortilla + Rice + Meat + Chicken
+                    }
+                    else if (hasChicken && hasMeat)
+                    {
+                        transform.GetChild(parentIndex).GetChild(5).gameObject.SetActive(true); // Tortilla + Chicken + Meat
+                    }
+                    else if (hasRice && hasMeat)
+                    {
+                        transform.GetChild(parentIndex).GetChild(3).gameObject.SetActive(true); // Tortilla + Rice + Meat
+                    }
+                    else if (hasRice && hasChicken)
+                    {
+                        transform.GetChild(parentIndex).GetChild(4).gameObject.SetActive(true); // Tortilla + Rice + Chicken
+                    }
+                    else if (hasMeat)
+                    {
+                        transform.GetChild(parentIndex).GetChild(0).gameObject.SetActive(true); // Tortilla + Meat
+                    }
+                    else if (hasChicken)
+                    {
+                        transform.GetChild(parentIndex).GetChild(1).gameObject.SetActive(true); // Tortilla + Chicken
+                    }
+                    else if (hasRice)
+                    {
+                        transform.GetChild(parentIndex).GetChild(2).gameObject.SetActive(true); // Tortilla + Rice
+                    }
+                    else
+                    {
+                        transform.GetChild(8).gameObject.SetActive(true); // Tortilla만 활성화
+                    }
                 }
-                else if (hasChicken && hasMeat)
-                {
-                    transform.GetChild(parentIndex).GetChild(5).gameObject.SetActive(true); // Tortilla + Chicken + Meat
-                }
-                else if (hasRice && hasMeat)
-                {
-                    transform.GetChild(parentIndex).GetChild(3).gameObject.SetActive(true); // Tortilla + Rice + Meat
-                }
-                else if (hasRice && hasChicken)
-                {
-                    transform.GetChild(parentIndex).GetChild(4).gameObject.SetActive(true); // Tortilla + Rice + Chicken
-                }
-                else if (hasMeat)
-                {
-                    transform.GetChild(parentIndex).GetChild(0).gameObject.SetActive(true); // Tortilla + Meat
-                }
-                else if (hasChicken)
-                {
-                    transform.GetChild(parentIndex).GetChild(1).gameObject.SetActive(true); // Tortilla + Chicken
-                }
-                else if (hasRice)
-                {
-                    transform.GetChild(parentIndex).GetChild(2).gameObject.SetActive(true); // Tortilla + Rice
-                }
-                else
-                {
-                    transform.GetChild(8).gameObject.SetActive(true); // Tortilla만 활성화
-                }
+
+                break;
             }
         }
     }

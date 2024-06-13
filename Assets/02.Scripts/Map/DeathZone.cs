@@ -109,6 +109,15 @@ public class DeathZone : MonoBehaviour
         obj.transform.localPosition = tag == "Plate"
             ? new Vector3(0.072f, 0.006f, 0.024f)
             : new Vector3(0.0f, 0.006f, 0.0f);
+        
+        if (tag == "Pan")
+        {
+            obj.transform.localRotation = Quaternion.Euler(0, 0, 0); // Pan 오브젝트의 로컬 회전 값을 0, 0, 0으로 설정
+        }
+        else
+        {
+            obj.transform.rotation = Quaternion.identity;
+        }
 
         obj.SetActive(true);
     }

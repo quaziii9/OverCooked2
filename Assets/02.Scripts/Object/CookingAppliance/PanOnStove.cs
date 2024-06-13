@@ -22,10 +22,11 @@ public class PanOnStove : MonoBehaviour
     [Space(10)]
     public Material[] friedMaterials; // 요리된 재료의 재질 배열
 
+    private Camera _camera;
     private CancellationTokenSource _cts; // 비동기 작업 취소 토큰
     private bool _pause; // 요리 일시 정지 여부
     private bool _stateIsCooked; // 재료가 요리되었는지 여부
-    private Camera _camera;
+    private Ingredient _ingredient; // 현재 팬에 있는 재료
 
     private void Start()
     {
@@ -57,20 +58,20 @@ public class PanOnStove : MonoBehaviour
         cookingBar.value = cookingTime;
     }
 
-    // 재료의 상태 업데이트
-    private void UpdateIsIngredientState()
-    {
-        if (transform.childCount > 2)
-        {
-            _stateIsCooked = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>().isCooked;
-        }
-    }
-
     // 새로운 재료가 팬에 추가될 때 호출되는 메서드
     public void AddNewIngredient()
     {
         Debug.Log("AddNewIngredient");
+        _ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
         inSomething = true;
+        
+        // 이미 요리된 재료인 경우 반환합니다.
+        if (_ingredient.isCooked)
+        {
+            Debug.LogWarning("이미 요리된 재료는 추가할 수 없습니다.");
+            return;
+        }
+        
         _stateIsCooked = false; // 새로운 재료가 추가되면 요리 상태를 초기화
         cookingTime = 0; // 요리 시간을 초기화
         StartCooking();
@@ -126,7 +127,7 @@ public class PanOnStove : MonoBehaviour
 
         Debug.Log("Cooking End");
         pfxFire.SetActive(false); // 요리가 끝나면 불을 끕니다.
-        ChangeCookedMaterial();
+        UpdateIsIngredientState();
         EndCallBack?.Invoke();
         OffSlider();
 
@@ -146,8 +147,16 @@ public class PanOnStove : MonoBehaviour
             _cts.Dispose();
             _cts = null;
         }
-
         _pause = false;
+    }
+
+    // 재료의 상태 업데이트
+    private void UpdateIsIngredientState()
+    {
+        if (_ingredient == null) return;
+        
+        _stateIsCooked = _ingredient.isCooked;
+        ChangeCookedMaterial();
     }
 
     // 요리 진행 바를 비활성화합니다.
@@ -162,34 +171,39 @@ public class PanOnStove : MonoBehaviour
     // 재료의 상태를 업데이트합니다.
     private void UpdateIngredientState()
     {
-        if (transform.childCount < 3) return;
+        if (_ingredient == null) return;
 
-        Ingredient ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
-        ingredient.isCooked = true;
-        ingredient.ChangeMesh(ingredient.type);
+        _ingredient.isCooked = true;
+        _ingredient.ChangeMesh(_ingredient.type);
     }
 
     // 재료 UI를 생성합니다.
     private void InstantiateUI()
     {
-        if (transform.childCount < 3) return;
+        if (_ingredient == null) return;
 
-        Ingredient ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
         GameObject madeUI = Instantiate(ingredientUI, Vector3.zero, Quaternion.identity, canvas.transform);
         madeUI.transform.GetChild(0).gameObject.SetActive(true);
         Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
-        image.sprite = IconManager.Instance.GetIcon(ingredient.type);
-        madeUI.GetComponent<IngredientUI>().target = ingredient.transform;
+        image.sprite = IconManager.Instance.GetIcon(_ingredient.type);
+        madeUI.GetComponent<IngredientUI>().target = _ingredient.transform;
     }
 
     // 요리된 재료의 재질을 변경합니다.
     private void ChangeCookedMaterial()
     {
         Debug.LogError("ChangeCookedMaterial");
-        if (transform.childCount < 3) return;
+        if (_ingredient == null) return;
 
-        MeshFilter meshFilter = transform.GetChild(2).GetChild(0).GetComponent<MeshFilter>();
-        MeshRenderer mr = transform.GetChild(2).GetChild(0).GetComponent<MeshRenderer>();
+        // 부모 오브젝트에서 MeshFilter와 MeshRenderer를 가져옵니다.
+        Transform parentTransform = _ingredient.transform.parent;
+        if (parentTransform == null) return; // 부모가 없는 경우 반환
+
+        MeshFilter meshFilter = parentTransform.GetComponent<MeshFilter>();
+        MeshRenderer mr = parentTransform.GetComponent<MeshRenderer>();
+
+        if (meshFilter == null || mr == null) return; // 부모에 MeshFilter나 MeshRenderer가 없는 경우 반환
+
         string meshFileName = meshFilter.sharedMesh.name;
 
         mr.material = meshFileName switch

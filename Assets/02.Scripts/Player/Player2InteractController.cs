@@ -616,6 +616,7 @@ public class Player2InteractController : MonoBehaviour
                     ingredientObj.transform.localRotation = Quaternion.Euler(0f, -168.905f, 0f); // 회전 설정
 
                     potAndPan.GetComponent<PotOnStove>().inSomething = true;
+                    potAndPan.GetComponent<PotOnStove>().AddNewIngredient();
 
                     Animator.SetBool("isHolding", false);
                     IsHolding = false;
