@@ -1,6 +1,5 @@
-using System.Collections;  // IEnumerator 사용을 위해 필요함.
-using System.Collections.Generic;  // 일반적인 컬렉션 사용을 위해 필요함.
-using UnityEngine;  // Unity 엔진 관련 클래스와 메서드를 사용하기 위해 필요함.
+using System.Collections;
+using UnityEngine;
 
 public class AutoTrash : MonoBehaviour  // AutoTrash 클래스는 MonoBehaviour를 상속받아 Unity의 컴포넌트로 사용됨.
 {

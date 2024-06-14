@@ -61,14 +61,12 @@ public class PanOnStove : MonoBehaviour
     // 새로운 재료가 팬에 추가될 때 호출되는 메서드
     public void AddNewIngredient()
     {
-        Debug.Log("AddNewIngredient");
         _ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
         inSomething = true;
         
         // 이미 요리된 재료인 경우 반환합니다.
         if (_ingredient.isCooked)
         {
-            Debug.LogWarning("이미 요리된 재료는 추가할 수 없습니다.");
             return;
         }
         
@@ -85,7 +83,6 @@ public class PanOnStove : MonoBehaviour
     {
         if (_cts == null)
         {
-            Debug.Log("start cooking");
             ClearTime();
 
             _cts = new CancellationTokenSource();
@@ -127,7 +124,6 @@ public class PanOnStove : MonoBehaviour
         }
 
         SoundManager.Instance.effectAudioSource.Stop();
-        Debug.Log("Cooking End");
         pfxFire.SetActive(false); // 요리가 끝나면 불을 끕니다.
         UpdateIsIngredientState();
         EndCallBack?.Invoke();
@@ -195,7 +191,6 @@ public class PanOnStove : MonoBehaviour
     // 요리된 재료의 재질을 변경합니다.
     private void ChangeCookedMaterial()
     {
-        Debug.LogError("ChangeCookedMaterial");
         if (_ingredient == null) return;
 
         // 부모 오브젝트에서 MeshFilter와 MeshRenderer를 가져옵니다.
@@ -209,7 +204,6 @@ public class PanOnStove : MonoBehaviour
 
         string meshFileName = meshFilter.sharedMesh.name;
 
-        Debug.Log("메쉬 렌더러 머테리얼 변경~~~~~~~~~~~~~~~~");
         mr.material = meshFileName switch
         {
             "m_ingredients_chicken_sliced_01_0" => friedMaterials[0],

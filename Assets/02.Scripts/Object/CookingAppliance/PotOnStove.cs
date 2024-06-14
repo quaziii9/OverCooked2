@@ -48,16 +48,11 @@ public class PotOnStove : MonoBehaviour
     // 새로운 재료가 냄비에 추가될 때 호출되는 메서드
     public void AddNewIngredient()
     {
-        Debug.Log("AddNewIngredient");
         _ingredient = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
         inSomething = true;
         
         // 이미 요리된 재료인 경우 반환합니다.
-        if (_ingredient.isCooked)
-        {
-            Debug.LogWarning("이미 요리된 재료는 추가할 수 없습니다.");
-            return;
-        }
+        if (_ingredient.isCooked) return;
         
         _stateIsCooked = false; // 새로운 재료가 추가되면 요리 상태를 초기화
         cookingTime = 0; // 요리 시간을 초기화
@@ -68,15 +63,14 @@ public class PotOnStove : MonoBehaviour
     }
 
     // 요리를 시작합니다.
-    public async void StartCooking(UnityAction EndCallBack = null)
+    public async void StartCooking(UnityAction endCallBack = null)
     {
         if (_cts == null)
         {
-            Debug.Log("start cooking");
             ClearTime();
 
             _cts = new CancellationTokenSource();
-            StartCookingAsync(EndCallBack, _cts.Token).Forget();
+            StartCookingAsync(endCallBack, _cts.Token).Forget();
         }
         else if (_pause)
         {
@@ -85,7 +79,7 @@ public class PotOnStove : MonoBehaviour
     }
 
     // 비동기적으로 요리를 시작합니다.
-    private async UniTask StartCookingAsync(UnityAction EndCallBack = null, CancellationToken cancellationToken = default)
+    private async UniTask StartCookingAsync(UnityAction endCallBack = null, CancellationToken cancellationToken = default)
     {
         SoundManager.Instance.PlayEffect("potSizzle");
         if (!inSomething)
@@ -111,14 +105,12 @@ public class PotOnStove : MonoBehaviour
             await UniTask.Delay(450, cancellationToken: cancellationToken); // 요리 시간이 증가하는 간격
             cookingTime += 0.25f;
             UpdateCookingBarValue();
-            Debug.Log("Cooking time: " + cookingTime);
         }
 
         SoundManager.Instance.effectAudioSource.Stop();
-        Debug.Log("Cooking End");
         pfxFire.SetActive(false); // 요리가 끝나면 불을 끕니다.
         UpdateIsIngredientState();
-        EndCallBack?.Invoke();
+        endCallBack?.Invoke();
         OffSlider();
         SoundManager.Instance.PlayEffect("imCooked");
 
