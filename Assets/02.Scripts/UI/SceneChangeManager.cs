@@ -181,7 +181,6 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     {
         VanSingleton.Instance.van.SetActive(false);
 
-        Debug.Log($"씬 로드 완료: {scene.name}");
         switch (scene.name)
         {
             case "WorldMap":
