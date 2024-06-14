@@ -11,17 +11,16 @@ public class MapManager : Singleton<MapManager>
     public GameObject[] levelFlagUi;
     public GameObject[] level;
 
-    void Start()
+    private void Start()
     {
         unlock = new bool[MapManager.Instance.stages.Length + 1];
-        Debug.Log(unlock.Length);
-        Unlocknode();
+        UnlockNode();
         starSum = 0;
         Sum();
         Flip();
     }
 
-    void Flip()
+    private void Flip()
     {
         for (int i = 1; i < stages.Length; i++)
         {
@@ -34,7 +33,7 @@ public class MapManager : Singleton<MapManager>
         }
     }
 
-    void Unlocknode()
+    private void UnlockNode()
     {
         for (int i = 0; i < stages.Length; i++)
         {
@@ -45,7 +44,7 @@ public class MapManager : Singleton<MapManager>
         }
     }
 
-    void Sum()
+    private void Sum()
     {
         foreach (int Star in stages)
         {

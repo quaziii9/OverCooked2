@@ -91,13 +91,13 @@ public class DeathZone : MonoBehaviour
 
     private GameObject GetPrefabToSpawn(string tag)
     {
-        switch (tag)
+        return tag switch
         {
-            case "Plate": return Plate;
-            case "Pan": return Pan;
-            case "Pot": return Pot;
-            default: return null;
-        }
+            "Plate" => Plate,
+            "Pan" => Pan,
+            "Pot" => Pot,
+            _ => null
+        };
     }
 
     private void ResetTransform(GameObject obj, Transform returnPosition, string tag)

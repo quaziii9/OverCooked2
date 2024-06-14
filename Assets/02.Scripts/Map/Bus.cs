@@ -1,7 +1,5 @@
-using EnumTypes;
-using EventLibrary;
 using System.Collections;
-using Unity.VisualScripting;
+using EnumTypes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Pool;
@@ -55,7 +53,7 @@ public class Bus : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (!isBoost && moveInput != Vector2.zero)
         {
@@ -63,18 +61,18 @@ public class Bus : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {    
         if (other.CompareTag("Flag"))
         {
             enterFlagName = other.name;
         }
     }
-    void OnTriggerExit(Collider other)
+
+    private void OnTriggerExit(Collider other)
     {
         enterFlagName = "";
     }
-
 
     public void OnMove(InputValue inputValue)
     {
@@ -111,7 +109,7 @@ public class Bus : MonoBehaviour
         {
             BoostPuff();
             isBoost = true;
-            StartCoroutine("BoostCoroutine");
+            StartCoroutine(nameof(BoostCoroutine));
         }
     }
 
@@ -121,7 +119,7 @@ public class Bus : MonoBehaviour
         {
             BoostPuff();
             isBoost = true;
-            StartCoroutine("BoostCoroutine");
+            StartCoroutine(nameof(BoostCoroutine));
         }
     }
 
@@ -154,7 +152,7 @@ public class Bus : MonoBehaviour
         }
     }
 
-    IEnumerator BoostCoroutine()
+    private IEnumerator BoostCoroutine()
     {
         Rigidbody rb= GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * boostPower, ForceMode.Impulse);
@@ -170,7 +168,7 @@ public class Bus : MonoBehaviour
         //puff.Stop();
     }
 
-    void BoostPuff() // 부스트 퍼프 실행
+    private void BoostPuff() // 부스트 퍼프 실행
     {
         var bust = burstPool.Get();
         bust.transform.position = puffTransform.transform.position;

@@ -41,7 +41,6 @@ public class ScrollMT : MonoBehaviour
         // 매쉬 랜더러와 마테리얼이 제대로 설정되었는지 확인
         if (meshRenderer == null || originalMaterial == null)
         {
-            Debug.LogWarning("Mesh Renderer or Material not assigned properly.");
             return;
         }
 

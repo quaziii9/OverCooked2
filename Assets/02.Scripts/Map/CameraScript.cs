@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-
     public GameObject bus;
     public Transform target; // 타겟 오브젝트의 Transform
 
@@ -13,37 +10,26 @@ public class CameraScript : MonoBehaviour
     public Vector3 startVector;
     public float smoothSpeed = 0.125f; // 카메라 이동 속도
 
-
-    void Start()
+    private void Start()
     {
         startVector = transform.position;
-        BusFind();
+        FindBus();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        BusFind();
-        FlowBus();
+        FollowBus();
     }
 
-    void BusFind()
+    private void FindBus()
     {
-        if (bus == null)
-        {
-            bus = GameObject.FindWithTag("Bus");
-        }
-        else
-        {
-            //Debug.Log("Bus Find Fall!!");
-        }
+        bus = GameObject.FindWithTag("Bus");
     }
-    
-    void FlowBus()
+
+    private void FollowBus()
     {
-       
         offset = bus.transform.position + startVector;
         gameObject.transform.position = new Vector3(offset.x, startVector.y, offset.z);
-
     }
 }

@@ -19,25 +19,22 @@ public class Travelator : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 트레블레이터 위에 올라간 오브젝트가 Rigidbody를 가지고 있는지 확인
-        if (other.attachedRigidbody != null)
+        if (other.attachedRigidbody == null) return;
+
+        if (activeCoroutines.ContainsKey(other.attachedRigidbody)) return;
+        Coroutine moveCoroutine;
+
+        if (other.CompareTag("Player"))
         {
-            if (!activeCoroutines.ContainsKey(other.attachedRigidbody))
-            {
-                Coroutine moveCoroutine;
-
-                if (other.CompareTag("Player"))
-                {
-                    // 플레이어의 경우 별도 처리
-                    moveCoroutine = StartCoroutine(MovePlayer(other.attachedRigidbody));
-                }
-                else
-                {
-                    moveCoroutine = StartCoroutine(MoveObject(other.attachedRigidbody));
-                }
-
-                activeCoroutines[other.attachedRigidbody] = moveCoroutine;
-            }
+            // 플레이어의 경우 별도 처리
+            moveCoroutine = StartCoroutine(MovePlayer(other.attachedRigidbody));
         }
+        else
+        {
+            moveCoroutine = StartCoroutine(MoveObject(other.attachedRigidbody));
+        }
+
+        activeCoroutines[other.attachedRigidbody] = moveCoroutine;
     }
 
     private void OnTriggerExit(Collider other)
@@ -48,14 +45,7 @@ public class Travelator : MonoBehaviour
             StopCoroutine(activeCoroutines[other.attachedRigidbody]);
             activeCoroutines.Remove(other.attachedRigidbody);
 
-            if (other.CompareTag("Player"))
-            {
-                other.attachedRigidbody.velocity = Vector3.zero;
-            }
-            else
-            {
-                other.attachedRigidbody.velocity = Vector3.zero;
-            }
+            other.attachedRigidbody.velocity = Vector3.zero;
         }
     }
 

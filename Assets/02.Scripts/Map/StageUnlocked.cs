@@ -1,19 +1,12 @@
-using System.Collections;
+using EnumTypes;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StageUnlocked : MonoBehaviour
 {
-    public float scaleSpeed = 0.5f;
-    public float minScale = 0.2f;
-    public float midScale = 0.5f;
-    public float maxScale = 1.0f;   
     public GameObject[] childObjects;
     public GameObject[] star;
-    public GameObject[] level;
-    public GameObject[] levelFlag;
-
-    //[SerializeField]
+    
     public int StageNum;
     public int StarNum;
     public Sprite YellowStar;
@@ -21,7 +14,7 @@ public class StageUnlocked : MonoBehaviour
 
     public GameObject clickButton;   // 모바일 입장 버튼
 
-    void Start()
+    private void Start()
     {
         childObjects = new GameObject[transform.childCount];
         for (int i = 0; i < transform.childCount; i++)
@@ -32,7 +25,7 @@ public class StageUnlocked : MonoBehaviour
         SetStar();
     }
 
-    void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         // 해당 GameObject에 "Bus" 태그가 onTriggerEnter되면
         if (other.CompareTag("Bus"))
@@ -42,7 +35,7 @@ public class StageUnlocked : MonoBehaviour
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         // 해당 GameObject에 "Bus" 태그가 onTriggerExit되면
         if (other.CompareTag("Bus"))
@@ -54,85 +47,61 @@ public class StageUnlocked : MonoBehaviour
     }
 
     // 자식 GameObject들의 활성화 여부를 설정하는 함수
-    void SetChildrenActive(bool active)
+    private void SetChildrenActive(bool active)
     {
-        if (MapManager.Instance.stages[StageNum] > 0)//스테이지매니저 내부의 자신의 번호와 동일한 스테이지의 값을조회
+        switch (MapManager.Instance.stages[StageNum])
         {
-            foreach (GameObject childObject in childObjects) //자식들을 조회한뒤에 childObject중 unlock를 활성화
+            //스테이지매니저 내부의 자신의 번호와 동일한 스테이지의 값을조회
+            case > 0:
             {
-                if (childObject.name == "unlock")
+                foreach (GameObject childObject in childObjects) //자식들을 조회한뒤에 childObject중 unlock를 활성화
                 {
-                    childObject.SetActive(active);
-                    clickButton.SetActive(true);
-                    CheckSpace();
+                    if (childObject.name == "unlock")
+                    {
+                        childObject.SetActive(active);
+                        clickButton.SetActive(true);
+                        CheckSpace();
+                    }
                 }
+
+                break;
             }
-        }
-        else if (MapManager.Instance.stages[StageNum] <= 0)
-        {
-            foreach (GameObject childObject in childObjects) //자식들을 조회한뒤에 childObject중 lock를 활성화
+            case <= 0:
             {
-                if (childObject.name == "lock")
+                foreach (GameObject childObject in childObjects) //자식들을 조회한뒤에 childObject중 lock를 활성화
                 {
-                    childObject.SetActive(active);
+                    if (childObject.name == "lock")
+                    {
+                        childObject.SetActive(active);
+                    }
                 }
+
+                break;
             }
         }
     }
 
-    public void CheckSpace()
+    private void CheckSpace()
     {
-      if (Input.GetKeyDown(KeyCode.Space) && isLoading == false)
-      {
-          isLoading = true;
-          UIManager.Instance.mapType = EnumTypes.MapType.Tuto;
-          UIManager.Instance.sceneType = EnumTypes.SceneType.StageMap;
-          UIManager.Instance.EnterLoadingMapUI();
-      }  
+        if (!Input.GetKeyDown(KeyCode.Space) || isLoading) return;
+        
+        isLoading = true;
+        UIManager.Instance.mapType = MapType.Tuto;
+        UIManager.Instance.sceneType = SceneType.StageMap;
+        UIManager.Instance.EnterLoadingMapUI();
     }
 
-    void SetStar()
+    private void SetStar()
     {
-        if (StarNum > 0)
+        if (StarNum <= 0) return;
         {
+            for (int i = 0; i < StarNum; i++)
             {
-                for (int i = 0; i < StarNum; i++)
-                {
-                    Image starSprite = star[i].GetComponent<Image>();
-                    Debug.Log(i);
-                    Debug.Log(StarNum);
-                    starSprite.sprite = YellowStar;
-                }
+                Image starSprite = star[i].GetComponent<Image>();
+                Debug.Log(i);
+                Debug.Log(StarNum);
+                starSprite.sprite = YellowStar;
             }
-        }
-    }
-
-    IEnumerator ScaleDown()
-    {
-        while (childObjects[0].transform.localScale.magnitude > minScale)
-        {
-            // StageUI 태그를 가진 자식 GameObject들의 스케일을 축소
-            foreach (GameObject stageUIObject in childObjects)
-            {
-                stageUIObject.transform.localScale -= Vector3.one * scaleSpeed * Time.deltaTime;
-            }
-
-            yield return null;
-        }
-    }
-
-    IEnumerator ScaleUp()
-    {
-        // 최대 크기에 도달할 때까지 반복
-        while (childObjects[0].transform.localScale.magnitude < maxScale)
-        {
-            // StageUI 태그를 가진 자식 GameObject들의 스케일을 확대
-            foreach (GameObject stageUIObject in childObjects)
-            {
-                stageUIObject.transform.localScale += Vector3.one * scaleSpeed * Time.deltaTime;
-            }
-
-            yield return null;
         }
     }
 }

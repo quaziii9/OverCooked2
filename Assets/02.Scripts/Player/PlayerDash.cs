@@ -5,32 +5,25 @@ using UnityEngine.UI;
 
 public class PlayerDash : MonoBehaviour
 {
-    [Header("References")]
-    public Transform orientation;
+    [Header("References")] public Transform orientation;
     private Rigidbody rb;
 
-    [Header("Dashing")]
-    public float dashForce;
+    [Header("Dashing")] public float dashForce;
     public float dashDuration;
     private bool isDashing = false;
 
-    [Header("Settings")]
-    public bool allowAllDirections = true;
+    [Header("Settings")] public bool allowAllDirections = true;
     public bool disableGravity = false;
     public bool resetVel = true;
 
-    [Header("Cooldown")]
-    public float dashCd;
+    [Header("Cooldown")] public float dashCd;
     private float dashCdTimer;
 
-    [Header("Dash Curve")]
-    public AnimationCurve dashCurve; // AnimationCurve를 대시의 세기 변화에 사용
+    [Header("Dash Curve")] public AnimationCurve dashCurve; // AnimationCurve를 대시의 세기 변화에 사용
 
-    [Header("Player Master Controller")]
-    public PlayerMasterController2 masterController;
+    [Header("Player Master Controller")] public PlayerMasterController2 masterController;
 
-    [Header("Mobile Button")]
-    public Button dashButton; // UI 버튼 참조
+    [Header("Mobile Button")] public Button dashButton; // UI 버튼 참조
 
     private void Start()
     {
@@ -54,7 +47,8 @@ public class PlayerDash : MonoBehaviour
 
     public void OnDash(InputValue inputButton)
     {
-        if (inputButton.isPressed && !isDashing && dashCdTimer <= 0 && masterController.currentPlayer == this.gameObject)
+        if (inputButton.isPressed && !isDashing && dashCdTimer <= 0 &&
+            masterController.currentPlayer == this.gameObject)
         {
             SoundManager.Instance.PlayEffect("dash");
             Dash();
@@ -72,16 +66,13 @@ public class PlayerDash : MonoBehaviour
 
     private void Dash()
     {
-        
         if (dashCdTimer > 0 || isDashing)
             return;
 
         dashCdTimer = dashCd;
-        if (disableGravity)
-            rb.useGravity = false;
+        if (disableGravity) rb.useGravity = false;
 
-        if (resetVel)
-            rb.velocity = Vector3.zero;
+        if (resetVel) rb.velocity = Vector3.zero;
 
         StartCoroutine(ExecuteDash());
     }

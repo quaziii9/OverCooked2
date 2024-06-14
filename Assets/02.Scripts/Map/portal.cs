@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class portal : MonoBehaviour
+public class Portal : MonoBehaviour
 {
     public Transform targetPortal;
     public bool isTeleport;

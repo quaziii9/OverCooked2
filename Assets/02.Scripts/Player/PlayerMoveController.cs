@@ -22,6 +22,8 @@ public class PlayerMoveController : MonoBehaviour
     [Header("State")]
     [SerializeField] private bool isGrounded;
     [SerializeField] private bool isOnStairs;
+    
+    private static readonly int IsWalking = Animator.StringToHash("isWalking");
 
     private void Start()
     {
@@ -34,11 +36,11 @@ public class PlayerMoveController : MonoBehaviour
         if (moveInput == Vector2.zero)
         {
             rb.velocity = Vector3.zero;
-            animator.SetBool("isWalking", false);
+            animator.SetBool(IsWalking, false);
         }
         else
         {
-            animator.SetBool("isWalking", true);
+            animator.SetBool(IsWalking, true);
         }
     }
 
@@ -46,13 +48,10 @@ public class PlayerMoveController : MonoBehaviour
     {
         puffCount++;
 
-        if (moveInput != Vector2.zero)
+        if (moveInput != Vector2.zero && puffCount >= puffThreshold)
         {
-            if (puffCount >= puffThreshold)
-            {
-                PlayerPuff.Instance.MovePuff(transform);
-                puffCount = 0;
-            }
+            PlayerPuff.Instance.MovePuff(transform);
+            puffCount = 0;
         }
 
         // 매 초마다 소리 재생
@@ -76,8 +75,7 @@ public class PlayerMoveController : MonoBehaviour
 
     private void UpdateGroundAndStairStatus()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, rayDistance))
+        if (Physics.Raycast(transform.position, Vector3.down, out var hit, rayDistance))
         {
             isGrounded = hit.collider.CompareTag("Floor") || hit.collider.CompareTag("Stair");
             isOnStairs = hit.collider.CompareTag("Stair");
@@ -106,7 +104,7 @@ public class PlayerMoveController : MonoBehaviour
     {
         if (!isGrounded)
         {
-            rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplier * Time.fixedDeltaTime;
+            rb.velocity += Vector3.up * (Physics.gravity.y * fallMultiplier * Time.fixedDeltaTime);
         }
     }
 
