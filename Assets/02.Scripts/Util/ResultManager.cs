@@ -1,7 +1,10 @@
 using DG.Tweening.Core.Easing;
+using EnumTypes;
+using EventLibrary;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -44,13 +47,19 @@ public class ResultManager : MonoBehaviour
         Invoke("ShowSuccess", 1f);
         Invoke("SetStar", 2f);
     }
+
+    private void Start()
+    {
+        SoundManager.Instance.ResultBgm();
+    }
+
     private void Update()
     {
-        //if (canSkip && Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    SoundManager.Instance.WantChange = true;
-        //    LoadingSceneManager.LoadScene("Map");
-        //}
+        if (canSkip && Input.GetKeyDown(KeyCode.Space))
+        {
+            UIManager.Instance.EnterLoadingKeyUI();
+            canSkip = false;
+        }
     }
     private void SetStar()
     {
@@ -63,7 +72,7 @@ public class ResultManager : MonoBehaviour
             }
             else
             {
-                canSkip = true;
+                //canSkip = true;
             }
         }
         //else if (StageManager.Instance.playStage == StageManager.State.stage2)
@@ -102,7 +111,7 @@ public class ResultManager : MonoBehaviour
             time += 0.01f;
             yield return new WaitForSeconds(0.005f);
         }
-        SoundManager.Instance.PlayEffect("star1");
+        SoundManager.Instance.PlayEffect("RoundResult_Star1");
         if (StageManager.Instance.totalMoney > limits[i].twoStarLimit)
         {
             if (i == 0)
@@ -122,7 +131,7 @@ public class ResultManager : MonoBehaviour
         }
         else
         {
-            canSkip = true;
+            //canSkip = true;
         }
     }
     IEnumerator BiggerStar1(GameObject star, int i)
@@ -135,7 +144,7 @@ public class ResultManager : MonoBehaviour
             time += 0.01f;
             yield return new WaitForSeconds(0.005f);
         }
-        SoundManager.Instance.PlayEffect("star2");
+        SoundManager.Instance.PlayEffect("RoundResult_Star2");
         if (StageManager.Instance.totalMoney > limits[i].threeStarLimit)
         {
             if (i == 0)
@@ -154,7 +163,7 @@ public class ResultManager : MonoBehaviour
         }
         else
         {
-            canSkip = true;
+            //canSkip = true;
         }
     }
     IEnumerator BiggerStar2(GameObject star)
@@ -167,9 +176,9 @@ public class ResultManager : MonoBehaviour
             time += 0.01f;
             yield return new WaitForSeconds(0.005f);
         }
-        SoundManager.Instance.PlayEffect("star3");
+        SoundManager.Instance.PlayEffect("RoundResult_Star3");
         yield return null;
-        canSkip = true;
+        //canSkip = true;
     }
     private void SetScoreLimit()
     {
@@ -180,6 +189,7 @@ public class ResultManager : MonoBehaviour
             txtStars[2].text = limits[0].threeStarLimit.ToString();
             successMoney = limits[0].successMoney;
         }
+
         //else if (StageManager.Instance.playStage == StageManager.State.stage2)
         //{
         //    txtStars[0].text = limits[1].oneStarLimit.ToString();
@@ -200,45 +210,52 @@ public class ResultManager : MonoBehaviour
     {
         success.transform.GetChild(0).GetComponent<Text>().text = "배달된 주문 x " + StageManager.Instance.success;
         success.transform.GetChild(0).gameObject.SetActive(true);
-        Invoke("ShowSuccessMoney", 1f);
+        Invoke("ShowSuccessMoney", .5f);
+        SoundManager.Instance.PlayEffect("RoundResults_Description");
     }
     private void ShowSuccessMoney()
     {
         success.transform.GetChild(1).GetComponent<Text>().text = (StageManager.Instance.successMoney).ToString();
         success.transform.GetChild(1).gameObject.SetActive(true);
-        Invoke("ShowTip", 1f);
+        Invoke("ShowTip", .5f);
     }
     private void ShowTip()
     {
         tip.transform.GetChild(0).gameObject.SetActive(true);
-        Invoke("ShowTipMoney", 1f);
+        Invoke("ShowTipMoney", .5f);
+        SoundManager.Instance.PlayEffect("RoundResults_Description");
     }
     private void ShowTipMoney()
     {
         tip.transform.GetChild(1).GetComponent<Text>().text = (StageManager.Instance.tipMoney).ToString();
         tip.transform.GetChild(1).gameObject.SetActive(true);
-        Invoke("ShowFail", 1f);
+        Invoke("ShowFail", .5f);
     }
     private void ShowFail()
     {
         fail.transform.GetChild(0).GetComponent<Text>().text = "실패한 주문 x " + StageManager.Instance.fail.ToString();
         fail.transform.GetChild(0).gameObject.SetActive(true);
-        Invoke("ShowFailMoney", 1f);
+        Invoke("ShowFailMoney", .5f);
+        SoundManager.Instance.PlayEffect("RoundResults_Description");
+
     }
     private void ShowFailMoney()
     {
         fail.transform.GetChild(1).GetComponent<Text>().text = "-" + StageManager.Instance.failMoney.ToString();
         fail.transform.GetChild(1).gameObject.SetActive(true);
-        Invoke("ShowTotal", 1f);
+        Invoke("ShowTotal", .5f);
     }
     private void ShowTotal()
     {
         total.transform.GetChild(0).gameObject.SetActive(true);
-        Invoke("ShowTotalMoney", 1f);
+        Invoke("ShowTotalMoney", .5f);
     }
     private void ShowTotalMoney()
     {
         total.transform.GetChild(1).GetComponent<Text>().text = StageManager.Instance.totalMoney.ToString();
         total.transform.GetChild(1).gameObject.SetActive(true);
+        SoundManager.Instance.PlayEffect("RoundResults_FinalScore");
+        canSkip = true;
+
     }
 }
