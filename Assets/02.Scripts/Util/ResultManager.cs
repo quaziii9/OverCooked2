@@ -55,11 +55,23 @@ public class ResultManager : MonoBehaviour
 
     private void Update()
     {
-        if (canSkip && Input.GetKeyDown(KeyCode.Space))
+        if (Application.platform == RuntimePlatform.Android)
         {
-            UIManager.Instance.EnterLoadingKeyUI();
-            canSkip = false;
+            if (canSkip && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                UIManager.Instance.EnterLoadingKeyUI();
+                canSkip = false;
+            }
         }
+        else
+        {
+            if (canSkip && Input.GetKeyDown(KeyCode.Space))
+            {
+                UIManager.Instance.EnterLoadingKeyUI();
+                canSkip = false;
+            }
+        }
+       
     }
     private void SetStar()
     {
