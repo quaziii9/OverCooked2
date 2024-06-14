@@ -102,7 +102,6 @@ public class GameManager : MonoBehaviour
         InitializeStageManager();               // 스테이지 매니저 초기화
         InitializeGameSettingsAsync().Forget(); // 게임 세팅 초기화
     }
-
     public void InitSceneLoad()
     {
         recipeOff = false;
@@ -203,7 +202,7 @@ public class GameManager : MonoBehaviour
             {
                 ScaleUp(ready.transform);
             }
-            else if (startTime > 4 && playOnce && ready.transform.localScale.x >= 1 && !playTwice)
+            else if (startTime > 3 && playOnce && ready.transform.localScale.x >= 1 && !playTwice)
             {
                 ShowGoMessage();
             }
@@ -211,7 +210,7 @@ public class GameManager : MonoBehaviour
             {
                 ScaleUp(go.transform);
             }
-            else if (startTime > 6 && playTwice && go.transform.localScale.x > 1)
+            else if (startTime > 5 && playTwice && go.transform.localScale.x > 1)
             {
                 StartGame();
             }
@@ -290,18 +289,23 @@ public class GameManager : MonoBehaviour
         if (gameTime <= 0)
         {
             EndGame();
+
         }
     }
 
     private void AdjustBgmPitch()
     {
-        if (gameTime < 30 && SoundManager.Instance.bgmAudioSource.pitch == 1)
+        if (gameTime < 30 && SoundManager.Instance.stageAudioSource.pitch == 1)
         {
-            SoundManager.Instance.bgmAudioSource.pitch = 1.5f;
+            SoundManager.Instance.stageAudioSource.pitch = 1.2f;
         }
-        else if (gameTime < 15 && SoundManager.Instance.bgmAudioSource.pitch == 1.5f)
+        else if (gameTime < 15 && SoundManager.Instance.stageAudioSource.pitch == 1.2f)
         {
-            SoundManager.Instance.bgmAudioSource.pitch = 2;
+            SoundManager.Instance.stageAudioSource.pitch = 1.4f;
+        }
+        else if (gameTime <= 0)
+        {
+            SoundManager.Instance.stageAudioSource.pitch = 1f;
         }
     }
 
@@ -309,10 +313,10 @@ public class GameManager : MonoBehaviour
     {
         if (!isDone)
         {
-            SoundManager.Instance.bgmAudioSource.pitch = 1;
-            SoundManager.Instance.bgmAudioSource.Stop();
-            //SoundManager.Instance.stageAudioSource.Stop();
-            //SoundManager.Instance.stageBackGroundAudioSource.Stop();
+            Debug.Log("isdone");
+            SoundManager.Instance.stageAudioSource.pitch = 1f;
+            SoundManager.Instance.stageAudioSource.Stop();
+            SoundManager.Instance.stageBackGroundAudioSource.Stop();
             SoundManager.Instance.PlayEffect("timesUp");
             Time.timeScale = 0;
             if (StageManager.Instance != null)
@@ -622,6 +626,7 @@ public class GameManager : MonoBehaviour
         if (StageManager.Instance != null)
         {
             StageManager.Instance.fail += 1;
+            SoundManager.Instance.PlayEffect("recipeTimeOut");
         }
 
         int index = currentOrderUI.IndexOf(whichUI);

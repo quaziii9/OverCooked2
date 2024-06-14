@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using EnumTypes;
 using EventLibrary;
@@ -82,6 +83,18 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip potSizzle;
     public AudioClip move;
     public AudioClip timesUp;
+    public AudioClip beep;
+
+
+    [Header("Result Sound Effect")]
+    public AudioClip LevelVictorySound;
+    public AudioClip RoundResult;
+    public AudioClip RoundResult_Description;
+    public AudioClip RoundResult_FinalScore;
+    public AudioClip RoundResult_Star1;
+    public AudioClip RoundResult_Star2;
+    public AudioClip RoundResult_Star3;
+
 
     [Header("Van")]
     public AudioClip boing;
@@ -442,11 +455,17 @@ public class SoundManager : Singleton<SoundManager>
         vanAudioSource.PlayOneShot(vanShutter);
     }
 
-    public void ResultBgm()
+    public async void ResultBgm()
     {
+        bgmChangeAudioSource.volume = volumeBGM;
+        bgmChangeAudioSource.PlayOneShot(LevelVictorySound);
 
+        await Task.Delay((int)(5f));
+
+        bgmChangeAudioSource.clip = RoundResult;
+        bgmChangeAudioSource.loop = true;
+        bgmChangeAudioSource.Play();
     }
-
 
     public void PlayEffect(string effect)
     {
@@ -512,11 +531,30 @@ public class SoundManager : Singleton<SoundManager>
             case "timesUp":
                 effectAudioSource.clip = timesUp;
                 break;
+            case "beep":
+                effectAudioSource.clip = beep;
+                break;
             case "boing":
                 effectAudioSource.clip = boing;
                 effectAudioSource.volume = volumeEffect;
                 effectAudioSource.PlayOneShot(boing);
                 break;
+            case "RoundResults_Description":
+                effectAudioSource.clip = RoundResult_Description;
+                break;
+            case "RoundResults_FinalScore":
+                effectAudioSource.clip = RoundResult_FinalScore;
+                break;
+            case "RoundResult_Star1":
+                effectAudioSource.clip = RoundResult_Star1;
+                break;
+            case "RoundResult_Star2":
+                effectAudioSource.clip = RoundResult_Star2;
+                break;
+            case "RoundResult_Star3":
+                effectAudioSource.clip = RoundResult_Star3;
+                break;
+
         }
         effectAudioSource.volume = volumeEffect;
         effectAudioSource.PlayOneShot(effectAudioSource.clip);

@@ -121,7 +121,6 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         }
         else
         {
-            Debug.Log("scenetype success");
             if (SoundManager.Instance.bgmChangeAudioSource.isPlaying)
             {
                 SoundManager.Instance.FadeOutAudio(SoundManager.Instance.bgmChangeAudioSource, 0);
