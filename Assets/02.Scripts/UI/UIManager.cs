@@ -107,12 +107,8 @@ public class UIManager : Singleton<UIManager>
 
     private void Update()
     {
-        //Debug.Log(sceneType);
-        //Debug.Log(mapType);
         HandleEscapeInput();
     }
-
-
 
     #region Popup
     private void ToggleUI(GameObject uiElement, bool state)
