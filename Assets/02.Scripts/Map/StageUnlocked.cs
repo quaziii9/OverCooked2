@@ -86,7 +86,7 @@ public class StageUnlocked : MonoBehaviour
         if (!Input.GetKeyDown(KeyCode.Space) || isLoading) return;
         
         isLoading = true;
-        UIManager.Instance.mapType = MapType.Tuto;
+        UIManager.Instance.mapType = MapType.Stage2_5;
         UIManager.Instance.sceneType = SceneType.StageMap;
         UIManager.Instance.EnterLoadingMapUI();
     }

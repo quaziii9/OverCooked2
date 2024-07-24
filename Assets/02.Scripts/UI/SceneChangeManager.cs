@@ -2,8 +2,6 @@ using Cinemachine;
 using Cysharp.Threading.Tasks;
 using EnumTypes;
 using EventLibrary;
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

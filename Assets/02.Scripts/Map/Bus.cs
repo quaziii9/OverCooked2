@@ -143,7 +143,7 @@ public class Bus : MonoBehaviour
                 break;
             case "Stage3 UI":
                 UIManager.Instance.sceneType = SceneType.StageMap;
-                UIManager.Instance.mapType = MapType.Stage3_3;
+                UIManager.Instance.mapType = MapType.Stage2_5;
                 UIManager.Instance.EnterLoadingMapUI();
                 break;
             default:
