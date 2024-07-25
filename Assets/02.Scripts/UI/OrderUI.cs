@@ -25,6 +25,7 @@ public class OrderUI : MonoBehaviour
         timer = transform.GetChild(2).GetChild(0).GetComponent<Slider>();
         _duration = timer.maxValue / 2 * 30;
         _currentColor = _start;
+        goLeft = true;
     }
 
     private void Update()

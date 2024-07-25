@@ -26,7 +26,6 @@ public class LoadData : Singleton<LoadData>
             string jsonData = JsonUtility.ToJson(optionData, true);
             string path = GetFilePath();
             File.WriteAllText(path, jsonData);
-            Debug.Log("옵션 데이터 저장 성공");
         }
         catch (System.Exception ex)
         {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +5,12 @@ public class MobileSetrResolution : MonoBehaviour
 {
     public CanvasScaler canvasScaler;
 
-    void Start()
+    private void Start()
     {
         AdjustCanvasScaler();
     }
 
-    void AdjustCanvasScaler()
+    private void AdjustCanvasScaler()
     {
         if (Application.platform == RuntimePlatform.Android)
         {

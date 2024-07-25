@@ -98,8 +98,6 @@ public class StageUnlocked : MonoBehaviour
             for (int i = 0; i < StarNum; i++)
             {
                 Image starSprite = star[i].GetComponent<Image>();
-                Debug.Log(i);
-                Debug.Log(StarNum);
                 starSprite.sprite = YellowStar;
             }
         }
