@@ -16,13 +16,14 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.WorldMapOpen, ChangeToWorldMap);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.IntroMapOpen, ChangeToIntroMap);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.BattleRoomOpen, ChangeToBattleLobby);
-        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.TestStageMapOpen, ChangeToTestStage);
-        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.Stage1_4MapOpen, ChangeToStage1_4);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.Stage2_5MapOpen, ChangeToStage2_5);
-        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.Stage3_3MapOpen, ChangeToStage3_3);
-        EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.StageWizardMapOpen, ChangeToStageWizard);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.StageMineMapOpen, ChangeToStageMine);
         EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.ResultOpen, ChangeToResult);
+        
+        // EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.TestStageMapOpen, ChangeToTestStage);
+        //EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.Stage3_3MapOpen, ChangeToStage3_3);
+        //EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.StageWizardMapOpen, ChangeToStageWizard);
+        //EventManager<SceneChangeEvent>.StartListening(SceneChangeEvent.Stage1_4MapOpen, ChangeToStage1_4);
     }
 
     private void OnDisable()

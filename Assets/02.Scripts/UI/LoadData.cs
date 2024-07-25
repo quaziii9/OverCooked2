@@ -19,10 +19,10 @@ public class LoadData : Singleton<LoadData>
     {
         try
         {
-            optionData.saveWindowMode = UIManager.Instance.windowScreen;
             optionData.saveResolutionNum = UIManager.Instance.resolutionArrNum;
-            optionData.saveBgmVolume = SoundManager.Instance.volumeBGM;
+            optionData.saveWindowMode = UIManager.Instance.windowScreen;
             optionData.saveEffectVolume = SoundManager.Instance.volumeEffect;
+            optionData.saveBgmVolume = SoundManager.Instance.volumeBGM;
             string jsonData = JsonUtility.ToJson(optionData, true);
             string path = GetFilePath();
             File.WriteAllText(path, jsonData);
@@ -59,19 +59,7 @@ public class LoadData : Singleton<LoadData>
         }
     }
 
-    // 기본 옵션 데이터 초기화
-    private void InitializeDefaultOptionData()
-    {
-        optionData = new OptionData
-        {
-            saveWindowMode = true,
-            saveResolutionNum = 2,
-            saveBgmVolume = 0.2f,
-            saveEffectVolume = 0.2f
-        };
-        UIManager.Instance.JsonUILoad();
-        UIManager.Instance.SetResolution();
-    }
+  
 
     // 옵션 데이터를 저장할 파일 경로 반환
     private string GetFilePath()
@@ -87,10 +75,18 @@ public class LoadData : Singleton<LoadData>
         }
     }
 
-    // 애플리케이션 종료 시 옵션 데이터 저장
-    private void OnApplicationQuit()
+    // 기본 옵션 데이터 초기화
+    private void InitializeDefaultOptionData()
     {
-        SaveOptionDataToJson();
+        optionData = new OptionData
+        {
+            saveWindowMode = true,
+            saveResolutionNum = 2,
+            saveBgmVolume = 0.2f,
+            saveEffectVolume = 0.2f
+        };
+        UIManager.Instance.JsonUILoad();
+        UIManager.Instance.SetResolution();
     }
 
     [System.Serializable]
@@ -100,5 +96,11 @@ public class LoadData : Singleton<LoadData>
         public int saveResolutionNum;
         public float saveBgmVolume;
         public float saveEffectVolume;
+    }
+
+    // 애플리케이션 종료 시 옵션 데이터 저장
+    private void OnApplicationQuit()
+    {
+        SaveOptionDataToJson();
     }
 }
