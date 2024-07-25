@@ -1,6 +1,5 @@
 using EnumTypes;
 using EventLibrary;
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class InGameCanvas : MonoBehaviour

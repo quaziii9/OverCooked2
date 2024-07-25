@@ -92,19 +92,18 @@ public class GameManager : MonoBehaviour
     private Color endColor = new Color(215 / 255f, 11 / 255f, 0, 1f); // 빨강색
     private Color currentColor; // 현재 색상
 
-    private bool recipeOff = false;
+    private bool _recipeOff;
+    private bool _isAlreadyStart;
 
     protected void Awake()
     {
-       // base.Awake();
-
         InitializeVariables();                  // 변수 초기화
         InitializeStageManager();               // 스테이지 매니저 초기화
         InitializeGameSettingsAsync().Forget(); // 게임 세팅 초기화
     }
     public void InitSceneLoad()
     {
-        recipeOff = false;
+        _recipeOff = false;
         InitializeVariables();                  // 변수 초기화
         InitializeStageManager();               // 스테이지 매니저 초기화
         InitializeGameSettingsAsync().Forget(); // 게임 세팅 초기화
@@ -125,7 +124,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleGameStartEvent()
     {
-        recipeOff = true;
+        _recipeOff = true;
     }
 
     private void InitializeVariables()
@@ -135,7 +134,6 @@ public class GameManager : MonoBehaviour
         timeSlider.maxValue = gameTime;
         timeSlider.value = timeSlider.maxValue;
     }
-
 
     private void InitializeStageManager()
     {
@@ -179,7 +177,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (recipeOff == false) return;
+        if (_recipeOff == false) return; // 레시피 꺼지면
 
         HandleGameStart();
         HandleGamePause();
@@ -188,6 +186,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleGameStart()
     {
+        if (_isAlreadyStart) return;
         if (isPaused && !startSetting)
         {
             ToClock();
@@ -212,11 +211,13 @@ public class GameManager : MonoBehaviour
             }
             else if (startTime > 5 && playTwice && go.transform.localScale.x > 1)
             {
+                if (_isAlreadyStart) return;
                 StartGame();
             }
         }
         else if (startSetting && !once)
         {
+            if (_isAlreadyStart) return;
             StartGame();
         }
     }
@@ -238,6 +239,9 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
+        if (_isAlreadyStart) return; // 게임이 이미 시작되었는지 확인
+        _isAlreadyStart = true; // 게임 시작 상태로 변경
+
         EventManager<GameEvent>.TriggerEvent(GameEvent.MovingCart);
         if (UIManager.Instance.mapType == MapType.Stage2_5)
         {
@@ -248,6 +252,7 @@ public class GameManager : MonoBehaviour
         startSetting = true;
         Time.timeScale = 1;
         once = true;
+        
         Invoke(nameof(MakeOrder), 0.5f);
         Invoke(nameof(MakeOrder), 5f);
         Invoke(nameof(MakeOrder), 30f);
@@ -269,8 +274,7 @@ public class GameManager : MonoBehaviour
 
     private void UpdateGameTime()
     {
-        if(startSetting == true)
-            gameTime -= Time.deltaTime;
+        if(startSetting == true) gameTime -= Time.deltaTime;
         ToClock();
 
         AdjustBgmPitch();

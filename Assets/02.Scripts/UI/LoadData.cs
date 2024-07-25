@@ -26,11 +26,10 @@ public class LoadData : Singleton<LoadData>
             string jsonData = JsonUtility.ToJson(optionData, true);
             string path = GetFilePath();
             File.WriteAllText(path, jsonData);
-            Debug.Log("옵션 데이터 저장 성공");
         }
         catch (System.Exception ex)
         {
-            Debug.LogError($"옵션 데이터 저장 실패: {ex.Message}");
+            // Debug.LogError($"옵션 데이터 저장 실패: {ex.Message}");
         }
     }
 
@@ -43,19 +42,19 @@ public class LoadData : Singleton<LoadData>
         {
             try
             {
-                Debug.Log("옵션 데이터 불러오기 성공");
+                // Debug.Log("옵션 데이터 불러오기 성공");
                 string jsonData = File.ReadAllText(path);
                 optionData = JsonUtility.FromJson<OptionData>(jsonData);
             }
             catch (System.Exception ex)
             {
-                Debug.LogError($"옵션 데이터 불러오기 실패: {ex.Message}");
+                // Debug.LogError($"옵션 데이터 불러오기 실패: {ex.Message}");
                 InitializeDefaultOptionData();
             }
         }
         else
         {
-            Debug.Log("옵션 데이터 파일이 존재하지 않습니다. 기본 옵션 데이터를 생성합니다.");
+            // Debug.Log("옵션 데이터 파일이 존재하지 않습니다. 기본 옵션 데이터를 생성합니다.");
             InitializeDefaultOptionData();
         }
     }

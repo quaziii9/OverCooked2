@@ -76,16 +76,16 @@ public class DeathZone : MonoBehaviour
                 newObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 returnPosition.parent.GetChild(0).GetComponent<ObjectHighlight>().onSomething = true;
 
-                Debug.Log($"{tag}가 반환되었습니다.");
+                // Debug.Log($"{tag}가 반환되었습니다.");
             }
             else
             {
-                Debug.LogWarning($"{tag}의 프리팹이 설정되지 않았습니다.");
+                // Debug.LogWarning($"{tag}의 프리팹이 설정되지 않았습니다.");
             }
         }
         else
         {
-            Debug.LogWarning($"{tag}의 반환 위치를 찾을 수 없습니다.");
+            // Debug.LogWarning($"{tag}의 반환 위치를 찾을 수 없습니다.");
         }
     }
 
