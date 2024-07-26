@@ -41,6 +41,12 @@ public class PlayerInteractController : MonoBehaviour
     public Button cookButton; // 모바일 요리/던지기 버튼
 
     private Vector3 _placeTransform = Vector3.zero;
+    
+    // 애니메이터 파라미터 캐시 처리
+    private static readonly int Holding = Animator.StringToHash("isHolding");
+    private static readonly int StartCut = Animator.StringToHash("startCut");
+    private static readonly int Property = Animator.StringToHash("throw");
+    private static readonly int CanCut = Animator.StringToHash("canCut");
 
     private void Awake()
     {
@@ -172,7 +178,7 @@ public class PlayerInteractController : MonoBehaviour
         return false;
     }
 
-    bool ShouldStartCutting()
+    private bool ShouldStartCutting()
     {
         return objectHighlight.objectType == ObjectHighlight.ObjectType.Board &&
                interactObject.transform.parent.childCount > 2 &&
@@ -187,7 +193,7 @@ public class PlayerInteractController : MonoBehaviour
                Ingredient.IngredientType.Tortilla;
     }
 
-    void StartCuttingProcess()
+    private void StartCuttingProcess()
     {
         var cuttingBoard = interactObject.transform.GetChild(0).GetComponent<CuttingBoard>();
         var ingredient = cuttingBoard.transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Ingredient>();
@@ -197,17 +203,16 @@ public class PlayerInteractController : MonoBehaviour
             GameObject ingredientObj = interactObject.transform.parent.GetChild(2).GetChild(0).gameObject;
             MeshFilter meshFilter = ingredientObj.transform.GetComponent<MeshFilter>();
             string meshFileName = meshFilter.sharedMesh.name;
-            if (meshFileName.Equals("m_ingredients_chicken_sliced_01_0") ||
-                meshFileName.Equals("m_ingredients_meat_sliced_01_0"))
+            if (meshFileName.Equals("m_ingredients_chicken_sliced_01_0") || meshFileName.Equals("m_ingredients_meat_sliced_01_0"))
                 
             cuttingBoard.Pause = false;
             cuttingBoard.CuttingTime = 0;
             cuttingBoard.StartCutting1();
-            Animator.SetTrigger("startCut");
+            Animator.SetTrigger(StartCut);
         }
         else if (cuttingBoard.Pause) // 실행되다 만거라면
         {
-            Animator.SetTrigger("startCut");
+            Animator.SetTrigger(StartCut);
             cuttingBoard.PauseSlider(false);
         }
     }
@@ -233,18 +238,18 @@ public class PlayerInteractController : MonoBehaviour
         SoundManager.Instance.PlayEffect("throwItem");
     }
 
-    void SetThrowAnimation()
+    private void SetThrowAnimation()
     {
-        Animator.SetTrigger("throw");
+        Animator.SetTrigger(Property);
     }
 
-    void UpdateHoldingStatus(bool status)
+    private void UpdateHoldingStatus(bool status)
     {
         IsHolding = status;
-        Animator.SetBool("isHolding", IsHolding);
+        Animator.SetBool(Holding, IsHolding);
     }
 
-    void AdjustIngredientPosition()
+    private void AdjustIngredientPosition()
     {
         Transform ingredient = GetIngredientTransform();
         ingredient.localPosition += new Vector3(0, 0.3f, 0);
@@ -255,7 +260,7 @@ public class PlayerInteractController : MonoBehaviour
         return transform.GetChild(1).GetChild(0);
     }
 
-    void ApplyThrowForce()
+    private void ApplyThrowForce()
     {
         Transform ingredient = GetIngredientTransform();
         Rigidbody ingreRigid = ingredient.GetComponent<Rigidbody>();
@@ -263,17 +268,16 @@ public class PlayerInteractController : MonoBehaviour
         ingreRigid.AddForce(dir, ForceMode.Impulse);
     }
 
-    void EnableIngredientCollision()
+    private void EnableIngredientCollision()
     {
         Transform ingredient = GetIngredientTransform();
         MeshCollider ingreCollider = ingredient.GetComponent<MeshCollider>();
         ingreCollider.isTrigger = false;
         Rigidbody ingreRigid = ingredient.GetComponent<Rigidbody>();
-        // ingreRigid.constraints = RigidbodyConstraints.None;
         ingreRigid.constraints = RigidbodyConstraints.FreezeRotationY;
     }
 
-    void ReleaseIngredient()
+    private void ReleaseIngredient()
     {
         transform.GetChild(1).SetParent(transform.parent);
     }
@@ -285,13 +289,11 @@ public class PlayerInteractController : MonoBehaviour
     public void OnPickupOrPlace(InputValue inputValue)
     {
         ProcessInteraction();
-        //SetHand();
     }
 
     public void MobilePickupOrPlace()
     {
         ProcessInteraction();
-        //SetHand();
     }
 
     private void ProcessInteraction()
@@ -331,40 +333,43 @@ public class PlayerInteractController : MonoBehaviour
     }
 
     private void HandleOvenInteraction()
+{
+    var childTransform = transform.childCount > 1 ? transform.GetChild(1) : null;
+    var ingredient = childTransform != null ? childTransform.gameObject.GetComponent<Ingredient>() : null;
+
+    // Ingredient 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
+    if (IsHolding && ingredient != null && ingredient.type == Ingredient.IngredientType.Plate)
     {
-        var ingredient = transform.GetChild(1).gameObject.GetComponent<Ingredient>();
-        
-        // Ingredient 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
-        if (IsHolding && ingredient != null && ingredient.type == Ingredient.IngredientType.Plate)
+        var plateComponent = childTransform.gameObject; // Plates Object
+        var oven = objectHighlight.transform.parent.gameObject;
+        bool isDough = plateComponent.transform.GetChild(9).gameObject.activeSelf;
+        if (oven.transform.childCount == 2 && !plateComponent.transform.GetComponent<Ingredient>().pizzaIsCooked && isDough)
         {
-            var plateComponent = transform.GetChild(1).gameObject; // Plates Object
-            var Oven = objectHighlight.transform.parent.gameObject;
-            bool isDough = plateComponent.transform.GetChild(9).gameObject.activeSelf;
-            if (Oven.transform.childCount == 2 && !plateComponent.transform.GetComponent<Ingredient>().pizzaIsCooked && isDough)
-            {
-                plateComponent.transform.SetParent(Oven.transform);
+            plateComponent.transform.SetParent(oven.transform);
 
-                // 위치 설정
-                plateComponent.transform.localPosition = new Vector3(0f, 0.01f, 0f);
+            // 위치 설정
+            plateComponent.transform.localPosition = new Vector3(0f, 0.01f, 0f);
 
-                // 회전 설정
-                plateComponent.transform.localRotation = Quaternion.Euler(0f, 2.281f, 0f);
+            // 회전 설정
+            plateComponent.transform.localRotation = Quaternion.Euler(0f, 2.281f, 0f);
 
-                // 크기 조정
-                plateComponent.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            // 크기 조정
+            plateComponent.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
 
-                Oven.GetComponent<Oven>().StartCooking();
+            oven.GetComponent<Oven>().StartCooking();
 
-                IsHolding = false;
-                Animator.SetBool("isHolding", IsHolding);
-            }
+            IsHolding = false;
+            Animator.SetBool(Holding, IsHolding);
         }
-        else if (!IsHolding)
-        {
-            // 다시 꺼냄. 근데 요리중일땐 못꺼냄.
-            var Oven = objectHighlight.transform.parent.gameObject;
-            var plateComponent = Oven.transform.GetChild(2).gameObject;
+    }
+    else if (!IsHolding)
+    {
+        // 다시 꺼냄. 근데 요리중일땐 못꺼냄.
+        var oven = objectHighlight.transform.parent.gameObject;
+        var plateComponent = oven.transform.childCount > 2 ? oven.transform.GetChild(2).gameObject : null;
 
+        if (plateComponent != null)
+        {
             plateComponent.transform.SetParent(transform);
 
             // 위치 설정
@@ -377,9 +382,10 @@ public class PlayerInteractController : MonoBehaviour
             plateComponent.transform.localScale = new Vector3(312.5f, 312.5f, 312.5f);
 
             IsHolding = true;
-            Animator.SetBool("isHolding", IsHolding);
+            Animator.SetBool(Holding, IsHolding);
         }
     }
+}
 
     // Station
     private void HandleStationInteraction()
@@ -403,7 +409,7 @@ public class PlayerInteractController : MonoBehaviour
 
         Destroy(transform.GetChild(1).gameObject); // 접시 전체를 삭제 (추후 재활용을 고려)
         IsHolding = false; // 아이템을 들고 있는 상태를 해제
-        Animator.SetBool("isHolding", IsHolding); // 애니메이션 상태를 업데이트
+        Animator.SetBool(Holding, IsHolding); // 애니메이션 상태를 업데이트
         _gameManager.PlateReturn(); // 접시 반환 처리
         // Ingredient 컴포넌트가 존재하고, 그 타입이 Plate인지 확인
     }
@@ -527,7 +533,7 @@ public class PlayerInteractController : MonoBehaviour
         }
 
         handlingThing.transform.SetParent(null); // 부모 설정 해제
-        Animator.SetBool("isHolding", false);
+        Animator.SetBool(Holding, false);
         IsHolding = false;
     }
 
@@ -536,7 +542,7 @@ public class PlayerInteractController : MonoBehaviour
         SoundManager.Instance.PlayEffect("itemPickUp");
         objectHighlight.onSomething = false;
         // isHolding = true;
-        // Animator.SetBool("isHolding", isHolding);
+        // Animator.SetBool(Holding, isHolding);
         HandleObject(handleThing);
     }
 
@@ -567,8 +573,6 @@ public class PlayerInteractController : MonoBehaviour
                 {
                     var meshFilter = ingredientObj.transform.GetChild(0).GetComponent<MeshFilter>();
                     
-                    string meshFileName = meshFilter.sharedMesh.name;
-
                     ingredientObj.transform.SetParent(potAndPan.transform);
                     ingredientObj.transform.localPosition = new Vector3(2e-05f, -0.00017f, 0.00013f); // 위치 설정
                     ingredientObj.transform.localRotation = Quaternion.Euler(0f, -168.905f, 0f); // 회전 설정
@@ -576,7 +580,7 @@ public class PlayerInteractController : MonoBehaviour
                     potAndPan.GetComponent<PanOnStove>().inSomething = true;
                     potAndPan.GetComponent<PanOnStove>().AddNewIngredient();
 
-                    Animator.SetBool("isHolding", false);
+                    Animator.SetBool(Holding, false);
                     IsHolding = false;
                 }
 
@@ -590,7 +594,7 @@ public class PlayerInteractController : MonoBehaviour
                     potAndPan.GetComponent<PotOnStove>().inSomething = true;
                     potAndPan.GetComponent<PotOnStove>().AddNewIngredient();
 
-                    Animator.SetBool("isHolding", false);
+                    Animator.SetBool(Holding, false);
                     IsHolding = false;
                 }
             }
@@ -655,7 +659,7 @@ public class PlayerInteractController : MonoBehaviour
         plate.InstantiateUI();
         Destroy(transform.GetChild(1).gameObject);
         IsHolding = false;
-        Animator.SetBool("isHolding", false);
+        Animator.SetBool(Holding, false);
     }
 
     private void HandleObject(GameObject obj, bool isPickingUp = true)
@@ -691,7 +695,7 @@ private void HandlePlatePickup(GameObject obj)
     obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
     obj.transform.SetParent(transform);
     SetPositionBetweenPlayerAndObject(obj);
-    Animator.SetBool("isHolding", true);
+    Animator.SetBool(Holding, true);
     IsHolding = true;
 }
 
@@ -715,7 +719,7 @@ private void HandlePanOrPotPickup(GameObject obj)
         }
         obj.transform.SetParent(transform);
         // SetPositionBetweenPlayerAndObject(obj); // Uncomment if necessary
-        Animator.SetBool("isHolding", true);
+        Animator.SetBool(Holding, true);
         IsHolding = true;
 
         if (obj.CompareTag("Pan"))
@@ -739,7 +743,7 @@ private void HandleGenericPickup(GameObject obj)
     }
     obj.transform.SetParent(transform);
     SetPositionBetweenPlayerAndObject(obj);
-    Animator.SetBool("isHolding", true);
+    Animator.SetBool(Holding, true);
     IsHolding = true;
 }
 
@@ -774,7 +778,7 @@ private void DropObject()
         HandleContainerDrop(handleThing, playerDirection);
     }
 
-    Animator.SetBool("isHolding", false);
+    Animator.SetBool(Holding, false);
     IsHolding = false;
 }
 
@@ -839,7 +843,7 @@ private void HandleCookedIngredient(GameObject obj)
     var ingredient = cookedIngredientObj.transform.GetChild(0).GetChild(0).GetComponent<Ingredient>();
     ingredient.HandleIngredient(transform, ingredient.type, true);
 
-    Animator.SetBool("isHolding", true);
+    Animator.SetBool(Holding, true);
     IsHolding = true;
 }
 
@@ -851,7 +855,7 @@ private void HandleCookedIngredient(GameObject obj)
         interactObject.GetComponent<Craft>().OpenCraftPlayer1();
         objectHighlight.onSomething = false;
         IsHolding = true;
-        Animator.SetBool("isHolding", IsHolding);
+        Animator.SetBool(Holding, IsHolding);
     }
 
     private void DisposePlate()
@@ -863,14 +867,14 @@ private void HandleCookedIngredient(GameObject obj)
     {
         Destroy(transform.GetChild(1).gameObject);
         IsHolding = false;
-        Animator.SetBool("isHolding", IsHolding);
+        Animator.SetBool(Holding, IsHolding);
     }
 
     private void PickupObject(GameObject obj, bool isIngredient)
     {
         SoundManager.Instance.PlayEffect("itemPickUp");
         IsHolding = true;
-        Animator.SetBool("isHolding", IsHolding);
+        Animator.SetBool(Holding, IsHolding);
 
         obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
@@ -903,7 +907,6 @@ private void HandleCookedIngredient(GameObject obj)
         // 접시 인식
         var plateObject = interactObject.transform.parent.gameObject;
         TryPickupObject(plateObject);
-        //SetPositionbetweenPlayerAndObject(plateObject);
     }
 
     #endregion
@@ -984,7 +987,7 @@ private void HandleCookedIngredient(GameObject obj)
 
         if (interactObject.GetComponent<ObjectHighlight>().objectType == ObjectHighlight.ObjectType.Board)
         {
-            Animator.SetBool("canCut", true);
+            Animator.SetBool(CanCut, true);
         }
     }
 
@@ -1102,7 +1105,7 @@ private void HandleCookedIngredient(GameObject obj)
     {
         if (interactObject.GetComponent<ObjectHighlight>().objectType == ObjectHighlight.ObjectType.Board)
         {
-            Animator.SetBool("canCut", false);
+            Animator.SetBool(CanCut, false);
             interactObject.transform.GetChild(0).GetComponent<CuttingBoard>().PauseSlider(true);
         }
     }
@@ -1117,7 +1120,7 @@ private void HandleCookedIngredient(GameObject obj)
 
     private void SwitchActiveToNextObject()
     {
-        Animator.SetBool("canCut", false);
+        Animator.SetBool(CanCut, false);
         OffHighlightCurrentObject();
         interactObject = nextInteractObject;
         objectHighlight = interactObject?.GetComponent<ObjectHighlight>();
@@ -1143,11 +1146,6 @@ private void HandleCookedIngredient(GameObject obj)
     {
         if (interactObject != null && interactObject.GetComponent<ObjectHighlight>() != null)
         {
-            /*
-            bool highlightState = interactObject.CompareTag("Ingredient")
-                ? interactObject.GetComponent<Ingredient>().isCooked
-                : true;
-            */
             bool highlightState = !interactObject.CompareTag("Ingredient") || interactObject.GetComponent<Ingredient>().isCooked;
             interactObject.GetComponent<ObjectHighlight>().DeactivateHighlight(highlightState);
         }

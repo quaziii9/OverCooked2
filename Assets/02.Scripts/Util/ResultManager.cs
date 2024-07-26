@@ -1,11 +1,6 @@
-using DG.Tweening.Core.Easing;
-using EnumTypes;
-using EventLibrary;
 using System.Collections;
-using System.Collections.Generic;
+using EnumTypes;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour
@@ -26,8 +21,8 @@ public class ResultManager : MonoBehaviour
 
     private void Awake()
     {
-        UIManager.Instance.sceneType = EnumTypes.SceneType.Result;
-        UIManager.Instance.mapType = EnumTypes.MapType.None;
+        UIManager.Instance.sceneType = SceneType.Result;
+        UIManager.Instance.mapType = MapType.None;
         canSkip = false;
         Time.timeScale = 1;
 
