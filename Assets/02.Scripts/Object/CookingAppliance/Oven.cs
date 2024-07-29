@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
-using System;
+using UnityEngine.UI;
 
 public class Oven : MonoBehaviour
 {
@@ -12,26 +11,20 @@ public class Oven : MonoBehaviour
     private bool pause = false;
     private bool stateIsCooked = false;
 
-
-    private void Start()
-    {
-        //potAnim.GetComponent<Animator>();
-    }
-
     private void Update()
     {
         if (!stateIsCooked)
         {
             UpdateCookingBarPosition();
             UpdateCookingBarValue();
-            UpdateisIngredientState();
+            UpdateIsIngredientState();
         }
 
         if (stateIsCooked)
             cookingBar.gameObject.SetActive(false);
     }
 
-    private void UpdateisIngredientState()
+    private void UpdateIsIngredientState()
     {
         if (transform.childCount == 3)
         {
@@ -97,5 +90,4 @@ public class Oven : MonoBehaviour
         cookingBar.value = 0f;
         cookingBar.gameObject.SetActive(false);
     }
-
 }

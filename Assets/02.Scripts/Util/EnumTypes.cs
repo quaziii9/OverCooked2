@@ -2,41 +2,11 @@ using UnityEngine;
 
 namespace EnumTypes
 {
-    public enum LookDirection { Up, Down, Left, Right }
-    public enum PlayerState { Stand, Move, Run, Hold, Cook }
-    public enum Layers
-    {
-        Default,
-        TransparentFX,
-        IgnoreRaycast,
-        Reserved1,
-        Water,
-        UI,
-        Reserved2,
-        Reserved3,
-        Player,
-        World,
-    }
-
-    public enum ThrowableType
-    {
-        Ingredient,
-    };
-
-    public enum GlobalEvents
-    {
-        PlayerDead,
-        PlayerSpawned,
-        PlayerInactive,
-        PlayerDamaged,
-    }
-
     public enum SceneChangeEvent
     {
         WorldMapOpen,
         IntroMapOpen,
         BattleRoomOpen,
-        TutoMapOpen,
         Stage1_4MapOpen,
         Stage2_5MapOpen,
         Stage3_3MapOpen,
@@ -48,41 +18,21 @@ namespace EnumTypes
 
     public enum SoundEvents
     {
-        FadeIn,
-        FadeOut,
         MineBgmPlay,
         StageBgmFadeOut,
     }
 
     public enum UIEvents
     {
-        EscUI,
         MobilePlayerController,
-    }
-
-    public enum UIType
-    {
-        OptionUI,
-        StopUI,
-        BattleUI,
-        ExitLobbyUI,
-        LoadingKeyUI,
-        LoadingMapUI,
-        LoadingFoodUI,
-        BusMap,
-        StageMapEscUI,
-        RecipeUI,
-        EscUI,
     }
 
     public enum GameEvent
     {
-        FireOff,
         StartGame,
         ResetGameSetting,
         MovingCart
     }
-
 
     public enum SceneType
     {
@@ -91,7 +41,6 @@ namespace EnumTypes
         WorldMap,
         BattleMap,
         StageMap,
-        // Canvas분기 처리를 위한 추가
         NetworkBattleMap,
         Result
     }

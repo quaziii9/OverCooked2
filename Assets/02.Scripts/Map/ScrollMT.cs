@@ -20,8 +20,8 @@ public class ScrollMT : MonoBehaviour
     public float startXOffset = 0.0f; // 시작 X 오프셋
     public float endXOffset = -0.0f; // 도달해야 할 X 오프셋
 
-    private Vector2 currentOffset;
-    private Material originalMaterial;
+    private Vector2 _currentOffset;
+    private Material _originalMaterial;
 
     private void Start()
     {
@@ -31,44 +31,44 @@ public class ScrollMT : MonoBehaviour
         // 매테리얼의 인덱스가 유효한지 확인
         if (meshRenderer.sharedMaterials.Length > materialIndex)
         {
-            originalMaterial = meshRenderer.sharedMaterials[materialIndex];
-            originalMaterial.mainTextureOffset = new Vector2(0f, 0);
+            _originalMaterial = meshRenderer.sharedMaterials[materialIndex];
+            _originalMaterial.mainTextureOffset = new Vector2(0f, 0);
         }
     }
 
     void Update()
     {
         // 매쉬 랜더러와 마테리얼이 제대로 설정되었는지 확인
-        if (meshRenderer == null || originalMaterial == null)
+        if (meshRenderer == null || _originalMaterial == null)
         {
             return;
         }
 
         // 현재 오프셋
-        currentOffset = originalMaterial.mainTextureOffset;
+        _currentOffset = _originalMaterial.mainTextureOffset;
 
         // Y 축 이동 업데이트
         if (y)
         {
-            currentOffset.y = UpdateOffset(currentOffset.y, startYOffset, endYOffset, YPlus, yLimit);
+            _currentOffset.y = UpdateOffset(_currentOffset.y, startYOffset, endYOffset, YPlus, yLimit);
         }
 
         // X 축 이동 업데이트
         if (x)
         {
-            currentOffset.x = UpdateOffset(currentOffset.x, startXOffset, endXOffset, XPlus, xLimit);
+            _currentOffset.x = UpdateOffset(_currentOffset.x, startXOffset, endXOffset, XPlus, xLimit);
         }
 
         // 변경된 오프셋을 마테리얼에 적용
-        originalMaterial.mainTextureOffset = currentOffset;
+        _originalMaterial.mainTextureOffset = _currentOffset;
     }
 
     private void OnDisable()
     {
         // 스크립트가 비활성화될 때 오프셋 초기화
-        if (originalMaterial != null)
+        if (_originalMaterial != null)
         {
-            originalMaterial.mainTextureOffset = new Vector2(0f, 0f);
+            _originalMaterial.mainTextureOffset = new Vector2(0f, 0f);
         }
     }
 

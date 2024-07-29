@@ -119,7 +119,6 @@ public class GameManager : MonoBehaviour
     {
         EventManager<GameEvent>.StopListening(GameEvent.StartGame, HandleGameStartEvent);
         EventManager<GameEvent>.StopListening(GameEvent.ResetGameSetting, InitSceneLoad);
-
     }
 
     private void HandleGameStartEvent()

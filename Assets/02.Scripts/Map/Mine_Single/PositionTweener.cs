@@ -11,7 +11,7 @@ public class PositionTweener : MonoBehaviour
     public int shakeVibrato = 10; // 흔들림 진동 횟수
     private Vector3 originalCameraPosition; // 카메라의 원래 위치를 저장
 
-    void Start()
+    private void Start()
     {
         // 카메라의 원래 위치 저장
         if (cameraTransform != null)
@@ -53,7 +53,7 @@ public class PositionTweener : MonoBehaviour
     }
 
 
-    void ShakeCamera()
+    private void ShakeCamera()
     {
         if (cameraTransform != null)
         {
