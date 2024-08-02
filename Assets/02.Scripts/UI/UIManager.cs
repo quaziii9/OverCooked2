@@ -256,7 +256,7 @@ public class UIManager : Singleton<UIManager>
         settingResolutionArrNum = resolutionArrNum;
         settingWindowScreen = windowScreen;
 
-        //LoadData.Instance.SaveOptionDataToJson();
+        LoadData.Instance.SaveOptionDataToJson();
 
         SetResolution();
     }

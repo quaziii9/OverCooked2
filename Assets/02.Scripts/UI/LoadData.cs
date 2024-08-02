@@ -1,4 +1,6 @@
+using System.Globalization;
 using System.IO;
+using System.Text;
 using UnityEngine;
 
 public class LoadData : Singleton<LoadData>
@@ -23,7 +25,9 @@ public class LoadData : Singleton<LoadData>
             optionData.saveResolutionNum = UIManager.Instance.resolutionArrNum;
             optionData.saveBgmVolume = SoundManager.Instance.volumeBGM;
             optionData.saveEffectVolume = SoundManager.Instance.volumeEffect;
-            string jsonData = JsonUtility.ToJson(optionData, true);
+            //string jsonData = JsonUtility.ToJson(optionData, true);
+
+            string jsonData = FormatJson(optionData);
             string path = GetFilePath();
             File.WriteAllText(path, jsonData);
         }
@@ -32,6 +36,21 @@ public class LoadData : Singleton<LoadData>
             // Debug.LogError($"옵션 데이터 저장 실패: {ex.Message}");
         }
     }
+
+
+    private string FormatJson(OptionData data)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("{");
+        sb.AppendLine($"    \"saveWindowMode\": {data.saveWindowMode.ToString().ToLower()},");
+        sb.AppendLine($"    \"saveResolutionNum\": {data.saveResolutionNum},");
+        sb.AppendLine($"    \"saveBgmVolume\": {data.saveBgmVolume.ToString("F1", CultureInfo.InvariantCulture)},");
+        sb.AppendLine($"    \"saveEffectVolume\": {data.saveEffectVolume.ToString("F1", CultureInfo.InvariantCulture)}");
+        sb.Append("}");
+        return sb.ToString();
+    }
+
+
 
     // JSON 파일에서 옵션 데이터를 로드
     [ContextMenu("From Json Data")]

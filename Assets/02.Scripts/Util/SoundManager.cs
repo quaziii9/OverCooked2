@@ -160,9 +160,15 @@ public class SoundManager : Singleton<SoundManager>
         SetAllEffectVolume();
     }
 
+    private float TruncateToOneDecimal(float value)
+    {
+        return (float)Math.Truncate(value * 10f) / 10f;
+    }
+
+
     public void BGMVolumeUp()
     {
-        volumeBGM += 0.1f;
+        volumeBGM = TruncateToOneDecimal(volumeBGM + 0.1f);
         if (volumeBGM >= 1)
         {
             volumeBGM = 1f;
@@ -177,7 +183,7 @@ public class SoundManager : Singleton<SoundManager>
 
     public void BGMVolumeDown()
     {
-        volumeBGM -= 0.1f;
+        volumeBGM = TruncateToOneDecimal(volumeBGM - 0.1f);
         if (volumeBGM <= 0)
         {
             volumeBGM = 0;
@@ -192,7 +198,7 @@ public class SoundManager : Singleton<SoundManager>
 
     public void EffectSoundVolumeUp()
     {
-        volumeEffect += 0.1f;
+        volumeEffect = TruncateToOneDecimal(volumeEffect + 0.1f);
         if (volumeEffect >= 1)
         {
             volumeEffect = 1f;
@@ -204,7 +210,7 @@ public class SoundManager : Singleton<SoundManager>
 
     public void EffectSoundVolumeDown()
     {
-        volumeEffect -= 0.1f;
+        volumeEffect = TruncateToOneDecimal(volumeEffect - 0.1f);
         if (volumeEffect <= 0)
         {
             volumeEffect = 0;
